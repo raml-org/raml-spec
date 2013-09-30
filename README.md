@@ -1,4 +1,7 @@
-raml-spec
-=========
+# RAML Spec
 
-raml-spec
+To build the spec type:
+
+    make
+
+The individual spec files are concatenated into a single file, raml-spec.md.
