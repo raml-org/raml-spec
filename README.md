@@ -1,6 +1,6 @@
-# RAML Spec
+# The RESTful API Modeling Language (RAML) Spec
 
-To build the spec type:
+To build the spec, type:
 
     make
 
