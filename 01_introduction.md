@@ -1,4 +1,4 @@
-RAML&trade; Version 0.2: RESTful API Modeling Language
+RAML&trade; Version 0.8: RESTful API Modeling Language
 ===================================
 
 
@@ -56,7 +56,7 @@ This specification uses YAML 1.2 [YAML] as its core format. YAML is a human-read
 RAML API definitions are YAML-compliant documents that begin with a REQUIRED YAML-comment line that indicates the RAML version, as follows:
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 ```
 

@@ -12,7 +12,7 @@ RAML-documented API definition properties MAY appear in any order.
 This example shows a snippet of the RAML API definition for the GitHub v3 public API.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: GitHub API
 version: v3
@@ -63,7 +63,7 @@ section of this specification. Its type is "string", it is required, and its dis
 The following example RAML API definition uses a Level 1 Template URI as the *baseUri*.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Salesforce Chatter REST API
 version: v28.0
@@ -73,7 +73,7 @@ baseUri: https://na1.salesforce.com/services/data/{version}/chatter
 The following example declares an explicit base URI parameter.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Amazon S3 REST API
 version: 1
@@ -88,7 +88,7 @@ baseUriParameters:
 A RESTful API can be reached HTTP, HTTPS, or both. The *protocols* property MAY be used to specify the protocols that an API supports. If the *protocols* property is not specified, the protocol specified at the *baseUri* property is used. The *protocols* property MUST be an array of strings, of values __"HTTP"__ and/or __"HTTPS"__.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Salesforce Chatter REST API
 version: v28.0
@@ -112,7 +112,7 @@ For any combination of resource and operation in the API, if a media type is spe
 This example shows an API that accepts and returns only JSON bodies.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Stormpath REST API
 version: v1
@@ -125,7 +125,7 @@ mediaType: application/json
 To better achieve consistency and simplicity, the API definition SHOULD include an OPTIONAL *schemas* property in the root section. The *schemas* property specifies collections of schemas that could be used anywhere in the API definition. The value of the *schemas* property is an array of maps; in each map, the keys are the schema name, and the values are schema definitions. The schema definitions MAY be included inline or by using the RAML !include user-defined data type.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 baseUri: https://api.example.com
 title: Filesystem API
@@ -145,7 +145,7 @@ schemas:
 In addition to the reserved URI parameters described in the *baseUri* property section, a Level 1 Template URI can feature custom URI parameters, which are useful in a variety of scenarios.  For example, let's look at the following API provider that parameterizes the base URI with customer information such as the company name.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: FreshBooks API
 version: 2.1
@@ -155,7 +155,7 @@ baseUri: https://{companyName}.freshbooks.com/api/{version}/xml-in
 URI parameters can be further defined by using the *uriParameters* property. The use of *uriParameters* is OPTIONAL. The *uriParameters* property MUST be a map in which each key MUST be the name of the URI parameter as defined in the *baseUri* property. The *uriParameters* CANNOT contain a key named *version* because it is a reserved URI parameter name. The value of the *uriParameters* property is itself a map that specifies the property's attributes, according to the [Named Parameters section](#named-parameters).
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Salesforce Chatter Communities REST API
 version: v28.0
@@ -184,7 +184,7 @@ Documentation-generators MUST process the content field as if it was defined usi
 This example shows an API definition with a single user document.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: ZEncoder API
 baseUri: https://app.zencoder.com/api
@@ -204,7 +204,7 @@ The *documentation* property MAY be included inline, as described above, or by u
 This example shows the same API definition (ZEncoder API), but the *documentation* property's *content* attribute is referenced as external content.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: ZEncoder API
 baseUri: https://app.zencoder.com/api
@@ -218,7 +218,7 @@ There is no limit to the number of documentation pages that can be included in a
 This example shows an RAML API definition with multiple documentation pages:
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: GitHub API
 version: v3

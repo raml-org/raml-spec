@@ -7,7 +7,7 @@ A resource defined as a root-level property is called a *top-level resource*. It
 This example shows an API definition with one top-level resource, /gists, and one nested resource, /public.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: GitHub API
 version: v3
@@ -36,7 +36,7 @@ Template URIs containing URI parameters can be used to define a resource's relat
 The following example shows a top-level resource with a key */jobs* and a nested resource with a key */{jobId}*:
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: ZEncoder API
 version: v2
@@ -53,7 +53,7 @@ The values matched by URI parameters cannot contain slash (/) characters, in ord
 A resource MAY contain a *uriParameters* property specifying the uriParameters in that resource's relative URI, as described in the Named Parameters section of this specification. The example below shows two top-level resources (/user and /users) and a nested resource specified by its template URI, "/{userId}". The URI parameter "userId" is explicitly declared, and given a displayName "User ID" and an integer type.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: GitHub API
 version: v3
@@ -73,7 +73,7 @@ baseUri: https://api.github.com
 If a URI parameter in a resource's relative URI is not explicitly described in a uriParameters property for that resource, it MUST still be treated as a URI parameter with defaults as specified in the Named Parameters section of this specification. Its type is "string", it is required, and its displayName is its name (i.e. without the surrounding curly brackets [{] and [}]). In the example below, the top-level resource has two URI parameters, "folderId" and "fileId".
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Flat Filesystem API
 version: v1
@@ -86,7 +86,7 @@ version: v1
 A special uriParameter, *mediaTypeExtension*, is a reserved parameter. It may be specified explicitly in a uriParameters property or not specified explicitly, but its meaning is reserved: it is used by a client to specify that the body of the request or response be of the associated media type. By convention, a value of .json is equivalent to an Accept header of application/json and .xml is equivalent to an Accept header of text/xml. If this parameter is used, clients may specify the media type of a request/response via the URI rather than via the Accept HTTP header. For example, in the following example, the /users resource could be represented as application/json or text/xml:
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: API Using media type in the URL
 version: v1
@@ -106,7 +106,7 @@ A resource or a method can override a base URI template's values. This is useful
 In the following example, calls to the /files resource must be made to "https://api-content.dropbox.com/{version}". All other calls in the API are made to "https://api.dropbox.com/{version}".
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Dropbox API
 version: 1
@@ -148,7 +148,7 @@ A nested resource can itself have a child (nested) resource, creating a multiply
 In this example, /user is a top-level resource that has no children; /users is a top-level resource that has a nested resource, /{userId}; and the nested resource, /{userId}, has three nested resources, /followers, /following, and /keys.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: GitHub API
 version: v3
@@ -191,7 +191,7 @@ Each declared method MAY contain a *description* attribute that briefly describe
 This example shows a resource, /jobs, with POST and GET methods (verbs) declared:
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: ZEncoder API
 version: v2
@@ -206,7 +206,7 @@ baseUri: https://app.zencoder.com/api/{version}
 The value of the *description* property MAY be formatted using Markdown [MARKDOWN].
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: ZEncoder API
 version: v2
@@ -235,7 +235,7 @@ The *headers* property is a map in which the key is the name of the header, and 
 This example shows a POST method with an HTTP header.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: ZEncoder API
 version: v2
@@ -253,7 +253,7 @@ If the header name contains the placeholder token {*}, processing applications M
 In the following example, the header x-metadata-{*} is used to send metadata that will be saved with the job.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: ZEncoder API
 version: v2
@@ -277,7 +277,7 @@ baseUri: https://app.zencoder.com/api/{version}
 Documentation generators MUST include content specified as example information for headers. This information is included in the API definition by using the *example* property.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: ZEncoder API
 version: v2
@@ -305,7 +305,7 @@ A method can override an API's *protocols* value for that single method by setti
 In the following example, the GET method is accessible through both HTTP and HTTPS, while the rest of the API only through HTTPS.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Twitter API
 version: 1.1
@@ -324,7 +324,7 @@ An API's resources MAY be filtered (to return a subset of results) or altered (s
 The *queryParameters* property is a map in which the key is the query parameter's name, and the value is itself a map specifying the query parameter's attributes, according to the [Named Parameters section](#named-parameters).
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: GitHub API
 version: v3
@@ -344,7 +344,7 @@ baseUri: https://api.github.com
 Query string *queryParameters* properties MAY include an *example* attribute. Documentation generators MUST use *example* attributes to generate example invocations.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: GitHub API
 version: v3
@@ -399,7 +399,7 @@ The *formParameters* property is a map in which the key is the name of the web f
 Documentation generators MUST use *form* properties' *example* attributes to generate example invocations.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Twilio API
 version: 2010-04-01

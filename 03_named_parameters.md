@@ -83,7 +83,7 @@ To denote that a named parameter can have multiple types, the value of the named
 In the following example, the named parameter *file* can be used for sending a file or string text data to an API:
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Amazon simple storage API
 version: 1

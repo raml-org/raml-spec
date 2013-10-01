@@ -5,7 +5,7 @@ The YAML specification does not require that YAML parsers use any particular mec
 In this example, the content of myTextFile.txt is included as the value of the external property.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 external: !include myTextFile.txt
 ```
@@ -17,7 +17,7 @@ To simplify API definition, and because the included file's parsing context is n
 In this example, the *properties.raml* file defines two properties. The *big.raml* file includes the properties.raml file.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 #properties.raml
 
@@ -26,7 +26,7 @@ propertyB: valueB
 ```
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 #big.raml
 
@@ -36,7 +36,7 @@ external: !include properties.raml
 The resulting structure is equivalent to the following inline declaration:
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 external:
   propertyA: valueA
@@ -48,7 +48,7 @@ If a relative path is used for the included file, the path is interpreted relati
 In the following example, because the original (including) file is located at *http://example-domain.org/api/example.raml*, the *properties.raml* file should be fetched from *http://example-domain.org/api/properties.raml*.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 #http://example-domain.org/api/example.raml
 

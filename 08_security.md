@@ -14,7 +14,7 @@ one authentication method is allowed if the API supports them.
 In this example, the Dropbox API supports authentication via OAuth 2.0 and OAuth 1.0.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Dropbox API
 version: 1
@@ -117,7 +117,7 @@ To apply a *securityScheme* definition to every method in an API, the API MAY be
 Applying a *securityScheme* definition to a method overrides whichever *securityScheme* has been defined at the root level. To indicate that the method is protected using a specific security scheme, the method MUST be defined by using the *securedBy* attribute. The value of the *securedBy* attribute MUST be a list of any of the security schemas defined in the *securitySchema* declaration.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Dropbox API
 version: 1
@@ -136,7 +136,7 @@ A securityScheme may also be applied to a resource by using the *securedBy* key,
 To indicate that the method may be called without applying any *securityScheme*, the method may be annotated with the *null* *securityScheme*.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: GitHub API
 version: v3
@@ -155,7 +155,7 @@ If the processing application supports custom properties, custom parameters can 
 RAML does not specify which parameters MUST be provided or supported by each *securityScheme* implementation. 
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: GitHub API
 version: v3

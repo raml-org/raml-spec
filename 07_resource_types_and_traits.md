@@ -17,7 +17,7 @@ Similarly, methods may specify one or more traits from which they inherit using 
 The *resourceTypes* and *traits* properties are declared at the API definition's root level with the *resourceTypes* and *traits* property keys, respectively. The value of each of these properties is an array of maps; in each map, the keys are resourceType or trait names, and the values are resourceType or trait definitions, respectively.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Example API
 version: v1
@@ -44,7 +44,7 @@ traits:
 The following example builds on the previous one, but the the resource types and traits are defined in external files that are included by using the RAML !include data type.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Example API
 version: v1
@@ -59,7 +59,7 @@ traits:
 This example can be further shortened to:
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Example API
 
@@ -71,7 +71,7 @@ traits: !include allTraits.yaml  # where allTraits.yaml is an array of maps of t
 Collections of resourceTypes may also be combined, as can collections of traits. Some possibilities are shown in the following example:
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Example API
 version: v1
@@ -113,7 +113,7 @@ Parameter values MAY further be transformed by applying one of the following fun
 To apply functions, append them to the parameter name within the double angle brackets, separated from the parameter name with a | (pipe) character and optional whitespace padding. Here is an example that uses both as well as reserved parameters:
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Example API
 version: v1
@@ -159,7 +159,7 @@ To accommodate this need, a resource type or trait definition MAY append a quest
 The following example shows an optional *post?* property that defines a body parameter called createAuthority. If the inheriting resource defines a *post* method, it will include the createAuthority property in its body. Likewise, if the inheriting resource defines a *delete* method, it will include the deleteAuthority property in its body.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Example of Optional Properties
 resourceTypes:
@@ -187,7 +187,7 @@ To apply a trait definition to a method, so that the method inherits the trait's
 A trait may also be applied to a resource by using the *is* key, which is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type.
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Example API
 version: v1
@@ -208,7 +208,7 @@ traits:
 To pass parameter values to resource types and traits, use a map when declaring the resource type or trait to be used. 
 
 ```yaml
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Example API
 version: v1
