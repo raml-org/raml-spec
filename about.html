@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>RAML - RESTful API modeling language</title>
+        <link rel="stylesheet" href="stylesheets/normalize.css" />
+        <link href="stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+        <script src="javascripts/jquery.scrollTo.min.js" ></script>
+        <script src="javascripts/waypoints.min.js" ></script>
+        <script src="javascripts/custom.js" ></script>
+    </head>
+    <body>
+        <div class="header-wrapper">
+            <header>
+                <nav>
+                    <ul>
+                        <li class="nav-projects">
+                            <a href="projects.html">Projects</a>
+                        </li>
+                        <li class="nav-docs">
+                            <a href="docs.html">Documentation</a>
+                        </li>
+                        <li class="nav-logo">
+                            <a href="index.html">RAML</a>
+                        </li>
+                        <li class="nav-blog">
+                            <a href="http://open-raml.blogspot.com">RAML Blog</a>
+                        </li>
+                        <li class="nav-about">
+                            <a class="active" href="about.html">About</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+        <div class="content-wrapper-pages">
+            <section>
+                <aside>
+                    <nav>
+                        <h1>About</h1>
+                        <ul>
+                            <li>
+                                <a class="active" href="#one">What is RAML?</a>
+                            </li>
+                            <li>
+                                <a href="#two">Why should I use it?</a>
+                            </li>
+                            <li>
+                                <a href="#three">How RAML describes an API</a>
+                            </li>
+                            <li>
+                                <a href="#five">Getting Started with RAML</a>
+                            </li>
+                            <li>
+                                <a href="#six">The RAML Workgroup</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </aside>
+                <div class="content">
+                    <h2 id="one">What is RAML?</h2>
+                    <p>RAML stands for RESTful API Modeling Language. It's a way of describing practically-RESTful APIs in a way that's highly readable by both humans and computers. We say "practically RESTful" because in the real world, very few APIs today actually are. RAML isn't strict: in the end it is only describing HTTP with a few higher-level (optional) constructs.</p>
+                    <p>RAML is a non-proprietary, vendor-neutral open spec. The aim is to help our current API ecosystem and solve immediate problems, and then gently encourage ever-better API patterns.</p>
+                    <h2 id="two">Why should I use RAML for my API?</h2>
+                    <ol>
+                        <li>You'll get a well-defined contract in a human-readable format to actually exist as your source code.</li>
+                        <li>Your API's structure is manifest and easily understood by everyone: developers, partners, and API-consumers.</li>
+                        <li>APX vastly improves with the knowledge that there is a formal, versioned, crystal-clear contract that reflects the structure of the API and is independent of implementation.</li>
+                    </ol>
+                    <p>Well-designed and manifestly-structured APIs, with a lot of internal consistency based on explicit patterns, lead to easier and more robust client coding and server implementations.</p>
+                    <h2 id="three">RAML describes an API in a way that is</h2>
+                    <p><strong>Clear:</strong> The structure of the API should be manifest. Patterns are brought to the forefront; its data and interaction models are front and center.</p>
+                    <p><strong>Correct:</strong> An API spec is a contract: whatever is captured must correctly describe the behavior of the API.</p>
+                    <p><strong>Precise:</strong> Can a client be generated from the spec that's as faithful to the API as it is reasonable? Do the implementers know what they're required to deliver?</p>
+                    <p><strong>Consistent:</strong> RAML has strong support for capturing patterns. It encourages reuse, enables discovery and pattern-sharing, and aims for merit-based emergence of best practices.</p>
+                    <p><strong>Readable & writable:</strong> Optimizes both creating and reading specs by impatient, smart humans.</p>
+                    <p><strong>Natural & intuitive:</strong> It is as close as possible to the mental model one has for the API, like what you'd type out in an email to a colleague or friend you were helping design or consume the API.</p>
+                    <h2 id="five">Getting Started with RAML</h2>
+                    <p>See how easy it is to get started with the <a href="docs.html">RAML 100 tutorial</a>. We will be adding additional documentation on an ongoing basis.</p>
+                    <h2 id="six">The RAML Workgroup</h2>
+                    <p>RAML was developed and is supported by a group of technology leaders dedicated to building an open, simple and succinct spec for describing APIs to help further unlock the potential of the API economy. The RAML Workgroup provides ongoing contributions to both the RAML spec and a growing ecosystem of tools designed to make API-first design simple and API consumption frictionless.</p>
+                    <ul class="bios">
+                        <li class="odd">
+                            <div class="headshot"><img src="images/uri-sarid.jpg"/></div>
+                            <div class="bio-info">
+                                <h3>Uri Sarid</h3>
+                                <p><strong>CTO</strong></p>
+                                <p>MuleSoft</p>
+                                <div class="bio-social">
+                                    <a class="symbol" href="http://www.linkedin.com/in/sarid" target="_blank">circlelinkedin</a>
+                                    <a class="symbol" href="https://twitter.com/usarid" target="_blank">circletwitterbird</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="headshot"><img src="images/misko-hevery.jpg"/></div>
+                            <div class="bio-info">
+                                <h3>Mi&#x161;ko Hevery</h3>
+                                <p><strong>Project Founder</strong></p>
+                                <p>AngularJS</p>
+                                <div class="bio-social">
+                                    <a class="symbol" href="http://www.linkedin.com/pub/misko-hevery/0/3b1/388" target="_blank">circlelinkedin</a>
+                                    <a class="symbol" href="https://twitter.com/mhevery" target="_blank">circletwitterbird</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="odd">
+                            <div class="headshot"><img class="ivan-lazarov" src="images/ivan-lazarov.jpg"/></div>
+                            <div class="bio-info">
+                                <h3>Ivan Lazarov</h3>
+                                <p><strong>Chief Enterprise Architect</strong></p>
+                                <p>Intuit</p>
+                                <div class="bio-social">
+                                    <a class="symbol" href="http://www.linkedin.com/pub/ivan-lazarov/0/6a8/" target="_blank">circlelinkedin</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="headshot"><img src="images/peter-rexer.jpg"/></div>
+                            <div class="bio-info">
+                                <h3>Peter Rexer</h3>
+                                <p><strong>Senior Platform Product Manager</strong></p>
+                                <p>Box</p>
+                                <div class="bio-social">
+                                    <a class="symbol" href="http://www.linkedin.com/pub/peter-rexer/0/183/40b" target="_blank">circlelinkedin</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="odd">
+                            <div class="headshot"><img src="images/bill-scott.jpg"/></div>
+                            <div class="bio-info">
+                                <h3>Bill Scott</h3>
+                                <p><strong>Sr. Director of User Interface Engineering</strong></p>
+                                <p>PayPal</p>
+                                <div class="bio-social">
+                                    <a class="symbol" href="http://www.linkedin.com/in/billwscott" target="_blank">circlelinkedin</a>
+                                    <a class="symbol" href="https://twitter.com/billwscott" target="_blank">circletwitterbird</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="headshot"><img src="images/kin-lane.jpg"/></div>
+                            <div class="bio-info">
+                                <h3>Kin Lane</h3>
+                                <p><strong>Presidential Innovation Fellow</strong></p>
+                                <p>Department of Veterans Affairs</p>
+                                <div class="bio-social">
+                                    <a class="symbol" href="http://www.linkedin.com/in/kinlanekin " target="_blank">circlelinkedin</a>
+                                    <a class="symbol" href="https://twitter.com/kinlane" target="_blank">circletwitterbird</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="odd">
+                            <div class="headshot"><img class="john-musser" src="images/john-musser.jpg"/></div>
+                            <div class="bio-info">
+                                <h3>John Musser</h3>
+                                <p><strong>Founder</strong></p>
+                                <p>Programmable Web & API Science</p>
+                                <div class="bio-social">
+                                    <a class="symbol" href="http://www.linkedin.com/in/jmusser" target="_blank">circlelinkedin</a>
+                                    <a class="symbol" href="https://twitter.com/johnmusser" target="_blank">circletwitterbird</a>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- <li>
+                            <div class="headshot"><img src="images/joe-betz.jpg"/></div>
+                            <div class="bio-info">
+                                <h3>Joe Betz</h3>
+                                <p><strong>Staff Engineer</strong></p>
+                                <p>LinkedIn</p>
+                                <div class="bio-social">
+                                    <a class="symbol" href="http://www.linkedin.com/in/josephbetz" target="_blank">circlelinkedin</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="headshot"><img src="images/tom-occhino.jpg"/></div>
+                            <div class="bio-info">
+                                <h3>Tom Occhino</h3>
+                                <p><strong>Software Engineer</strong></p>
+                                <p>Facebook</p>
+                                <div class="bio-social">
+                                    <a class="symbol" href="http://www.linkedin.com/pub/tom-occhino/3/180/247" target="_blank">circlelinkedin</a>
+                                    <a class="symbol" href="https://twitter.com/tomocchino" target="_blank">circletwitterbird</a>
+                                </div>
+                            </div>
+                        </li> -->
+                    </ul>
+                </div>
+            </section>
+        </div>
+        <div class="footer-wrapper">
+            <section class="footer">
+                <div class="signup">
+<iframe name="signup-form" style="display:none" src="https://docs.google.com/a/mulesoft.com/forms/d/1n3XKLpqIU9yg5635jD33LQBT2Jo4xqUsmSGrU-nKmGs/formResponse"></iframe> 
+                    <form action="https://docs.google.com/a/mulesoft.com/forms/d/1n3XKLpqIU9yg5635jD33LQBT2Jo4xqUsmSGrU-nKmGs/formResponse" method="POST" id="ss-form" onsubmit="" target="signup-form">
+                        <label>Subscribe & learn about new RAML projects</label>
+                        <input type="text" name="entry.1586103239" value="" class="ss-q-short valid" placeholder="Email Address" id="entry_1586103239" dir="auto" title="">
+                        <input type="submit" name="submit" value="Subscribe" id="ss-submit">
+                    </form>
+                    <div id="ss-form-response" style="display:none">Thanks for signing up!</div>
+                </div>
+                <div class="footer-nav">
+                    <!-- <ul>
+                        <li>
+                            <a href="licensing.html">Licensing</a>
+                        </li>
+                        <li>
+                            <a href="licensing.html">Another link?</a>
+                        </li>
+                        <li>
+                            <a href="licensing.html">Another link?</a>
+                        </li>
+                    </ul> -->
+                    <p>RAML&trade; is a trademark of MuleSoft, Inc.</p>
+                </div>
+            </section>
+        </div>
+        <script type="text/javascript">
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-44483523-1', 'raml.org');
+            ga('send', 'pageview');
+        </script>
+    </body>
+</html>

@@ -1,0 +1,734 @@
+/* line 17, ../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+/* line 22, ../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1; }
+
+/* line 24, ../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 26, ../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 28, ../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 30, ../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none; }
+  /* line 103, ../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+  q:before, q:after, blockquote:before, blockquote:after {
+    content: "";
+    content: none; }
+
+/* line 32, ../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none; }
+
+/* line 116, ../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block; }
+
+@font-face {
+  font-family: 'Mono Social Icons Font';
+  src: url("../fonts/MonoSocialIconsFont-1.10.eot");
+  src: url("../fonts/MonoSocialIconsFont-1.10.eot?#iefix") format("embedded-opentype"), url("../fonts/MonoSocialIconsFont-1.10.woff") format("woff"), url("../fonts/MonoSocialIconsFont-1.10.ttf") format("truetype"), url("../fonts/MonoSocialIconsFont-1.10.svg#MonoSocialIconsFont") format("svg");
+  src: url("../fonts/MonoSocialIconsFont-1.10.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url("../fonts/Montserrat-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Montserrat Bold';
+  src: url("../fonts/Montserrat-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal; }
+
+/* line 29, ../sass/screen.scss */
+body {
+  -webkit-font-smoothing: antialiased !important;
+  color: #262626;
+  background: #000102; }
+  /* line 33, ../sass/screen.scss */
+  body strong {
+    font-weight: bold; }
+  /* line 36, ../sass/screen.scss */
+  body a {
+    color: #e400ff;
+    text-decoration: none; }
+  /* line 40, ../sass/screen.scss */
+  body ul, body ol {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: normal;
+    list-style: none; }
+  /* line 49, ../sass/screen.scss */
+  body ol {
+    margin: 18px 0 0;
+    list-style: decimal;
+    padding: 0 0 0 20px; }
+    /* line 53, ../sass/screen.scss */
+    body ol li {
+      margin: 9px 0 0; }
+  /* line 57, ../sass/screen.scss */
+  body h1, body h3, body h4 {
+    margin: 0;
+    font-family: "Montserrat Bold", Helvetica, Arial, sans-serif;
+    font-weight: bold; }
+    /* line 61, ../sass/screen.scss */
+    body h1 i, body h3 i, body h4 i {
+      color: #0b9be6; }
+  /* line 65, ../sass/screen.scss */
+  body h1 {
+    font-size: 24px;
+    line-height: 24px; }
+  /* line 69, ../sass/screen.scss */
+  body h2 {
+    font-family: "Montserrat", Helvetica, Arial, sans-serif;
+    font-size: 21px;
+    font-weight: normal;
+    line-height: 26px;
+    text-transform: uppercase; }
+  /* line 76, ../sass/screen.scss */
+  body h4 {
+    padding: 9px 0 0;
+    font-size: 14px;
+    line-height: 14px; }
+  /* line 81, ../sass/screen.scss */
+  body p {
+    margin: 0;
+    padding: 9px 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 21px; }
+  /* line 89, ../sass/screen.scss */
+  body#home .header-wrapper {
+    border-bottom: 1px solid #00446b;
+    box-shadow: 0 18px 30px black; }
+  /* line 94, ../sass/screen.scss */
+  body .header-wrapper {
+    position: fixed;
+    top: 0;
+    z-index: 4;
+    width: 100%;
+    background: #000102;
+    border-bottom: 1px solid #000102; }
+    /* line 101, ../sass/screen.scss */
+    body .header-wrapper header {
+      margin: 0 auto;
+      padding: 20px;
+      width: 914px; }
+      /* line 105, ../sass/screen.scss */
+      body .header-wrapper header nav {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        font-size: 14px; }
+        /* line 109, ../sass/screen.scss */
+        body .header-wrapper header nav li {
+          display: inline-block;
+          width: 150px; }
+          /* line 112, ../sass/screen.scss */
+          body .header-wrapper header nav li a {
+            padding: 10px;
+            font-family: "Montserrat", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 50px;
+            color: #fff;
+            border-bottom: 1px solid #000102; }
+            /* line 119, ../sass/screen.scss */
+            body .header-wrapper header nav li a.active, body .header-wrapper header nav li a:hover {
+              border-bottom: 1px solid #e400ff; }
+          /* line 123, ../sass/screen.scss */
+          body .header-wrapper header nav li.nav-logo {
+            width: auto; }
+            /* line 125, ../sass/screen.scss */
+            body .header-wrapper header nav li.nav-logo a {
+              padding: 0;
+              display: inline-block;
+              text-indent: 100%;
+              overflow: hidden;
+              height: 50px;
+              width: 163px;
+              border-bottom: 1px solid #000102;
+              background: url("../images/logo-glow.png") center no-repeat;
+              /* &:hover {
+                  border-bottom: 1px solid #000102;
+                  background: url('../images/logo-glow.png') center 1px no-repeat;
+              } */ }
+          /* line 140, ../sass/screen.scss */
+          body .header-wrapper header nav li.nav-projects {
+            float: left;
+            text-align: left; }
+          /* line 144, ../sass/screen.scss */
+          body .header-wrapper header nav li.nav-docs {
+            float: left; }
+          /* line 147, ../sass/screen.scss */
+          body .header-wrapper header nav li.nav-about {
+            float: right; }
+          /* line 150, ../sass/screen.scss */
+          body .header-wrapper header nav li.nav-blog {
+            float: right;
+            text-align: right; }
+    /* line 157, ../sass/screen.scss */
+    body .header-wrapper .cta-mini {
+      margin-left: -160px;
+      padding: 10px 10px 10px 70px;
+      display: none;
+      position: fixed;
+      top: 92px;
+      left: 50%;
+      height: 40px;
+      width: 240px;
+      font-size: 18px;
+      line-height: 38px;
+      font-family: "Montserrat", Helvetica, Arial, sans-serif;
+      color: #fff;
+      background-color: #b336a9;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#b336a9), to(#93258a));
+      background-image: -webkit-linear-gradient(top, #b336a9, #93258a);
+      background-image: -moz-linear-gradient(top, #b336a9, #93258a);
+      background-image: -o-linear-gradient(top, #b336a9, #93258a);
+      background-image: linear-gradient(to bottom, #b336a9, #93258a);
+      border-radius: 0 0 3px 3px;
+      box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.75); }
+      /* line 178, ../sass/screen.scss */
+      body .header-wrapper .cta-mini:before {
+        content: "";
+        position: absolute;
+        top: 7px;
+        left: 12px;
+        height: 44px;
+        width: 44px;
+        background: url("../images/github.png") no-repeat; }
+      /* line 187, ../sass/screen.scss */
+      body .header-wrapper .cta-mini:hover {
+        background-color: #8f2b87;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#8f2b87), to(#761e6e));
+        background-image: -webkit-linear-gradient(top, #8f2b87, #761e6e);
+        background-image: -moz-linear-gradient(top, #8f2b87, #761e6e);
+        background-image: -o-linear-gradient(top, #8f2b87, #761e6e);
+        background-image: linear-gradient(to bottom, #8f2b87, #761e6e); }
+  /* line 197, ../sass/screen.scss */
+  body .banner-wrapper {
+    margin-top: 92px;
+    width: 100%;
+    border-bottom: 2px solid #00446b;
+    background: #000109; }
+    /* line 202, ../sass/screen.scss */
+    body .banner-wrapper .banner {
+      margin: 0 auto;
+      padding: 45px 20px;
+      overflow: hidden;
+      width: 914px; }
+      /* line 207, ../sass/screen.scss */
+      body .banner-wrapper .banner .content {
+        float: left;
+        width: 73%; }
+        /* line 210, ../sass/screen.scss */
+        body .banner-wrapper .banner .content h1 {
+          line-height: 20px;
+          color: #0b9be6; }
+        /* line 214, ../sass/screen.scss */
+        body .banner-wrapper .banner .content h2 {
+          margin: 18px 0 0;
+          font-family: Arial, sans-serif;
+          font-size: 14px;
+          line-height: 21px;
+          font-weight: normal;
+          color: #fff;
+          text-transform: inherit; }
+      /* line 224, ../sass/screen.scss */
+      body .banner-wrapper .banner .cta {
+        margin: 43px 0 0;
+        /* remove once video is back in */
+        float: right;
+        width: 23.5%; }
+        /* line 228, ../sass/screen.scss */
+        body .banner-wrapper .banner .cta a {
+          display: block;
+          position: relative;
+          font-family: "Montserrat", Helvetica, Arial, sans-serif;
+          color: #fff;
+          border-radius: 3px; }
+          /* line 234, ../sass/screen.scss */
+          body .banner-wrapper .banner .cta a.cta-github {
+            padding: 10px 10px 10px 70px;
+            font-family: "Montserrat", Helvetica, Arial, sans-serif;
+            font-size: 18px;
+            line-height: 26px;
+            background-color: #b336a9;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#b336a9), to(#93258a));
+            background-image: -webkit-linear-gradient(top, #b336a9, #93258a);
+            background-image: -moz-linear-gradient(top, #b336a9, #93258a);
+            background-image: -o-linear-gradient(top, #b336a9, #93258a);
+            background-image: linear-gradient(to bottom, #b336a9, #93258a); }
+            /* line 245, ../sass/screen.scss */
+            body .banner-wrapper .banner .cta a.cta-github:before {
+              content: "";
+              position: absolute;
+              top: 13px;
+              left: 12px;
+              height: 44px;
+              width: 44px;
+              background: url("../images/github.png") no-repeat; }
+            /* line 254, ../sass/screen.scss */
+            body .banner-wrapper .banner .cta a.cta-github:hover {
+              background-color: #8f2b87;
+              background-image: -webkit-gradient(linear, left top, left bottom, from(#8f2b87), to(#761e6e));
+              background-image: -webkit-linear-gradient(top, #8f2b87, #761e6e);
+              background-image: -moz-linear-gradient(top, #8f2b87, #761e6e);
+              background-image: -o-linear-gradient(top, #8f2b87, #761e6e);
+              background-image: linear-gradient(to bottom, #8f2b87, #761e6e); }
+          /* line 263, ../sass/screen.scss */
+          body .banner-wrapper .banner .cta a.cta-video {
+            margin: 12px 0 0;
+            padding: 12px 10px 12px 70px;
+            font-size: 14px;
+            line-height: 14px;
+            background-color: #2d2d2d;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#2d2d2d), to(#262626));
+            background-image: -webkit-linear-gradient(top, #2d2d2d, #262626);
+            background-image: -moz-linear-gradient(top, #2d2d2d, #262626);
+            background-image: -o-linear-gradient(top, #2d2d2d, #262626);
+            background-image: linear-gradient(to bottom, #2d2d2d, #262626); }
+            /* line 274, ../sass/screen.scss */
+            body .banner-wrapper .banner .cta a.cta-video:before {
+              content: "";
+              position: absolute;
+              top: 9px;
+              left: 19px;
+              height: 20px;
+              width: 33px;
+              background: url("../images/video.png") no-repeat; }
+  /* line 288, ../sass/screen.scss */
+  body .content-wrapper {
+    width: 100%;
+    border-bottom: 2px solid #00446b;
+    background: #020619; }
+    /* line 292, ../sass/screen.scss */
+    body .content-wrapper .code {
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      height: 960px;
+      width: 914px; }
+      /* line 298, ../sass/screen.scss */
+      body .content-wrapper .code .code-highlight {
+        padding: 0 480px 0 67px;
+        position: absolute;
+        left: 0;
+        z-index: 2;
+        width: 340px;
+        color: #020619; }
+        /* line 305, ../sass/screen.scss */
+        body .content-wrapper .code .code-highlight a {
+          color: #020619; }
+        /* line 308, ../sass/screen.scss */
+        body .content-wrapper .code .code-highlight img {
+          display: none; }
+        /* line 311, ../sass/screen.scss */
+        body .content-wrapper .code .code-highlight.inactive {
+          color: #323232;
+          -webkit-transition: all 0.5s ease;
+          -moz-transition: all 0.5s ease;
+          -o-transition: all 0.5s ease;
+          transition: all 0.5s ease; }
+          /* line 317, ../sass/screen.scss */
+          body .content-wrapper .code .code-highlight.inactive a {
+            color: #323232; }
+        /* line 321, ../sass/screen.scss */
+        body .content-wrapper .code .code-highlight.active {
+          color: #fff;
+          -webkit-transition: all 0.5s ease;
+          -moz-transition: all 0.5s ease;
+          -o-transition: all 0.5s ease;
+          transition: all 0.5s ease; }
+          /* line 327, ../sass/screen.scss */
+          body .content-wrapper .code .code-highlight.active a {
+            color: #e400ff; }
+          /* line 330, ../sass/screen.scss */
+          body .content-wrapper .code .code-highlight.active img {
+            display: block; }
+        /* line 334, ../sass/screen.scss */
+        body .content-wrapper .code .code-highlight.code-1 {
+          padding: 25px 0 0 67px;
+          top: 42px;
+          height: 77px; }
+          /* line 338, ../sass/screen.scss */
+          body .content-wrapper .code .code-highlight.code-1 img {
+            top: 5px;
+            left: 434px; }
+            /* line 341, ../sass/screen.scss */
+            body .content-wrapper .code .code-highlight.code-1 img.icon {
+              top: 25px;
+              left: 22px; }
+        /* line 347, ../sass/screen.scss */
+        body .content-wrapper .code .code-highlight.code-2 {
+          padding: 34px 0 0 67px;
+          top: 145px;
+          height: 84px; }
+          /* line 351, ../sass/screen.scss */
+          body .content-wrapper .code .code-highlight.code-2 img {
+            top: 1px;
+            left: 434px; }
+            /* line 354, ../sass/screen.scss */
+            body .content-wrapper .code .code-highlight.code-2 img.icon {
+              top: 34px;
+              left: 21px; }
+        /* line 360, ../sass/screen.scss */
+        body .content-wrapper .code .code-highlight.code-3 {
+          padding: 26px 0 0 67px;
+          top: 255px;
+          height: 46px;
+          z-index: 3; }
+          /* line 365, ../sass/screen.scss */
+          body .content-wrapper .code .code-highlight.code-3 img {
+            top: 8px;
+            left: 435px; }
+            /* line 368, ../sass/screen.scss */
+            body .content-wrapper .code .code-highlight.code-3 img.icon {
+              top: 30px;
+              left: 21px; }
+        /* line 374, ../sass/screen.scss */
+        body .content-wrapper .code .code-highlight.code-4 {
+          padding: 54px 0 0 67px;
+          top: 284px;
+          height: 139px; }
+          /* line 378, ../sass/screen.scss */
+          body .content-wrapper .code .code-highlight.code-4 img {
+            top: -2px;
+            left: 435px; }
+            /* line 381, ../sass/screen.scss */
+            body .content-wrapper .code .code-highlight.code-4 img.icon {
+              top: 85px;
+              left: 22px; }
+        /* line 387, ../sass/screen.scss */
+        body .content-wrapper .code .code-highlight.code-5 {
+          padding: 92px 0 0 67px;
+          top: 463px;
+          height: 168px; }
+          /* line 391, ../sass/screen.scss */
+          body .content-wrapper .code .code-highlight.code-5 img {
+            left: 434px; }
+            /* line 393, ../sass/screen.scss */
+            body .content-wrapper .code .code-highlight.code-5 img.icon {
+              top: 92px;
+              left: 22px; }
+        /* line 399, ../sass/screen.scss */
+        body .content-wrapper .code .code-highlight.code-6 {
+          top: 728px;
+          height: 75px; }
+          /* line 402, ../sass/screen.scss */
+          body .content-wrapper .code .code-highlight.code-6 img {
+            top: 18px;
+            left: 434px; }
+            /* line 405, ../sass/screen.scss */
+            body .content-wrapper .code .code-highlight.code-6 img.icon {
+              top: 30px;
+              left: 22px; }
+      /* line 412, ../sass/screen.scss */
+      body .content-wrapper .code img {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 16px;
+        z-index: 1;
+        background: #020619; }
+  /* line 422, ../sass/screen.scss */
+  body .content-wrapper-pages {
+    margin-top: 92px;
+    width: 100%;
+    background: #fff; }
+    /* line 426, ../sass/screen.scss */
+    body .content-wrapper-pages section {
+      margin: 0 auto;
+      padding: 0 20px 40px;
+      overflow: hidden;
+      width: 914px; }
+      /* line 431, ../sass/screen.scss */
+      body .content-wrapper-pages section h1 {
+        padding: 40px 0 9px;
+        font-family: "Montserrat", Helvetica, Arial, sans-serif;
+        font-weight: normal; }
+      /* line 436, ../sass/screen.scss */
+      body .content-wrapper-pages section h2 {
+        padding: 40px 0 9px; }
+      /* line 439, ../sass/screen.scss */
+      body .content-wrapper-pages section p {
+        word-wrap: break-word; }
+      /* line 442, ../sass/screen.scss */
+      body .content-wrapper-pages section a {
+        text-decoration: underline; }
+      /* line 445, ../sass/screen.scss */
+      body .content-wrapper-pages section .soon {
+        padding: 140px 0 100px;
+        text-align: center;
+        font-family: "Montserrat Bold", Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        color: #b2b2b1; }
+      /* line 452, ../sass/screen.scss */
+      body .content-wrapper-pages section .tutorial-intro {
+        margin: 9px 0 0;
+        padding: 11px 20px;
+        background: #f6f6f6; }
+      /* line 457, ../sass/screen.scss */
+      body .content-wrapper-pages section pre {
+        margin: 9px 0;
+        white-space: pre-line;
+        font-family: "Montserrat", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        background: #020619; }
+        /* line 463, ../sass/screen.scss */
+        body .content-wrapper-pages section pre code {
+          padding: 15px 20px 0px;
+          display: block;
+          white-space: pre-wrap;
+          font-family: "Montserrat", Helvetica, Arial, sans-serif; }
+          /* line 468, ../sass/screen.scss */
+          body .content-wrapper-pages section pre code .l1 {
+            color: #e400ff; }
+          /* line 471, ../sass/screen.scss */
+          body .content-wrapper-pages section pre code .l2 {
+            color: #567d92; }
+          /* line 474, ../sass/screen.scss */
+          body .content-wrapper-pages section pre code .l3 {
+            color: #0b9be6; }
+          /* line 477, ../sass/screen.scss */
+          body .content-wrapper-pages section pre code .l4 {
+            color: #8fd1f4; }
+      /* line 482, ../sass/screen.scss */
+      body .content-wrapper-pages section aside {
+        position: fixed;
+        top: 92px;
+        float: left;
+        width: 230px; }
+        /* line 488, ../sass/screen.scss */
+        body .content-wrapper-pages section aside ul li {
+          padding: 9px 0 0; }
+          /* line 490, ../sass/screen.scss */
+          body .content-wrapper-pages section aside ul li a {
+            position: relative;
+            font-family: Arial, sans-serif;
+            color: #b2b2b1;
+            text-decoration: none; }
+            /* line 495, ../sass/screen.scss */
+            body .content-wrapper-pages section aside ul li a:hover {
+              color: #262626; }
+            /* line 498, ../sass/screen.scss */
+            body .content-wrapper-pages section aside ul li a.active {
+              color: #262626; }
+              /* line 500, ../sass/screen.scss */
+              body .content-wrapper-pages section aside ul li a.active:before {
+                content: "";
+                position: absolute;
+                top: 3px;
+                left: -14px;
+                height: 10px;
+                width: 5px;
+                background: url("../images/carrot.png") no-repeat; }
+        /* line 512, ../sass/screen.scss */
+        body .content-wrapper-pages section aside ul.nav-tutorials {
+          margin: 20px 0 0;
+          padding: 11px 0 0;
+          border-top: 1px solid #f6f6f6; }
+          /* line 516, ../sass/screen.scss */
+          body .content-wrapper-pages section aside ul.nav-tutorials a {
+            font-family: "Montserrat", Helvetica, Arial, sans-serif;
+            color: #262626; }
+      /* line 523, ../sass/screen.scss */
+      body .content-wrapper-pages section .content {
+        float: right;
+        width: 69%; }
+      /* line 527, ../sass/screen.scss */
+      body .content-wrapper-pages section .bios {
+        overflow: hidden; }
+        /* line 529, ../sass/screen.scss */
+        body .content-wrapper-pages section .bios li {
+          margin: 30px 0 0;
+          float: left;
+          width: 300px; }
+          /* line 533, ../sass/screen.scss */
+          body .content-wrapper-pages section .bios li.odd {
+            margin: 30px 20px 0 0; }
+          /* line 536, ../sass/screen.scss */
+          body .content-wrapper-pages section .bios li .headshot {
+            margin: 0 18px 0 0;
+            float: left;
+            position: relative;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 4px solid #0b9be6;
+            height: 100px;
+            width: 100px;
+            background: #f6f6f6; }
+            /* line 546, ../sass/screen.scss */
+            body .content-wrapper-pages section .bios li .headshot img {
+              position: absolute;
+              top: 0;
+              left: 0;
+              max-height: 100px;
+              min-width: 100px; }
+              /* line 552, ../sass/screen.scss */
+              body .content-wrapper-pages section .bios li .headshot img.john-musser {
+                left: -8px; }
+              /* line 555, ../sass/screen.scss */
+              body .content-wrapper-pages section .bios li .headshot img.ivan-lazarov {
+                left: -35px; }
+          /* line 560, ../sass/screen.scss */
+          body .content-wrapper-pages section .bios li .bio-info {
+            padding: 5px 0 0;
+            float: left;
+            width: 170px; }
+            /* line 564, ../sass/screen.scss */
+            body .content-wrapper-pages section .bios li .bio-info h3 {
+              margin: 0 0 6px;
+              font-size: 21px;
+              line-height: 21px;
+              color: #0b9be6; }
+            /* line 570, ../sass/screen.scss */
+            body .content-wrapper-pages section .bios li .bio-info p {
+              padding: 3px 0 0;
+              line-height: 18px; }
+            /* line 574, ../sass/screen.scss */
+            body .content-wrapper-pages section .bios li .bio-info .bio-social {
+              margin: 9px 0 0; }
+              /* line 576, ../sass/screen.scss */
+              body .content-wrapper-pages section .bios li .bio-info .bio-social .symbol {
+                margin: 0 5px 0 0;
+                font-size: 24px;
+                color: #b2b2b1;
+                text-decoration: none; }
+                /* line 581, ../sass/screen.scss */
+                body .content-wrapper-pages section .bios li .bio-info .bio-social .symbol:hover {
+                  color: #262626; }
+              /* line 585, ../sass/screen.scss */
+              body .content-wrapper-pages section .bios li .bio-info .bio-social .symbol, body .content-wrapper-pages section .bios li .bio-info .bio-social a.symbol:before {
+                font-family: 'Mono Social Icons Font';
+                -webkit-text-rendering: optimizeLegibility;
+                -moz-text-rendering: optimizeLegibility;
+                -ms-text-rendering: optimizeLegibility;
+                -o-text-rendering: optimizeLegibility;
+                text-rendering: optimizeLegibility;
+                -webkit-font-smoothing: antialiased;
+                -moz-font-smoothing: antialiased;
+                -ms-font-smoothing: antialiased;
+                -o-font-smoothing: antialiased;
+                font-smoothing: antialiased; }
+              /* line 599, ../sass/screen.scss */
+              body .content-wrapper-pages section .bios li .bio-info .bio-social a.symbol:before {
+                content: attr(title); }
+  /* line 608, ../sass/screen.scss */
+  body .footer-wrapper {
+    width: 100%;
+    background: #000102; }
+    /* line 611, ../sass/screen.scss */
+    body .footer-wrapper .footer {
+      margin: 0 auto;
+      padding: 40px 20px;
+      overflow: hidden;
+      width: 914px; }
+      /* line 616, ../sass/screen.scss */
+      body .footer-wrapper .footer .footer-nav {
+        text-align: right;
+        /* hide when we have footer links */
+        /* float: left; unhide when we have footer links */ }
+        /* line 619, ../sass/screen.scss */
+        body .footer-wrapper .footer .footer-nav ul {
+          overflow: hidden; }
+          /* line 621, ../sass/screen.scss */
+          body .footer-wrapper .footer .footer-nav ul li {
+            margin: 0 18px 0 0;
+            float: left; }
+            /* line 624, ../sass/screen.scss */
+            body .footer-wrapper .footer .footer-nav ul li a {
+              font-family: "Montserrat", Helvetica, Arial, sans-serif;
+              color: #fff; }
+        /* line 630, ../sass/screen.scss */
+        body .footer-wrapper .footer .footer-nav p {
+          padding: 43px 0 0;
+          display: block;
+          font-size: 12px;
+          color: rgba(255, 255, 255, 0.5); }
+      /* line 637, ../sass/screen.scss */
+      body .footer-wrapper .footer .signup {
+        text-align: center;
+        /* hide when we have footer links */
+        /* float: right; unhide when we have footer links */
+        font-family: "Montserrat", Helvetica, Arial, sans-serif;
+        font-size: 14px; }
+        /* line 642, ../sass/screen.scss */
+        body .footer-wrapper .footer .signup label {
+          margin: 0 0 20px;
+          display: block;
+          font-family: "Montserrat Bold", Helvetica, Arial, sans-serif;
+          font-size: 21px;
+          font-weight: bold;
+          line-height: 21px;
+          color: #0b9be6; }
+        /* line 651, ../sass/screen.scss */
+        body .footer-wrapper .footer .signup input {
+          padding: 10px;
+          display: inline-block;
+          border: none; }
+          /* line 655, ../sass/screen.scss */
+          body .footer-wrapper .footer .signup input[type=text] {
+            width: 365px;
+            /* hide when we have footer links */
+            /* width: 265px; unhide when we have footer links */
+            border-radius: 3px 0 0 3px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.45); }
+          /* line 661, ../sass/screen.scss */
+          body .footer-wrapper .footer .signup input[type=submit] {
+            color: #fff;
+            border-radius: 0 3px 3px 0;
+            background-color: #b336a9;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#b336a9), to(#93258a));
+            background-image: -webkit-linear-gradient(top, #b336a9, #93258a);
+            background-image: -moz-linear-gradient(top, #b336a9, #93258a);
+            background-image: -o-linear-gradient(top, #b336a9, #93258a);
+            background-image: linear-gradient(to bottom, #b336a9, #93258a); }
+            /* line 670, ../sass/screen.scss */
+            body .footer-wrapper .footer .signup input[type=submit]:hover {
+              background-color: #8f2b87;
+              background-image: -webkit-gradient(linear, left top, left bottom, from(#8f2b87), to(#761e6e));
+              background-image: -webkit-linear-gradient(top, #8f2b87, #761e6e);
+              background-image: -moz-linear-gradient(top, #8f2b87, #761e6e);
+              background-image: -o-linear-gradient(top, #8f2b87, #761e6e);
+              background-image: linear-gradient(to bottom, #8f2b87, #761e6e); }
+        /* line 680, ../sass/screen.scss */
+        body .footer-wrapper .footer .signup #ss-form-response {
+          padding: 10px;
+          color: #6fea05; }
