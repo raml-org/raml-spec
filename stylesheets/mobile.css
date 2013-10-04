@@ -1,0 +1,110 @@
+@media all and (max-width: 970px) and (min-width: 640px) {
+    body .header-wrapper header {
+        display: none;
+    }
+    body .header-wrapper header.header-condensed {
+        display: block;
+    }
+    body .banner-wrapper {
+        margin-top: 82px;
+    }
+    body .banner-wrapper .content {
+        width: auto;
+    }
+    body .banner-wrapper .content .cta {
+        margin: 20px 0 0;
+    }
+    body .banner-wrapper .content .banner h2 {
+        font-size: 12px;
+        line-height: 17px;
+    }
+    body .content-wrapper .content {
+        width: auto;
+    }
+    body .content-wrapper .content pre {
+        float: none;
+        width: auto;
+    }
+    body .content-wrapper-pages section {
+        width: auto;
+    }
+    .callouts, .brackets {
+        display: none;
+    }
+    body .footer-wrapper .footer {
+        width: auto;
+    }
+}
+
+@media all and (max-width: 970px) and (min-width: 800px) {
+    body .banner-wrapper .content .banner {
+        width: 66%;
+    }
+}
+
+@media all and (max-width: 800px) and (min-width: 640px) {
+    body .banner-wrapper .content .cta {
+        margin: 28px 0 0;
+    }
+    body .banner-wrapper .content .banner {
+        width: 57%;
+    }
+}
+
+@media all and (max-width: 640px) and (min-width: 240px) {
+    .callouts, .brackets {
+        display: none;
+    }
+    body .header-wrapper header {
+        display: none;
+    }
+    body .header-wrapper header.header-condensed {
+        display: none;
+    }
+    body .header-wrapper header.header-mobile {
+        display: block;
+    }
+    body .banner-wrapper {
+        margin-top: 155px;
+    }
+    body .banner-wrapper .content {
+        width: auto;
+    }
+    body .banner-wrapper .content .banner {
+        float: none;
+        text-align: center;
+        width: auto;
+    }
+    body .banner-wrapper .content .banner h2 {
+        font-size: 12px;
+        line-height: 18px;
+    }
+    body .banner-wrapper .content .banner .cta-github {
+        margin: 40px auto;
+    }
+    body .banner-wrapper .content .cta {
+        margin: 0 auto;
+        float: none;
+    }
+    body .content-wrapper .content {
+        width: auto;
+    }
+    body .content-wrapper .content pre {
+        margin: 0 auto;
+        float: none;
+        width: 345px;
+    }
+    body .content-wrapper .content pre code {
+        font-size: 12px;
+        line-height: 18px;
+    }
+    body .footer-wrapper .footer {
+        width: auto;
+    }
+    body .footer-wrapper .footer .signup input[type=text] {
+        width: auto;
+    }
+    body .footer-wrapper .footer .footer-nav a {
+        float: left;
+    }
+}

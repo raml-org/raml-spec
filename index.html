@@ -6,6 +6,7 @@
         <title>RAML - RESTful API modeling language</title>
         <link rel="stylesheet" href="stylesheets/normalize.css" />
         <link href="stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link href="stylesheets/mobile.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="javascripts/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
         <script type="text/javascript" src="javascripts/source/jquery.fancybox.pack.js?v=2.1.5"></script>
@@ -13,11 +14,11 @@
         <script src="javascripts/jquery.scrollTo.min.js" ></script>
         <script src="javascripts/waypoints.min.js" ></script>
         <script src="javascripts/custom.js" ></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$(".cta-video").fancybox();
-	});
-</script>
+        <script type="text/javascript">
+        	$(document).ready(function() {
+        		$(".cta-video").fancybox();
+        	});
+        </script>
     </head>
     <body id="home">
         <div class="header-wrapper">
@@ -42,31 +43,137 @@
                     </ul>
                 </nav>
             </header>
-            <a class="cta-mini" href="https://github.com/raml-org/raml-spec">View the spec on GitHub</a>
+            <header class="header-condensed">
+                <nav>
+                    <ul>
+                        <li class="nav-projects">
+                            <a href="projects.html">Projects</a>
+                        </li>
+                        <li class="nav-docs">
+                            <a href="docs.html">Documentation</a>
+                        </li>
+                        <li class="nav-logo">
+                            <a href="index.html">RAML</a>
+                        </li>
+                        <li class="nav-blog">
+                            <a href="http://open-raml.blogspot.com">RAML Blog</a>
+                        </li>
+                        <li class="nav-about">
+                            <a href="about.html">About</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <header class="header-mobile">
+                <a class="nav-logo" href="index.html">RAML</a>
+                <nav>
+                    <ul>
+                        <li class="nav-projects">
+                            <a href="projects.html">Projects</a>
+                        </li>
+                        <li class="nav-docs">
+                            <a href="docs.html">Documentation</a>
+                        </li>
+                        <li class="nav-blog">
+                            <a href="http://open-raml.blogspot.com">RAML Blog</a>
+                        </li>
+                        <li class="nav-about">
+                            <a href="about.html">About</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
         </div>
         <div class="banner-wrapper">
-            <section class="banner">
-                <div class="content">
+            <div class="content">
+                <section class="banner">
                     <h1>RESTful API Modeling Language</h1>
-                    <h2>RESTful API Modeling Language (RAML) is a simple and succinct way of describing practically-RESTful APIs. It encourages reuse, enables discovery and pattern-sharing, and aims for merit-based emergence of best practices. The goal is to help our current API ecosystem and solve immediate problems and then gently encourage ever-better API patterns. RAML is built on broadly-used standards such as YAML and JSON and is a non-proprietary, vendor-neutral open spec.</h2>
+                    <h2>RESTful API Modeling Language (RAML) is a simple and succinct way of describing practically-RESTful APIs. It encourages reuse, enables discovery and pattern-sharing, and aims for merit-based emergence of best practices. The goal is to help our current API ecosystem by solving immediate problems and then encourage ever-better API patterns. RAML is built on broadly-used standards such as YAML and JSON and is a non-proprietary, vendor-neutral open spec.</h2>
                     <a class="cta-github symbol" href="https://github.com/raml-org/raml-spec" title="circlegithubalt">View the spec on GitHub</a>
-                </div>
+                </section>
                 <div class="cta">
                     <a class="cta-video fancybox.iframe" href="http://www.youtube.com/embed/5o_nExedezw?autoplay=1"></a>
                 </div>
-            </section>
+            </div>
         </div>
         <div class="content-wrapper">
-            <section class="code">
-                <p class="code-highlight code-1">For every API, start by defining which version of RAML you are using, and then document <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md" target="_blank">basic characteristics</a> of your API - the title, version, and baseURI.<span><img class="code-1" src="images/code-1.png"/></span><img class="code-1 icon" src="images/code-1-icon.png"/></p>
-                <p class="code-highlight code-2">RAML allows you to define patterns using <a href="https://github.com/raml-org/raml-spec/blob/master/07_resource_types_and_traits.md" target="_blank">traits</a>, <a href="https://github.com/raml-org/raml-spec/blob/master/07_resource_types_and_traits.md" target="_blank">resourceTypes</a>, and <a href="https://github.com/raml-org/raml-spec/blob/master/08_security.md" target="_blank">securitySchemes</a>, and then use them within a API to minimize repetition.<span><img class="code-2" src="images/code-2.png"/></span><img class="code-2 icon" src="images/code-2-icon.png"/></p>
-                <p class="code-highlight code-3">Externalize those patterns, store them on the web, and import them with an <a href="https://github.com/raml-org/raml-spec/blob/master/02_includes.md" target="_blank">!include</a>.<span><img class="code-3" src="images/code-3.png"/></span><img class="code-3 icon" src="images/code-3-icon.png"/></p>
-                <p class="code-highlight code-4">Easily define <a href="https://github.com/raml-org/raml-spec/blob/master/05_resources_and_methods.md" target="_blank">resources and methods</a>, then add as much detail as you want. Apply traits and other patterns, or add <a href="https://github.com/raml-org/raml-spec/blob/master/03_named_parameters.md" target="_blank">parameters</a> and other details specific to each call.<span><img class="code-4" src="images/code-4.png"/></span><img class="code-4 icon" src="images/code-4-icon.png"/></p>
-                <p class="code-highlight code-5">Describe expected <a href="https://github.com/raml-org/raml-spec/blob/master/06_schemas_and_responses.md" target="_blank">responses</a> for multiple mime-types and specify <a href="https://github.com/raml-org/raml-spec/blob/master/06_schemas_and_responses.md" target="_blank">schemas and examples</a> for each one. Schemas and examples can be defined in-line, or externalized with !include.<span><img class="code-5" src="images/code-5.png"/></span><img class="code-5 icon" src="images/code-5-icon.png"/></p>
-                <p class="code-highlight code-6">Write human-readable, markdown-formatted descriptions throughout your RAML spec, or include entire <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md#user-documentation" target="_blank">markdown documentation</a> sections at the root.<span><img class="code-6" src="images/code-6.png"/></span><img class="code-6 icon" src="images/code-6-icon.png"/></p>
-                <img class="code-showall" src="images/code-showall.png"/>
-                <img class="code-inactive" src="images/code-inactive.png"/>
-            </section>
+            <div class="content">
+                <section class="callouts">
+                    <p class="callout1">For every API, start by defining which version of RAML you are using, and then document <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md" target="_blank">basic characteristics</a> of your API - the title, version, and baseURI.</p>
+                    <p class="callout2">RAML allows you to define patterns using <a href="https://github.com/raml-org/raml-spec/blob/master/07_resource_types_and_traits.md" target="_blank">traits</a>, <a href="https://github.com/raml-org/raml-spec/blob/master/07_resource_types_and_traits.md" target="_blank">resourceTypes</a>, and <a href="https://github.com/raml-org/raml-spec/blob/master/08_security.md" target="_blank">securitySchemes</a>, and then use them within a API to minimize repetition.</p>
+                    <p class="callout3">Externalize those patterns, store them on the web, and import them with an <a href="https://github.com/raml-org/raml-spec/blob/master/02_includes.md" target="_blank">!include</a>.</p>
+                    <p class="callout4">Easily define <a href="https://github.com/raml-org/raml-spec/blob/master/05_resources_and_methods.md" target="_blank">resources and methods</a>, then add as much detail as you want. Apply traits and other patterns, or add <a href="https://github.com/raml-org/raml-spec/blob/master/03_named_parameters.md" target="_blank">parameters</a> and other details specific to each call.</p>
+                    <p class="callout5">Describe expected <a href="https://github.com/raml-org/raml-spec/blob/master/06_schemas_and_responses.md" target="_blank">responses</a> for multiple mime-types and specify <a href="https://github.com/raml-org/raml-spec/blob/master/06_schemas_and_responses.md" target="_blank">schemas and examples</a> for each one. Schemas and examples can be defined in-line, or externalized with !include.</p>
+                    <p class="callout6">Write human-readable, markdown-formatted descriptions throughout your RAML spec, or include entire <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md#user-documentation" target="_blank">markdown documentation</a> sections at the root.</p>
+                </section>
+                <section class="brackets">
+                    <div class="bracket bracket1">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                    <div class="bracket bracket2">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                    <div class="bracket bracket3">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                    <div class="bracket bracket4">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                    <div class="bracket bracket5">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                    <div class="bracket bracket6">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                </section>
+                <pre>
+                    <code>
+<span class="ln">1  </span><span class="l1">#%RAML 0.8</span>
+<span class="ln">2  </span><span class="l5">–––</span>
+<span class="ln">3  </span><span class="def">title:</span> <span class="val">World Music API</span>
+<span class="ln">4  </span><span class="def">baseUri:</span> <span class="val">http://example.api.com/{version}</span>
+<span class="ln">5  </span><span class="def">version:</span> <span class="val">v1</span>
+<span class="ln">6  </span><span class="l2">traits:</span>
+<span class="ln">7  </span><span class="l22">  - paged:</span>
+<span class="ln">8  </span><span class="l22">      queryParameters:</span>
+<span class="ln">9  </span><span class="l22">        pages:</span>
+<span class="ln">10  </span><span class="l22">          description:</span> <span class="val">The number of pages to return</span>
+<span class="ln">11  </span><span class="l22">          type:</span> <span class="val">number</span>
+<span class="ln">12  </span><span class="l22">  - secured:</span> <span class="val">!include http://raml-example.com/secured.yml</span>
+<span class="ln">13  </span><span class="l3">/songs:</span>
+<span class="ln">14  </span><span class="def">  is:</span> <span class="val">[ paged, secured ]</span>
+<span class="ln">15  </span><span class="l4">  get:</span>
+<span class="ln">16  </span><span class="l5">    queryParameters:</span>
+<span class="ln">17  </span><span class="l5">      genre:</span>
+<span class="ln">18  </span><span class="l5">        description:</span> <span class="val">filter the songs by genre</span>
+<span class="ln">19  </span><span class="l4">  post:</span>
+<span class="ln">20  </span><span class="l3">  /{songId}:</span>
+<span class="ln">21  </span><span class="l4">    get:</span>
+<span class="ln">22  </span><span class="l5">      body:</span>
+<span class="ln">23  </span><span class="l5">        application/json:</span>
+<span class="ln">24  </span><span class="l5">          schema:</span> <span class="l1">|</span>
+<span class="ln">25  </span><span class="l1">            { "$schema": "http://json-schema.org/schema",</span>
+<span class="ln">26  </span><span class="l1">              "type": "object",</span>
+<span class="ln">27  </span><span class="l1">              "description": "The canonical song representation",</span>
+<span class="ln">28  </span><span class="l1">              "properties": {</span>
+<span class="ln">29  </span><span class="l1">                "title":  { "type": "string" },</span>
+<span class="ln">30  </span><span class="l1">                "artist": { "type": "string" }</span>
+<span class="ln">31  </span><span class="l1">              }</span>
+<span class="ln">32  </span><span class="l1">              "required": [ "title", "artist" ]</span>
+<span class="ln">33  </span><span class="l1">            }</span>
+<span class="ln">34  </span><span class="l5">        application/xml:</span>
+<span class="ln">35  </span><span class="l4">    delete:</span>
+<span class="ln">36  </span><span class="l5">      description: |</span>
+<span class="ln">37  </span><span class="val">        This method will <span class="u">*delete*</span> an <span class="def">**individual song**</span></span>
+                    </code>
+                </pre>
+            </div>
         </div>
         <div class="footer-wrapper">
             <section class="footer">
@@ -80,17 +187,7 @@
                     <div id="ss-form-response" style="display:none">Thanks for signing up!</div>
                 </div>
                 <div class="footer-nav">
-                    <!-- <ul>
-                        <li>
-                            <a href="licensing.html">Licensing</a>
-                        </li>
-                        <li>
-                            <a href="licensing.html">Another link?</a>
-                        </li>
-                        <li>
-                            <a href="licensing.html">Another link?</a>
-                        </li>
-                    </ul> -->
+                    <a href="mailto:theramlspec@gmail.com">Contact</a>
                     <p>RAML&trade; is a trademark of MuleSoft, Inc.</p>
                 </div>
             </section>
