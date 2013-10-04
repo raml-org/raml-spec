@@ -6,10 +6,18 @@
         <title>RAML - RESTful API modeling language</title>
         <link rel="stylesheet" href="stylesheets/normalize.css" />
         <link href="stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="javascripts/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+        <script type="text/javascript" src="javascripts/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+        <script type="text/javascript" src="javascripts/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
         <script src="javascripts/jquery.scrollTo.min.js" ></script>
         <script src="javascripts/waypoints.min.js" ></script>
         <script src="javascripts/custom.js" ></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".cta-video").fancybox();
+	});
+</script>
     </head>
     <body id="home">
         <div class="header-wrapper">
@@ -41,21 +49,21 @@
                 <div class="content">
                     <h1>RESTful API Modeling Language</h1>
                     <h2>RESTful API Modeling Language (RAML) is a simple and succinct way of describing practically-RESTful APIs. It encourages reuse, enables discovery and pattern-sharing, and aims for merit-based emergence of best practices. The goal is to help our current API ecosystem and solve immediate problems and then gently encourage ever-better API patterns. RAML is built on broadly-used standards such as YAML and JSON and is a non-proprietary, vendor-neutral open spec.</h2>
+                    <a class="cta-github symbol" href="https://github.com/raml-org/raml-spec" title="circlegithubalt">View the spec on GitHub</a>
                 </div>
                 <div class="cta">
-                    <a class="cta-github" href="https://github.com/raml-org/raml-spec">View the spec on GitHub</a>
-                    <!-- <a class="cta-video" href="#">Watch the video</a> -->
+                    <a class="cta-video fancybox.iframe" href="http://www.youtube.com/embed/5o_nExedezw?autoplay=1"></a>
                 </div>
             </section>
         </div>
         <div class="content-wrapper">
             <section class="code">
-                <p class="code-highlight code-1">For every API, start by defining which version of RAML you are using, and then document <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md" target="_blank">basic characteristics</a> of your API - the title, version, and baseURI.<img class="code-1" src="images/code-1.png"/><img class="code-1 icon" src="images/code-1-icon.png"/></p>
-                <p class="code-highlight code-2">RAML allows you to define patterns using <a href="https://github.com/raml-org/raml-spec/blob/master/07_resource_types_and_traits.md" target="_blank">traits</a>, <a href="https://github.com/raml-org/raml-spec/blob/master/07_resource_types_and_traits.md" target="_blank">resourceTypes</a>, and <a href="https://github.com/raml-org/raml-spec/blob/master/08_security.md" target="_blank">securitySchemes</a>, and then use them within a API to minimize repetition.<img class="code-2" src="images/code-2.png"/><img class="code-2 icon" src="images/code-2-icon.png"/></p>
-                <p class="code-highlight code-3">Externalize those patterns, store them on the web, and import them with an <a href="https://github.com/raml-org/raml-spec/blob/master/02_includes.md" target="_blank">!include</a>.<img class="code-3" src="images/code-3.png"/><img class="code-3 icon" src="images/code-3-icon.png"/></p>
-                <p class="code-highlight code-4">Easily define <a href="https://github.com/raml-org/raml-spec/blob/master/05_resources_and_methods.md" target="_blank">resources and methods</a>, then add as much detail as you want. Apply traits and other patterns, or add <a href="https://github.com/raml-org/raml-spec/blob/master/03_named_parameters.md" target="_blank">parameters</a> and other details specific to each call.<img class="code-4" src="images/code-4.png"/><img class="code-4 icon" src="images/code-4-icon.png"/></p>
-                <p class="code-highlight code-5">Describe expected <a href="https://github.com/raml-org/raml-spec/blob/master/06_schemas_and_responses.md" target="_blank">responses</a> for multiple mime-types and specify <a href="https://github.com/raml-org/raml-spec/blob/master/06_schemas_and_responses.md" target="_blank">schemas and examples</a> for each one. Schemas and examples can be defined in-line, or externalized with !include.<img class="code-5" src="images/code-5.png"/><img class="code-5 icon" src="images/code-5-icon.png"/></p>
-                <p class="code-highlight code-6">Write human-readable, markdown-formatted descriptions throughout your RAML spec, or include entire <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md#user-documentation" target="_blank">markdown documentation</a> sections at the root.<img class="code-6" src="images/code-6.png"/><img class="code-6 icon" src="images/code-6-icon.png"/></p>
+                <p class="code-highlight code-1">For every API, start by defining which version of RAML you are using, and then document <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md" target="_blank">basic characteristics</a> of your API - the title, version, and baseURI.<span><img class="code-1" src="images/code-1.png"/></span><img class="code-1 icon" src="images/code-1-icon.png"/></p>
+                <p class="code-highlight code-2">RAML allows you to define patterns using <a href="https://github.com/raml-org/raml-spec/blob/master/07_resource_types_and_traits.md" target="_blank">traits</a>, <a href="https://github.com/raml-org/raml-spec/blob/master/07_resource_types_and_traits.md" target="_blank">resourceTypes</a>, and <a href="https://github.com/raml-org/raml-spec/blob/master/08_security.md" target="_blank">securitySchemes</a>, and then use them within a API to minimize repetition.<span><img class="code-2" src="images/code-2.png"/></span><img class="code-2 icon" src="images/code-2-icon.png"/></p>
+                <p class="code-highlight code-3">Externalize those patterns, store them on the web, and import them with an <a href="https://github.com/raml-org/raml-spec/blob/master/02_includes.md" target="_blank">!include</a>.<span><img class="code-3" src="images/code-3.png"/></span><img class="code-3 icon" src="images/code-3-icon.png"/></p>
+                <p class="code-highlight code-4">Easily define <a href="https://github.com/raml-org/raml-spec/blob/master/05_resources_and_methods.md" target="_blank">resources and methods</a>, then add as much detail as you want. Apply traits and other patterns, or add <a href="https://github.com/raml-org/raml-spec/blob/master/03_named_parameters.md" target="_blank">parameters</a> and other details specific to each call.<span><img class="code-4" src="images/code-4.png"/></span><img class="code-4 icon" src="images/code-4-icon.png"/></p>
+                <p class="code-highlight code-5">Describe expected <a href="https://github.com/raml-org/raml-spec/blob/master/06_schemas_and_responses.md" target="_blank">responses</a> for multiple mime-types and specify <a href="https://github.com/raml-org/raml-spec/blob/master/06_schemas_and_responses.md" target="_blank">schemas and examples</a> for each one. Schemas and examples can be defined in-line, or externalized with !include.<span><img class="code-5" src="images/code-5.png"/></span><img class="code-5 icon" src="images/code-5-icon.png"/></p>
+                <p class="code-highlight code-6">Write human-readable, markdown-formatted descriptions throughout your RAML spec, or include entire <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md#user-documentation" target="_blank">markdown documentation</a> sections at the root.<span><img class="code-6" src="images/code-6.png"/></span><img class="code-6 icon" src="images/code-6-icon.png"/></p>
                 <img class="code-showall" src="images/code-showall.png"/>
                 <img class="code-inactive" src="images/code-inactive.png"/>
             </section>

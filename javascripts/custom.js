@@ -2,12 +2,12 @@ $(document).ready(function() {
     $(window).scroll(function() {
         var scrollVal = $(this).scrollTop();
         if (scrollVal > 220) {
-        $('.cta-mini').fadeIn('fast');
+        /* $('.cta-mini').fadeIn('fast'); */
             /* $('.banner-wrapper').css({'position': 'fixed','top': '-1px','z-index': '3'});
             $('.content-wrapper').css({'margin-top': '216px'});
             $('.content-wrapper-pages aside').css({'position': 'fixed','top': '0'}); */
         } else {
-            $('.cta-mini').fadeOut('fast');
+            /* $('.cta-mini').fadeOut('fast'); */
             /* $('.banner-wrapper').css({'position': 'static','top': 'auto','z-index': 'auto'});
             $('.content-wrapper').css({'margin-top': 'auto'});
             $('.content-wrapper-pages aside').css({'position': 'static','top': 'auto'}); */
