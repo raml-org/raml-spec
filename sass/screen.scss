@@ -111,7 +111,7 @@ body {
     pre {
         overflow: auto;
         white-space: pre-line;
-        background: #001b2b;
+        background: #000102;
         code {
             padding: 0 20px 0px;
             display: block;
@@ -147,7 +147,7 @@ body {
                 text-decoration: underline;
             }
             .ln {
-                color: rgba(255,255,255,.25);
+                color: rgba(255,255,255,.35);
             }
         }
     }
@@ -187,10 +187,7 @@ body {
                             height: 50px;
                             width: 163px;
                             border-bottom: 1px solid #000102;
-                            background: url('../images/logo-blue.png') center no-repeat;
-                            &:hover {
-                                background: url('../images/logo-glow.png') center 1px no-repeat;
-                            }
+                            background:url('../images/logo.png') center no-repeat;
                         }
                     }
                     &.nav-projects {
@@ -255,13 +252,9 @@ body {
                 display: inline-block;
                 text-indent: 100%;
                 overflow: hidden;
-                height: 50px;
-                width: 163px;
-                border-bottom: 1px solid #000102;
-                background: url('../images/logo-blue.png') center no-repeat;
-                &:hover {
-                    background: url('../images/logo-glow.png') center 1px no-repeat;
-                }
+                height: 35px;
+                width: 125px;
+                background: url('../images/logo-blue-small.png') center no-repeat;
             }
         }
         header.header-condensed, header.header-mobile {
@@ -353,6 +346,10 @@ body {
                         font-size: 24px;
                         line-height: 24px;
                     }
+                }
+                .cta-github.mobile {
+                    padding: 10px 25px;
+                    display: none;
                 }
             }
             .cta {
@@ -562,20 +559,6 @@ body {
             }
             pre {
                 margin: 9px 0;
-                code {
-                    .l1 {
-                        color: #e400ff;
-                    }
-                    .l2 {
-                        color: #567d92;
-                    }
-                    .l3 {
-                        color: #0b9be6;
-                    }
-                    .l4 {
-                        color: #8fd1f4;
-                    }
-                }
             }
             aside {
                 position: fixed;
@@ -691,10 +674,10 @@ body {
             .footer-nav {
                 margin: 43px 0 0;
                 overflow: hidden;
+                text-align: center;
                 font-family: Arial, sans-serif;
                 a {
                     margin: 0 0 0 14px;
-                    float: right;
                     font-size: 12px;
                     line-height: 12px;
                     color: #fff;

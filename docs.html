@@ -8,9 +8,6 @@
         <link href="stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <link href="stylesheets/mobile.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
-        <script src="javascripts/jquery.scrollTo.min.js" ></script>
-        <script src="javascripts/waypoints.min.js" ></script>
-        <script src="javascripts/custom.js" ></script>
     </head>
     <body>
         <div class="header-wrapper">
@@ -57,6 +54,7 @@
                 </nav>
             </header>
             <header class="header-mobile">
+                <a class="nav-logo" href="index.html">RAML</a>
                 <nav>
                     <ul>
                         <li class="nav-projects">
@@ -64,9 +62,6 @@
                         </li>
                         <li class="nav-docs">
                             <a href="docs.html">Documentation</a>
-                        </li>
-                        <li class="nav-logo">
-                            <a href="index.html">RAML</a>
                         </li>
                         <li class="nav-blog">
                             <a href="http://open-raml.blogspot.com">RAML Blog</a>
@@ -130,11 +125,11 @@
                     <p><strong>First, you'll enter some basic information in a text editor. You can save your API's RAML definition as a text file with a recommended extension .raml:</strong></p>
                     <pre>
                         <code>
-<span class="l1">#&#37;RAML 0.8</span>
-<span class="l4">---</span>
-<span class="l2">title:</span> <span class="l4">e-BookMobile API</span>
-<span class="l2">baseUri:</span> <span class="l4">http://api.e-bookmobile.com/{version}</span>
-<span class="l2">version:</span> <span class="l4">v1</span>
+<span class="ln">1  </span><span class="l1">#&#37;RAML 0.8</span>
+<span class="ln">2  </span><span class="l5">---</span>
+<span class="ln">3  </span><span class="def">title:</span> <span class="val">e-BookMobile API</span>
+<span class="ln">4  </span><span class="def">baseUri:</span> <span class="val">http://api.e-bookmobile.com/{version}</span>
+<span class="ln">5  </span><span class="def">version:</span> <span class="val">v1</span>
                         </code>
                     </pre>
                     <p>Everything you enter in at the <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md#root-section" target="_blank">root</a> (or top) of the spec applies to the rest of your API. This is going to come in very handy later as you discover patterns in how you build your API. The baseURI you choose will be used with every call made, so make sure it's as clean and concise as can be.</p>
@@ -143,17 +138,17 @@
                     <p><strong>Recalling how your API consumers will use your API, enter the following three resources under your root:</strong></p>
                     <pre>
                         <code>
-<span class="l3">/users:</span>
-<span class="l3">/authors:</span>
-<span class="l3">/books:</span>
+<span class="ln">1  </span><span class="l3">/users:</span>
+<span class="ln">2  </span><span class="l3">/authors:</span>
+<span class="ln">3  </span><span class="l3">/books:</span>
                         </code>
                     </pre>
                     <p>Notice that these resources all begin with a backslash (/). In RAML, this is how you indicate a resource. Any methods and parameters nested under these top level resources belong to and act upon that resource. Now, since each of these resources is a collection of individual objects (specific authors, books, and users), we'll need to define some sub-resources to fill out the collection.</p>
                     <p><strong>Nested resources are useful when you want to call out a particular subset of your resource in order to narrow it. For example:</strong></p>
                     <pre>
                         <code>
-<span class="l3">/authors:</span>
-<span class="l4">    /{authorname}:</span>
+<span class="ln">1  </span><span class="l3">/authors:</span>
+<span class="ln">2  </span><span class="l3">  /{authorname}:</span>
                         </code>
                     </pre>
                     <p>This lets the API consumer interact with the key resource and its nested resources. For example a GET request to http://api.e-bookmobile.com/authors/Mary_Roach returns details about science writer and humorist Mary Roach. Now, let's think about what we want developers and API consumers to DO.</p>
@@ -168,36 +163,36 @@
                     <p><strong>Nest the methods to allow developers to perform these actions under your resources. Note that you must use lower-case for methods in your RAML API definition:</strong></p>
                     <pre>
                         <code>
-<span class="l3">/books:</span>
-<span class="l4">    get:</span>
-<span class="l4">    post:</span>
-<span class="l4">    put:</span>
+<span class="ln">1  </span><span class="l3">/books:</span>
+<span class="ln">2  </span><span class="l4">  get:</span>
+<span class="ln">3  </span><span class="l4">  post:</span>
+<span class="ln">4  </span><span class="l4">  put:</span>
                         </code>
                     </pre>
                     <h2 id="five"><strong>Step 4:</strong> Enter URI Parameters</h2>
                     <p>The resources that we defined are collections of smaller, relevant objects. You, as the thoughtful API designer, have realized that developers will most likely want to act upon these more granular objects. Remember the example of nested resources above? /authors is made up of individual authors, referenced by {authorName}, for example. This is a URI parameter, denoted by surrounding curly brackets in RAML:</p>
                     <pre>
                         <code>
-<span class="l3">/books:</span>
-<span class="l4">    /{bookTitle}:</span>
+<span class="ln">1  </span><span class="l3">/books:</span>
+<span class="ln">2  </span><span class="l3">  /{bookTitle}:</span>
                         </code>
                     </pre>
                     <p>So, to make a request to this nested resource, the URI would look like http://api.e-bookmobile.com/v1/book/Stiff</p>
                     <p><strong>Time to edit your spec to reflect the inherent granular characteristics of your resources:</strong></p>
                     <pre>
                         <code>
-<span class="l3">/books:</span>
-<span class="l4">    get:</span>
-<span class="l4">    put:</span>
-<span class="l4">    post:</span>
-<span class="l4">        /{bookTitle}:</span>
-<span class="l4">            get:</span>
-<span class="l4">            put:</span>
-<span class="l4">            delete:</span>
-<span class="l4">            /author:</span>
-<span class="l4">                get:</span>
-<span class="l4">            /publisher:</span>
-<span class="l4">                get:</span>
+<span class="ln">1  </span><span class="l3">/books:</span>
+<span class="ln">2  </span><span class="l4">  get:</span>
+<span class="ln">3  </span><span class="l4">  put:</span>
+<span class="ln">4  </span><span class="l4">  post:</span>
+<span class="ln">5  </span><span class="l3">    /{bookTitle}:</span>
+<span class="ln">6  </span><span class="l4">      get:</span>
+<span class="ln">7  </span><span class="l4">      put:</span>
+<span class="ln">8  </span><span class="l4">      delete:</span>
+<span class="ln">9  </span><span class="l3">      /author:</span>
+<span class="ln">10  </span><span class="l4">       get:</span>
+<span class="ln">11  </span><span class="l3">     /publisher:</span>
+<span class="ln">12  </span><span class="l4">       get:</span>
                         </code>
                     </pre>
                     <h2 id="six"><strong>Step 5:</strong> Enter Query Parameters</h2>
@@ -205,71 +200,71 @@
                     <p><strong>Start by adding some query parameters under the GET method for books. These can be specific characteristics, like the year a book was published:</strong></p>
                     <pre>
                         <code>
-<span class="l3">/books:</span>
-<span class="l4">    get:</span>
-<span class="l4">        queryParameters:</span>
-<span class="l4">            author:</span>
-<span class="l4">            publicationYear:</span>
-<span class="l4">            rating:</span>
-<span class="l4">            isbn:</span>
-<span class="l4">    put:</span>
-<span class="l4">    post:</span>
+<span class="ln">1  </span><span class="l3">/books:</span>
+<span class="ln">2  </span><span class="l4">  get:</span>
+<span class="ln">3  </span><span class="l5">    queryParameters:</span>
+<span class="ln">4  </span><span class="l5">      author:</span>
+<span class="ln">5  </span><span class="l5">      publicationYear:</span>
+<span class="ln">6  </span><span class="l5">      rating:</span>
+<span class="ln">7  </span><span class="l5">      isbn:</span>
+<span class="ln">8  </span><span class="l4">  put:</span>
+<span class="ln">9  </span><span class="l4">  post:</span>
                         </code>
                     </pre>
                     <p>Query parameters may also be something that the server requires to process the API consumer's request, like an access token. Often, you need security authorization to alter a collection or record. <strong>Nest the access-token query parameter under the PUT method for a specific title:</strong></p>
                     <pre>
                         <code>
-<span class="l3">/books:</span>
-<span class="l4">    /{bookTitle}</span>
-<span class="l4">        get:</span>
-<span class="l4">            queryParameters:</span>
-<span class="l4">                author:</span>
-<span class="l4">                publicationYear:</span>
-<span class="l4">                rating:</span>
-<span class="l4">                isbn:</span>
-<span class="l4">        put:</span>
-<span class="l4">            queryParameters:</span>
-<span class="l4">                access_token:</span>
+<span class="ln">1  </span><span class="l3">/books:</span>
+<span class="ln">2  </span><span class="l3">  /{bookTitle}</span>
+<span class="ln">3  </span><span class="l4">    get:</span>
+<span class="ln">4  </span><span class="l5">      queryParameters:</span>
+<span class="ln">5  </span><span class="l5">        author:</span>
+<span class="ln">6  </span><span class="l5">        publicationYear:</span>
+<span class="ln">7  </span><span class="l5">        rating:</span>
+<span class="ln">8  </span><span class="l5">        isbn:</span>
+<span class="ln">9  </span><span class="l4">    put:</span>
+<span class="ln">10  </span><span class="l5">     queryParameters:</span>
+<span class="ln">11  </span><span class="l5">       access_token:</span>
                         </code>
                     </pre>
                     <p>An API's resources and methods often have a number of associated query parameters. Each query parameter may have any number of optional attributes to further define it. The Quick reference guide contains a full listing.</p>
                     <p><strong>Now, specify attributes for each of the query parameters you defined above. As always, be as complete in your documentation as possible:</strong></p>
                     <pre>
                         <code>
-<span class="l3">/books:</span>
-<span class="l4">    /{bookTitle}</span>
-<span class="l4">        get:</span>
-<span class="l4">            queryParameters:</span>
-<span class="l4">                author:</span>
-<span class="l4">                    displayName: Author</span>
-<span class="l4">                    type: string</span>
-<span class="l4">                    description: An author's full name</span>
-<span class="l4">                    example: Mary Roach</span>
-<span class="l4">                    required: false</span>
-<span class="l4">                publicationYear:</span>
-<span class="l4">                    displayName: Pub Year</span>
-<span class="l4">                    type: number</span>
-<span class="l4">                    description: The year the book was released for the first time in the US</span>
-<span class="l4">                    example: 1984</span>
-<span class="l4">                    required: false</span>
-<span class="l4">                rating:</span>
-<span class="l4">                    displayName: Rating</span>
-<span class="l4">                    type: number</span>
-<span class="l4">                    description: The average rating, on a scale of 1-5, submitted by users</span>
-<span class="l4">                    example: 3.14</span>
-<span class="l4">                    required: false</span>
-<span class="l4">                isbn:</span>
-<span class="l4">                    displayName: ISBN</span>
-<span class="l4">                    type: string</span>
-<span class="l4">                    minLength: 10</span>
-<span class="l4">                    example: 0321736079?</span>
-<span class="l4">        put:</span>
-<span class="l4">            queryParameters:</span>
-<span class="l4">                access_token:</span>
-<span class="l4">                    displayName: Access Token</span>
-<span class="l4">                    type: string</span>
-<span class="l4">                    description: Access token giving you permission to make a call</span>
-<span class="l4">                    required: true</span>
+<span class="ln">1  </span><span class="l3">/books:</span>
+<span class="ln">2  </span><span class="l3">  /{bookTitle}</span>
+<span class="ln">3  </span><span class="l4">    get:</span>
+<span class="ln">4  </span><span class="l5">      queryParameters:</span>
+<span class="ln">5  </span><span class="l5">        author:</span>
+<span class="ln">6  </span><span class="l5">          displayName:</span> <span class="val">Author</span>
+<span class="ln">7  </span><span class="l5">          type:</span> <span class="val">string</span>
+<span class="ln">8  </span><span class="l5">          description:</span> <span class="val">An author's full name</span>
+<span class="ln">9  </span><span class="l5">          example:</span> <span class="val">Mary Roach</span>
+<span class="ln">10  </span><span class="l5">         required:</span> <span class="val">false</span>
+<span class="ln">11  </span><span class="l5">       publicationYear:</span>
+<span class="ln">12  </span><span class="l5">         displayName:</span> <span class="val">Pub Year</span>
+<span class="ln">13  </span><span class="l5">         type:</span> <span class="val">number</span>
+<span class="ln">14  </span><span class="l5">         description:</span> <span class="val">The year released for the first time in the US</span>
+<span class="ln">15  </span><span class="l5">         example:</span> <span class="val">1984</span>
+<span class="ln">16  </span><span class="l5">         required:</span> <span class="val">false</span>
+<span class="ln">17  </span><span class="l5">       rating:</span>
+<span class="ln">18  </span><span class="l5">         displayName:</span> <span class="val">Rating</span>
+<span class="ln">19  </span><span class="l5">         type: <span class="val">number</span>
+<span class="ln">20  </span><span class="l5">         description:</span> <span class="val">Average rating (1-5) submitted by users</span>
+<span class="ln">21  </span><span class="l5">         example:</span> <span class="val">3.14</span>
+<span class="ln">22  </span><span class="l5">         required:</span> <span class="val">false</span>
+<span class="ln">23  </span><span class="l5">       isbn:</span>
+<span class="ln">24  </span><span class="l5">         displayName:</span> <span class="val">ISBN</span>
+<span class="ln">25  </span><span class="l5">         type:</span> <span class="val">string</span>
+<span class="ln">26  </span><span class="l5">         minLength:</span> <span class="val">10</span>
+<span class="ln">27  </span><span class="l5">         example:</span> <span class="val">0321736079?</span>
+<span class="ln">28  </span><span class="l4">    put:</span>
+<span class="ln">29  </span><span class="l5">      queryParameters:</span>
+<span class="ln">30  </span><span class="l5">        access_token:</span>
+<span class="ln">31  </span><span class="l5">          displayName:</span> <span class="val">Access Token</span>
+<span class="ln">32  </span><span class="l5">          type:</span> <span class="val">string</span>
+<span class="ln">33  </span><span class="l5">          description:</span> <span class="val">Token giving you permission to make call</span>
+<span class="ln">34  </span><span class="l5">          required: <span class="val">true</span>
                         </code>
                     </pre>
                     <p>To make a PUT call, your URI looks like http://api.e-bookmobile.com/books/Stiff?access_token=ACCESS TOKEN</p>
@@ -277,28 +272,28 @@
                     <p>Responses MUST be a map of one or more HTTP status codes, and each response may include descriptions, examples, or schemas. Schemas are more fully explained in the Level 200 tutorial.</p>
                     <pre>
                         <code>
-<span class="l3">/books:</span>
-<span class="l4">    /{bookTitle}:</span>
-<span class="l4">    get:</span>
-<span class="l4">        summary: Retrieve a specific book title</span>
-<span class="l4">        responses:</span>
-<span class="l4">            200:</span>
-<span class="l4">                body:</span>
-<span class="l4">                    application/json:</span>
-<span class="l4">                        example: |</span>
-<span class="l4">                            {</span>
-<span class="l4">                                "data": {</span>
-<span class="l4">                                    "id": "SbBGk",</span>
-<span class="l4">                                    "title": "Stiff: The Curious Lives of Human Cadavers",</span>
-<span class="l4">                                    "description": null,</span>
-<span class="l4">                                    "datetime": 1341533193,</span>
-<span class="l4">                                    "genre": "science",</span>
-<span class="l4">                                    "author": "Mary Roach",</span>
-<span class="l4">                                    "link": "http://e-bookmobile.com/books/Stiff",</span>
-<span class="l4">                                },</span>
-<span class="l4">                                "success": true,</span>
-<span class="l4">                                "status": 200</span>
-<span class="l4">                            }</span>
+<span class="ln">1  </span><span class="l3">/books:</span>
+<span class="ln">2  </span><span class="l3">  /{bookTitle}:</span>
+<span class="ln">3  </span><span class="l4">    get:</span>
+<span class="ln">4  </span><span class="l5">      summary:</span> <span class="val">Retrieve a specific book title</span>
+<span class="ln">5  </span><span class="l5">      responses:</span>
+<span class="ln">6  </span><span class="l5">        200:</span>
+<span class="ln">7  </span><span class="l5">          body:</span>
+<span class="ln">8  </span><span class="l5">            application/json:</span>
+<span class="ln">9  </span><span class="l5">              example:</span> <span class="l1">|</span>
+<span class="ln">10  </span><span class="l1">               {</span>
+<span class="ln">11  </span><span class="l1">                 "data": {</span>
+<span class="ln">12  </span><span class="l1">                   "id": "SbBGk",</span>
+<span class="ln">13  </span><span class="l1">                   "title": "Stiff: The Curious Lives of Human Cadavers",</span>
+<span class="ln">14  </span><span class="l1">                   "description": null,</span>
+<span class="ln">15  </span><span class="l1">                   "datetime": 1341533193,</span>
+<span class="ln">16  </span><span class="l1">                   "genre": "science",</span>
+<span class="ln">17  </span><span class="l1">                   "author": "Mary Roach",</span>
+<span class="ln">18  </span><span class="l1">                   "link": "http://e-bookmobile.com/books/Stiff",</span>
+<span class="ln">19  </span><span class="l1">                 },</span>
+<span class="ln">20  </span><span class="l1">                 "success": true,</span>
+<span class="ln">21  </span><span class="l1">                 "status": 200</span>
+<span class="ln">22  </span><span class="l1">               }</span>
                         </code>
                     </pre>
                     <p><strong>Congratulations! You've just written your first API definition in RAML.</strong></p>
@@ -318,10 +313,13 @@
                 </div>
                 <div class="footer-nav">
                     <a href="mailto:theramlspec@gmail.com">Contact</a>
-                    <p>RAML&trade; is a trademark of MuleSoft, Inc.</p>
                 </div>
             </section>
         </div>
+        <script src="javascripts/retina.js"></script> 
+        <script src="javascripts/jquery.scrollTo.min.js" ></script>
+        <script src="javascripts/waypoints.min.js" ></script>
+        <script src="javascripts/custom.js" ></script>
         <script type="text/javascript">
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

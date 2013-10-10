@@ -5,7 +5,7 @@
     body .header-wrapper header.header-condensed {
         display: block;
     }
-    body .banner-wrapper {
+    body .banner-wrapper, body .content-wrapper-pages {
         margin-top: 82px;
     }
     body .banner-wrapper .content {
@@ -27,6 +27,9 @@
     }
     body .content-wrapper-pages section {
         width: auto;
+    }
+    body .content-wrapper-pages section aside {
+        top: 82px;
     }
     .callouts, .brackets {
         display: none;
@@ -64,8 +67,8 @@
     body .header-wrapper header.header-mobile {
         display: block;
     }
-    body .banner-wrapper {
-        margin-top: 155px;
+    body .banner-wrapper, body .content-wrapper-pages {
+        margin-top: 139px;
     }
     body .banner-wrapper .content {
         width: auto;
@@ -92,11 +95,17 @@
     body .content-wrapper .content pre {
         margin: 0 auto;
         float: none;
-        width: 345px;
+        width: auto;
     }
     body .content-wrapper .content pre code {
         font-size: 12px;
         line-height: 18px;
+    }
+    body .content-wrapper-pages section {
+        width: auto;
+    }
+    body .content-wrapper-pages section aside {
+        top: 139px;
     }
     body .footer-wrapper .footer {
         width: auto;
@@ -106,5 +115,38 @@
     }
     body .footer-wrapper .footer .footer-nav a {
         float: left;
+    }
+}
+
+@media all and (max-width: 480px) {
+    body .header-wrapper {
+        position: static;
+    }
+    body .header-wrapper header nav li.nav-logo a {
+        background-size: 100px 28px;
+    }
+    body .banner-wrapper .content .banner .cta-github {
+        display: none;
+    }
+    body .banner-wrapper .content .banner .cta-github.mobile {
+        display: block;
+    }
+    body .banner-wrapper, body .content-wrapper-pages {
+        margin-top: 0;
+    }
+    body .content-wrapper .content pre {
+        margin: 0 auto;
+        float: none;
+        width: 280px;
+    }
+    body .content-wrapper-pages section aside {
+        position: static;
+        top: 0;
+        float: none;
+        width: auto;
+    }
+    body .content-wrapper-pages section .content {
+        float: none;
+        width: auto;
     }
 }
