@@ -126,7 +126,7 @@ securedBy: [oauth_2_0]
 securitySchemes:
     - oauth_2_0: !include oauth_2_0.yml
     - oauth_1_0: !include oauth_1_0.yml
-/users
+/users:
     get:
         securedBy: [oauth_2_0, oauth_1_0]
 ```
@@ -143,7 +143,7 @@ version: v3
 baseUri: https://api.github.com/
 securitySchemes:
     - oauth_2_0: !include oauth_2_0.yml
-/users/{userid}/gists
+/users/{userid}/gists:
     get:
         securedBy: [null, oauth_2_0]
         description: |
@@ -162,7 +162,7 @@ version: v3
 baseUri: https://api.github.com/
 securitySchemes:
     - oauth_2_0: !include oauth_2_0.yml
-/users/{userid}/gists
+/users/{userid}/gists:
     get:
         securedBy: [null, oauth_2_0: { scopes: [ ADMINISTRATOR ] } ]
         description: |
