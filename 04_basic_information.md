@@ -137,6 +137,13 @@ schemas:
     Files:      !include path-to-schemas/filesystem/files.xsd
     Dir:        !include path-to-schemas/filesystem/dir.xsd
     Dirs:       !include path-to-schemas/filesystem/dirs.xsd
+/files:
+  get:
+    responses:
+      200:
+        body:
+          application/xml:
+            schema: Files
 
 ```
 
@@ -162,7 +169,7 @@ version: v28.0
 baseUri: https://{communityDomain}.force.com/{communityPath}
 uriParameters:
  communityDomain:
-   dsplayName: Community Domain
+   displayName: Community Domain
    type: string
  communityPath:
    displayName: Community Path
