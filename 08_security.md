@@ -48,8 +48,8 @@ securitySchemes:
                         Bad OAuth request (wrong consumer key, bad nonce, expired
                         timestamp...). Unfortunately, re-authenticating the user won't help here.
         settings:
-          authorizationUrl: https://www.dropbox.com/1/oauth2/authorize
-          accessTokenUrl: https://api.dropbox.com/1/oauth2/token
+          authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+          accessTokenUri: https://api.dropbox.com/1/oauth2/token
           authorizationGrants: [ code, token ]
     - oauth_1_0:
         description:|
