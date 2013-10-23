@@ -1,10 +1,17 @@
 # The RESTful API Modeling Language (RAML) Spec
 
+You can read the whole RAML 0.8 spec at [raml.org](http://raml.org/spec.html), or you can build it yourself. 
+
 To build the spec, type:
 
     make
 
-The individual spec files are concatenated into a single file, raml-spec.md.
+The individual spec files will then be concatenated into a single file, raml-spec.md.
+
+###Licensing
+[Contributors License Agreement](https://github.com/raml-org/raml-spec/blob/master/legal/contribution_agreement.docx)
+
+[Branding Guidelines](https://github.com/raml-org/raml-spec/blob/master/legal/brand_guidelines.pdf)
 
 ## Index
 
