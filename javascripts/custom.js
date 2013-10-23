@@ -29,7 +29,7 @@ $(document).ready(function() {
             navigation_links.removeClass("active");
             active_link.addClass("active");
         },
-        offset: 91
+        offset: 93
     });
     /* Anchor link smooth scrolling */
     $(function() {
@@ -39,7 +39,7 @@ $(document).ready(function() {
                 target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
                 if (target.length) {
                     $('html,body').animate({
-                        scrollTop: target.offset().top - 91
+                        scrollTop: target.offset().top - 93
                     }, 400);
                     return false;
                 }

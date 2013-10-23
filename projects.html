@@ -23,8 +23,8 @@
                         <li class="nav-logo">
                             <a href="index.html">RAML</a>
                         </li>
-                        <li class="nav-blog">
-                            <a href="http://open-raml.blogspot.com">RAML Blog</a>
+                        <li class="nav-licensing">
+                            <a href="licensing.html">Licensing</a>
                         </li>
                         <li class="nav-about">
                             <a href="about.html">About</a>
@@ -36,7 +36,7 @@
                 <nav>
                     <ul>
                         <li class="nav-projects">
-                            <a href="projects.html">Projects</a>
+                            <a class="active" href="projects.html">Projects</a>
                         </li>
                         <li class="nav-docs">
                             <a href="docs.html">Documentation</a>
@@ -44,8 +44,8 @@
                         <li class="nav-logo">
                             <a href="index.html">RAML</a>
                         </li>
-                        <li class="nav-blog">
-                            <a href="http://open-raml.blogspot.com">RAML Blog</a>
+                        <li class="nav-licensing">
+                            <a href="licensing.html">Licensing</a>
                         </li>
                         <li class="nav-about">
                             <a href="about.html">About</a>
@@ -58,13 +58,13 @@
                 <nav>
                     <ul>
                         <li class="nav-projects">
-                            <a href="projects.html">Projects</a>
+                            <a class="active" href="projects.html">Projects</a>
                         </li>
                         <li class="nav-docs">
                             <a href="docs.html">Documentation</a>
                         </li>
-                        <li class="nav-blog">
-                            <a href="http://open-raml.blogspot.com">RAML Blog</a>
+                        <li class="nav-licensing">
+                            <a href="licensing.html">Licensing</a>
                         </li>
                         <li class="nav-about">
                             <a href="about.html">About</a>
@@ -72,10 +72,81 @@
                     </ul>
                 </nav>
             </header>
+            <a class="github-callout symbol" href="https://github.com/raml-org/raml-spec" title="circlegithubalt"></a>
         </div>
         <div class="content-wrapper-pages">
             <section>
-                <h1 class="soon">Projects are coming soon</h1>
+                <h2>Source</h2>
+                <ul class="projects-source">
+                  <li>
+                    <div class="project-title">
+                      <div class="icon"></div>
+                      <h3>RAML Spec</h3>
+                      <h4>Developed by the RAML workgroup</h4>
+                      <a href="https://github.com/raml-org/raml-spec" class="project-github">View on Github</a>
+                      <a href="spec.html" class="project-html" target="_blank">View as HTML</a>
+                    </div>
+                    <div class="project-description">
+                      <p>RESTful API Modeling Language (RAML) is a concise, expressive language for describing RESTful APIs. RAML is built on broadly used standards such as YAML and JSON and is a non-proprietary, vendor-neutral open spec.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="project-title">
+                      <div class="icon"></div>
+                      <h3>RAML Parser</h3>
+                      <h4>Contributed to the RAML workgroup by Mulesoft</h4>
+                      <a href="https://github.com/raml-org/raml-js-parser" class="project-github">View on Github</a>
+                    </div>
+                    <div class="project-description">
+                      <p>A RAML parser based on PyYAML written in CoffeeScript and available for use as Node.js module or in-browser. Currently compliant with RAML 0.8 and provided under an Apache 2.0 license.</p>
+                    </div>
+                  </li>
+                  <!-- <li class="projects-add">
+                    <a href="#"><i>+</i><h3>Submit RAML tools</h3></a>
+                  </li> -->
+                </ul>
+                <h2>Projects</h2>
+                <ul class="projects-projects">
+                  <li>
+                    <div class="project-title">
+                      <div class="icon"></div>
+                      <h3>API Designer</h3>
+                      <h4>Developed by MuleSoft</h4>
+                      <a href="https://github.com/mulesoft/api-designer" class="project-github">View on Github</a>
+                      <a href="http://www.apihub.com/raml/api-designer" class="project-html">Implementation</a>
+                    </div>
+                    <div class="project-description">
+                      <p>API Designer is a web-based API development tool that allows API providers to create their API in a human-readable, consumable format, and socialize the definition.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="project-title">
+                      <div class="icon"></div>
+                      <h3>API Console</h3>
+                      <h4>Developed by MuleSoft</h4>
+                      <a href="https://github.com/mulesoft/api-console" class="project-github">View on Github</a>
+                      <a href="http://www.apihub.com/raml-tools" class="project-html">Implementation</a>
+                    </div>
+                    <div class="project-description">
+                      <p>API Console is a graphical representation of a RAML-defined API visually exposes the API’s structure and important patterns and provides access to interactive API documentation.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="project-title">
+                      <div class="icon"></div>
+                      <h3>API Notebook</h3>
+                      <h4>Developed by MuleSoft</h4>
+                      <a href="https://github.com/mulesoft/api-notebook" class="project-github">View on Github</a>
+                      <a href="http://www.apihub.com/raml/api-notebook" class="project-html">Implementation</a>
+                    </div>
+                    <div class="project-description">
+                      <p>API Notebook is a web-based persistent JavaScript console that enables live testing and exploring of APIs, and saving API use cases as gists, so they are versioned, forkable and usable from Git.</p>
+                    </div>
+                  </li>
+                  <li class="projects-add">
+                    <h3>Contact us at <a href="mailto:info@raml.org">info@raml.org</a> to submit RAML tools</h3>
+                  </li>
+                </ul>
             </section>
         </div>
         <div class="footer-wrapper">
@@ -90,11 +161,15 @@
                     <div id="ss-form-response" style="display:none">Thanks for signing up!</div>
                 </div>
                 <div class="footer-nav">
+                    <a href="http://open-raml.blogspot.com" target="_blank">RAML Blog</a>
+                    <a href="about.html#six">RAML Workgroup</a>
                     <a href="mailto:theramlspec@gmail.com">Contact</a>
+                    <a href="#">Contributor License Agreement</a>
+                    <a href="licensing.html">Branding Policy</a>
                 </div>
             </section>
         </div>
-        <script src="javascripts/retina.js"></script> 
+        <script src="javascripts/retina-1.1.0.min.js"></script> 
         <script src="javascripts/jquery.scrollTo.min.js" ></script>
         <script src="javascripts/waypoints.min.js" ></script>
         <script src="javascripts/custom.js" ></script>

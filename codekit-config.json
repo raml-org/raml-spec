@@ -1,70 +1,131 @@
 {
   "CodeKitInfo" : "This is a CodeKit project configuration file. It is designed to sync project settings across multiple machines. Modifying the contents of this file can be a poor life decision if you don't know what you're doing. This file is not useful unless accompanied by the project that created it in CodeKit. For more information, see: http:\/\/incident57.com\/codekit",
-  "creatorBuild" : "8326",
+  "creatorBuild" : "8348",
   "files" : {
-    "\/javascripts\/source\/helpers\/jquery.fancybox-buttons.js" : {
+    "\/sass\/screen.scss" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-buttons.js",
+      "inputAbbreviatedPath" : "\/sass\/screen.scss",
+      "outputStyle" : 0,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/stylesheets\/screen.css",
+      "fileType" : 4,
+      "debugStyle" : 0
+    },
+    "\/javascripts\/source\/jquery.fancybox.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/javascripts\/source\/jquery.fancybox.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-buttons-ck.js",
+      "outputAbbreviatedPath" : "\/javascripts\/source\/jquery.fancybox-ck.js",
       "fileType" : 64
     },
-    "\/images\/video-thumb.png" : {
+    "\/javascripts\/source\/jquery.fancybox.pack.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/video-thumb.png",
+      "inputAbbreviatedPath" : "\/javascripts\/source\/jquery.fancybox.pack.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/javascripts\/source\/jquery.fancybox.pack-ck.js",
+      "fileType" : 64
+    },
+    "\/images\/logo@2x.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/logo@2x.png",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/video-thumb.png",
-      "initialSize" : 23034,
+      "outputAbbreviatedPath" : "\/images\/logo@2x.png",
+      "initialSize" : 4117,
       "fileType" : 8192
     },
-    "\/images\/logo-glow.png" : {
+    "\/150.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/logo-glow.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/logo-glow.png",
-      "initialSize" : 11227,
-      "fileType" : 8192
-    },
-    "\/images\/bill-scott.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/bill-scott.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/bill-scott.jpg",
-      "initialSize" : 16626,
-      "fileType" : 4096
-    },
-    "\/licensing.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/licensing.html",
+      "inputAbbreviatedPath" : "\/150.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/javascripts\/source\/fancybox_overlay.png" : {
+    "\/branding.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/source\/fancybox_overlay.png",
+      "inputAbbreviatedPath" : "\/branding.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
+    "\/images\/misko-hevery.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/misko-hevery.jpg",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/javascripts\/source\/fancybox_overlay.png",
-      "initialSize" : 1003,
+      "outputAbbreviatedPath" : "\/images\/misko-hevery.jpg",
+      "initialSize" : 17163,
+      "fileType" : 4096
+    },
+    "\/projects.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/projects.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
+    "\/javascripts\/jquery.scrollTo.min.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/javascripts\/jquery.scrollTo.min.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/javascripts\/jquery.scrollTo.min-ck.js",
+      "fileType" : 64
+    },
+    "\/javascripts\/source\/fancybox_sprite@2x.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/javascripts\/source\/fancybox_sprite@2x.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/javascripts\/source\/fancybox_sprite@2x.png",
+      "initialSize" : 6553,
       "fileType" : 8192
+    },
+    "\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/index.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
+    "\/javascripts\/source\/helpers\/jquery.fancybox-media.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-media.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-media-ck.js",
+      "fileType" : 64
     },
     "\/sass\/ie.scss" : {
       "ignoreWasSetByUser" : 0,
@@ -87,121 +148,25 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
-    "\/javascripts\/source\/fancybox_sprite.png" : {
+    "\/about.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/source\/fancybox_sprite.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/javascripts\/source\/fancybox_sprite.png",
-      "initialSize" : 1362,
-      "fileType" : 8192
-    },
-    "\/images\/joe-betz.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/joe-betz.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/joe-betz.jpg",
-      "initialSize" : 5690,
-      "fileType" : 4096
-    },
-    "\/sass\/screen.scss" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/screen.scss",
-      "outputStyle" : 0,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/stylesheets\/screen.css",
-      "fileType" : 4,
-      "debugStyle" : 0
-    },
-    "\/javascripts\/source\/jquery.fancybox.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/source\/jquery.fancybox.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
-    "\/javascripts\/source\/fancybox_sprite@2x.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/source\/fancybox_sprite@2x.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/javascripts\/source\/fancybox_sprite@2x.png",
-      "initialSize" : 6553,
-      "fileType" : 8192
-    },
-    "\/javascripts\/source\/helpers\/fancybox_buttons.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/source\/helpers\/fancybox_buttons.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/javascripts\/source\/helpers\/fancybox_buttons.png",
-      "initialSize" : 1080,
-      "fileType" : 8192
-    },
-    "\/images\/video.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/video.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/video.png",
-      "initialSize" : 2976,
-      "fileType" : 8192
-    },
-    "\/150.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/150.html",
+      "inputAbbreviatedPath" : "\/about.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/images\/uri-sarid.jpg" : {
+    "\/javascripts\/custom.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/uri-sarid.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/uri-sarid.jpg",
-      "initialSize" : 20832,
-      "fileType" : 4096
-    },
-    "\/javascripts\/source\/jquery.fancybox.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/source\/jquery.fancybox.js",
+      "inputAbbreviatedPath" : "\/javascripts\/custom.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/source\/jquery.fancybox-ck.js",
+      "outputAbbreviatedPath" : "\/javascripts\/custom-ck.js",
       "fileType" : 64
-    },
-    "\/200.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/200.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
     },
     "\/images\/callout-icons.png" : {
       "ignoreWasSetByUser" : 0,
@@ -214,87 +179,16 @@
       "initialSize" : 2829,
       "fileType" : 8192
     },
-    "\/javascripts\/source\/helpers\/jquery.fancybox-thumbs.js" : {
+    "\/javascripts\/source\/helpers\/jquery.fancybox-buttons.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-thumbs.js",
+      "inputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-buttons.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-thumbs-ck.js",
+      "outputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-buttons-ck.js",
       "fileType" : 64
-    },
-    "\/stylesheets\/screen.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/stylesheets\/screen.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
-    "\/config.rb" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/config.rb",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 32768
-    },
-    "\/about.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/about.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
-    "\/javascripts\/custom-ck.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/custom-ck.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/custom-ck-ck.js",
-      "fileType" : 64
-    },
-    "\/javascripts\/jquery.scrollTo.min.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/jquery.scrollTo.min.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/jquery.scrollTo.min-ck.js",
-      "fileType" : 64
-    },
-    "\/images\/carrot.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/carrot.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/carrot.png",
-      "initialSize" : 2846,
-      "fileType" : 8192
-    },
-    "\/images\/peter-rexer.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/peter-rexer.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/peter-rexer.jpg",
-      "initialSize" : 11173,
-      "fileType" : 4096
     },
     "\/javascripts\/waypoints.min.js" : {
       "ignoreWasSetByUser" : 0,
@@ -307,127 +201,54 @@
       "outputAbbreviatedPath" : "\/javascripts\/waypoints.min-ck.js",
       "fileType" : 64
     },
-    "\/images\/logo-blue-small.png" : {
+    "\/licensing.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/logo-blue-small.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/logo-blue-small.png",
-      "initialSize" : 1983,
-      "fileType" : 8192
-    },
-    "\/stylesheets\/mobile.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/stylesheets\/mobile.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
-    "\/projects.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/projects.html",
+      "inputAbbreviatedPath" : "\/licensing.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/images\/tom-occhino.jpg" : {
+    "\/javascripts\/retina-1.1.0.min.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/tom-occhino.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/tom-occhino.jpg",
-      "initialSize" : 27146,
-      "fileType" : 4096
-    },
-    "\/images\/kin-lane.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/kin-lane.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/kin-lane.jpg",
-      "initialSize" : 26890,
-      "fileType" : 4096
-    },
-    "\/images\/misko-hevery.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/misko-hevery.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/misko-hevery.jpg",
-      "initialSize" : 17163,
-      "fileType" : 4096
-    },
-    "\/images\/logo@2x.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/logo@2x.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/logo@2x.png",
-      "initialSize" : 4117,
-      "fileType" : 8192
-    },
-    "\/javascripts\/source\/helpers\/jquery.fancybox-media.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-media.js",
+      "inputAbbreviatedPath" : "\/javascripts\/retina-1.1.0.min.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-media-ck.js",
+      "outputAbbreviatedPath" : "\/javascripts\/retina-1.1.0.min-ck.js",
       "fileType" : 64
     },
-    "\/stylesheets\/ie.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/stylesheets\/ie.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
-    "\/images\/logo.png" : {
+    "\/javascripts\/source\/fancybox_overlay.png" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/logo.png",
+      "inputAbbreviatedPath" : "\/javascripts\/source\/fancybox_overlay.png",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/logo.png",
-      "initialSize" : 2908,
+      "outputAbbreviatedPath" : "\/javascripts\/source\/fancybox_overlay.png",
+      "initialSize" : 1003,
       "fileType" : 8192
     },
-    "\/javascripts\/source\/jquery.fancybox.pack.js" : {
+    "\/images\/john-musser.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/source\/jquery.fancybox.pack.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/source\/jquery.fancybox.pack-ck.js",
-      "fileType" : 64
+      "inputAbbreviatedPath" : "\/images\/john-musser.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/john-musser.jpg",
+      "initialSize" : 27237,
+      "fileType" : 4096
     },
-    "\/index.html" : {
+    "\/spec.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/index.html",
+      "inputAbbreviatedPath" : "\/spec.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
@@ -442,63 +263,136 @@
       "initialSize" : 28988,
       "fileType" : 4096
     },
-    "\/javascripts\/source\/helpers\/jquery.fancybox-thumbs.css" : {
+    "\/images\/logo-blue-small.png" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-thumbs.css",
+      "inputAbbreviatedPath" : "\/images\/logo-blue-small.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/logo-blue-small.png",
+      "initialSize" : 1983,
+      "fileType" : 8192
+    },
+    "\/images\/video-thumb.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/video-thumb.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/video-thumb.png",
+      "initialSize" : 23034,
+      "fileType" : 8192
+    },
+    "\/images\/kin-lane.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/kin-lane.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/kin-lane.jpg",
+      "initialSize" : 26890,
+      "fileType" : 4096
+    },
+    "\/images\/carrot.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/carrot.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/carrot.png",
+      "initialSize" : 2846,
+      "fileType" : 8192
+    },
+    "\/javascripts\/source\/jquery.fancybox.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/javascripts\/source\/jquery.fancybox.css",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
-    "\/javascripts\/custom.js" : {
+    "\/javascripts\/custom-ck.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/custom.js",
+      "inputAbbreviatedPath" : "\/javascripts\/custom-ck.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/custom-ck.js",
+      "outputAbbreviatedPath" : "\/javascripts\/custom-ck-ck.js",
       "fileType" : 64
     },
-    "\/images\/john-musser.jpg" : {
+    "\/stylesheets\/ie.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/stylesheets\/ie.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
+    },
+    "\/images\/tom-occhino.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/john-musser.jpg",
+      "inputAbbreviatedPath" : "\/images\/tom-occhino.jpg",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/john-musser.jpg",
-      "initialSize" : 27237,
+      "outputAbbreviatedPath" : "\/images\/tom-occhino.jpg",
+      "initialSize" : 27146,
       "fileType" : 4096
     },
-    "\/javascripts\/retina-1.1.0.min.js" : {
+    "\/stylesheets\/mobile.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/stylesheets\/mobile.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
+    },
+    "\/images\/peter-rexer.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/retina-1.1.0.min.js",
+      "inputAbbreviatedPath" : "\/images\/peter-rexer.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/peter-rexer.jpg",
+      "initialSize" : 11173,
+      "fileType" : 4096
+    },
+    "\/config.rb" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/config.rb",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 32768
+    },
+    "\/javascripts\/source\/helpers\/jquery.fancybox-thumbs.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-thumbs.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/retina-1.1.0.min-ck.js",
+      "outputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-thumbs-ck.js",
       "fileType" : 64
     },
-    "\/docs.html" : {
+    "\/stylesheets\/github2-8159a6c9a2c0054ae5779d7c98fa8d0b5dd25fca.css" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/docs.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
-    "\/stylesheets\/normalize.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/stylesheets\/normalize.css",
+      "inputAbbreviatedPath" : "\/stylesheets\/github2-8159a6c9a2c0054ae5779d7c98fa8d0b5dd25fca.css",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
@@ -514,6 +408,121 @@
       "fileType" : 4,
       "debugStyle" : 0
     },
+    "\/images\/logo-glow.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/logo-glow.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/logo-glow.png",
+      "initialSize" : 11227,
+      "fileType" : 8192
+    },
+    "\/images\/uri-sarid.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/uri-sarid.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/uri-sarid.jpg",
+      "initialSize" : 20832,
+      "fileType" : 4096
+    },
+    "\/images\/logo.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/logo.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/logo.png",
+      "initialSize" : 2908,
+      "fileType" : 8192
+    },
+    "\/stylesheets\/screen.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/stylesheets\/screen.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
+    },
+    "\/images\/bill-scott.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/bill-scott.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/bill-scott.jpg",
+      "initialSize" : 16626,
+      "fileType" : 4096
+    },
+    "\/images\/video.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/video.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/video.png",
+      "initialSize" : 2976,
+      "fileType" : 8192
+    },
+    "\/javascripts\/source\/helpers\/fancybox_buttons.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/javascripts\/source\/helpers\/fancybox_buttons.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/javascripts\/source\/helpers\/fancybox_buttons.png",
+      "initialSize" : 1080,
+      "fileType" : 8192
+    },
+    "\/stylesheets\/github-37b6e181a972ce6706fa61ad91a3f4994af90049.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/stylesheets\/github-37b6e181a972ce6706fa61ad91a3f4994af90049.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
+    },
+    "\/images\/joe-betz.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/joe-betz.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/joe-betz.jpg",
+      "initialSize" : 5690,
+      "fileType" : 4096
+    },
+    "\/javascripts\/source\/fancybox_sprite.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/javascripts\/source\/fancybox_sprite.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/javascripts\/source\/fancybox_sprite.png",
+      "initialSize" : 1362,
+      "fileType" : 8192
+    },
+    "\/docs.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/docs.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
     "\/javascripts\/source\/helpers\/jquery.fancybox-buttons.css" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -522,6 +531,33 @@
       "inputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-buttons.css",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
+    },
+    "\/javascripts\/source\/helpers\/jquery.fancybox-thumbs.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/javascripts\/source\/helpers\/jquery.fancybox-thumbs.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
+    },
+    "\/stylesheets\/normalize.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/stylesheets\/normalize.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
+    },
+    "\/200.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/200.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
     }
   },
   "manualImportLinks" : [
@@ -600,6 +636,7 @@
       "trailing" : 1,
       "nonew" : 1,
       "es3" : 0,
+      "freeze" : true,
       "yui" : 0,
       "mootools" : 0,
       "proto" : 0,
@@ -635,6 +672,7 @@
       "unused" : 1,
       "debug" : 0,
       "bitwise" : 1,
+      "notypeof" : true,
       "white" : 0,
       "browser" : 1,
       "worker" : 0,
@@ -661,7 +699,6 @@
       "newcap" : 0,
       "sloppy" : 0,
       "closure" : 0,
-      "es5" : 0,
       "browser" : 1,
       "properties" : 0,
       "plusplus" : 0,

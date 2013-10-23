@@ -1,3 +1,25 @@
+@media all and (max-width: 970px) {
+  .github-callout {
+    display: none;
+  }
+}
+
+@media all and (max-width: 640px) {
+  .projects-source li, .projects-projects li {
+    display: block !important;
+    background: #f6f6f6;
+  }
+  .projects-source .project-title, .projects-projects .project-title {
+    display: block !important;
+    width: auto !important;
+    border-right: none !important;
+  }
+  .projects-source .project-description, .projects-projects .project-description {
+    padding: 0 20px 20px !important;
+    display: block !important;
+  }
+}
+
 @media all and (max-width: 970px) and (min-width: 640px) {
     body .header-wrapper header {
         display: none;
@@ -112,9 +134,6 @@
     }
     body .footer-wrapper .footer .signup input[type=text] {
         width: auto;
-    }
-    body .footer-wrapper .footer .footer-nav a {
-        float: left;
     }
 }
 
