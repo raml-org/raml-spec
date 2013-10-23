@@ -1418,8 +1418,8 @@ securitySchemes:
                         Bad OAuth request (wrong consumer key, bad nonce, expired
                         timestamp...). Unfortunately, re-authenticating the user won't help here.
         settings:
-          authorizationUrl: https://www.dropbox.com/1/oauth2/authorize
-          accessTokenUrl: https://api.dropbox.com/1/oauth2/token
+          authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+          accessTokenUri: https://api.dropbox.com/1/oauth2/token
           authorizationGrants: [ code, token ]
     - oauth_1_0:
         description:|
@@ -1496,7 +1496,7 @@ securedBy: [oauth_2_0]
 securitySchemes:
     - oauth_2_0: !include oauth_2_0.yml
     - oauth_1_0: !include oauth_1_0.yml
-/users
+/users:
     get:
         securedBy: [oauth_2_0, oauth_1_0]
 ```
@@ -1513,7 +1513,7 @@ version: v3
 baseUri: https://api.github.com/
 securitySchemes:
     - oauth_2_0: !include oauth_2_0.yml
-/users/{userid}/gists
+/users/{userid}/gists:
     get:
         securedBy: [null, oauth_2_0]
         description: |
@@ -1532,7 +1532,7 @@ version: v3
 baseUri: https://api.github.com/
 securitySchemes:
     - oauth_2_0: !include oauth_2_0.yml
-/users/{userid}/gists
+/users/{userid}/gists:
     get:
         securedBy: [null, oauth_2_0: { scopes: [ ADMINISTRATOR ] } ]
         description: |
