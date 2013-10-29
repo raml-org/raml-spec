@@ -18,7 +18,7 @@ In this example, the Dropbox API supports authentication via OAuth 2.0 and OAuth
 ---
 title: Dropbox API
 version: 1
-baseUri: https://api.dropbox.com/{version}/
+baseUri: https://api.dropbox.com/{version}
 securitySchemes:
     - oauth_2_0:
         description: |
@@ -121,7 +121,7 @@ Applying a *securityScheme* definition to a method overrides whichever *security
 ---
 title: Dropbox API
 version: 1
-baseUri: https://api.dropbox.com/{version}/
+baseUri: https://api.dropbox.com/{version}
 securedBy: [oauth_2_0]
 securitySchemes:
     - oauth_2_0: !include oauth_2_0.yml
@@ -140,7 +140,7 @@ To indicate that the method may be called without applying any *securityScheme*,
 ---
 title: GitHub API
 version: v3
-baseUri: https://api.github.com/
+baseUri: https://api.github.com
 securitySchemes:
     - oauth_2_0: !include oauth_2_0.yml
 /users/{userid}/gists:
@@ -159,7 +159,7 @@ RAML does not specify which parameters MUST be provided or supported by each *se
 ---
 title: GitHub API
 version: v3
-baseUri: https://api.github.com/
+baseUri: https://api.github.com
 securitySchemes:
     - oauth_2_0: !include oauth_2_0.yml
 /users/{userid}/gists:
