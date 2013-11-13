@@ -142,6 +142,7 @@
 
 <p>The location of the file to be included, that is, the right-hand side of !include, must be static, that is, it cannot contain any resource type or trait parameters. This will be reconsidered for future versions of RAML.</p>
 
+<a name="named-parameters"></a>
 <h2>Named Parameters</h2>
 
 <p>This RAML Specification describes collections of named parameters for the following properties: URI parameters, query string parameters, form parameters, request bodies (depending on the media type), and request and response headers. All the collections specify the named parameters' attributes as described in this section.</p>
@@ -185,7 +186,7 @@ The <em>type</em> attribute specifies the primitive type of the parameter's reso
 </tr>
 <tr>
 <td align="left">date</td>
-<td align="left">Value MUST be a string representation of a date as defined in RFC2616 Section 3.3 [RFC2616]. See <a href="http://localhost:5000/#date-representations">Date Representations</a>.</td>
+<td align="left">Value MUST be a string representation of a date as defined in RFC2616 Section 3.3 [RFC2616]. See <a href="http://raml.org/spec.html#date-representations">Date Representations</a>.</td>
 </tr>
 <tr>
 <td align="left">boolean</td>
@@ -196,7 +197,9 @@ The <em>type</em> attribute specifies the primitive type of the parameter's reso
 <td align="left">(Applicable only to Form properties)<br><br>Value is a file. Client generators SHOULD use this type to handle file uploads correctly.</td>
 </tr>
 </tbody>
-</table><h5>Date Representations</h5>
+</table>
+<a name="date-representations"></a>
+<h5>Date Representations</h5>
 
 <p>As defined in [RFC2616], all date/time stamps are represented in Greenwich Mean Time (GMT), which for the purposes of HTTP is equal to UTC (Coordinated Universal Time). This is indicated by including "GMT" as the three-letter abbreviation for the timezone. Example: <code>Sun, 06 Nov 1994 08:49:37 GMT</code>.</p>
 
@@ -455,7 +458,7 @@ In addition to the reserved URI parameters described in the <em>baseUri</em> pro
 <span class="l-Scalar-Plain">baseUri</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">https://{companyName}.freshbooks.com/api/{version}/xml-in</span>
 </pre></div>
 
-<p>URI parameters can be further defined by using the <em>uriParameters</em> property. The use of <em>uriParameters</em> is OPTIONAL. The <em>uriParameters</em> property MUST be a map in which each key MUST be the name of the URI parameter as defined in the <em>baseUri</em> property. The <em>uriParameters</em> CANNOT contain a key named <em>version</em> because it is a reserved URI parameter name. The value of the <em>uriParameters</em> property is itself a map that specifies the property's attributes, according to the <a href="http://localhost:5000/#named-parameters">Named Parameters section</a>.</p>
+<p>URI parameters can be further defined by using the <em>uriParameters</em> property. The use of <em>uriParameters</em> is OPTIONAL. The <em>uriParameters</em> property MUST be a map in which each key MUST be the name of the URI parameter as defined in the <em>baseUri</em> property. The <em>uriParameters</em> CANNOT contain a key named <em>version</em> because it is a reserved URI parameter name. The value of the <em>uriParameters</em> property is itself a map that specifies the property's attributes, according to the <a href="http://raml.org/spec.html#named-parameters">Named Parameters section</a>.</p>
 
 <div class="highlight highlight-yaml"><pre><span class="c1">#%RAML 0.8</span>
 <span class="nn">---</span>
@@ -753,7 +756,7 @@ https://api.github.com/users/{userId}/keys/{keyId}
 
 <p>An API's methods MAY support or require non-standard HTTP headers. In the API definition, specify the non-standard HTTP headers by using the <em>headers</em> property.</p>
 
-<p>The <em>headers</em> property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the <a href="http://localhost:5000/#name-parameters">Named Parameters section</a>.</p>
+<p>The <em>headers</em> property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the <a href="http://raml.org/spec.html#named-parameters">Named Parameters section</a>.</p>
 
 <p>This example shows a POST method with an HTTP header.</p>
 
@@ -840,7 +843,7 @@ https://api.github.com/users/{userId}/keys/{keyId}
 
 <p>An API's resources MAY be filtered (to return a subset of results) or altered (such as transforming a response body from JSON to XML format) by the use of query strings. If the resource or its method supports a query string, the query string MUST be defined by the <em>queryParameters</em> property. </p>
 
-<p>The <em>queryParameters</em> property is a map in which the key is the query parameter's name, and the value is itself a map specifying the query parameter's attributes, according to the <a href="http://localhost:5000/#named-parameters">Named Parameters section</a>.</p>
+<p>The <em>queryParameters</em> property is a map in which the key is the query parameter's name, and the value is itself a map specifying the query parameter's attributes, according to the <a href="http://raml.org/spec.html#named-parameters">Named Parameters section</a>.</p>
 
 <div class="highlight highlight-yaml"><pre><span class="c1">#%RAML 0.8</span>
 <span class="nn">---</span>
@@ -884,6 +887,7 @@ https://api.github.com/users/{userId}/keys/{keyId}
         <span class="l-Scalar-Plain">example</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">50</span>
 </pre></div>
 
+<a name="body"></a>
 <h5>Body</h5>
 
 <p>Some method verbs expect the resource to be sent as a request body. For example, to create a resource, the request must include the details of the resource to create.</p>
@@ -908,7 +912,7 @@ https://api.github.com/users/{userId}/keys/{keyId}
 
 <p>If the API's media type is either <em>application/x-www-form-urlencoded</em> or <em>multipart/form-data</em>, the <em>formParameters</em> property MUST specify the name-value pairs that the API is expecting.</p>
 
-<p>The <em>formParameters</em> property is a map in which the key is the name of the web form parameter, and the value is itself a map the specifies the web form parameter's attributes, according to the <a href="http://localhost:5000/#named-parameters">Named Parameters section</a>.</p>
+<p>The <em>formParameters</em> property is a map in which the key is the name of the web form parameter, and the value is itself a map the specifies the web form parameter's attributes, according to the <a href="http://raml.org/spec.html#named-parameters">Named Parameters section</a>.</p>
 
 <h6>Example</h6>
 
@@ -994,7 +998,7 @@ https://api.github.com/users/{userId}/keys/{keyId}
           <span class="no">}</span>
 </pre></div>
 
-<p>Alternatively, the value of the <em>schema</em> field MAY be the name of a schema specified in the root-level <em>schemas</em> property (see <a href="http://localhost:5000/#named-parameters">Named Parameters</a>, or it MAY be declared in an external file and included by using the by using the RAML !include user-defined data type.</p>
+<p>Alternatively, the value of the <em>schema</em> field MAY be the name of a schema specified in the root-level <em>schemas</em> property (see <a href="http://raml.org/spec.html#named-parameters">Named Parameters</a>, or it MAY be declared in an external file and included by using the by using the RAML !include user-defined data type.</p>
 
 <p>This example repeats the /jobs resource definition, but with the schemas defined in the external files job.xsd and job.schema.json.</p>
 
@@ -1054,7 +1058,7 @@ https://api.github.com/users/{userId}/keys/{keyId}
 
 <p>Responses MUST be a map of one or more HTTP status codes, where each status code itself is a map that describes that status code.</p>
 
-<p>Each response MAY contain a <em>body</em> property, which conforms to the same structure as request <em>body</em> properties (see <a href="http://localhost:5000/#body">Body</a>). Responses that can return more than one response code MAY therefore have multiple bodies defined.</p>
+<p>Each response MAY contain a <em>body</em> property, which conforms to the same structure as request <em>body</em> properties (see <a href="http://raml.org/spec.html#body">Body</a>). Responses that can return more than one response code MAY therefore have multiple bodies defined.</p>
 
 <p>For APIs without <em>a priori</em> knowledge of the response types for their responses, "*/*" MAY be used to indicate that responses that do not matching other defined data types MUST be accepted. Processing applications MUST match the most descriptive media type first if "*/*" is used.</p>
 
@@ -1112,7 +1116,7 @@ https://api.github.com/users/{userId}/keys/{keyId}
 
 <p>An API's methods may support custom header values in responses. The custom, non-standard HTTP headers MUST be specified by the <em>headers</em> property.</p>
 
-<p>The <em>headers</em> property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the <a href="http://localhost:5000/#name-parameters">Named Parameters section</a>.</p>
+<p>The <em>headers</em> property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the <a href="http://raml.org/spec.html#named-parameters">Named Parameters section</a>.</p>
 
 <p>This example shows a 503 error response that includes a custom header.</p>
 
