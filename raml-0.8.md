@@ -1150,6 +1150,8 @@ Resources may specify the resource type from which they inherit using the *type*
 
 Similarly, methods may specify one or more traits from which they inherit using the *is* property. A resource may also use the *is* property to apply the list of traits to all its methods. The value of the *is* property is an array of traits. Each trait element in that array may be defined inline (directly or via an !include), or it may be the name of a trait defined within the root-level *traits* property.
 
+Resource type definitions MUST NOT incorporate nested resources; they cannot be used to generate nested resources when they are applied to a resource, and they do not apply to its existing nested resources.
+
 #### Declaration
 
 The *resourceTypes* and *traits* properties are declared at the API definition's root level with the *resourceTypes* and *traits* property keys, respectively. The value of each of these properties is an array of maps; in each map, the keys are resourceType or trait names, and the values are resourceType or trait definitions, respectively.
@@ -1354,15 +1356,19 @@ resourceTypes:
   - searchableCollection:
       get:
         queryParameters:
-          <<queryParamName>>: Return <<resourcePathName>> that have their <<queryParamName>> matching the given value
-          <<fallbackParamName>>: If no values match the value given for <<queryParamName>>, use <<fallbackParamName>> instead
+          <<queryParamName>>:
+            description: Return <<resourcePathName>> that have their <<queryParamName>> matching the given value
+          <<fallbackParamName>>:
+            description: If no values match the value given for <<queryParamName>>, use <<fallbackParamName>> instead
 traits:
   - secured:
       queryParameters:
-        <<tokenName>>: A valid <<tokenName>> is required
+        <<tokenName>>:
+          description: A valid <<tokenName>> is required
     paged:
       queryParameters:
-        numPages: The number of pages to return, not to exceed <<maxPages>>
+        numPages:
+          description: The number of pages to return, not to exceed <<maxPages>>
 /books:
   type: { searchableCollection: { queryParamName: title, fallbackParamName: digest_all_fields } }
   get:
