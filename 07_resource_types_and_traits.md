@@ -218,15 +218,19 @@ resourceTypes:
   - searchableCollection:
       get:
         queryParameters:
-          <<queryParamName>>: Return <<resourcePathName>> that have their <<queryParamName>> matching the given value
-          <<fallbackParamName>>: If no values match the value given for <<queryParamName>>, use <<fallbackParamName>> instead
+          <<queryParamName>>:
+            description: Return <<resourcePathName>> that have their <<queryParamName>> matching the given value
+          <<fallbackParamName>>:
+            description: If no values match the value given for <<queryParamName>>, use <<fallbackParamName>> instead
 traits:
   - secured:
       queryParameters:
-        <<tokenName>>: A valid <<tokenName>> is required
+        <<tokenName>>:
+          description: A valid <<tokenName>> is required
     paged:
       queryParameters:
-        numPages: The number of pages to return, not to exceed <<maxPages>>
+        numPages:
+          description: The number of pages to return, not to exceed <<maxPages>>
 /books:
   type: { searchableCollection: { queryParamName: title, fallbackParamName: digest_all_fields } }
   get:
