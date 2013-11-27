@@ -55,4 +55,6 @@ The individual spec files will then be concatenated into a single file, raml-spe
 
 ###[References:](https://github.com/raml-org/raml-spec/blob/master/09_references.md)
 [Normative References](https://github.com/raml-org/raml-spec/blob/master/09_references.md#normative-references)  
-[Informative References](https://github.com/raml-org/raml-spec/blob/master/09_references.md#informative-references)  
+[Informative References](https://github.com/raml-org/raml-spec/blob/master/09_references.md#informative-references)
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/2c379a9b36749a80379d5f3f328a8bed "githalytics.com")](http://githalytics.com/raml-org/raml-spec)
