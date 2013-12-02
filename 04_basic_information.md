@@ -19,10 +19,10 @@ version: v3
 baseUri: https://api.github.com
 mediaType:  application/json
 schemas:
-  User:  schema/user.json
-  Users: schema/users.json
-  Org:   schema/org.json
-  Orgs:  schema/orgs.json
+  - User:  schema/user.json
+    Users: schema/users.json
+    Org:   schema/org.json
+    Orgs:  schema/orgs.json
 ```
 
 ### API Title
