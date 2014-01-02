@@ -40,7 +40,7 @@ The API architect MAY use any versioning scheme so long as version numbers retai
 
 ### Base URI and baseUriParameters
 (Optional during development; Required after implementation)
-A RESTful API's resources are defined relative to the API's base URI. The use of the *baseUri* field is OPTIONAL to allow describing APIs that have not yet been implemented. After the API is implemented (even a mock implementation) and can be accessed at a service endpoint, the API definition MUST contain a *baseUri* property. The *baseUri* property's value MUST conform to the URI specification [RFC2396] or a Level 1 Template URI as defined in [RFC 6570](http://tools.ietf.org/html/rfc6570).
+A RESTful API's resources are defined relative to the API's base URI. The use of the *baseUri* field is OPTIONAL to allow describing APIs that have not yet been implemented. After the API is implemented (even a mock implementation) and can be accessed at a service endpoint, the API definition MUST contain a *baseUri* property. The *baseUri* property's value MUST conform to the URI specification [RFC2396] or a Level 1 Template URI as defined in [RFC6570].
 
 The *baseUri* property SHOULD only be used as a reference value. API client generators MAY make the *baseUri* configurable by the API client's users.
 
