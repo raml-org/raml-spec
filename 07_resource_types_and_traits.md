@@ -156,7 +156,7 @@ Parameters may not be used within !include tags, that is, within the location of
 
 When defining resource types and traits, it can be useful to capture patterns that manifest several levels below the inheriting resource or method, without requiring the creation of the intermediate levels. For example, a resource type definition may describe a body parameter that will be used *if* the API defines a post method for that resource, but the processing application should not create the post method itself. 
 
-To accommodate this need, a resource type or trait definition MAY append a question mark ("?") suffix to the name of any property that should not be applied if it doesn't already exist in the resource or method at the corresponding level. This optional structure key indicates that the value of the property should be applied if the property name itself (without the question mark) is already defined (whether explicitly or implicitly) at the corresponding level in that resource or method.
+To accommodate this need, a resource type or trait definition MAY append a question mark ("?") suffix to the name of any non-scalar property that should not be applied if it doesn't already exist in the resource or method at the corresponding level. This optional structure key indicates that the value of the property should be applied if the property name itself (without the question mark) is already defined (whether explicitly or implicitly) at the corresponding level in that resource or method.
 
 The following example shows an optional *post?* property that defines a body parameter called createAuthority. If the inheriting resource defines a *post* method, it will include the createAuthority property in its body. Likewise, if the inheriting resource defines a *delete* method, it will include the deleteAuthority property in its body.
 
@@ -179,6 +179,9 @@ resourceTypes:
               If the resource has a delete method defined, expect a deleteAuthority 
               property in its body
 ```
+
+It is important to note that this feature applies only to non-scalar properties, thus, using the optional marker ("?") in a scalar property such as _usage_ or _displayName_ MUST be rejected from RAML parsers.
+
 
 #### Applying Resource Types and Traits
 
