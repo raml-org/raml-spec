@@ -57,7 +57,6 @@ RAML API definitions are YAML-compliant documents that begin with a REQUIRED YAM
 
 ```yaml
 #%RAML 0.8
----
 ```
 
 The RAML version MUST be the first line of the RAML document. RAML parsers MUST interpret all other YAML-commented lines as comments.
@@ -74,7 +73,6 @@ In this example, the content of myTextFile.txt is included as the value of the e
 
 ```yaml
 #%RAML 0.8
----
 external: !include myTextFile.txt
 ```
 
@@ -86,7 +84,6 @@ In this example, the *properties.raml* file defines two properties. The *big.ram
 
 ```yaml
 #%RAML 0.8
----
 #properties.raml
 
 propertyA: valueA
@@ -95,7 +92,6 @@ propertyB: valueB
 
 ```yaml
 #%RAML 0.8
----
 #big.raml
 
 external: !include properties.raml
@@ -105,7 +101,6 @@ The resulting structure is equivalent to the following inline declaration:
 
 ```yaml
 #%RAML 0.8
----
 external:
   propertyA: valueA
   propertyB: valueB
@@ -117,7 +112,6 @@ In the following example, because the original (including) file is located at *h
 
 ```yaml
 #%RAML 0.8
----
 #http://example-domain.org/api/example.raml
 
 external: !include properties.raml
@@ -220,7 +214,6 @@ In the following example, the named parameter *file* can be used for sending a f
 
 ```yaml
 #%RAML 0.8
----
 title: Amazon simple storage API
 version: 1
 baseUri: https://{destinationBucket}.s3.amazonaws.com
@@ -257,7 +250,6 @@ This example shows a snippet of the RAML API definition for the GitHub v3 public
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -308,7 +300,6 @@ The following example RAML API definition uses a Level 1 Template URI as the *ba
 
 ```yaml
 #%RAML 0.8
----
 title: Salesforce Chatter REST API
 version: v28.0
 baseUri: https://na1.salesforce.com/services/data/{version}/chatter
@@ -318,7 +309,6 @@ The following example declares an explicit base URI parameter.
 
 ```yaml
 #%RAML 0.8
----
 title: Amazon S3 REST API
 version: 1
 baseUri: https://{bucketName}.s3.amazonaws.com
@@ -333,7 +323,6 @@ A RESTful API can be reached HTTP, HTTPS, or both. The *protocols* property MAY 
 
 ```yaml
 #%RAML 0.8
----
 title: Salesforce Chatter REST API
 version: v28.0
 protocols: [ HTTP, HTTPS ]
@@ -357,7 +346,6 @@ This example shows an API that accepts and returns only JSON bodies.
 
 ```yaml
 #%RAML 0.8
----
 title: Stormpath REST API
 version: v1
 baseUri: https://api.stormpath.com/{version}
@@ -370,7 +358,6 @@ To better achieve consistency and simplicity, the API definition SHOULD include 
 
 ```yaml
 #%RAML 0.8
----
 baseUri: https://api.example.com
 title: Filesystem API
 version: 0.1
@@ -397,7 +384,6 @@ In addition to the reserved URI parameters described in the *baseUri* property s
 
 ```yaml
 #%RAML 0.8
----
 title: FreshBooks API
 version: 2.1
 baseUri: https://{companyName}.freshbooks.com/api/{version}/xml-in
@@ -407,7 +393,6 @@ URI parameters can be further defined by using the *uriParameters* property. The
 
 ```yaml
 #%RAML 0.8
----
 title: Salesforce Chatter Communities REST API
 version: v28.0
 baseUri: https://{communityDomain}.force.com/{communityPath}
@@ -436,7 +421,6 @@ This example shows an API definition with a single user document.
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 baseUri: https://app.zencoder.com/api
 documentation:
@@ -456,7 +440,6 @@ This example shows the same API definition (ZEncoder API), but the *documentatio
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 baseUri: https://app.zencoder.com/api
 documentation:
@@ -470,7 +453,6 @@ This example shows an RAML API definition with multiple documentation pages:
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -492,7 +474,6 @@ This example shows an API definition with one top-level resource, /gists, and on
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -521,7 +502,6 @@ The following example shows a top-level resource with a key */jobs* and a nested
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -538,7 +518,6 @@ A resource MAY contain a *uriParameters* property specifying the uriParameters i
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -558,7 +537,6 @@ If a URI parameter in a resource's relative URI is not explicitly described in a
 
 ```yaml
 #%RAML 0.8
----
 title: Flat Filesystem API
 version: v1
 /files:
@@ -571,7 +549,6 @@ A special uriParameter, *mediaTypeExtension*, is a reserved parameter. It may be
 
 ```yaml
 #%RAML 0.8
----
 title: API Using media type in the URL
 version: v1
 /users{mediaTypeExtension}:
@@ -585,13 +562,12 @@ Although URI parameters can be explicitly specified to be optional, they SHOULD 
 
 #### Base URI parameters
 
-A resource or a method can override a base URI template's values. This is useful to restrict or change the default or parameter selection in the base URI. The *baseUriParameters* property MAY be used to override any or all parameters defined at the root level *baseUriParameters* property, as well as base URI parameters not specified at the root level.
+A resource or a method can override a base URI template's values. This is useful to restrict or change the default or parameter selection in the base URI. The *baseUriParameters* property MAY be used to override any or all parameters defined at the root level *baseUriParameters* property, as well as base URI parameters not specified at the root level.  
 
 In the following example, calls to the /files resource must be made to "https://api-content.dropbox.com/{version}". All other calls in the API are made to "https://api.dropbox.com/{version}".
 
 ```yaml
 #%RAML 0.8
----
 title: Dropbox API
 version: 1
 baseUri: https://{apiDomain}.dropbox.com/{version}
@@ -607,6 +583,52 @@ baseUriParameters:
   baseUriParameters:
     apiDomain:
       enum: [ "api-content" ]
+```
+
+In a resource structure of resources and nested resources with their methods, the most specific baseUriParameter fully overrides any baseUriParameter definition made before. In the following example the resource `/user/{userId}/image` overrides the definition made in `/users`.
+
+```
+#%RAML 0.8
+title: Users API
+version: 1
+baseUri: https://{apiDomain}.someapi.com
+/users:
+  displayName: retrieve all users
+  baseUriParameters:
+    apiDomain:
+      enum: [ "api" ]
+  /{userId}/image:
+    displayName: access users pictures
+    baseUriParameters:
+      apiDomain:
+        enum: [ "static" ]
+```
+
+In the following example, the `PUT` method overrides the definition made in `/user/{userId}/image`.
+
+```
+#%RAML 0.8
+title: Users API
+version: 1
+baseUri: https://{apiDomain}.someapi.com
+/users:
+  displayName: retrieve all users
+  baseUriParameters:
+    apiDomain:
+      enum: [ "api" ]
+  /{userId}/image:
+    displayName: access users pictures
+    baseUriParameters:
+      apiDomain:
+        enum: [ "static" ]
+    get:
+      displayName: retrieve a user's picture
+    put:
+      displayName: update a user's picture
+      baseUriParameters:
+        apiDomain:
+          enum: [ "content-update" ]
+
 ```
 
 The special baseUriParameter *version* is reserved; processing applications MUST replace occurrences of {version} in any baseUri property values with the value of the root-level *version* property. The {version} parameter, if used in a baseUri, is required: if it is ued in a baseUri, the *version* root-level property MUST be provided and MUST be a valid non-empty URI fragment. 
@@ -633,7 +655,6 @@ In this example, /user is a top-level resource that has no children; /users is a
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -676,7 +697,6 @@ This example shows a resource, /jobs, with POST and GET methods (verbs) declared
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -691,7 +711,6 @@ The value of the *description* property MAY be formatted using Markdown [MARKDOW
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -720,7 +739,6 @@ This example shows a POST method with an HTTP header.
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -738,7 +756,6 @@ In the following example, the header x-metadata-{*} is used to send metadata tha
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -762,7 +779,6 @@ Documentation generators MUST include content specified as example information f
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -790,7 +806,6 @@ In the following example, the GET method is accessible through both HTTP and HTT
 
 ```yaml
 #%RAML 0.8
----
 title: Twitter API
 version: 1.1
 baseUri: https://api.twitter.com/{version}
@@ -809,7 +824,6 @@ The *queryParameters* property is a map in which the key is the query parameter'
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -829,7 +843,6 @@ Query string *queryParameters* properties MAY include an *example* attribute. Do
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com/{version}
@@ -884,7 +897,6 @@ Documentation generators MUST use *form* properties' *example* attributes to gen
 
 ```yaml
 #%RAML 0.8
----
 title: Twilio API
 version: 2010-04-01
 baseUri: https://api.twilio.com/{version}
@@ -1158,7 +1170,6 @@ The *resourceTypes* and *traits* properties are declared at the API definition's
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 resourceTypes:
@@ -1185,7 +1196,6 @@ The following example builds on the previous one, but the the resource types and
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 resourceTypes:
@@ -1212,7 +1222,6 @@ Collections of resourceTypes may also be combined, as can collections of traits.
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 resourceTypes: 
@@ -1254,7 +1263,6 @@ To apply functions, append them to the parameter name within the double angle br
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 mediaType: application/json
@@ -1300,7 +1308,6 @@ The following example shows an optional *post?* property that defines a body par
 
 ```yaml
 #%RAML 0.8
----
 title: Example of Optional Properties
 resourceTypes:
   - auditableResource
@@ -1318,6 +1325,9 @@ resourceTypes:
               property in its body
 ```
 
+It is important to note that this feature applies only to non-scalar properties, thus, using the optional marker ("?") in a scalar property such as _usage_ or _displayName_ MUST be rejected from RAML parsers.
+
+
 #### Applying Resource Types and Traits
 
 To apply a resource type definition to a resource, so that the resource inherits the resource type's characteristics, the resource MUST be defined using the *type* attribute. The value of the *type* attribute MUST be either a) one and only one of the resource type keys (names) included in the *resourceTypes* declaration, or b) one and only one resource type definition map.
@@ -1328,7 +1338,6 @@ A trait may also be applied to a resource by using the *is* key, which is equiva
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 resourceTypes:
@@ -1349,7 +1358,6 @@ To pass parameter values to resource types and traits, use a map when declaring 
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 resourceTypes:
@@ -1391,7 +1399,6 @@ In this example, the Dropbox API supports authentication via OAuth 2.0 and OAuth
 
 ```yaml
 #%RAML 0.8
----
 title: Dropbox API
 version: 1
 baseUri: https://api.dropbox.com/{version}
@@ -1494,7 +1501,6 @@ Applying a *securityScheme* definition to a method overrides whichever *security
 
 ```yaml
 #%RAML 0.8
----
 title: Dropbox API
 version: 1
 baseUri: https://api.dropbox.com/{version}
@@ -1513,7 +1519,6 @@ To indicate that the method may be called without applying any *securityScheme*,
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -1532,7 +1537,6 @@ RAML does not specify which parameters MUST be provided or supported by each *se
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com

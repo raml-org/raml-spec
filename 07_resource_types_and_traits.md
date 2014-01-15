@@ -20,7 +20,6 @@ The *resourceTypes* and *traits* properties are declared at the API definition's
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 resourceTypes:
@@ -47,7 +46,6 @@ The following example builds on the previous one, but the the resource types and
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 resourceTypes:
@@ -74,7 +72,6 @@ Collections of resourceTypes may also be combined, as can collections of traits.
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 resourceTypes: 
@@ -116,7 +113,6 @@ To apply functions, append them to the parameter name within the double angle br
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 mediaType: application/json
@@ -162,7 +158,6 @@ The following example shows an optional *post?* property that defines a body par
 
 ```yaml
 #%RAML 0.8
----
 title: Example of Optional Properties
 resourceTypes:
   - auditableResource
@@ -193,7 +188,6 @@ A trait may also be applied to a resource by using the *is* key, which is equiva
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 resourceTypes:
@@ -214,7 +208,6 @@ To pass parameter values to resource types and traits, use a map when declaring 
 
 ```yaml
 #%RAML 0.8
----
 title: Example API
 version: v1
 resourceTypes:

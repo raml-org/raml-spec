@@ -84,7 +84,6 @@ In the following example, the named parameter *file* can be used for sending a f
 
 ```yaml
 #%RAML 0.8
----
 title: Amazon simple storage API
 version: 1
 baseUri: https://{destinationBucket}.s3.amazonaws.com

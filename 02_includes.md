@@ -6,7 +6,6 @@ In this example, the content of myTextFile.txt is included as the value of the e
 
 ```yaml
 #%RAML 0.8
----
 external: !include myTextFile.txt
 ```
 
@@ -18,7 +17,6 @@ In this example, the *properties.raml* file defines two properties. The *big.ram
 
 ```yaml
 #%RAML 0.8
----
 #properties.raml
 
 propertyA: valueA
@@ -27,7 +25,6 @@ propertyB: valueB
 
 ```yaml
 #%RAML 0.8
----
 #big.raml
 
 external: !include properties.raml
@@ -37,7 +34,6 @@ The resulting structure is equivalent to the following inline declaration:
 
 ```yaml
 #%RAML 0.8
----
 external:
   propertyA: valueA
   propertyB: valueB
@@ -49,7 +45,6 @@ In the following example, because the original (including) file is located at *h
 
 ```yaml
 #%RAML 0.8
----
 #http://example-domain.org/api/example.raml
 
 external: !include properties.raml
