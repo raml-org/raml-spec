@@ -2,7 +2,7 @@
 
 Resource and method declarations are frequently repetitive. For example, if an API requires OAuth authentication, the API definition must include the *access_token* query string parameter (which is defined by the *queryParameters* property) in all the API's resource method declarations.
 
-Moreover, there are many advantages to reusing patterns across multiple resources and methods. For example, after defining a collection-type resource's characteristics, that definition can be applied to multiple resources. This use of patterns encouraging consistency and reduces complexity for both servers and clients.
+Moreover, there are many advantages to reusing patterns across multiple resources and methods. For example, after defining a collection-type resource's characteristics, that definition can be applied to multiple resources. This use of patterns encourages consistency and reduces complexity for both servers and clients.
 
 A *resource type* is a partial resource definition that, like a resource, can specify a description and methods and their properties. Resources that use a resource type inherit its properties, such as its methods.
 
