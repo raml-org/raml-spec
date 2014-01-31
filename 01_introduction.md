@@ -57,7 +57,6 @@ RAML API definitions are YAML-compliant documents that begin with a REQUIRED YAM
 
 ```yaml
 #%RAML 0.8
----
 ```
 
 The RAML version MUST be the first line of the RAML document. RAML parsers MUST interpret all other YAML-commented lines as comments.

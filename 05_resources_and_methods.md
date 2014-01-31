@@ -8,7 +8,6 @@ This example shows an API definition with one top-level resource, /gists, and on
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -37,7 +36,6 @@ The following example shows a top-level resource with a key */jobs* and a nested
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -54,7 +52,6 @@ A resource MAY contain a *uriParameters* property specifying the uriParameters i
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -74,7 +71,6 @@ If a URI parameter in a resource's relative URI is not explicitly described in a
 
 ```yaml
 #%RAML 0.8
----
 title: Flat Filesystem API
 version: v1
 /files:
@@ -87,7 +83,6 @@ A special uriParameter, *mediaTypeExtension*, is a reserved parameter. It may be
 
 ```yaml
 #%RAML 0.8
----
 title: API Using media type in the URL
 version: v1
 /users{mediaTypeExtension}:
@@ -101,13 +96,12 @@ Although URI parameters can be explicitly specified to be optional, they SHOULD 
 
 #### Base URI parameters
 
-A resource or a method can override a base URI template's values. This is useful to restrict or change the default or parameter selection in the base URI. The *baseUriParameters* property MAY be used to override any or all parameters defined at the root level *baseUriParameters* property, as well as base URI parameters not specified at the root level.
+A resource or a method can override a base URI template's values. This is useful to restrict or change the default or parameter selection in the base URI. The *baseUriParameters* property MAY be used to override any or all parameters defined at the root level *baseUriParameters* property, as well as base URI parameters not specified at the root level.  
 
 In the following example, calls to the /files resource must be made to "https://api-content.dropbox.com/{version}". All other calls in the API are made to "https://api.dropbox.com/{version}".
 
 ```yaml
 #%RAML 0.8
----
 title: Dropbox API
 version: 1
 baseUri: https://{apiDomain}.dropbox.com/{version}
@@ -123,6 +117,52 @@ baseUriParameters:
   baseUriParameters:
     apiDomain:
       enum: [ "api-content" ]
+```
+
+In a resource structure of resources and nested resources with their methods, the most specific baseUriParameter fully overrides any baseUriParameter definition made before. In the following example the resource `/user/{userId}/image` overrides the definition made in `/users`.
+
+```
+#%RAML 0.8
+title: Users API
+version: 1
+baseUri: https://{apiDomain}.someapi.com
+/users:
+  displayName: retrieve all users
+  baseUriParameters:
+    apiDomain:
+      enum: [ "api" ]
+  /{userId}/image:
+    displayName: access users pictures
+    baseUriParameters:
+      apiDomain:
+        enum: [ "static" ]
+```
+
+In the following example, the `PUT` method overrides the definition made in `/user/{userId}/image`.
+
+```
+#%RAML 0.8
+title: Users API
+version: 1
+baseUri: https://{apiDomain}.someapi.com
+/users:
+  displayName: retrieve all users
+  baseUriParameters:
+    apiDomain:
+      enum: [ "api" ]
+  /{userId}/image:
+    displayName: access users pictures
+    baseUriParameters:
+      apiDomain:
+        enum: [ "static" ]
+    get:
+      displayName: retrieve a user's picture
+    put:
+      displayName: update a user's picture
+      baseUriParameters:
+        apiDomain:
+          enum: [ "content-update" ]
+
 ```
 
 The special baseUriParameter *version* is reserved; processing applications MUST replace occurrences of {version} in any baseUri property values with the value of the root-level *version* property. The {version} parameter, if used in a baseUri, is required: if it is ued in a baseUri, the *version* root-level property MUST be provided and MUST be a valid non-empty URI fragment. 
@@ -149,7 +189,6 @@ In this example, /user is a top-level resource that has no children; /users is a
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -192,7 +231,6 @@ This example shows a resource, /jobs, with POST and GET methods (verbs) declared
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -207,7 +245,6 @@ The value of the *description* property MAY be formatted using Markdown [MARKDOW
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -236,7 +273,6 @@ This example shows a POST method with an HTTP header.
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -254,7 +290,6 @@ In the following example, the header x-metadata-{*} is used to send metadata tha
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -278,7 +313,6 @@ Documentation generators MUST include content specified as example information f
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
@@ -306,7 +340,6 @@ In the following example, the GET method is accessible through both HTTP and HTT
 
 ```yaml
 #%RAML 0.8
----
 title: Twitter API
 version: 1.1
 baseUri: https://api.twitter.com/{version}
@@ -325,7 +358,6 @@ The *queryParameters* property is a map in which the key is the query parameter'
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -345,7 +377,6 @@ Query string *queryParameters* properties MAY include an *example* attribute. Do
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com/{version}
@@ -400,7 +431,6 @@ Documentation generators MUST use *form* properties' *example* attributes to gen
 
 ```yaml
 #%RAML 0.8
----
 title: Twilio API
 version: 2010-04-01
 baseUri: https://api.twilio.com/{version}

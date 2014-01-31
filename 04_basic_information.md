@@ -13,7 +13,6 @@ This example shows a snippet of the RAML API definition for the GitHub v3 public
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -64,7 +63,6 @@ The following example RAML API definition uses a Level 1 Template URI as the *ba
 
 ```yaml
 #%RAML 0.8
----
 title: Salesforce Chatter REST API
 version: v28.0
 baseUri: https://na1.salesforce.com/services/data/{version}/chatter
@@ -74,7 +72,6 @@ The following example declares an explicit base URI parameter.
 
 ```yaml
 #%RAML 0.8
----
 title: Amazon S3 REST API
 version: 1
 baseUri: https://{bucketName}.s3.amazonaws.com
@@ -89,7 +86,6 @@ A RESTful API can be reached HTTP, HTTPS, or both. The *protocols* property MAY 
 
 ```yaml
 #%RAML 0.8
----
 title: Salesforce Chatter REST API
 version: v28.0
 protocols: [ HTTP, HTTPS ]
@@ -113,7 +109,6 @@ This example shows an API that accepts and returns only JSON bodies.
 
 ```yaml
 #%RAML 0.8
----
 title: Stormpath REST API
 version: v1
 baseUri: https://api.stormpath.com/{version}
@@ -126,7 +121,6 @@ To better achieve consistency and simplicity, the API definition SHOULD include 
 
 ```yaml
 #%RAML 0.8
----
 baseUri: https://api.example.com
 title: Filesystem API
 version: 0.1
@@ -153,7 +147,6 @@ In addition to the reserved URI parameters described in the *baseUri* property s
 
 ```yaml
 #%RAML 0.8
----
 title: FreshBooks API
 version: 2.1
 baseUri: https://{companyName}.freshbooks.com/api/{version}/xml-in
@@ -163,7 +156,6 @@ URI parameters can be further defined by using the *uriParameters* property. The
 
 ```yaml
 #%RAML 0.8
----
 title: Salesforce Chatter Communities REST API
 version: v28.0
 baseUri: https://{communityDomain}.force.com/{communityPath}
@@ -192,7 +184,6 @@ This example shows an API definition with a single user document.
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 baseUri: https://app.zencoder.com/api
 documentation:
@@ -212,7 +203,6 @@ This example shows the same API definition (ZEncoder API), but the *documentatio
 
 ```yaml
 #%RAML 0.8
----
 title: ZEncoder API
 baseUri: https://app.zencoder.com/api
 documentation:
@@ -226,7 +216,6 @@ This example shows an RAML API definition with multiple documentation pages:
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com

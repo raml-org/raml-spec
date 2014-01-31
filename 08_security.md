@@ -15,7 +15,6 @@ In this example, the Dropbox API supports authentication via OAuth 2.0 and OAuth
 
 ```yaml
 #%RAML 0.8
----
 title: Dropbox API
 version: 1
 baseUri: https://api.dropbox.com/{version}
@@ -118,7 +117,6 @@ Applying a *securityScheme* definition to a method overrides whichever *security
 
 ```yaml
 #%RAML 0.8
----
 title: Dropbox API
 version: 1
 baseUri: https://api.dropbox.com/{version}
@@ -137,7 +135,6 @@ To indicate that the method may be called without applying any *securityScheme*,
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
@@ -156,7 +153,6 @@ RAML does not specify which parameters MUST be provided or supported by each *se
 
 ```yaml
 #%RAML 0.8
----
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
