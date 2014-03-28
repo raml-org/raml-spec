@@ -29,7 +29,7 @@
 body {
     -webkit-font-smoothing: antialiased !important;
     color: #262626;
-    background: #fff;
+    background: #000102;
     strong {
         font-weight: bold;
     }
@@ -104,21 +104,43 @@ body {
         -o-font-smoothing: antialiased;
         font-smoothing: antialiased;
     }
-    
     a.symbol:before {
         content: attr(title);
     }
     pre {
-        overflow: auto;
-        white-space: pre-line;
-        background: #000102;
-        code {
-            padding: 0 20px 0px;
-            display: block;
-            white-space: pre-wrap;
-            font-family: "Lucida Console", Monaco, monospace;
-            font-size: 14px;
-            line-height: 20px;
+      overflow: auto;
+      white-space: pre-line;
+      background: #000102;
+      code {
+        padding: 0 20px 0px;
+        display: block;
+        white-space: pre-wrap;
+        font-family: "Lucida Console", Monaco, monospace;
+        font-size: 14px;
+        line-height: 20px;
+        color: #fff;
+        ol {
+          margin: -9px 0 0;
+          padding: 0;
+          font-family: "Lucida Console", Monaco, monospace;
+          font-size: 14px;
+          line-height: 20px;
+          list-style: none;
+          counter-reset: li;
+          li {
+            margin: 0;
+            padding: 0 0 0 30px;
+            position: relative;
+            white-space: pre;
+            line-height: 0px;
+            &:before {
+              position: absolute;
+              top: 0;
+              left: 0;
+              content: counter(li);
+              counter-increment: li;
+              color: rgba(255,255,255,.35);
+            }
             .l1 {
                 color: #bfeb71;
             }
@@ -149,232 +171,312 @@ body {
             .ln {
                 color: rgba(255,255,255,.35);
             }
+          }
         }
+      }
     }
+    /* add back when prettify works correctly
+    pre, pre.prettyprint {
+      padding: 25px 20px;
+      overflow: auto;
+      white-space: pre-line;
+      font-family: "Lucida Console", Monaco, monospace;
+      font-size: 14px;
+      line-height: 20px;
+      background: #000102;
+      border: none;
+      ol {
+          padding: 0 0 0 34px;;
+          font-family: "Lucida Console", Monaco, monospace;
+          font-size: 14px;
+          line-height: 20px;
+          li {
+            margin: 0;
+            color: rgba(255,255,255,.35);
+            list-style-type: decimal !important;
+            background: #000102 !important;
+            span {
+              color: #97a8ae;
+            }
+          }
+      }
+    }*/
     .header-wrapper {
         position: fixed;
         top: 0;
         z-index: 4;
         width: 100%;
-        background: #000102;
+        background: rgba(0,1,2,.9);
+        @media (max-width: 768px) {
+          position: static;
+          top: auto;
+        }
         header {
-            margin: 0 auto;
-            padding: 20px;
-            width: 914px;
-            nav {
-              ul {
-                line-height: 14px;
-              }
-                text-align: center;
-                li {
-                    display: inline-block;
-                    width: 150px;
-                    a {
-                        padding: 10px;
-                        font-family: "Montserrat", Helvetica, Arial, sans-serif;
-                        font-size: 16px;
-                        line-height: 55px;
-                        color: #fff;
-                        border-bottom: 1px solid #000102;
-                        &.active, &:hover {
-                            border-bottom: 1px solid #e400ff;
-                        }
-                    }
-                    &.nav-logo {
-                        width: auto;
-                        a {
-                            padding: 0;
-                            display: inline-block;
-                            text-indent: 100%;
-                            overflow: hidden;
-                            height: 50px;
-                            width: 163px;
-                            border-bottom: 1px solid #000102;
-                            background:url('../images/logo.png') center no-repeat;
-                        }
-                    }
-                    &.nav-projects {
-                        float: left;
-                        text-align: left;
-                    }
-                    &.nav-docs {
-                        float: left;
-                    }
-                    &.nav-about {
-                        float: right;
-                    }
-                    &.nav-licensing {
-                        float: right;
-                        text-align: right;
-                    }
-                }
-            }
-        }
-        header.header-condensed {
+          margin: 0 auto;
+          padding: 20px;
+          width: 914px;
+          @media (max-width: 970px) {
             width: auto;
-                li {
-                    width: 100px;
-                    a {
-                        font-size: 14px;
-                        line-height: 43px;
-                    }
-                    &.nav-logo {
-                        width: auto;
-                        a {
-                            width: 125px;
-                            height: 35px;
-                            background: url('../images/logo-blue-small.png') no-repeat 0 0;
-                        }
-                    }
-                    &.nav-docs {
-                        width: 131px;
-                    }
+          }
+          @media (max-width: 768px) {
+            display: none;
+          }
+          &.header-condensed, &.header-mobile {
+              display: none;
+          }
+          nav {
+            ul {
+              line-height: 14px;
+              > li {
+                margin: 0 0 0 40px;
+                float: left;
+                @media (max-width: 970px) {
+                  margin: 0 0 0 30px;
                 }
-        }
-        header.header-mobile {
+                @media (max-width: 881px) {
+                  margin: 0 0 0 20px;
+                }
+                a {
+                  padding: 10px;
+                  font-family: "Montserrat", Helvetica, Arial, sans-serif;
+                  font-size: 16px;
+                  line-height: 55px;
+                  color: #fff;
+                  border-bottom: 1px solid transparent;
+                  @media (max-width: 970px) {
+                    font-size: 14px;
+                    line-height: 53px;
+                  }
+                  &.active, &:hover {
+                    border-bottom: 1px solid #e400ff;
+                  }
+                }
+                &.nav-logo {
+                  a {
+                    padding: 8px 0;
+                    display: inline-block;
+                    text-indent: 100%;
+                    overflow: hidden;
+                    height: 35px;
+                    width: 125px;
+                    border-bottom: 1px solid transparent;
+                    background:url('../images/logo@2x.png') center no-repeat;
+                    background-size: 125px 35px;
+                  }
+                }
+                &:first-child {
+                  margin: 0 108px 0 0;
+                  @media (max-width: 881px) {
+                    margin: 0 85px 0 0;
+                  }
+                }
+              }
+            }
+            &:after { 
+              content: " ";
+              display: block;
+              height: 0; 
+              clear: both;
+            }
+          }
+          &.header-mobile {
             text-align: center;
             width: auto;
-            nav {
-                margin: 16px 0 0;
-                height: 45px;
-                li {
-                    float: none !important;
-                    width: auto;
-                    a {
-                        font-size: 16px;
-                        line-height: 16px;
-                        &.active, &:hover {
-                            color: #e400ff;
-                            border-bottom: none;
-                        }
-                    }
-                }
+            @media (max-width: 768px) {
+              display: block;
             }
             .nav-logo {
-                padding: 0;
-                display: inline-block;
-                text-indent: 100%;
-                overflow: hidden;
-                height: 35px;
-                width: 125px;
-                background: url('../images/logo-blue-small.png') center no-repeat;
+              padding: 8px 0;
+              display: inline-block;
+              text-indent: 100%;
+              overflow: hidden;
+              height: 35px;
+              width: 125px;
+              border-bottom: 1px solid transparent;
+              background:url('../images/logo@2x.png') center no-repeat;
+              background-size: 125px 35px;
             }
-        }
-        header.header-condensed, header.header-mobile {
-            display: none;
+            nav {
+              margin: 16px 0 0;
+              height: 45px;
+              @media (max-width: 768px) {
+                height: auto;
+              }
+              ul {
+                line-height: 45px;
+                > li {
+                  margin: 0 15px;
+                  float: none !important;
+                  display: inline-block;
+                  @media (max-width: 670px) {
+                    margin: 0 5px;
+                  }
+                  a {
+                    font-size: 16px;
+                    line-height: 16px;
+                    &.active, &:hover {
+                      color: #e400ff;
+                      border-bottom: none;
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
         .cta-mini {
-            padding: 10px;
-            display: none;
-            position: fixed;
-            top: 93px;
-            right: 0;
-            height: 40px;
-            width: 50px;
-            font-size: 18px;
-            line-height: 38px;
-            font-family: "Montserrat", Helvetica, Arial, sans-serif;
-            color: #fff;
-            background-color: #b336a9;
-            background-image: -webkit-gradient(linear, left top, left bottom, from(#b336a9), to(#93258a));
-            background-image: -webkit-linear-gradient(top, #b336a9, #93258a);
-            background-image: -moz-linear-gradient(top, #b336a9, #93258a);
-            background-image: -o-linear-gradient(top, #b336a9, #93258a);
-            background-image: linear-gradient(to bottom, #b336a9, #93258a);
-            border-radius: 0 0 3px 3px;
-            box-shadow: 0 0 0 3px rgba(0,0,0,.05);
-            &:hover {
-                background-color: #8f2b87;
-                background-image: -webkit-gradient(linear, left top, left bottom, from(#8f2b87), to(#761e6e));
-                background-image: -webkit-linear-gradient(top, #8f2b87, #761e6e);
-                background-image: -moz-linear-gradient(top, #8f2b87, #761e6e);
-                background-image: -o-linear-gradient(top, #8f2b87, #761e6e);
-                background-image: linear-gradient(to bottom, #8f2b87, #761e6e);
-            }
+          padding: 10px;
+          display: none;
+          position: fixed;
+          top: 95px;
+          right: 0;
+          height: 40px;
+          width: 50px;
+          font-size: 18px;
+          line-height: 38px;
+          font-family: "Montserrat", Helvetica, Arial, sans-serif;
+          color: #fff;
+          background-color: #b336a9;
+          background-image: -webkit-gradient(linear, left top, left bottom, from(#b336a9), to(#93258a));
+          background-image: -webkit-linear-gradient(top, #b336a9, #93258a);
+          background-image: -moz-linear-gradient(top, #b336a9, #93258a);
+          background-image: -o-linear-gradient(top, #b336a9, #93258a);
+          background-image: linear-gradient(to bottom, #b336a9, #93258a);
+          border-radius: 0 0 3px 3px;
+          box-shadow: 0 0 0 3px rgba(0,0,0,.05);
+          &:hover {
+            background-color: #8f2b87;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#8f2b87), to(#761e6e));
+            background-image: -webkit-linear-gradient(top, #8f2b87, #761e6e);
+            background-image: -moz-linear-gradient(top, #8f2b87, #761e6e);
+            background-image: -o-linear-gradient(top, #8f2b87, #761e6e);
+            background-image: linear-gradient(to bottom, #8f2b87, #761e6e);
+          }
         }
     }
     .banner-wrapper {
-        margin-top: 93px;
+        margin-top: 95px;
         width: 100%;
         background: #f6f6f6;
+        @media (max-width: 970px) {
+          margin-top: 94px;
+        }
+        @media (max-width: 768px) {
+          margin-top: auto;
+        }
         .content {
             margin: 0 auto;
             padding: 45px 20px;
             overflow: hidden;
             width: 914px;
+            @media (max-width: 970px) {
+              width: auto;
+            }
+            @media (max-width: 768px) {
+              width: auto;
+            }
             .banner {
                 float: left;
-                width: 73%;
+                width: 70%;
+                @media (max-width: 970px) {
+                  width: 66%;
+                }
+                @media (max-width: 800px) {
+                  width: 57%;
+                }
+                @media (max-width: 768px) {
+                  float: none;
+                  text-align: center;
+                  width: auto;
+                }
                 h1 {
                     color: #0b9be6;
                 }
                 h2 {
-                    margin: 16px 0 0;
-                    font-family: "Montserrat", Helvetica, Arial, sans-serif;
-                    font-size: 16px;
-                    line-height: 21px;
-                    font-weight: normal;
-                    color: #262626;
-                    text-transform: inherit;
+                  margin: 16px 0 0;
+                  font-family: "Montserrat", Helvetica, Arial, sans-serif;
+                  font-size: 14px;
+                  line-height: 21px;
+                  font-weight: normal;
+                  color: #262626;
+                  text-transform: inherit;
+                  @media (max-width: 970px) {
+                    font-size: 12px;
+                    line-height: 17px;
+                  }
+                  @media (max-width: 768px) {
+                    font-size: 12px;
+                    line-height: 18px;
+                  }
                 }
                 .cta-github {
-                    margin: 16px 0 0;
-                    padding: 10px;
-                    display: block;
-                    position: relative;
-                    text-align: center;
-                    font-family: "Montserrat", Helvetica, Arial, sans-serif;
-                    font-size: 12px;
-                    line-height: 14px;
-                    color: #fff;
-                    width: 150px;
-                    border-radius: 3px;
-                    background-color: #2d2d2d;
-                    background-image: -webkit-gradient(linear, left top, left bottom, from(#2d2d2d), to(#262626));
-                    background-image: -webkit-linear-gradient(top, #2d2d2d, #262626);
-                    background-image: -moz-linear-gradient(top, #2d2d2d, #262626);
-                    background-image: -o-linear-gradient(top, #2d2d2d, #262626);
-                    background-image: linear-gradient(to bottom, #2d2d2d, #262626);
-                    &:hover {
-                        background-color: #262626;
-                        background-image: -webkit-gradient(linear, left top, left bottom, from(#262626), to(#1e1e1e));
-                        background-image: -webkit-linear-gradient(top, #262626, #1e1e1e);
-                        background-image: -moz-linear-gradient(top, #262626, #1e1e1e);
-                        background-image: -o-linear-gradient(top, #262626, #1e1e1e);
-                        background-image: linear-gradient(to bottom, #262626, #1e1e1e);
-                    }
-                    &:before {
-                        position: absolute;
-                        top: 5px;
-                        left: 12px;
-                        font-size: 24px;
-                        line-height: 24px;
-                    }
-                }
-                .cta-github.mobile {
+                  margin: 16px 0 0;
+                  padding: 10px;
+                  display: block;
+                  position: relative;
+                  text-align: center;
+                  font-family: "Montserrat", Helvetica, Arial, sans-serif;
+                  font-size: 12px;
+                  line-height: 14px;
+                  color: #fff;
+                  width: 150px;
+                  border-radius: 3px;
+                  background-color: #2d2d2d;
+                  background-image: -webkit-gradient(linear, left top, left bottom, from(#2d2d2d), to(#262626));
+                  background-image: -webkit-linear-gradient(top, #2d2d2d, #262626);
+                  background-image: -moz-linear-gradient(top, #2d2d2d, #262626);
+                  background-image: -o-linear-gradient(top, #2d2d2d, #262626);
+                  background-image: linear-gradient(to bottom, #2d2d2d, #262626);
+                  @media (max-width: 768px) {
+                    margin: 40px auto;
                     padding: 10px 25px;
-                    display: none;
+                  }
+                  &:hover {
+                    background-color: #262626;
+                    background-image: -webkit-gradient(linear, left top, left bottom, from(#262626), to(#1e1e1e));
+                    background-image: -webkit-linear-gradient(top, #262626, #1e1e1e);
+                    background-image: -moz-linear-gradient(top, #262626, #1e1e1e);
+                    background-image: -o-linear-gradient(top, #262626, #1e1e1e);
+                    background-image: linear-gradient(to bottom, #262626, #1e1e1e);
+                  }
+                  &:before {
+                    position: absolute;
+                    top: 5px;
+                    left: 12px;
+                    font-size: 24px;
+                    line-height: 24px;
+                  }
                 }
             }
             .cta {
                 margin: 29px 0 0;
                 float: right;
                 width: 229px;
+                @media (max-width: 970px) {
+                  margin: 20px 0 0;
+                }
+                @media (max-width: 800px) {
+                  margin: 28px 0 0;
+                }
+                @media (max-width: 768px) {
+                  margin: 0 auto;
+                  float: none;
+                }
                 a {
-                    display: block;
-                    position: relative;
-                    font-family: "Montserrat", Helvetica, Arial, sans-serif;
-                    color: #fff;
-                    border-radius: 3px;
-                    &.cta-video {
-                        height: 150px;
-                        width: 229px;
-                        background: url('../images/video-thumb.png') center no-repeat;
-                        box-shadow: 0 0 3px 1px rgba(0,0,0,.25);
-                        &:hover {
-                            opacity: 0.9;
-                        }
+                  display: block;
+                  position: relative;
+                  font-family: "Montserrat", Helvetica, Arial, sans-serif;
+                  color: #fff;
+                  border-radius: 3px;
+                  &.cta-video {
+                    height: 150px;
+                    width: 229px;
+                    background: url('../images/video-thumb.png') center no-repeat;
+                    box-shadow: 0 0 3px 1px rgba(0,0,0,.25);
+                    &:hover {
+                      opacity: 0.9;
                     }
+                  }
                 }
             }
         }
@@ -388,10 +490,19 @@ body {
             padding: 40px 20px;
             overflow: hidden;
             width: 914px;
+            @media (max-width: 970px) {
+              width: auto;
+            }
             .callouts {
                 margin: 0 25px 0 0;
                 float: left;
                 width: 270px;
+                @media (max-width: 970px) {
+                  display: none;
+                }
+                @media (max-width: 768px) {
+                  display: none;
+                }
                 a {
                     color: #e400ff;
                 }
@@ -400,80 +511,70 @@ body {
                     position: relative;
                     font-size: 12px;
                     line-height: 18px;
-                    &:before {
-                        content: "";
+                    i {
                         position: absolute;
+                        top: 2px;
+                        left: 0;
+                        background: url('../images/callout-icons.png') no-repeat 0 0;
                     }
                     &.callout1 {
                         margin: 37px 0 0;
-                        &:before {
-                            top: 0;
-                            left: 0;
+                        i {
                             width: 26px;
                             height: 25px;
-                            background-size: 26px 25px;
-                            background: url('../images/callout-icons.png') no-repeat 0 0;
+                            background-position: 0 0;
                         }
                     }
                     &.callout2 {
                         margin: 38px 0 0;
-                        &:before {
-                            top: 0;
-                            left: 0;
+                        i {
                             width: 26px;
                             height: 25px;
-                            background-size: 26px 25px;
-                            background: url('../images/callout-icons.png') no-repeat 0 -25px;
+                            background-position: 0 -25px;
                         }
                     }
                     &.callout3 {
                         margin: 14px 0 0;
-                        &:before {
-                            top: 0;
-                            left: 0;
+                        i {
                             width: 28px;
                             height: 28px;
-                            background-size: 28px 28px;
-                            background: url('../images/callout-icons.png') no-repeat 0 -50px;
+                            background-position: 0 -50px;
                         }
                     }
                     &.callout4 {
                         margin: 27px 0 0;
-                        &:before {
-                            top: 0;
-                            left: 0;
+                        i {
                             width: 26px;
                             height: 26px;
-                            background-size: 26px 26px;
-                            background: url('../images/callout-icons.png') no-repeat 0 -78px;
+                            background-position: 0 -78px;
                         }
                     }
                     &.callout5 {
                         margin: 145px 0 0;
-                        &:before {
-                            top: 0;
-                            left: 0;
+                        i {
                             width: 26px;
                             height: 21px;
-                            background-size: 26px 21px;
-                            background: url('../images/callout-icons.png') no-repeat 0 -104px;
+                            background-position: 0 -104px;
                         }
                     }
                     &.callout6 {
                         margin: 77px 0 0;
-                        &:before {
-                            top: 0;
-                            left: 0;
+                        i {
                             width: 26px;
                             height: 27px;
-                            background-size: 26px 27px;
-                            background: url('../images/callout-icons.png') no-repeat 0 -126px;
+                            background-position: 0 -126px;
                         }
                     }
                 }
             }
             .brackets {
                 float: left;
+                @media (max-width: 970px) {
+                  display: none;
+                }
+                @media (max-width: 768px) {
+                  display: none;
+                }
                 .bracket {
                     position: relative;
                     width: 2px;
@@ -519,22 +620,71 @@ body {
                 }
             }
             pre {
-                float: right;
-                width: 595px;
-                code {
-                    color: #fff;
+              position: relative;
+              float: right;
+              width: 595px;
+              @media (max-width: 970px) {
+                float: none;
+                width: auto;
+              }
+              @media (max-width: 768px) {
+                margin: 0 auto;
+              }
+              @media (max-width: 480px) {
+                width: 280px;
+              }
+              code {
+                color: #fff;
+                white-space: inherit;
+                @media (max-width: 768px) {
+                  font-size: 12px;
+                  line-height: 18px;
                 }
+              }
+              .copy-clipboard {
+                padding: 2px 6px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 16px;
+                width: 16px;
+                background: url('../images/copy.svg') no-repeat 5px 2px;
+                background-size: 16px 16px;
+                cursor: pointer;
+                border-left: 1px solid rgba(255,255,255,.25);
+                border-bottom: 1px solid rgba(255,255,255,.25);
+                span {
+                  position: absolute;
+                  top: 6px;
+                  left: -45px;
+                  display: none;
+                  font-family: Arial, sans-serif;
+                  font-size: 10px;
+                  font-weight: bold;
+                  color: #fff;
+                }
+              }
             }
         }
     }
     .content-wrapper-pages {
-        margin-top: 93px;
+        margin-top: 95px;
         width: 100%;
+        background: #fff;
+        @media (max-width: 970px) {
+          margin-top: 94px;
+        }
+        @media (max-width: 768px) {
+          margin-top: auto;
+        }
         section {
             margin: 0 auto;
             padding: 0 20px 40px;
             overflow: hidden;
             width: 914px;
+            @media (max-width: 970px) {
+              width: auto;
+            }
             h1 {
                 padding: 40px 0 9px;
                 font-family: "Montserrat", Helvetica, Arial, sans-serif;
@@ -596,33 +746,42 @@ body {
             }
             aside {
                 position: fixed;
-                top: 93px;
+                top: 95px;
                 float: left;
                 width: 230px;
+                @media (max-width: 970px) {
+                  top: 94px;
+                }
+                @media (max-width: 768px) {
+                  display: none;
+                }
                 ul {
                     li {
-                        padding: 9px 0 0;
-                        a {
-                            position: relative;
-                            font-family: Arial, sans-serif;
-                            color: #b2b2b1;
-                            text-decoration: none;
-                            &:hover {
-                                color: #262626;
-                            }
-                            &.active {
-                                color: #262626;
-                                &:before {
-                                    content: "";
-                                    position: absolute;
-                                    top: 3px;
-                                    left: -14px;
-                                    height: 10px;
-                                    width: 5px;
-                                    background: url('../images/carrot.png') no-repeat;
-                                }
-                            }
+                      padding: 9px 0 0;
+                      a {
+                        position: relative;
+                        font-family: Arial, sans-serif;
+                        color: #b2b2b1;
+                        text-decoration: none;
+                        &:hover {
+                          color: #262626;
                         }
+                        &.active {
+                          color: #262626;
+                          &:before {
+                            content: "";
+                            position: absolute;
+                            top: 3px;
+                            left: -14px;
+                            height: 10px;
+                            width: 5px;
+                            background: url('../images/carrot.png') no-repeat;
+                            @media (max-width: 970px) {
+                              left: -10px;
+                            }
+                          }
+                        }
+                      }
                     }
                     &.nav-tutorials {
                       margin: 20px 0 0;
@@ -649,7 +808,14 @@ body {
             }
             .content {
                 float: right;
-                width: 69%;
+                width: 630px;
+                @media (max-width: 970px) {
+                  width: 69%;
+                }
+                @media (max-width: 768px) {
+                  float: none;
+                  width: auto;
+                }
             }
             .projects-source, .projects-projects {
               li {
@@ -658,21 +824,31 @@ body {
                 clear: both;
                 display: table;
                 width: 100%;
+                @media (max-width: 768px) {
+                  display: block !important;
+                  background: #f6f6f6;
+                }
                 h3 {
                   margin: 0;
                   font: {
                     family: Arial, sans-serif;
-                    size: 21px;
+                    size: 16px;
                   }
                   color: #262626;
-                  line-height: 21px;
+                  line-height: 18px;
                 }
                 .project-title {
                   padding: 20px;
                   display: table-cell;
                   width: 225px;
-                  background: #f6f6f6;
+                  background: #f2f2f2;
                   border-right: 2px solid #fff;
+                  @media (max-width: 768px) {
+                    display: block !important;
+                    width: auto !important;
+                    border-right: none !important;
+                    border-bottom: 2px solid #fff;
+                  }
                   .icon {
                     margin: 0 15px 0 0;
                     float: left;
@@ -717,6 +893,9 @@ body {
                   display: table-cell;
                   vertical-align: middle;
                   background: #f6f6f6;
+                  @media (max-width: 768px) {
+                    display: block !important;
+                  }
                   p {
                     padding: 0;
                   }
@@ -813,12 +992,14 @@ body {
     }
     .footer-wrapper {
         width: 100%;
-        background: #000102;
         .footer {
             margin: 0 auto;
             padding: 40px 20px;
             overflow: hidden;
             width: 914px;
+            @media (max-width: 970px) {
+              width: auto;
+            }
             .footer-nav {
                 margin: 43px 0 0;
                 overflow: hidden;
@@ -889,6 +1070,9 @@ body {
                         /* width: 265px; unhide when we have footer links */
                         border-radius: 3px 0 0 3px;
                         box-shadow: inset 0 0 5px rgba(0,0,0,.45);
+                        @media (max-width: 768px) {
+                          width: auto;
+                        }
                     }
                     &[type=submit] {
                         color: #fff;
@@ -927,6 +1111,9 @@ body {
       border-top: 0 solid transparent;
       border-bottom: 70px solid transparent;
       border-right: 80px solid #e400ff;
+      @media (max-width: 768px) {
+        display: none;
+      }
       &.symbol {
         &:before {
           position: absolute;
@@ -934,6 +1121,7 @@ body {
           right: -71px;
           color: #fff;
           font-size: 36px;
+          content: "\e237";
         }
       }
       &:hover {

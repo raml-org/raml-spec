@@ -6,7 +6,6 @@
         <title>RAML - RESTful API modeling language</title>
         <link rel="stylesheet" href="stylesheets/normalize.css" />
         <link href="stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-        <link href="stylesheets/mobile.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
     </head>
     <body>
@@ -14,41 +13,23 @@
             <header>
                 <nav>
                     <ul>
+                        <li class="nav-logo">
+                            <a href="index.html">RAML</a>
+                        </li>
                         <li class="nav-projects">
                             <a href="projects.html">Projects</a>
                         </li>
                         <li class="nav-docs">
                             <a class="active" href="docs.html">Documentation</a>
                         </li>
-                        <li class="nav-logo">
-                            <a href="index.html">RAML</a>
+                        <li class="nav-forum">
+                            <a href="http://forums.raml.org/">Forum</a>
+                        </li>
+                        <li class="nav-blog">
+                            <a href="http://blog.raml.org/">Blog</a>
                         </li>
                         <li class="nav-about">
                             <a href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-            <header class="header-condensed">
-                <nav>
-                    <ul>
-                        <li class="nav-projects">
-                            <a href="projects.html">Projects</a>
-                        </li>
-                        <li class="nav-docs">
-                            <a class="active" href="docs.html">Documentation</a>
-                        </li>
-                        <li class="nav-logo">
-                            <a href="index.html">RAML</a>
-                        </li>
-                        <li class="nav-about">
-                            <a href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
                         </li>
                     </ul>
                 </nav>
@@ -63,16 +44,19 @@
                         <li class="nav-docs">
                             <a class="active" href="docs.html">Documentation</a>
                         </li>
+                        <li class="nav-forum">
+                            <a href="http://forums.raml.org/">Forum</a>
+                        </li>
+                        <li class="nav-blog">
+                            <a href="http://blog.raml.org/">Blog</a>
+                        </li>
                         <li class="nav-about">
                             <a href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
                         </li>
                     </ul>
                 </nav>
             </header>
-            <a class="github-callout symbol" href="https://github.com/raml-org/raml-spec" title="circlegithubalt"></a>
+            <a class="github-callout symbol" href="https://github.com/raml-org/raml-spec" title="GitHub"></a>
         </div>
         <div class="content-wrapper-pages">
             <section>
@@ -81,39 +65,36 @@
                         <h1>Documentation</h1>
                         <ul>
                             <li>
-                                <a class="active" href="#one">Introduction</a>
+                                <a class="active" href="#step-introduction">Introduction: RAML 100 Tutorial</a>
                             </li>
                             <li>
-                                <a href="#two">Step 1: Enter the Root</a>
+                                <a href="#step-enter-root">Step 1: Enter the Root</a>
                             </li>
                             <li>
-                                <a href="#three">Step 2: Enter Resources</a>
+                                <a href="#step-enter-resources">Step 2: Enter Resources</a>
                             </li>
                             <li>
-                                <a href="#four">Step 3: Enter Methods</a>
+                                <a href="#step-enter-methods">Step 3: Enter Methods</a>
                             </li>
                             <li>
-                                <a href="#five">Step 4: Enter URI Parameters</a>
+                                <a href="#step-enter-uri-params">Step 4: Enter URI Parameters</a>
                             </li>
                             <li>
-                                <a href="#six">Step 5: Enter Query Parameters</a>
+                                <a href="#step-enter-query-params">Step 5: Enter Query Parameters</a>
                             </li>
                             <li>
-                                <a href="#seven">Step 6: Enter Responses</a>
+                                <a href="#step-enter-responses">Step 6: Enter Responses</a>
                             </li>
                         </ul>
-                        <!-- <ul class="nav-tutorials">
-                            <li>
-                                <a href="150.html">RAML 150 Tutorial</a>
-                            </li>
+                        <ul class="nav-tutorials">
                             <li>
                                 <a href="200.html">RAML 200 Tutorial</a>
                             </li>
-                        </ul> -->
+                        </ul>
                     </nav>
                 </aside>
                 <div class="content">
-                    <h2 id="one">RAML 100 tutorial</h2>
+                    <h2 id="step-introduction">RAML 100 tutorial</h2>
                     <div class="tutorial-intro">
                         <p><strong>Objective:</strong> Learn the basics of RAML by designing a very basic API for BookMobile.</p>
                         <h4><i>Introduction</i></h4>
@@ -121,7 +102,7 @@
                         <h4><i>Assumptions</i></h4>
                         <p>You know the basics of how RESTful APIs operate: how to send requests and responses, and how to specify the components of a RESTful API.</p>
                     </div>
-                    <h2 id="two"><strong>Step 1:</strong> Enter the Root</h2>
+                    <h2 id="step-enter-root"><strong>Step 1:</strong> Enter the Root</h2>
                     <p>Let's say you are the API designer for a BookMobile startup. You've worked out a business plan, a scaling plan, and Ashton Kutcher is an angel investor. You know you want developers to capitalize on what you've built, so that you can capitalize on what THEY build. You know having a RESTful API is one way to make that happen. So, let's get started by writing a spec.</p>
                     <p><strong>First, you'll enter some basic information in a text editor. You can save your API's RAML definition as a text file with a recommended extension .raml:</strong></p>
                     <pre>
@@ -134,7 +115,7 @@
                         </code>
                     </pre>
                     <p>Everything you enter in at the <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md#root-section" target="_blank">root</a> (or top) of the spec applies to the rest of your API. This is going to come in very handy later as you discover patterns in how you build your API. The baseURI you choose will be used with every call made, so make sure it's as clean and concise as can be.</p>
-                    <h2 id="three"><strong>Step 2:</strong> Enter Resources</h2>
+                    <h2 id="step-enter-resources"><strong>Step 2:</strong> Enter Resources</h2>
                     <p>As a thoughtful API designer, it's important to consider how your API consumers will use your API. It's especially important because in many ways, as the API designer YOU control the consumption. For example, consider the functionality of the BookMobile API. You know you want your users to be able to keep track of what they've read and their favorites. Users should also be able to discover new books and look at other titles written by their favorite authors. To do this, you define various _collections_ as your <a href="https://github.com/raml-org/raml-spec/blob/master/05_resources_and_methods.md#resources-and-nested-resources" target="_blank">resources</a>.</p>
                     <p><strong>Recalling how your API consumers will use your API, enter the following three resources under your root:</strong></p>
                     <pre>
@@ -153,7 +134,7 @@
                         </code>
                     </pre>
                     <p>This lets the API consumer interact with the key resource and its nested resources. For example a GET request to http://api.e-bookmobile.com/authors/Mary_Roach returns details about science writer and humorist Mary Roach. Now, let's think about what we want developers and API consumers to DO.</p>
-                    <h2 id="four"><strong>Step 3:</strong> Enter Methods</h2>
+                    <h2 id="step-enter-methods"><strong>Step 3:</strong> Enter Methods</h2>
                     <p>Here's where it starts to get interesting, as you decide what you want the developer to be able to do with the resources you've made available. <strong>Let's quickly review the 4 most common HTTP verbs:</strong></p>
                     <p><strong>GET</strong> - Retrieve the information defined in the request URI.</p>
                     <p><strong>PUT</strong> - Replace the addressed collection. At the object-level, create or update it.</p>
@@ -170,7 +151,7 @@
 <span class="ln">4  </span><span class="l4">  put:</span>
                         </code>
                     </pre>
-                    <h2 id="five"><strong>Step 4:</strong> Enter URI Parameters</h2>
+                    <h2 id="step-enter-uri-params"><strong>Step 4:</strong> Enter URI Parameters</h2>
                     <p>The resources that we defined are collections of smaller, relevant objects. You, as the thoughtful API designer, have realized that developers will most likely want to act upon these more granular objects. Remember the example of nested resources above? /authors is made up of individual authors, referenced by {authorName}, for example. This is a URI parameter, denoted by surrounding curly brackets in RAML:</p>
                     <pre>
                         <code>
@@ -196,7 +177,7 @@
 <span class="ln">12  </span><span class="l4">     get:</span>
                         </code>
                     </pre>
-                    <h2 id="six"><strong>Step 5:</strong> Enter Query Parameters</h2>
+                    <h2 id="step-enter-query-params"><strong>Step 5:</strong> Enter Query Parameters</h2>
                     <p>Great job so far! Now, let's say you want your API to allow even more powerful operations. You already have collections-based resource types that are further defined by object-based URI parameters. But you also want developers to be able perform actions like filtering a collection. Query parameters are a great way to accomplish this.</p>
                     <p><strong>Start by adding some query parameters under the GET method for books. These can be specific characteristics, like the year a book was published:</strong></p>
                     <pre>
@@ -269,7 +250,7 @@
                         </code>
                     </pre>
                     <p>To make a PUT call, your URI looks like http://api.e-bookmobile.com/books/Stiff?access_token=ACCESS TOKEN</p>
-                    <h2 id="seven"><strong>Step 6:</strong> Enter Responses</h2>
+                    <h2 id="step-enter-responses"><strong>Step 6:</strong> Enter Responses</h2>
                     <p>Responses MUST be a map of one or more HTTP status codes, and each response may include descriptions, examples, or schemas. Schemas are more fully explained in the Level 200 tutorial.</p>
                     <pre>
                         <code>
@@ -297,7 +278,7 @@
 <span class="ln">22  </span><span class="l1">               }</span>
                         </code>
                     </pre>
-                    <p><strong>Congratulations! You've just written your first API definition in RAML.</strong></p>
+                    <p><strong>Congratulations! You've just written your first API definition in RAML.</strong></p><br /><br />
                 </div>
             </section>
         </div>
@@ -313,17 +294,27 @@
                     <div id="ss-form-response" style="display:none">Thanks for signing up!</div>
                 </div>
                 <div class="footer-nav">
-                    <a href="http://open-raml.blogspot.com" target="_blank">RAML Blog</a>
-                    <a href="about.html#six">RAML Workgroup</a>
+                    <a href="about.html#about-workgroup">RAML Workgroup</a>
                     <a href="mailto:info@raml.org">Contact</a>
                     <a href="licensing.html">Licensing</a>
                 </div>
             </section>
         </div>
-        <script src="javascripts/retina-1.1.0.min.js"></script> 
+        <script src="javascripts/retina-1.1.0.min.js"></script>
         <script src="javascripts/jquery.scrollTo.min.js" ></script>
         <script src="javascripts/waypoints.min.js" ></script>
         <script src="javascripts/custom.js" ></script>
+        <script type="text/javascript">
+          var $buoop = {};
+          $buoop.ol = window.onload;
+          window.onload=function(){
+           try {if ($buoop.ol) $buoop.ol();}catch (e) {}
+           var e = document.createElement("script");
+           e.setAttribute("type", "text/javascript");
+           e.setAttribute("src", "//browser-update.org/update.js");
+           document.body.appendChild(e);
+          }
+        </script>
         <script type="text/javascript">
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

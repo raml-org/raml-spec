@@ -6,7 +6,6 @@
         <title>RAML - RESTful API modeling language</title>
         <link rel="stylesheet" href="stylesheets/normalize.css" />
         <link href="stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-        <link href="stylesheets/mobile.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
     </head>
     <body>
@@ -14,41 +13,23 @@
             <header>
                 <nav>
                     <ul>
+                        <li class="nav-logo">
+                            <a href="index.html">RAML</a>
+                        </li>
                         <li class="nav-projects">
                             <a href="projects.html">Projects</a>
                         </li>
                         <li class="nav-docs">
                             <a class="active" href="docs.html">Documentation</a>
                         </li>
-                        <li class="nav-logo">
-                            <a href="index.html">RAML</a>
+                        <li class="nav-forum">
+                            <a href="http://forums.raml.org/">Forum</a>
+                        </li>
+                        <li class="nav-blog">
+                            <a href="http://blog.raml.org/">Blog</a>
                         </li>
                         <li class="nav-about">
                             <a href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-            <header class="header-condensed">
-                <nav>
-                    <ul>
-                        <li class="nav-projects">
-                            <a href="projects.html">Projects</a>
-                        </li>
-                        <li class="nav-docs">
-                            <a class="active" href="docs.html">Documentation</a>
-                        </li>
-                        <li class="nav-logo">
-                            <a href="index.html">RAML</a>
-                        </li>
-                        <li class="nav-about">
-                            <a href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
                         </li>
                     </ul>
                 </nav>
@@ -63,51 +44,51 @@
                         <li class="nav-docs">
                             <a class="active" href="docs.html">Documentation</a>
                         </li>
+                        <li class="nav-forum">
+                            <a href="http://forums.raml.org/">Forum</a>
+                        </li>
+                        <li class="nav-blog">
+                            <a href="http://blog.raml.org/">Blog</a>
+                        </li>
                         <li class="nav-about">
                             <a href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
                         </li>
                     </ul>
                 </nav>
             </header>
-            <a class="github-callout symbol" href="https://github.com/raml-org/raml-spec" title="circlegithubalt"></a>
+            <a class="github-callout symbol" href="https://github.com/raml-org/raml-spec" title="GitHub"></a>
         </div>
         <div class="content-wrapper-pages">
             <section>
                 <aside>
                     <nav>
                         <h1>Documentation</h1>
-                        <ul>
-                            <li>
-                                <a class="active" href="#one">Introduction</a>
-                            </li>
-                            <li>
-                                <a href="#two">Step 1: Enter the Root</a>
-                            </li>
-                            <li>
-                                <a href="#three">Step 2: Enter Resources</a>
-                            </li>
-                            <li>
-                                <a href="#four">Step 3: Enter Methods</a>
-                            </li>
-                            <li>
-                                <a href="#five">Step 4: Enter URI Parameters</a>
-                            </li>
-                            <li>
-                                <a href="#six">Step 5: Enter Query Parameters</a>
-                            </li>
-                            <li>
-                                <a href="#seven">Step 6: Enter Responses</a>
-                            </li>
-                        </ul>
                         <ul class="nav-tutorials">
                             <li>
                                 <a href="docs.html">RAML 100 Tutorial</a>
                             </li>
+                        </ul>
+                        <ul>
                             <li>
-                                <a href="200.html">RAML 200 Tutorial</a>
+                                <a class="active" href="#step-introduction">Introduction</a>
+                            </li>
+                            <li>
+                                <a href="#step-enter-root">Step 1: Enter the Root</a>
+                            </li>
+                            <li>
+                                <a href="#step-enter-resources">Step 2: Enter Resources</a>
+                            </li>
+                            <li>
+                                <a href="#step-enter-methods">Step 3: Enter Methods</a>
+                            </li>
+                            <li>
+                                <a href="#step-enter-uri-params">Step 4: Enter URI Parameters</a>
+                            </li>
+                            <li>
+                                <a href="#step-enter-query-params">Step 5: Enter Query Parameters</a>
+                            </li>
+                            <li>
+                                <a href="#step-enter-responses">Step 6: Enter Responses</a>
                             </li>
                         </ul>
                     </nav>
@@ -128,8 +109,7 @@
                     <div id="ss-form-response" style="display:none">Thanks for signing up!</div>
                 </div>
                 <div class="footer-nav">
-                    <a href="http://open-raml.blogspot.com" target="_blank">RAML Blog</a>
-                    <a href="about.html#six">RAML Workgroup</a>
+                    <a href="about.html#about-workgroup">RAML Workgroup</a>
                     <a href="mailto:info@raml.org">Contact</a>
                     <a href="licensing.html">Licensing</a>
                 </div>
@@ -139,6 +119,17 @@
         <script src="javascripts/jquery.scrollTo.min.js" ></script>
         <script src="javascripts/waypoints.min.js" ></script>
         <script src="javascripts/custom.js" ></script>
+        <script type="text/javascript">
+          var $buoop = {};
+          $buoop.ol = window.onload;
+          window.onload=function(){
+           try {if ($buoop.ol) $buoop.ol();}catch (e) {}
+           var e = document.createElement("script");
+           e.setAttribute("type", "text/javascript");
+           e.setAttribute("src", "//browser-update.org/update.js");
+           document.body.appendChild(e);
+          }
+        </script>
         <script type="text/javascript">
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

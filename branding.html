@@ -6,7 +6,6 @@
         <title>RAML - RESTful API modeling language</title>
         <link rel="stylesheet" href="stylesheets/normalize.css" />
         <link href="stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-        <link href="stylesheets/mobile.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
     </head>
     <body class="branding">
@@ -14,41 +13,23 @@
             <header>
                 <nav>
                     <ul>
+                        <li class="nav-logo">
+                            <a href="index.html">RAML</a>
+                        </li>
                         <li class="nav-projects">
                             <a href="projects.html">Projects</a>
                         </li>
                         <li class="nav-docs">
                             <a href="docs.html">Documentation</a>
                         </li>
-                        <li class="nav-logo">
-                            <a href="index.html">RAML</a>
+                        <li class="nav-forum">
+                            <a href="http://forums.raml.org/">Forum</a>
+                        </li>
+                        <li class="nav-blog">
+                            <a href="http://blog.raml.org/">Blog</a>
                         </li>
                         <li class="nav-about">
                             <a href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-            <header class="header-condensed">
-                <nav>
-                    <ul>
-                        <li class="nav-projects">
-                            <a href="projects.html">Projects</a>
-                        </li>
-                        <li class="nav-docs">
-                            <a href="docs.html">Documentation</a>
-                        </li>
-                        <li class="nav-logo">
-                            <a href="index.html">RAML</a>
-                        </li>
-                        <li class="nav-about">
-                            <a href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
                         </li>
                     </ul>
                 </nav>
@@ -63,11 +44,14 @@
                         <li class="nav-docs">
                             <a href="docs.html">Documentation</a>
                         </li>
+                        <li class="nav-forum">
+                            <a href="http://forums.raml.org/">Forum</a>
+                        </li>
+                        <li class="nav-blog">
+                            <a href="http://blog.raml.org/">Blog</a>
+                        </li>
                         <li class="nav-about">
                             <a href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
                         </li>
                     </ul>
                 </nav>
@@ -144,8 +128,7 @@
                     <div id="ss-form-response" style="display:none">Thanks for signing up!</div>
                 </div>
                 <div class="footer-nav">
-                    <a href="http://open-raml.blogspot.com" target="_blank">RAML Blog</a>
-                    <a href="about.html#six">RAML Workgroup</a>
+                    <a href="about.html#about-workgroup">RAML Workgroup</a>
                     <a href="mailto:info@raml.org">Contact</a>
                     <a href="licensing.html">Licensing</a>
                 </div>
@@ -155,6 +138,17 @@
         <script src="javascripts/jquery.scrollTo.min.js" ></script>
         <script src="javascripts/waypoints.min.js" ></script>
         <script src="javascripts/custom.js" ></script>
+        <script type="text/javascript">
+          var $buoop = {};
+          $buoop.ol = window.onload;
+          window.onload=function(){
+           try {if ($buoop.ol) $buoop.ol();}catch (e) {}
+           var e = document.createElement("script");
+           e.setAttribute("type", "text/javascript");
+           e.setAttribute("src", "//browser-update.org/update.js");
+           document.body.appendChild(e);
+          }
+        </script>
         <script type="text/javascript">
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -6,7 +6,6 @@
         <title>RAML - RESTful API modeling language</title>
         <link rel="stylesheet" href="stylesheets/normalize.css" />
         <link href="stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-        <link href="stylesheets/mobile.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
     </head>
     <body>
@@ -14,41 +13,23 @@
             <header>
                 <nav>
                     <ul>
+                        <li class="nav-logo">
+                            <a href="index.html">RAML</a>
+                        </li>
                         <li class="nav-projects">
                             <a href="projects.html">Projects</a>
                         </li>
                         <li class="nav-docs">
                             <a href="docs.html">Documentation</a>
                         </li>
-                        <li class="nav-logo">
-                            <a href="index.html">RAML</a>
+                        <li class="nav-forum">
+                            <a href="http://forums.raml.org/">Forum</a>
+                        </li>
+                        <li class="nav-blog">
+                            <a href="http://blog.raml.org/">Blog</a>
                         </li>
                         <li class="nav-about">
                             <a class="active" href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-            <header class="header-condensed">
-                <nav>
-                    <ul>
-                        <li class="nav-projects">
-                            <a href="projects.html">Projects</a>
-                        </li>
-                        <li class="nav-docs">
-                            <a href="docs.html">Documentation</a>
-                        </li>
-                        <li class="nav-logo">
-                            <a href="index.html">RAML</a>
-                        </li>
-                        <li class="nav-about">
-                            <a class="active" href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
                         </li>
                     </ul>
                 </nav>
@@ -63,16 +44,19 @@
                         <li class="nav-docs">
                             <a href="docs.html">Documentation</a>
                         </li>
+                        <li class="nav-forum">
+                            <a href="http://forums.raml.org/">Forum</a>
+                        </li>
+                        <li class="nav-blog">
+                            <a href="http://blog.raml.org/">Blog</a>
+                        </li>
                         <li class="nav-about">
                             <a class="active" href="about.html">About</a>
-                        </li>
-                        <li class="nav-licensing">
-                            <a href="http://forums.raml.org/">Forum</a>
                         </li>
                     </ul>
                 </nav>
             </header>
-            <a class="github-callout symbol" href="https://github.com/raml-org/raml-spec" title="circlegithubalt"></a>
+            <a class="github-callout symbol" href="https://github.com/raml-org/raml-spec" title="GitHub"></a>
         </div>
         <div class="content-wrapper-pages">
             <section>
@@ -81,52 +65,47 @@
                         <h1>About</h1>
                         <ul>
                             <li>
-                                <a class="active" href="#one">What is RAML?</a>
+                                <a class="active" href="#about-what">What is RAML?</a>
                             </li>
                             <li>
-                                <a href="#two">Why should I use it?</a>
+                                <a href="#about-why">Why should I use it?</a>
                             </li>
                             <li>
-                                <a href="#three">How RAML describes an API</a>
+                                <a href="#about-how">How RAML describes an API</a>
                             </li>
                             <li>
-                                <a href="#five">Getting Started with RAML</a>
+                                <a href="#about-start">Getting Started with RAML</a>
                             </li>
                             <li>
-                                <a href="#six">The RAML Workgroup</a>
+                                <a href="#about-workgroup">The RAML Workgroup</a>
                             </li>
                             <li>
-                                <a href="#seven">Trademark Usage</a>
-                            </li>
-                        </ul>
-                        <ul class="nav-tutorials">
-                            <li>
-                                <a href="http://open-raml.blogspot.com" target="_blank">RAML Blog</a>
+                                <a href="#about-trademark">Trademark Usage</a>
                             </li>
                         </ul>
                     </nav>
                 </aside>
                 <div class="content">
-                    <h2 id="one">What is RAML?</h2>
+                    <h2 id="about-what">What is RAML?</h2>
                     <p>RAML stands for RESTful API Modeling Language. It's a way of describing practically-RESTful APIs in a way that's highly readable by both humans and computers. We say "practically RESTful" because, today in the real world, very few APIs today actually obey all constraints of REST. RAML isn't strict: for now, it focuses on cleanly describing resources, methods, parameters, responses, media types, and other HTTP constructs that form the basis for modern APIs that obey many, though perhaps not all, RESTful constraints.</p>
                     <p>RAML is a non-proprietary, vendor-neutral open spec. The aim is to help our current API ecosystem and solve immediate problems, and then gently encourage ever-better API patterns.</p>
-                    <h2 id="two">Why should I use RAML for my API?</h2>
+                    <h2 id="about-why">Why should I use RAML for my API?</h2>
                     <ol>
                         <li>You'll get a well-defined contract in a human-readable format to actually exist as your source code.</li>
                         <li>Your API's structure is manifest and easily understood by everyone: developers, partners, and other API-consumers.</li>
                         <li>The Application Programming eXperience, or APX, vastly improves with the knowledge that there is a formal, versioned, crystal-clear contract that reflects the structure of the API and is independent of implementation.</li>
                     </ol>
                     <p>Well-designed and manifestly-structured APIs, with a lot of internal consistency based on explicit patterns, lead to easier and more robust client coding and server implementations.</p>
-                    <h2 id="three">RAML describes an API in a way that is</h2>
+                    <h2 id="about-how">RAML describes an API in a way that is</h2>
                     <p><strong>Clear:</strong> The structure of the API should be manifest. Patterns are brought to the forefront; its data and interaction models are front and center.</p>
                     <p><strong>Correct:</strong> An API spec is a contract: whatever is captured must correctly describe the behavior of the API.</p>
                     <p><strong>Precise:</strong> Can a client be generated from the spec that's as faithful to the API as it is reasonable? Do the implementers know what they're required to deliver?</p>
                     <p><strong>Consistent:</strong> RAML has strong support for capturing patterns. It encourages reuse, enables discovery and pattern-sharing, and aims for merit-based emergence of best practices.</p>
                     <p><strong>Readable &amp; writable:</strong> Optimizes both creating and reading specs by impatient, smart humans.</p>
                     <p><strong>Natural &amp; intuitive:</strong> It is as close as possible to the mental model one has for the API, like what you'd type out in an email to a colleague or friend you were helping design or consume the API.</p>
-                    <h2 id="five">Getting Started with RAML</h2>
+                    <h2 id="about-start">Getting Started with RAML</h2>
                     <p>See how easy it is to get started with the <a href="docs.html">RAML 100 tutorial</a>. We will be adding additional documentation on an ongoing basis.</p>
-                    <h2 id="six">The RAML Workgroup</h2>
+                    <h2 id="about-workgroup">The RAML Workgroup</h2>
                     <p>RAML was developed and is supported by a group of technology leaders dedicated to building an open, simple and succinct spec for describing APIs to help further unlock the potential of the API economy. The RAML Workgroup provides ongoing contributions to both the RAML spec and a growing ecosystem of tools designed to make API-first design simple and API consumption frictionless.</p>
                     <ul class="bios">
                         <li class="odd">
@@ -212,8 +191,8 @@
                             </div>
                         </li>
                     </ul>
-                    <h2 id="seven">Trademark Usage</h2>
-                    <p>RAML is a trademark of MuleSoft, Inc. Learn more about our Branding Policy (and why we have one) <a href="branding.html">here</a>.</p>
+                    <h2 id="about-trademark">Trademark Usage</h2>
+                    <p>RAML is a trademark of MuleSoft, Inc. Learn more about our Branding Policy (and why we have one) <a href="branding.html">here</a>.</p><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                 </div>
             </section>
         </div>
@@ -229,8 +208,7 @@
                     <div id="ss-form-response" style="display:none">Thanks for signing up!</div>
                 </div>
                 <div class="footer-nav">
-                    <a href="http://open-raml.blogspot.com" target="_blank">RAML Blog</a>
-                    <a href="about.html#six">RAML Workgroup</a>
+                    <a href="about.html#about-workgroup">RAML Workgroup</a>
                     <a href="mailto:info@raml.org">Contact</a>
                     <a href="licensing.html">Licensing</a>
                 </div>
@@ -240,6 +218,17 @@
         <script src="javascripts/jquery.scrollTo.min.js" ></script>
         <script src="javascripts/waypoints.min.js" ></script>
         <script src="javascripts/custom.js" ></script>
+        <script type="text/javascript">
+          var $buoop = {};
+          $buoop.ol = window.onload;
+          window.onload=function(){
+           try {if ($buoop.ol) $buoop.ol();}catch (e) {}
+           var e = document.createElement("script");
+           e.setAttribute("type", "text/javascript");
+           e.setAttribute("src", "//browser-update.org/update.js");
+           document.body.appendChild(e);
+          }
+        </script>
         <script type="text/javascript">
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
