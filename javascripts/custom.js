@@ -23,7 +23,7 @@ $(document).ready(function() {
         handler: function(direction) {
             var active_section;
             active_section = $(this);
-            if (direction == 'up') {
+            if (direction === 'up') {
               var active_id = active_section.attr("id");
               active_section = $('#'+active_id).waypoint('prev');
             }
@@ -31,7 +31,7 @@ $(document).ready(function() {
             navigation_links.removeClass("active");
             active_link.addClass("active");
         },
-        offset: 93
+        offset: 95
     });
     /*
     Anchor link smooth scrolling
@@ -43,7 +43,7 @@ $(document).ready(function() {
                 target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
                 if (target.length) {
                     $('html,body').animate({
-                        scrollTop: target.offset().top - 93
+                        scrollTop: target.offset().top - 95
                     }, 400);
                     return false;
                 }
@@ -60,11 +60,13 @@ $(document).ready(function() {
     /*
     Copy to clipboard
     */
-    $('.copy-clipboard').clipboard({
-            path: 'jquery.clipboard.swf',
-            copy: function() {
-                $('.copy-clipboard span').fadeIn('fast');
-                return $('#home .content code ol').text();
-            }
+    $(function() {
+      $('.copy-clipboard').clipboard({
+              path: 'jquery.clipboard.swf',
+              copy: function() {
+                  $('.copy-clipboard span').fadeIn('fast');
+                  return $('#home .content code').text();
+              }
+      });
     });
 });
