@@ -32,14 +32,18 @@ So, it makes sense to work on a branch of "gh-pages". We will call it "gh-pages-
 From the git branch -h: `git branch [options] [-l] [-f] <branchname> [<start-point>]`
 
 Now, let's move to that branch to start working:
+
     # git checkout gh-pages-staging
+    
 Once there, just make the desired changes and, as usual:
+
     # git add .
     # git commit -m "A good and describing comment"
     # git push origin gh-pages-staging
+    
 Please, pay attention to the destination of the push.
 Once it's done, you can check that the "gh-pages" branch was have not been modified, hence, the published version isn't either.
-
+mov
 ## Reviewing
 
 The reviewer can just clone and checkout the "gh-pages-staging" branch to have it in his local environment
@@ -54,6 +58,7 @@ Since "gh-pages-staging" is just a branch of "gh-pages", merging and pushing wil
 
 Make sure you are standing on "gh-pages" branch (yes, the production one), since we will be merging the changes
 inhere.
+
     # git checkout gh-pages
     # git merge gh-pages-staging
 
