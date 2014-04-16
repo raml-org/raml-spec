@@ -1,0 +1,119 @@
+---
+layout: default
+title: Your New Jekyll Site
+---
+
+<div class="banner-wrapper">
+            <div class="content">
+                <section class="banner">
+                    <h1>RESTful API Modeling Language</h1>
+                    <h2>RESTful API Modeling Language (RAML) is a simple and succinct way of describing practically-RESTful APIs. It encourages reuse, enables discovery and pattern-sharing, and aims for merit-based emergence of best practices. The goal is to help our current API ecosystem by solving immediate problems and then encourage ever-better API patterns. RAML is built on broadly-used standards such as YAML and JSON and is a non-proprietary, vendor-neutral open spec.</h2>
+                    <a class="cta-github" href="spec.html" target="_blank">Read the RAML Spec</a>
+                </section>
+                <div class="cta">
+                    <a class="cta-video fancybox.iframe" href="http://www.youtube.com/embed/5o_nExedezw?autoplay=1"></a>
+                </div>
+            </div>
+        </div>
+        <div class="content-wrapper">
+            <div class="content">
+                <section class="callouts">
+                    <p class="callout1">For every API, start by defining which version of RAML you are using, and then document <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md" target="_blank">basic characteristics</a> of your API - the title, version, and baseURI.<i></i></p>
+                    <p class="callout2">RAML allows you to define patterns using <a href="https://github.com/raml-org/raml-spec/blob/master/07_resource_types_and_traits.md" target="_blank">traits</a>, <a href="https://github.com/raml-org/raml-spec/blob/master/07_resource_types_and_traits.md" target="_blank">resourceTypes</a>, and <a href="https://github.com/raml-org/raml-spec/blob/master/08_security.md" target="_blank">securitySchemes</a>, and then use them within a API to minimize repetition.<i></i></p>
+                    <p class="callout3">Externalize those patterns, store them on the web, and import them with an <a href="https://github.com/raml-org/raml-spec/blob/master/02_includes.md" target="_blank">!include</a>.<i></i></p>
+                    <p class="callout4">Easily define <a href="https://github.com/raml-org/raml-spec/blob/master/05_resources_and_methods.md" target="_blank">resources and methods</a>, then add as much detail as you want. Apply traits and other patterns, or add <a href="https://github.com/raml-org/raml-spec/blob/master/03_named_parameters.md" target="_blank">parameters</a> and other details specific to each call.<i></i></p>
+                    <p class="callout5">Describe expected <a href="https://github.com/raml-org/raml-spec/blob/master/06_schemas_and_responses.md" target="_blank">responses</a> for multiple mime-types and specify <a href="https://github.com/raml-org/raml-spec/blob/master/06_schemas_and_responses.md" target="_blank">schemas and examples</a> for each one. Schemas and examples can be defined in-line, or externalized with !include.<i></i></p>
+                    <p class="callout6">Write human-readable, markdown-formatted descriptions throughout your RAML spec, or include entire <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md#user-documentation" target="_blank">markdown documentation</a> sections at the root.<i></i></p>
+                </section>
+                <section class="brackets">
+                    <div class="bracket bracket1">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                    <div class="bracket bracket2">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                    <div class="bracket bracket3">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                    <div class="bracket bracket4">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                    <div class="bracket bracket5">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                    <div class="bracket bracket6">
+                        <span class="top"></span>
+                        <span class="bottom"></span>
+                    </div>
+                </section>
+                <pre>
+                    <code>
+                      <ol>
+                        <li><span class="l1">#&#37;RAML 0.8</span></li>
+                        <li><span class="l5"></span></li>
+                        <li><span class="def">title:</span> <span class="val">World Music API</span></li>
+                        <li><span class="def">baseUri:</span> <span class="val">http://example.api.com/{version}</span></li>
+                        <li><span class="def">version:</span> <span class="val">v1</span></li>
+                        <li><span class="l2">traits:</span></li>
+                        <li><span class="l22">  - paged:</span></li>
+                        <li><span class="l22">      queryParameters:</span></li>
+                        <li><span class="l22">        pages:</span></li>
+                        <li><span class="l22">          description:</span> <span class="val">The number of pages to return</span></li>
+                        <li><span class="l22">          type:</span> <span class="val">number</span></li>
+                        <li><span class="l22">  - secured:</span> <span class="val">!include http://raml-example.com/secured.yml</span></li>
+                        <li><span class="l3">/songs:</span></li>
+                        <li><span class="def">  is:</span> <span class="val">[ paged, secured ]</span></li>
+                        <li><span class="l4">  get:</span></li>
+                        <li><span class="l5">    queryParameters:</span></li>
+                        <li><span class="l5">      genre:</span></li>
+                        <li><span class="l5">        description:</span> <span class="val">filter the songs by genre</span></li>
+                        <li><span class="l4">  post:</span></li>
+                        <li><span class="l3">  /{songId}:</span></li>
+                        <li><span class="l4">    get:</span></li>
+                        <li><span class="l5">      responses:</span></li>
+                        <li><span class="l5">        200:</span></li>
+                        <li><span class="l5">          body:</span></li>
+                        <li><span class="l5">            application/json:</span></li>
+                        <li><span class="l5">              schema:</span> <span class="l1">|</span></li>
+                        <li><span class="l1">                { "$schema": "http://json-schema.org/schema",</span></li>
+                        <li><span class="l1">                  "type": "object",</span></li>
+                        <li><span class="l1">                  "description": "A canonical song",</span></li>
+                        <li><span class="l1">                  "properties": {</span></li>
+                        <li><span class="l1">                    "title":  { "type": "string" },</span></li>
+                        <li><span class="l1">                    "artist": { "type": "string" }</span></li>
+                        <li><span class="l1">                  },</span></li>
+                        <li><span class="l1">                  "required": [ "title", "artist" ]</span></li>
+                        <li><span class="l1">                }</span></li>
+                        <li><span class="l5">            application/xml:</span></li>
+                        <li><span class="l4">    delete:</span></li>
+                        <li><span class="l5">      description: |</span></li>
+                        <li><span class="val">        This method will <span class="u">*delete*</span> an <span class="def">**individual song**</span></span></li>
+                      </ol>
+                    </code>
+                    <div class="copy-clipboard" title="Copy code to clipboard"><span>Copied!</span></div>
+                </pre>
+            </div>
+        </div>
+
+
+<!-- ---
+layout: default
+title: Your New Jekyll Site
+---
+
+<div id="home">
+  <h1>Section</h1>
+
+  # Am I writting markdown?
+  or not?
+   <ul class="posts">
+    {% for post in site.posts %}
+      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div> -->
