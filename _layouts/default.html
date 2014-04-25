@@ -5,10 +5,12 @@
         <meta name="viewport" content="width=device-width" />
         <title>RAML - RESTful API modeling language</title>
         <link rel="stylesheet" href="stylesheets/normalize.css" />
+        <link rel="stylesheet" href="stylesheets/pygments.css" />
         <link href="stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="javascripts/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
     </head>
-    <body>
+    <body id="home">
         <div class="header-wrapper">
             <header>
                 <nav>
@@ -17,10 +19,10 @@
                             <a href="index.html">RAML</a>
                         </li>
                         <li class="nav-projects">
-                            <a href="projects.html">Projects</a>
+                            <a class="{% if page.url == '/projects.html' %}active{% endif %}" href="projects.html">Projects</a>
                         </li>
                         <li class="nav-docs">
-                            <a class="active" href="docs.html">Documentation</a>
+                            <a class="{% if page.url == '/docs.html' %}active{% endif %}" href="docs.html">Documentation</a>
                         </li>
                         <li class="nav-forum">
                             <a href="http://forums.raml.org/">Forum</a>
@@ -29,7 +31,7 @@
                             <a href="http://blog.raml.org/">Blog</a>
                         </li>
                         <li class="nav-about">
-                            <a href="about.html">About</a>
+                            <a class="{% if page.url == '/about.html' or page.url == '/licensing.html' or page.url == '/branding.html' %}active{% endif %}" href="about.html">About</a>
                         </li>
                     </ul>
                 </nav>
@@ -42,7 +44,7 @@
                             <a href="projects.html">Projects</a>
                         </li>
                         <li class="nav-docs">
-                            <a class="active" href="docs.html">Documentation</a>
+                            <a href="docs.html">Documentation</a>
                         </li>
                         <li class="nav-forum">
                             <a href="http://forums.raml.org/">Forum</a>
@@ -58,49 +60,14 @@
             </header>
             <a class="github-callout symbol" href="https://github.com/raml-org/raml-spec" title="GitHub"></a>
         </div>
-        <div class="content-wrapper-pages">
-            <section>
-                <aside>
-                    <nav>
-                        <h1>Documentation</h1>
-                        <ul class="nav-tutorials">
-                            <li>
-                                <a href="docs.html">RAML 100 Tutorial</a>
-                            </li>
-                        </ul>
-                        <ul>
-                            <li>
-                                <a class="active" href="#step-introduction">Introduction</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-root">Step 1: Enter the Root</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-resources">Step 2: Enter Resources</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-methods">Step 3: Enter Methods</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-uri-params">Step 4: Enter URI Parameters</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-query-params">Step 5: Enter Query Parameters</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-responses">Step 6: Enter Responses</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </aside>
-                <div class="content">
-                </div>
-            </section>
-        </div>
-        <div class="footer-wrapper">
+
+
+          {{ content }}
+
+          <div class="footer-wrapper">
             <section class="footer">
                 <div class="signup">
-<iframe name="signup-form" style="display:none" src="https://docs.google.com/a/mulesoft.com/forms/d/1n3XKLpqIU9yg5635jD33LQBT2Jo4xqUsmSGrU-nKmGs/formResponse"></iframe> 
+<iframe name="signup-form" style="display:none" src="https://docs.google.com/a/mulesoft.com/forms/d/1n3XKLpqIU9yg5635jD33LQBT2Jo4xqUsmSGrU-nKmGs/formResponse"></iframe>
                     <form action="https://docs.google.com/a/mulesoft.com/forms/d/1n3XKLpqIU9yg5635jD33LQBT2Jo4xqUsmSGrU-nKmGs/formResponse" method="POST" id="ss-form" onsubmit="" target="signup-form">
                         <label>Subscribe & learn about new RAML projects</label>
                         <input type="text" name="entry.1586103239" value="" class="ss-q-short valid" placeholder="Email Address" id="entry_1586103239" dir="auto" title="">
@@ -115,10 +82,18 @@
                 </div>
             </section>
         </div>
-        <script src="javascripts/retina-1.1.0.min.js"></script> 
+        <script src="javascripts/retina-1.1.0.min.js"></script>
+        <script src="javascripts/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+        <script src="javascripts/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
         <script src="javascripts/jquery.scrollTo.min.js" ></script>
         <script src="javascripts/waypoints.min.js" ></script>
+        <script src="javascripts/jquery.clipboard.js" ></script>
         <script src="javascripts/custom.js" ></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".cta-video").fancybox();
+            });
+        </script>
         <script type="text/javascript">
           var $buoop = {};
           $buoop.ol = window.onload;

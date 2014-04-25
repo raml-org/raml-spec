@@ -1,125 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>RAML - RESTful API modeling language</title>
-        <link rel="stylesheet" href="stylesheets/normalize.css" />
-        <link href="stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
-    </head>
-    <body>
-        <div class="header-wrapper">
-            <header>
-                <nav>
-                    <ul>
-                        <li class="nav-logo">
-                            <a href="index.html">RAML</a>
-                        </li>
-                        <li class="nav-projects">
-                            <a href="projects.html">Projects</a>
-                        </li>
-                        <li class="nav-docs">
-                            <a class="active" href="docs.html">Documentation</a>
-                        </li>
-                        <li class="nav-forum">
-                            <a href="http://forums.raml.org/">Forum</a>
-                        </li>
-                        <li class="nav-blog">
-                            <a href="http://blog.raml.org/">Blog</a>
-                        </li>
-                        <li class="nav-about">
-                            <a href="about.html">About</a>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-            <header class="header-mobile">
-                <a class="nav-logo" href="index.html">RAML</a>
-                <nav>
-                    <ul>
-                        <li class="nav-projects">
-                            <a href="projects.html">Projects</a>
-                        </li>
-                        <li class="nav-docs">
-                            <a class="active" href="docs.html">Documentation</a>
-                        </li>
-                        <li class="nav-forum">
-                            <a href="http://forums.raml.org/">Forum</a>
-                        </li>
-                        <li class="nav-blog">
-                            <a href="http://blog.raml.org/">Blog</a>
-                        </li>
-                        <li class="nav-about">
-                            <a href="about.html">About</a>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-            <a class="github-callout symbol" href="https://github.com/raml-org/raml-spec" title="GitHub"></a>
-        </div>
-        <div class="content-wrapper-pages">
-            <section>
-                <aside>
-                    <nav>
-                        <h1>Documentation</h1>
-                        <ul class="nav-tutorials">
-                            <li>
-                                <a href="docs.html">RAML 100 Tutorial</a>
-                            </li>
-                        </ul>
-                        <ul>
-                            <li>
-                                <a class="active" href="#step-introduction">Introduction: RAML 200 Tutorial</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-root">Step 1: Enter the Root</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-resources">Step 2: Enter Resources</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-methods">Step 3: Enter Methods</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-uri-params">Step 4: Enter URI Parameters</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-query-params">Step 5: Enter Query Parameters</a>
-                            </li>
-                            <li>
-                                <a href="#step-enter-responses">Step 6: Enter Responses</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </aside>
-                <div class="content">
-                    <h2 id="step-introduction">RAML 200 tutorial</h2>
-                    <div class="tutorial-intro">
-                        <p><strong>Objective:</strong> Once you got familiar with the <a href="./docs.html"> basics of RAML</a>, it's time to move on and get into more complex features of the language itself, that will allow you to take full advantadge of it.</p>
-                        <h4><i>Introduction</i></h4>
-                        <p>This tutorial will guide you through a complete use case by showing how to optimize and reuse your code.</p>
-                        <h4><i>Assumptions</i></h4>
-                        <p>You know the <a href="./docs.html">basics of RAML</a>: how to write a RAML file, resources, parameters, methods, and responses.</p>
-                    </div>
-                    <h2 id="step-enter-root"><strong>Step 1:</strong> Use Case description</h2>
-                    <p>You are helping to build a music Jukebox. While the physical device will be responsible for displaying the information, and capturing the user input, it will be relying on your API to get the contents. The Jukebox needs to be able to:</p>
-                      <ul>
-                        <li>Show the full list of artists.</li>
-                        <li>Show the full list of albums.</li>
-                        <li>Show the list of artists by nationality.</li>
-                        <li>Show the list of albums by genre.</li>
-                        <li>Search for a song by title.</li>
-                        <li>Show a particular artist's albums collection.</li>
-                        <li>Show a particular album's songs list.</li>
-                        <li>Play a song (by specifying the song id).</li>
-                        <li>Enter new Artists, Albums and Songs (only authenticated users).</li>
-                      </ul>
-                      <p><strong>Consideration</strong>: This is a jukebox, not a command line. People in pubs might be unable to type lot of characters, so, a user friendly UI (paging, pictures-based, etc) would be very appretiated.
-                  </p>
-                    
-                    <h2 id="step-enter-resources"><strong>Step 2:</strong> Base RAML file</h2>
-                    <p>After a couple of minutes, you came up with the first version of your RAML file. You attended to the requirements list described in the use case.</p>
+---
+layout: regular
+title: Your New Jekyll Site
+---
+
+<aside>
+    <nav>
+        <h1>Documentation</h1>
+        <ul>
+            <li>
+                <a class="active" href="#step-introduction">Introduction: RAML 100 Tutorial</a>
+            </li>
+            <li>
+                <a href="#step-enter-root">Step 1: Enter the Root</a>
+            </li>
+            <li>
+                <a href="#step-enter-resources">Step 2: Enter Resources</a>
+            </li>
+            <li>
+                <a href="#step-enter-methods">Step 3: Enter Methods</a>
+            </li>
+            <li>
+                <a href="#step-enter-uri-params">Step 4: Enter URI Parameters</a>
+            </li>
+            <li>
+                <a href="#step-enter-query-params">Step 5: Enter Query Parameters</a>
+            </li>
+            <li>
+                <a href="#step-enter-responses">Step 6: Enter Responses</a>
+            </li>
+        </ul>
+</aside>
+<div class="content">
+<h2 id="step-introduction">RAML 100 tutorial</h2>
+<div class="tutorial-intro">
+    <p><strong>Objective:</strong> Learn the basics of RAML by designing a very basic API for BookMobile.</p>
+    <h4><i>Introduction</i></h4>
+    <p>This tutorial will guide you through conceptualizing the design of your API and writing it in RAML, the RESTful API Modeling Language.</p>
+    <h4><i>Assumptions</i></h4>
+    <p>You know the basics of how RESTful APIs operate: how to send requests and responses, and how to specify the components of a RESTful API.</p>
+</div>
+<h2 id="step-enter-root"><strong>Step 1:</strong> Enter the Root</h2>
+                    <p>Let's say you are the API designer for a BookMobile startup. You've worked out a business plan, a scaling plan, and Ashton Kutcher is an angel investor. You know you want developers to capitalize on what you've built, so that you can capitalize on what THEY build. You know having a RESTful API is one way to make that happen. So, let's get started by writing a spec.</p>
+                    <p><strong>First, you'll enter some basic information in a text editor. You can save your API's RAML definition as a text file with a recommended extension .raml:</strong></p>
+<pre>
+                        <code>
+<span class="ln">1  </span><span class="l1">#&#37;RAML 0.8</span>
+<span class="ln">2  </span><span class="l5">---</span>
+<span class="ln">3  </span><span class="def">title:</span> <span class="val">e-BookMobile API</span>
+<span class="ln">4  </span><span class="def">baseUri:</span> <span class="val">http://api.e-bookmobile.com/{version}</span>
+<span class="ln">5  </span><span class="def">version:</span> <span class="val">v1</span>
+                        </code>
+                    </pre>
+                    <p>Everything you enter in at the <a href="https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md#root-section" target="_blank">root</a> (or top) of the spec applies to the rest of your API. This is going to come in very handy later as you discover patterns in how you build your API. The baseURI you choose will be used with every call made, so make sure it's as clean and concise as can be.</p>
+                    <h2 id="step-enter-resources"><strong>Step 2:</strong> Enter Resources</h2>
+                    <p>As a thoughtful API designer, it's important to consider how your API consumers will use your API. It's especially important because in many ways, as the API designer YOU control the consumption. For example, consider the functionality of the BookMobile API. You know you want your users to be able to keep track of what they've read and their favorites. Users should also be able to discover new books and look at other titles written by their favorite authors. To do this, you define various _collections_ as your <a href="https://github.com/raml-org/raml-spec/blob/master/05_resources_and_methods.md#resources-and-nested-resources" target="_blank">resources</a>.</p>
                     <p><strong>Recalling how your API consumers will use your API, enter the following three resources under your root:</strong></p>
                     <pre>
                         <code>
@@ -282,49 +216,4 @@
                         </code>
                     </pre>
                     <p><strong>Congratulations! You've just written your first API definition in RAML.</strong></p><br /><br />
-                </div>
-            </section>
-        </div>
-        <div class="footer-wrapper">
-            <section class="footer">
-                <div class="signup">
-<iframe name="signup-form" style="display:none" src="https://docs.google.com/a/mulesoft.com/forms/d/1n3XKLpqIU9yg5635jD33LQBT2Jo4xqUsmSGrU-nKmGs/formResponse"></iframe> 
-                    <form action="https://docs.google.com/a/mulesoft.com/forms/d/1n3XKLpqIU9yg5635jD33LQBT2Jo4xqUsmSGrU-nKmGs/formResponse" method="POST" id="ss-form" onsubmit="" target="signup-form">
-                        <label>Subscribe & learn about new RAML projects</label>
-                        <input type="text" name="entry.1586103239" value="" class="ss-q-short valid" placeholder="Email Address" id="entry_1586103239" dir="auto" title="">
-                        <input type="submit" name="submit" value="Subscribe" id="ss-submit">
-                    </form>
-                    <div id="ss-form-response" style="display:none">Thanks for signing up!</div>
-                </div>
-                <div class="footer-nav">
-                    <a href="about.html#about-workgroup">RAML Workgroup</a>
-                    <a href="mailto:info@raml.org">Contact</a>
-                    <a href="licensing.html">Licensing</a>
-                </div>
-            </section>
-        </div>
-        <script src="javascripts/retina-1.1.0.min.js"></script>
-        <script src="javascripts/jquery.scrollTo.min.js" ></script>
-        <script src="javascripts/waypoints.min.js" ></script>
-        <script src="javascripts/custom.js" ></script>
-        <script type="text/javascript">
-          var $buoop = {};
-          $buoop.ol = window.onload;
-          window.onload=function(){
-           try {if ($buoop.ol) $buoop.ol();}catch (e) {}
-           var e = document.createElement("script");
-           e.setAttribute("type", "text/javascript");
-           e.setAttribute("src", "//browser-update.org/update.js");
-           document.body.appendChild(e);
-          }
-        </script>
-        <script type="text/javascript">
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-            ga('create', 'UA-44483523-1', 'raml.org');
-            ga('send', 'pageview');
-        </script>
-    </body>
-</html>
+                    </div>

@@ -1,0 +1,6 @@
+name: Your New Jekyll Site
+markdown: redcarpet
+redcarpet:
+    extensions: [with_toc_data]
+extensions: [fenced_code_blocks]
+pygments: true
