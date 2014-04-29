@@ -106,8 +106,8 @@ In resource type definitions, there are two reserved parameter names: *resourceP
 In trait definitions, there is one reserved parameter name, *methodName*, in addition to the *resourcePath* and *resourcePathName*. The processing application MUST set the value of the *methodName* parameter to the inheriting method's name. The processing application MUST set the values of the *resourcePath* and *resourcePathName* parameters the same as in resource type definitions.
 
 Parameter values MAY further be transformed by applying one of the following functions:
-* The *!singularize* function MUST act on the value of the parameter by a locale-specific singularization of its original value. The only locale supported by this verion of RAML is United States English.
-* The *!pluralize* function MUST act on the value of the parameter by a locale-specific pluralization of its original value. The only locale supported by this verion of RAML is United States English.
+* The *!singularize* function MUST act on the value of the parameter by a locale-specific singularization of its original value. The only locale supported by this version of RAML is United States English.
+* The *!pluralize* function MUST act on the value of the parameter by a locale-specific pluralization of its original value. The only locale supported by this version of RAML is United States English.
 
 To apply functions, append them to the parameter name within the double angle brackets, separated from the parameter name with a | (pipe) character and optional whitespace padding. Here is an example that uses both as well as reserved parameters:
 
