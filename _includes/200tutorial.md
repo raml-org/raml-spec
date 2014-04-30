@@ -295,6 +295,7 @@ As you can see in the code example, the schema described in previous sections is
 **We are definitively not saying that all RESTful APIs are the same,** not even suggesting it. But there are some common "behaviors" that can be found in tons of them. Particualrilly, if we are trying to represent "resources" that could be infered from a business model, it will probably happen to find some kind of analogy with the CRUD models. Given a resource, you can **c**reate a new one, **r**etrieve one or all of them and **u**pdate or **d**elete an existing one.
 
 In that sense, we can easily identify an existing resource (to be fetched, deleted or updated), a new one (to be added to a collection) and the collection itself (to be retrieved)
+
 ```yaml
 #%RAML 0.8
 title:
