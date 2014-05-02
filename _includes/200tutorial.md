@@ -1,19 +1,3 @@
-## RAML 200 TUTORIAL
-
-### Objective
-Once you got familiar with the [basics of RAML](http://raml.org/docs.html), it's time to move on and get into more complex features of the language itself, that will allow you to take full advantadge of it.
-
-### Introduction
-This tutorial will guide you through a complete use case by showing how to optimize and reuse your code by applying concepts such as resourceTypes and traits and RAML utilities such as includes. The tutorial will also introduce the concept of schemas and show how to use these to validate an HTTP body
-
-### Assumptions
-You know the [basics of RAML](http://raml.org/docs.html): how to write a RAML file, resources, parameters, methods, and responses.
-
-### Hands on!
-This tutorial will be explaining and showing snippets of RAML definitions. However, the best approach to learn the presneted concepts, is to hands on and play with the code.
-With this purpose, you can easily setup a workspace, play and mess with the code, and reset it to any of the steps of this tutorial.
-
-
 ## SETTING UP THE WORKSPACE
 If you decided to "hands on", please clone the GitHub repository
 
@@ -47,7 +31,7 @@ You are helping to build a music Jukebox. While the physical device will be resp
 
 **Consideration:** This is a jukebox, not a command line. People in pubs might be unable to type lot of characters, so, a user friendly UI (paging, pictures-based, etc) would be very appreciated.
 
-## **STEP 0:** BASE RAML FILE
+## **STEP 1:** BASE RAML FILE
 
 Reset your workspace:
 ```
@@ -154,8 +138,8 @@ As you can see in the following example (extracted from jukebox-api.raml), the r
   post:
 ```
 
-## **STEP 1:** BODY PARAMETERS
-### Form Parameters
+## **STEP 2:** BODY PARAMETERS
+**Form Parameters**
 
 Reset your workspace:
 ```
@@ -196,7 +180,7 @@ As you can see in the POST definition, its `body` contains two possible content-
 
 For the `multipart/form-data` (and also the `application/x-www-form-urlencoded`), it is possible to define a map of "formParameters", defining this map the same way that the rest of the RAML ones (in this case, the "file" field is required and of type "file").
 
-### Schemas
+**Schemas**
 
 Reset your workspace:
 ```
@@ -242,7 +226,7 @@ What the example is basically saying is: "The expected parameter is a valid json
 
 It's not the intention of this tutorial explain how JSON and XML schemas work, but you could find information about it at [http://json-schema.org/](http://json-schema.org/) and [http://www.w3.org/XML/Schema.html](http://json-schema.org/)
 
-## **STEP 2:** EXTRACT SCHEMAS
+## **STEP 3:** EXTRACT SCHEMAS
 
 Reset your workspace:
 ```
@@ -289,8 +273,8 @@ body:
 
 As you can see in the code example, the schema described in previous sections is now being defined and referenced by the name "song". The name choice is not random, and the correct convention will allow you to parametrize resource types and reuse a lot of code (this will be explained in following sections).
 
-## **STEP 3:** INTRODUCING RESOURCE TYPES
-### The "collection/collection-item" pattern
+## **STEP 4:** INTRODUCING RESOURCE TYPES
+**The "collection/collection-item" pattern**
 
 **We are definitively not saying that all RESTful APIs are the same,** not even suggesting it. But there are some common "behaviors" that can be found in tons of them. Particualrilly, if we are trying to represent "resources" that could be infered from a business model, it will probably happen to find some kind of analogy with the CRUD models. Given a resource, you can **c**reate a new one, **r**etrieve one or all of them and **u**pdate or **d**elete an existing one.
 
@@ -311,7 +295,7 @@ title:
 
 So, we found two different type of resources. The item (represented by an id), and the collection (containing all the items). It would be nice to be able to define these types, and "declare" the resources of those types.
 
-### Resource Types in RAML
+**Resource Types in RAML**
 
 Luckily, there is a way to do this in RAML.
 
@@ -335,7 +319,7 @@ As you may notice, the PUT and DELETE methods are not defined for the collection
 
 So, what this version of the jukebox-api.raml is saying is "There are two resource types: collection, which has the GET and POST methods defined, and collection-item which has the GET method defined". Like that, it doesn't really seem to be very useful, however, it's easy to understand as the first step of defining good resourceTypes and reusing code.
 
-### Defining and parametrizing resourceTypes
+**Defining and parametrizing resourceTypes**
 
 The following explanation and code snippets will guide you step by step on how to get the next version of the jukebox-api.raml. Nevertheless, you can see the final result by reseting your workspace.
 
@@ -558,7 +542,7 @@ Basically, every piece of code needed to define the **examples**. And this is ba
 
 That would solve our "examples problem".
 
-## **STEP 4:** FREE PARAMETERS
+## **STEP 5:** FREE PARAMETERS
 
 Reset your workspace:
 
@@ -689,7 +673,7 @@ As you can see, the same concept shown at the previous example, was applied to t
 
 The code that was being repeated at the end of the step 3, is now completely on the resourceType at the point that the POST definition, directly disappeared from the resources. **That's correct. Now, every `collection-item` typed resources will have a valid (generic) POST definition without even writing it.**
 
-## **STEP 5:** INCLUDES
+## **STEP 6:** INCLUDES
 
 Reset your workspace:
 ```
@@ -765,7 +749,7 @@ The following code snippet shows how to include or "call" the extracted files fr
 
 As it's being shown on the last code snippet, RAML features encourage you to reduce the quantity of code you need to write, while making it more reusable and maintainable.
 
-## **STEP 6:** HARD STOP
+## **STEP 7:** HARD STOP
 
 We have introduced several features and made great progress with our API definition, but aren't we missing something? We have just focused on "/songs" resource (and descending branch). If you check your RAML file right now, you will discover that all other resources are still not taking advangadge of all the work we have done.
 
@@ -842,14 +826,14 @@ git checkout -f step6b
 If you are follwing the code in detail, you will have already notice something: `collection` and `readOnlyCollection` resourceTypes are repeating some code. Actually, `readOnlyCollection` code is completely included in `collection` code. You are right! And there is a way of making this more efficient. It's all about "types composing" and it will be totally covered on some other tutorial.
 
 
-## **STEP 7:** TRAITS
+## **STEP 8:** TRAITS
 We are almost done. Actually, we are fulfilling all the requirements for the described use case. But as usual, we discover something while building, and this tutorial cannot be the exception.
 
 Won't I be able to sort my collections? Shouldn't my API give the chance of paging these? And by the way, is the strategy we choose for searching on a collection good enough? What if we need to enhance and make more complex queries in the future?
 
 Let's tackle down these issues. First, we need to understand in right.
 
-### Understanding our resources
+**Understanding our resources**
 
 Let's build a simple table to discover and agree about each collection capabilities:
 
@@ -863,7 +847,7 @@ Let's build a simple table to discover and agree about each collection capabilit
 
 If we considered who will be consuming the API, this table would probably be different (small collections can be filtered, ordered and paged on the client side). We are keeping it anyway for this tutorial purposes.
 
-### Fixing the Searchable collections
+**Fixing the Searchable collections**
 
 Before getting involved with the Traits concept, let's enhance the Searchable fixed parameters by applying a generic "query" queryParameter.
 
@@ -906,7 +890,8 @@ Reset your workspace:
 git checkout -f step7a
 ```
 
-### Searchable Trait
+**Searchable Trait**
+
 The same way that several resources could belong to a specific resourceType, it's possible to define and reuse similar behavior by wirting traits. This is one of these concepts that are better explained by code:
 ```yaml
 /songs:
@@ -957,7 +942,8 @@ git checkout -f step7b
 
 Note that in the step7b workspace, we have already applied the Searchable trait to `/songs`, `/artists` and `/albums` resources.
 
-### Other traits
+**Other traits**
+
 Well, considering the table we built, we would need to create 2 additional traits: Orderable and Pageable. The creation is trivial, and when applied, we end confirming something that could have been seen on the previous step: Traits are a collection (that's why they are applied within an array).
 
 ```yaml
@@ -1014,7 +1000,7 @@ Reset your workspace:
 git checkout -f step7c
 ```
 
-### The hidden trait
+**The hidden trait**
 
 Have you noticed another "piece of code"/"behavior or contract" that is being repeated in our RAML definition? No? Well, that's because it's kind of hidden by a resourceType.
 
@@ -1054,7 +1040,7 @@ git checkout -f step7d
 ```
 
 
-## **STEP 8:** INCLUDES (SECOND PART)
+## **STEP 9:** INCLUDES (SECOND PART)
 We could say that our RAML file has been properly refactorized and is now much more readable, reusable and maintainable. Maybe a last step would be to double check which parts of the RAML definition could now be extracted to other files (the same way we have done with the "examples").
 
 Starting from the top, we find the "schemas", and it seems to be a no brainer that each JSON (in this case) could be extracted and included as we have learned

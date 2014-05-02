@@ -1,14 +1,3 @@
-## RAML 100 TUTORIAL
-
-### Objective
-Learn the basics of RAML by designing a very basic API for BookMobile.
-
-### Introduction
-This tutorial will guide you through conceptualizing the design of your API and writing it in RAML, the RESTful API Modeling Language.
-
-### Assumptions
-You know the basics of how RESTful APIs operate: how to send requests and responses, and how to specify the components of a RESTful API.
-
 ## **STEP 1:** ENTER THE ROOT
 Let's say you are the API designer for a BookMobile startup. You've worked out a business plan, a scaling plan, and Ashton Kutcher is an angel investor. You know you want developers to capitalize on what you've built, so that you can capitalize on what THEY build. You know having a RESTful API is one way to make that happen. So, let's get started by writing a spec.
 
@@ -22,7 +11,7 @@ baseUri: http://api.e-bookmobile.com/{version}
 version: v1
 ```
 
-Everything you enter in at the [root](https://github.com/raml-org/raml-spec/blob/master/04_basic_information.md#root-section) (or top) of the spec applies to the rest of your API. This is going to come in very handy later as you discover patterns in how you build your API. The baseURI you choose will be used with every call made, so make sure it's as clean and concise as can be.
+Everything you enter in at the [root](https://github.com/raml-org/raml-spec/blob/master/04_b  asic_information.md#root-section) (or top) of the spec applies to the rest of your API. This is going to come in very handy later as you discover patterns in how you build your API. The baseURI you choose will be used with every call made, so make sure it's as clean and concise as can be.
 
 ## **STEP 2:** ENTER RESOURCES
 
