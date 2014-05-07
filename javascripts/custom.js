@@ -51,6 +51,15 @@ $(document).ready(function() {
         });
     });
     /*
+    Add active class to last nav item on scroll to bottom
+    */
+    $(window).scroll(function() {
+      if($(window).scrollTop() + $(window).height() == $(document).height()) {
+        $('aside nav a').removeClass('active');
+        $('aside nav ul:first-of-type li:last-child a').addClass('active');
+      }
+    });
+    /*
     Show confirm message on marketing signup submit
     */
     $("#ss-form").submit(function() {
