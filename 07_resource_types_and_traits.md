@@ -117,8 +117,8 @@ title: Example API
 version: v1
 mediaType: application/json
 schemas:
-  users: !include schemas/users.json
-  user: !include schemas/user.json
+  - users: !include schemas/users.json
+  - user: !include schemas/user.json
 resourceTypes: 
   - collection:
       get:
