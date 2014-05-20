@@ -32,14 +32,12 @@ This example shows an inline schema declaration.
       application/json:
         schema: |
           {
-            "$schema": "http://json-schema.org/draft-03/schema",
+            "$schema": "http://json-schema.org/draft-04/schema#",
             "properties": {
                 "input": {
-                    "required": false,
                     "type": "string"
                 }
             },
-            "required": false,
             "type": "object"
           }
 ```
