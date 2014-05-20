@@ -276,7 +276,7 @@ The API architect MAY use any versioning scheme so long as version numbers retai
 
 ### Base URI and baseUriParameters
 (Optional during development; Required after implementation)
-A RESTful API's resources are defined relative to the API's base URI. The use of the *baseUri* field is OPTIONAL to allow describing APIs that have not yet been implemented. After the API is implemented (even a mock implementation) and can be accessed at a service endpoint, the API definition MUST contain a *baseUri* property. The *baseUri* property's value MUST conform to the URI specification [RFC2396] or a Level 1 Template URI as defined in RFC 6570 [RFC6570].
+A RESTful API's resources are defined relative to the API's base URI. The use of the *baseUri* field is OPTIONAL to allow describing APIs that have not yet been implemented. After the API is implemented (even a mock implementation) and can be accessed at a service endpoint, the API definition MUST contain a *baseUri* property. The *baseUri* property's value MUST conform to the URI specification [RFC2396] or a Level 1 Template URI as defined in [RFC6570].
 
 The *baseUri* property SHOULD only be used as a reference value. API client generators MAY make the *baseUri* configurable by the API client's users.
 
@@ -286,17 +286,8 @@ If the *baseUri* value is a Level 1 Template URI, the following reserved base UR
 |:--------------|:---------------------------------|
 | version       | The content of the version field.|
 
-Any other URI template variables appearing in the *baseUri* MAY be described explicitly within a *baseUriParameters* property at the root
-of the API definition. The properties of the *baseUriParameters* property are described in the 
-Named Parameters section of this specification.
 
-If a URI template variable in the base URI is not explicitly described in a *baseUriParameters* property, 
-and is not specified in a resource-level *baseUriParameters* property, 
-it MUST still be treated as a base URI parameter with defaults as specified in the Named Parameters 
-section of this specification. Its type is "string", it is required, and its displayName is its name 
-(i.e. without the surrounding curly brackets [{] and [}]).
-
-The following example RAML API definition uses a Level 1 Template URI as the *baseUri*.
+The following example RAML API definition uses a Level 1 Template URI as the *baseUri* with the reserved *{version}* base URI parameter.
 
 ```yaml
 #%RAML 0.8
@@ -304,6 +295,18 @@ title: Salesforce Chatter REST API
 version: v28.0
 baseUri: https://na1.salesforce.com/services/data/{version}/chatter
 ```
+
+
+
+Any other URI template variables appearing in the *baseUri* MAY be described explicitly within a *baseUriParameters* property at the root
+of the API definition. The properties of the *baseUriParameters* property are described in the 
+[Named Parameters](#03_named_parameters.md) section of this specification.
+
+If a URI template variable in the base URI is not explicitly described in a *baseUriParameters* property, 
+and is not specified in a resource-level *baseUriParameters* property, 
+it MUST still be treated as a base URI parameter with defaults as specified in the Named Parameters 
+section of this specification. Its type is "string", it is required, and its displayName is its name 
+(i.e. without the surrounding curly brackets [{] and [}]).
 
 The following example declares an explicit base URI parameter.
 
@@ -1556,27 +1559,27 @@ References
 ### Normative References
 
 [RFC1738]  Berners-Lee, T., Masinter, L., and M. McCahill, "Uniform
-          Resource Locators (URL)", RFC 1738, December 1994.
+          Resource Locators (URL)", RFC 1738, December 1994, <http://tools.ietf.org/html/rfc1738>.
 
 [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-          Requirement Levels", BCP 14, RFC 2119, March 1997.
+          Requirement Levels", BCP 14, RFC 2119, March 1997, <http://tools.ietf.org/html/rfc2119>.
 
 [RFC2396]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
           Resource Identifiers (URI): Generic Syntax", RFC 2396,
-          August 1998.
+          August 1998, <http://tools.ietf.org/html/rfc2396>.
 
 [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
           Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
-          Transfer Protocol -- HTTP/1.1", RFC 2616, June 1999.
+          Transfer Protocol -- HTTP/1.1", RFC 2616, June 1999, <http://tools.ietf.org/html/rfc2616>.
 
 [RFC4627]  Crockford, D., "The application/json Media Type for
-          JavaScript Object Notation (JSON)", RFC 4627, July 2006.
+          JavaScript Object Notation (JSON)", RFC 4627, July 2006, <http://tools.ietf.org/html/rfc4627>.
 
 [RFC5789]  Dusseault, L. and J. Snell, "PATCH Method for HTTP", RFC
-          5789, March 2010.
+          5789, March 2010, <http://tools.ietf.org/html/rfc5789>.
 
 [RFC6570]  Gregorio, J., Fielding, R., Hadley, M., Nottingham, M.,
-          and D. Orchard, "URI Template", RFC 6570, March 2012.
+          and D. Orchard, "URI Template", RFC 6570, March 2012, <http://tools.ietf.org/html/rfc6570>.
 
 [YAML]     Ben Kiki, O., Evans, C., and I. Net, "YAML Aint Markup
           Language", 2009, <http://www.yaml.org/spec/1.2/spec.html>.

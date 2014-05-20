@@ -39,7 +39,7 @@ The API architect MAY use any versioning scheme so long as version numbers retai
 
 ### Base URI and baseUriParameters
 (Optional during development; Required after implementation)
-A RESTful API's resources are defined relative to the API's base URI. The use of the *baseUri* field is OPTIONAL to allow describing APIs that have not yet been implemented. After the API is implemented (even a mock implementation) and can be accessed at a service endpoint, the API definition MUST contain a *baseUri* property. The *baseUri* property's value MUST conform to the URI specification [RFC2396] or a Level 1 Template URI as defined in RFC 6570 [RFC6570].
+A RESTful API's resources are defined relative to the API's base URI. The use of the *baseUri* field is OPTIONAL to allow describing APIs that have not yet been implemented. After the API is implemented (even a mock implementation) and can be accessed at a service endpoint, the API definition MUST contain a *baseUri* property. The *baseUri* property's value MUST conform to the URI specification [RFC2396] or a Level 1 Template URI as defined in [RFC6570].
 
 The *baseUri* property SHOULD only be used as a reference value. API client generators MAY make the *baseUri* configurable by the API client's users.
 
@@ -49,17 +49,8 @@ If the *baseUri* value is a Level 1 Template URI, the following reserved base UR
 |:--------------|:---------------------------------|
 | version       | The content of the version field.|
 
-Any other URI template variables appearing in the *baseUri* MAY be described explicitly within a *baseUriParameters* property at the root
-of the API definition. The properties of the *baseUriParameters* property are described in the 
-Named Parameters section of this specification.
 
-If a URI template variable in the base URI is not explicitly described in a *baseUriParameters* property, 
-and is not specified in a resource-level *baseUriParameters* property, 
-it MUST still be treated as a base URI parameter with defaults as specified in the Named Parameters 
-section of this specification. Its type is "string", it is required, and its displayName is its name 
-(i.e. without the surrounding curly brackets [{] and [}]).
-
-The following example RAML API definition uses a Level 1 Template URI as the *baseUri*.
+The following example RAML API definition uses a Level 1 Template URI as the *baseUri* with the reserved *{version}* base URI parameter.
 
 ```yaml
 #%RAML 0.8
@@ -67,6 +58,18 @@ title: Salesforce Chatter REST API
 version: v28.0
 baseUri: https://na1.salesforce.com/services/data/{version}/chatter
 ```
+
+
+
+Any other URI template variables appearing in the *baseUri* MAY be described explicitly within a *baseUriParameters* property at the root
+of the API definition. The properties of the *baseUriParameters* property are described in the 
+[Named Parameters](#03_named_parameters.md) section of this specification.
+
+If a URI template variable in the base URI is not explicitly described in a *baseUriParameters* property, 
+and is not specified in a resource-level *baseUriParameters* property, 
+it MUST still be treated as a base URI parameter with defaults as specified in the Named Parameters 
+section of this specification. Its type is "string", it is required, and its displayName is its name 
+(i.e. without the surrounding curly brackets [{] and [}]).
 
 The following example declares an explicit base URI parameter.
 

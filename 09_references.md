@@ -4,27 +4,27 @@ References
 ### Normative References
 
 [RFC1738]  Berners-Lee, T., Masinter, L., and M. McCahill, "Uniform
-          Resource Locators (URL)", RFC 1738, December 1994.
+          Resource Locators (URL)", RFC 1738, December 1994, <http://tools.ietf.org/html/rfc1738>.
 
 [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-          Requirement Levels", BCP 14, RFC 2119, March 1997.
+          Requirement Levels", BCP 14, RFC 2119, March 1997, <http://tools.ietf.org/html/rfc2119>.
 
 [RFC2396]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
           Resource Identifiers (URI): Generic Syntax", RFC 2396,
-          August 1998.
+          August 1998, <http://tools.ietf.org/html/rfc2396>.
 
 [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
           Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
-          Transfer Protocol -- HTTP/1.1", RFC 2616, June 1999.
+          Transfer Protocol -- HTTP/1.1", RFC 2616, June 1999, <http://tools.ietf.org/html/rfc2616>.
 
 [RFC4627]  Crockford, D., "The application/json Media Type for
-          JavaScript Object Notation (JSON)", RFC 4627, July 2006.
+          JavaScript Object Notation (JSON)", RFC 4627, July 2006, <http://tools.ietf.org/html/rfc4627>.
 
 [RFC5789]  Dusseault, L. and J. Snell, "PATCH Method for HTTP", RFC
-          5789, March 2010.
+          5789, March 2010, <http://tools.ietf.org/html/rfc5789>.
 
 [RFC6570]  Gregorio, J., Fielding, R., Hadley, M., Nottingham, M.,
-          and D. Orchard, "URI Template", RFC 6570, March 2012.
+          and D. Orchard, "URI Template", RFC 6570, March 2012, <http://tools.ietf.org/html/rfc6570>.
 
 [YAML]     Ben Kiki, O., Evans, C., and I. Net, "YAML Aint Markup
           Language", 2009, <http://www.yaml.org/spec/1.2/spec.html>.
