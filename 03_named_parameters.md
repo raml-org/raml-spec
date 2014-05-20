@@ -34,7 +34,7 @@ As defined in [RFC2616], all date/time stamps are represented in Greenwich Mean 
 
 
 ### enum
-(Optional, applicable only for parameters of type string)
+(Optional)
 The *enum* attribute provides an enumeration of the parameter's valid values. This MUST be an array. If the *enum* attribute is defined, API clients and servers MUST verify that a parameter's value matches a value in the *enum* array. If there is no matching value, the clients and servers MUST treat this as an error.
 
 ### pattern
