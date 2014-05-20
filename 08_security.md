@@ -9,7 +9,7 @@ This section describes how an API designer MAY include security scheme definitio
 The *securitySchemes* property is declared at the API's root level. 
 
 The *securitySchemes* property MUST be used to specify an API's security mechanisms, including the required settings and the authentication methods that the API supports.
-one authentication method is allowed if the API supports them.
+one authentication method is allowed if the API supports them. <- This sentence is incomprehensible, can someone fix?
 
 In this example, the Dropbox API supports authentication via OAuth 2.0 and OAuth 1.0.
 
