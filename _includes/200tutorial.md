@@ -180,7 +180,7 @@ There are several ways of defining the body parameters for an HTTP method. You c
 
 
 As you can see in the POST definition, its body contains two possible content-types.
-The `binary/octet-stream` simply expects `file-content` to be sent as parameter. It's a valid and popular technique for APIs that supporting files. Unfortunately, it makes the API impossible to call from a web browser (at least with the purpose of uploading a file).
+The `binary/octet-stream` simply expects `file-content` to be sent as a parameter. It's a valid and popular technique for APIs that supporting files. Unfortunately, it makes the API impossible to call from a web browser (at least with the purpose of uploading a file).
 
 For the `multipart/form-data` (and also the `application/x-www-form-urlencoded`), it is possible to define a map of "formParameters", defining this map the same way that the rest of the RAML ones (in this case, the "file" field is required and of type "file").
 
@@ -473,7 +473,7 @@ resourceTypes:
 ```
 
 Note that even the Schema name is specified with this parameter (singular in this case). Do you remember when we extracted the schemas at step 2? We mentioned that the schema name was not random - this is why.
-Another important aspect to stress is that defining and applying a resourceType to a resource doesn't forbid you to overwrite any of the map's elements. In this example, we still see that GET method is present in both, resource and resourceType (the same for the responses, POST, etc). Not only is this allowed, but also is the way of redefining something that changes from one resource to other. **If you think this looks like OOP inheritance, you’re right!**
+Another important aspect to stress is that defining and applying a resourceType to a resource doesn't forbid you from overwriting any of the map's elements. In this example, we still see that GET method is present in both, resource and resourceType (the same for the responses, POST, etc). Not only is this allowed, but also is the way of redefining something that changes from one resource to other. **If you think this looks like OOP inheritance, you’re right!**
 
 Now, let's work with the "collection-item" resourceType.
 
