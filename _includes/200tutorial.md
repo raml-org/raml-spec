@@ -388,7 +388,7 @@ Parameters are useful here. Suppose that you can write a "placeholder" on the re
 description: Collection of available <<resource>> in Jukebox
 ```
 
-with <<resource>> receiving "songs", "artists", or "albums" depending on the resource.
+with `<<resource>>` receiving "songs", "artists", or "albums" depending on the resource.
 
 While this is possible (and very useful for most scenarios), for this particular case it's not necessary for the resource to even pass the parameter thanks to **Reserved Parameters**.
 
