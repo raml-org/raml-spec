@@ -3,11 +3,9 @@
 
 **Introduction**
 
-
 This tutorial will guide you through a complete use case for a jukebox API. You’ll learn how to optimize and reuse your code by applying concepts such as resourceTypes and traits, and RAML utilities such as !includes. The tutorial will also demonstrate how RAML uses schemas, and show how to use them to validate an HTTP body.
 
 **Assumptions**
-
 
 You know the [basics of RAML](http://raml.org/docs.html): how to write a RAML file with resources, parameters, methods, and responses.
 
