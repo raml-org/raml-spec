@@ -51,47 +51,92 @@ title: Your New Jekyll Site
                 </section>
                 <pre>
                     <code>
-                      <ol>
-                        <li><span class="l1">#&#37;RAML 0.8</span></li>
-                        <li><span class="l5"></span></li>
-                        <li><span class="def">title:</span> <span class="val">World Music API</span></li>
-                        <li><span class="def">baseUri:</span> <span class="val">http://example.api.com/{version}</span></li>
-                        <li><span class="def">version:</span> <span class="val">v1</span></li>
-                        <li><span class="l2">traits:</span></li>
-                        <li><span class="l22">  - paged:</span></li>
-                        <li><span class="l22">      queryParameters:</span></li>
-                        <li><span class="l22">        pages:</span></li>
-                        <li><span class="l22">          description:</span> <span class="val">The number of pages to return</span></li>
-                        <li><span class="l22">          type:</span> <span class="val">number</span></li>
-                        <li><span class="l22">  - secured:</span> <span class="val">!include http://raml-example.com/secured.yml</span></li>
-                        <li><span class="l3">/songs:</span></li>
-                        <li><span class="def">  is:</span> <span class="val">[ paged, secured ]</span></li>
-                        <li><span class="l4">  get:</span></li>
-                        <li><span class="l5">    queryParameters:</span></li>
-                        <li><span class="l5">      genre:</span></li>
-                        <li><span class="l5">        description:</span> <span class="val">filter the songs by genre</span></li>
-                        <li><span class="l4">  post:</span></li>
-                        <li><span class="l3">  /{songId}:</span></li>
-                        <li><span class="l4">    get:</span></li>
-                        <li><span class="l5">      responses:</span></li>
-                        <li><span class="l5">        200:</span></li>
-                        <li><span class="l5">          body:</span></li>
-                        <li><span class="l5">            application/json:</span></li>
-                        <li><span class="l5">              schema:</span> <span class="l1">|</span></li>
-                        <li><span class="l1">                { "$schema": "http://json-schema.org/schema",</span></li>
-                        <li><span class="l1">                  "type": "object",</span></li>
-                        <li><span class="l1">                  "description": "A canonical song",</span></li>
-                        <li><span class="l1">                  "properties": {</span></li>
-                        <li><span class="l1">                    "title":  { "type": "string" },</span></li>
-                        <li><span class="l1">                    "artist": { "type": "string" }</span></li>
-                        <li><span class="l1">                  },</span></li>
-                        <li><span class="l1">                  "required": [ "title", "artist" ]</span></li>
-                        <li><span class="l1">                }</span></li>
-                        <li><span class="l5">            application/xml:</span></li>
-                        <li><span class="l4">    delete:</span></li>
-                        <li><span class="l5">      description: |</span></li>
-                        <li><span class="val">        This method will <span class="u">*delete*</span> an <span class="def">**individual song**</span></span></li>
-                      </ol>
+                      <div style="float: left;">
+                        <ol>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                          <li><span class="l1">&nbsp;</span></li>
+                        </ol>
+                      </div>
+                      <div style="float: left;">
+                        <ul>
+                          <li><span class="l1">#&#37;RAML 0.8</span></li>
+                          <li><span class="l5"></span></li>
+                          <li><span class="def">title:</span> <span class="val">World Music API</span></li>
+                          <li><span class="def">baseUri:</span> <span class="val">http://example.api.com/{version}</span></li>
+                          <li><span class="def">version:</span> <span class="val">v1</span></li>
+                          <li><span class="l2">traits:</span></li>
+                          <li><span class="l22">  - paged:</span></li>
+                          <li><span class="l22">      queryParameters:</span></li>
+                          <li><span class="l22">        pages:</span></li>
+                          <li><span class="l22">          description:</span> <span class="val">The number of pages to return</span></li>
+                          <li><span class="l22">          type:</span> <span class="val">number</span></li>
+                          <li><span class="l22">  - secured:</span> <span class="val">!include http://raml-example.com/secured.yml</span></li>
+                          <li><span class="l3">/songs:</span></li>
+                          <li><span class="def">  is:</span> <span class="val">[ paged, secured ]</span></li>
+                          <li><span class="l4">  get:</span></li>
+                          <li><span class="l5">    queryParameters:</span></li>
+                          <li><span class="l5">      genre:</span></li>
+                          <li><span class="l5">        description:</span> <span class="val">filter the songs by genre</span></li>
+                          <li><span class="l4">  post:</span></li>
+                          <li><span class="l3">  /{songId}:</span></li>
+                          <li><span class="l4">    get:</span></li>
+                          <li><span class="l5">      responses:</span></li>
+                          <li><span class="l5">        200:</span></li>
+                          <li><span class="l5">          body:</span></li>
+                          <li><span class="l5">            application/json:</span></li>
+                          <li><span class="l5">              schema:</span> <span class="l1">|</span></li>
+                          <li><span class="l1">                { "$schema": "http://json-schema.org/schema",</span></li>
+                          <li><span class="l1">                  "type": "object",</span></li>
+                          <li><span class="l1">                  "description": "A canonical song",</span></li>
+                          <li><span class="l1">                  "properties": {</span></li>
+                          <li><span class="l1">                    "title":  { "type": "string" },</span></li>
+                          <li><span class="l1">                    "artist": { "type": "string" }</span></li>
+                          <li><span class="l1">                  },</span></li>
+                          <li><span class="l1">                  "required": [ "title", "artist" ]</span></li>
+                          <li><span class="l1">                }</span></li>
+                          <li><span class="l5">            application/xml:</span></li>
+                          <li><span class="l4">    delete:</span></li>
+                          <li><span class="l5">      description: |</span></li>
+                          <li><span class="val">        This method will <span class="u">*delete*</span> an <span class="def">**individual song**</span></span></li>
+                        </ul>
+                      </div>
                     </code>
                     <div class="copy-clipboard" title="Copy code to clipboard"><span>Copied!</span></div>
                 </pre>
