@@ -1003,49 +1003,6 @@ Reset your workspace:
 git checkout -f step7c
 ```
 
-**The hidden trait**
-
-Have you noticed any another piece of code or behavior or contract that repeats in our RAML definition? No? That’s because it's kind of hidden by a resourceType.
-
-Remember the use case description?
-For the writeable collections the user needs to have some specific access permission.
-We implemented this by adding an `access_token` queryParameter to the "POST" methods of these resources, and after a couple of steps, we extracted that piece of code to the `collection` resourceType.
-
-Technically, there isn't anything wrong with that. Conceptually, the parameter could be added by implementing a trait (since it's more signature-related than type itself), and of course, it can be applied then at the resourceType level (in this case, any `collection` that is writeable will have it).
-
-```yaml
-- collection:
-    description: Collection of available <<resourcePathName>> in Jukebox.
-    is: [securized]
-    get:
-      description: Get a list of <<resourcePathName>>.
-      responses:
-        200:
-          body:
-            application/json:
-              example: |
-                <<exampleCollection>>
-```
-
-```yaml
-- securized:
-    queryParameters:
-        access_token:
-          description: "The access token provided by the authentication application"
-          example: AABBCCDDEE
-          required: true
-          type: string
-```
-
-In our OOP analogy, `collection` implements `secured`, and `/songs`, `/artists`, `/albums` extend `collection`.
-
-You can now implement that code or simply reset your workspace:
-
-```
-git checkout -f step7d
-```
-
-
 ## **STEP 8:** INCLUDES (SECOND PART)
 
 We could say that our RAML file has been properly refactored and is now much more readable, reusable, and maintainable. Maybe a last step would be to double-check which parts of the RAML definition could now be extracted to other files (the same way we have done with the "examples").
