@@ -49,52 +49,54 @@ title: Your New Jekyll Site
                         <span class="bottom"></span>
                     </div>
                 </section>
-                <pre>
-                    <code>
-                      <ol>
-                        <li><span class="l1">#&#37;RAML 0.8</span></li>
-                        <li><span class="l5"></span></li>
-                        <li><span class="def">title:</span> <span class="val">World Music API</span></li>
-                        <li><span class="def">baseUri:</span> <span class="val">http://example.api.com/{version}</span></li>
-                        <li><span class="def">version:</span> <span class="val">v1</span></li>
-                        <li><span class="l2">traits:</span></li>
-                        <li><span class="l22">  - paged:</span></li>
-                        <li><span class="l22">      queryParameters:</span></li>
-                        <li><span class="l22">        pages:</span></li>
-                        <li><span class="l22">          description:</span> <span class="val">The number of pages to return</span></li>
-                        <li><span class="l22">          type:</span> <span class="val">number</span></li>
-                        <li><span class="l22">  - secured:</span> <span class="val">!include http://raml-example.com/secured.yml</span></li>
-                        <li><span class="l3">/songs:</span></li>
-                        <li><span class="def">  is:</span> <span class="val">[ paged, secured ]</span></li>
-                        <li><span class="l4">  get:</span></li>
-                        <li><span class="l5">    queryParameters:</span></li>
-                        <li><span class="l5">      genre:</span></li>
-                        <li><span class="l5">        description:</span> <span class="val">filter the songs by genre</span></li>
-                        <li><span class="l4">  post:</span></li>
-                        <li><span class="l3">  /{songId}:</span></li>
-                        <li><span class="l4">    get:</span></li>
-                        <li><span class="l5">      responses:</span></li>
-                        <li><span class="l5">        200:</span></li>
-                        <li><span class="l5">          body:</span></li>
-                        <li><span class="l5">            application/json:</span></li>
-                        <li><span class="l5">              schema:</span> <span class="l1">|</span></li>
-                        <li><span class="l1">                { "$schema": "http://json-schema.org/schema",</span></li>
-                        <li><span class="l1">                  "type": "object",</span></li>
-                        <li><span class="l1">                  "description": "A canonical song",</span></li>
-                        <li><span class="l1">                  "properties": {</span></li>
-                        <li><span class="l1">                    "title":  { "type": "string" },</span></li>
-                        <li><span class="l1">                    "artist": { "type": "string" }</span></li>
-                        <li><span class="l1">                  },</span></li>
-                        <li><span class="l1">                  "required": [ "title", "artist" ]</span></li>
-                        <li><span class="l1">                }</span></li>
-                        <li><span class="l5">            application/xml:</span></li>
-                        <li><span class="l4">    delete:</span></li>
-                        <li><span class="l5">      description: |</span></li>
-                        <li><span class="val">        This method will <span class="u">*delete*</span> an <span class="def">**individual song**</span></span></li>
-                      </ol>
-                    </code>
-                    <div class="copy-clipboard" title="Copy code to clipboard"><span>Copied!</span></div>
-                </pre>
+                <table cellpadding="0" cellspacing="0" class="example-snippet">
+                  <tr>
+                    <td class="line-numbers">
+                      <span class="line-number">1</span>
+                      <span class="line-number">2</span>
+                      <span class="line-number">3</span>
+                      <span class="line-number">4</span>
+                      <span class="line-number">5</span>
+                      <span class="line-number">6</span>
+                      <span class="line-number">7</span>
+                      <span class="line-number">8</span>
+                      <span class="line-number">9</span>
+                      <span class="line-number">10</span>
+                      <span class="line-number">11</span>
+                      <span class="line-number">12</span>
+                      <span class="line-number">13</span>
+                      <span class="line-number">14</span>
+                      <span class="line-number">15</span>
+                      <span class="line-number">16</span>
+                      <span class="line-number">17</span>
+                      <span class="line-number">18</span>
+                      <span class="line-number">19</span>
+                      <span class="line-number">20</span>
+                      <span class="line-number">21</span>
+                      <span class="line-number">22</span>
+                      <span class="line-number">23</span>
+                      <span class="line-number">24</span>
+                      <span class="line-number">25</span>
+                      <span class="line-number">26</span>
+                      <span class="line-number">27</span>
+                      <span class="line-number">28</span>
+                      <span class="line-number">29</span>
+                      <span class="line-number">30</span>
+                      <span class="line-number">31</span>
+                      <span class="line-number">32</span>
+                      <span class="line-number">33</span>
+                      <span class="line-number">34</span>
+                      <span class="line-number">35</span>
+                      <span class="line-number">36</span>
+                      <span class="line-number">37</span>
+                      <span class="line-number">38</span>
+                      <span class="line-number">39</span>
+                    </td>
+                    <td class="line-code">
+                      <pre><div class="line"><span class="l1">#&#37;RAML 0.8</span></div><div class="line">&nbsp;</div><div class="line"><span class="def">title:</span> <span class="val">World Music API</span></div><div class="line"><span class="def">baseUri:</span> <span class="val">http://example.api.com/{version}</span></div><div class="line"><span class="def">version:</span> <span class="val">v1</span></div><div class="line"><span class="l2">traits:</span></div><div class="line"><span class="l22">  - paged:</span></div><div class="line"><span class="l22">      queryParameters:</span></div><div class="line"><span class="l22">        pages:</span></div><div class="line"><span class="l22">          description:</span> <span class="val">The number of pages to return</span></div><div class="line"><span class="l22">          type:</span> <span class="val">number</span></div><div class="line"><span class="l22">  - secured:</span> <span class="val">!include http://raml-example.com/secured.yml</span></div><div class="line"><span class="l3">/songs:</span></div><div class="line"><span class="def">  is:</span> <span class="val">[ paged, secured ]</span></div><div class="line"><span class="l4">  get:</span></div><div class="line"><span class="l5">    queryParameters:</span></div><div class="line"><span class="l5">      genre:</span></div><div class="line"><span class="l5">        description:</span> <span class="val">filter the songs by genre</span></div><div class="line"><span class="l4">  post:</span></div><div class="line"><span class="l3">  /{songId}:</span></div><div class="line"><span class="l4">    get:</</div><div class="line"><span class="l5">      responses:</span></div><div class="line"><span class="l5">        200:</span></div><div class="line"><span class="l5">          body:</span></div><div class="line"><span class="l5">            application/json:</span></div><div class="line"><span class="l5">              schema:</span> <span class="l1">|</span></div><div class="line"><span class="l1">                { "$schema": "http://json-schema.org/schema",</span></div><div class="line"><span class="l1">                  "type": "object",</span></div><div class="line"><span class="l1">                  "description": "A canonical song",</span></div><div class="line"><span class="l1">                  "properties": {</span></div><div class="line"><span class="l1">                    "title":  { "type": "string" },</span></div><div class="line"><span class="l1">                    "artist": { "type": "string" }</span></div><div class="line"><span class="l1">                  },</span></div><div class="line"><span class="l1">                  "required": [ "title", "artist" ]</span></div><div class="line"><span class="l1">                }</span></div><div class="line"><span class="l5">            application/xml:</span></div><div class="line"><span class="l4">    delete:</span></div><div class="line"><span class="l5">      description: |</span></div><div class="line"><span class="val">        This method will <span class="u">*delete*</span> an <span class="def">**individual song**</span></span></div></pre>
+                    </td>
+                  </tr>
+                </table>
 
 
 
