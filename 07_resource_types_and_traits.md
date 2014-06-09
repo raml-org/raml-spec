@@ -42,7 +42,7 @@ traits:
           required: true
 ```
 
-The following example builds on the previous one, but the the resource types and traits are defined in external files that are included by using the RAML !include data type.
+The following example builds on the previous one, but the resource types and traits are defined in external files that are included by using the RAML !include data type.
 
 ```yaml
 #%RAML 0.8
