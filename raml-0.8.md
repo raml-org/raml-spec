@@ -30,9 +30,9 @@ RAML also introduces the innovative concept of resource types and traits for cha
 This RAML Specification is organized as follows:
 
 * **Basic Information.** Explains how to describe core aspects of a RESTful API, such as is name, title, and location.
-* **User Documentation.** Describes how to include supporting documentation for the RESTful API. 
-* **Resource Types and Traits.** Describes the optional mechanism for using RAML resource types and traits to characterize resources so as to avoid unnecessary repetition in the RESTful API's definition. 
-* **Resources.** Describes how to specify a RESTful API's resources, resources' methods and schema, and the interactions between resources. 
+* **User Documentation.** Describes how to include supporting documentation for the RESTful API.
+* **Resource Types and Traits.** Describes the optional mechanism for using RAML resource types and traits to characterize resources so as to avoid unnecessary repetition in the RESTful API's definition.
+* **Resources.** Describes how to specify a RESTful API's resources, resources' methods and schema, and the interactions between resources.
 
 RAML is a trademark of MuleSoft, Inc.
 
@@ -60,7 +60,7 @@ RAML API definitions are YAML-compliant documents that begin with a REQUIRED YAM
 ```
 
 The RAML version MUST be the first line of the RAML document. RAML parsers MUST interpret all other YAML-commented lines as comments.
- 
+
 In RAML, the YAML data structures are enhanced to include data types that are not natively supported. All RAML document parsers MUST support these extensions.
 
 In RAML, all values MUST be interpreted in a case-sensitive manner.
@@ -198,7 +198,7 @@ The *repeat* attribute specifies that the parameter can be repeated. If the para
 ### required
 (Optional except as otherwise noted)
 The *required* attribute specifies whether the parameter and its value MUST be present in the API definition. It must be either 'true' if the value MUST be present or 'false' otherwise.
- 
+
 In general, parameters are optional unless the *required* attribute is included and its value set to 'true'.
 
 For a URI parameter, the *required* attribute MAY be omitted, but its default value is 'true'.
@@ -287,13 +287,13 @@ If the *baseUri* value is a Level 1 Template URI, the following reserved base UR
 | version       | The content of the version field.|
 
 Any other URI template variables appearing in the *baseUri* MAY be described explicitly within a *baseUriParameters* property at the root
-of the API definition. The properties of the *baseUriParameters* property are described in the 
+of the API definition. The properties of the *baseUriParameters* property are described in the
 Named Parameters section of this specification.
 
-If a URI template variable in the base URI is not explicitly described in a *baseUriParameters* property, 
-and is not specified in a resource-level *baseUriParameters* property, 
-it MUST still be treated as a base URI parameter with defaults as specified in the Named Parameters 
-section of this specification. Its type is "string", it is required, and its displayName is its name 
+If a URI template variable in the base URI is not explicitly described in a *baseUriParameters* property,
+and is not specified in a resource-level *baseUriParameters* property,
+it MUST still be treated as a base URI parameter with defaults as specified in the Named Parameters
+section of this specification. Its type is "string", it is required, and its displayName is its name
 (i.e. without the surrounding curly brackets [{] and [}]).
 
 The following example RAML API definition uses a Level 1 Template URI as the *baseUri*.
@@ -497,7 +497,7 @@ Each resource, whether top-level or nested, MAY contain a *description* property
 
 #### Template URIs and URI Parameters
 
-Template URIs containing URI parameters can be used to define a resource's relative URI when it contains variable elements. 
+Template URIs containing URI parameters can be used to define a resource's relative URI when it contains variable elements.
 The following example shows a top-level resource with a key */jobs* and a nested resource with a key */{jobId}*:
 
 ```yaml
@@ -631,7 +631,7 @@ baseUri: https://{apiDomain}.someapi.com
 
 ```
 
-The special baseUriParameter *version* is reserved; processing applications MUST replace occurrences of {version} in any baseUri property values with the value of the root-level *version* property. The {version} parameter, if used in a baseUri, is required: if it is ued in a baseUri, the *version* root-level property MUST be provided and MUST be a valid non-empty URI fragment. 
+The special baseUriParameter *version* is reserved; processing applications MUST replace occurrences of {version} in any baseUri property values with the value of the root-level *version* property. The {version} parameter, if used in a baseUri, is required: if it is ued in a baseUri, the *version* root-level property MUST be provided and MUST be a valid non-empty URI fragment.
 
 #### Absolute URI
 
@@ -768,8 +768,8 @@ baseUri: https://app.zencoder.com/api/{version}
       x-Zencoder-job-metadata-{*}
         displayName: Job Metadata
         description: |
-           Field names prefixed with x-Zencoder-job-metadata- contain user-specified metadata. 
-           The API does not validate or use this data. All metadata headers will be stored 
+           Field names prefixed with x-Zencoder-job-metadata- contain user-specified metadata.
+           The API does not validate or use this data. All metadata headers will be stored
            with the job and returned to the client when this resource is queried.
 ```
 
@@ -800,7 +800,7 @@ baseUri: https://app.zencoder.com/api/{version}
 
 ##### Protocols
 
-A method can override an API's *protocols* value for that single method by setting a different value for the fields. 
+A method can override an API's *protocols* value for that single method by setting a different value for the fields.
 
 In the following example, the GET method is accessible through both HTTP and HTTPS, while the rest of the API only through HTTPS.
 
@@ -818,7 +818,7 @@ baseUri: https://api.twitter.com/{version}
 
 ##### Query Strings
 
-An API's resources MAY be filtered (to return a subset of results) or altered (such as transforming a response body from JSON to XML format) by the use of query strings. If the resource or its method supports a query string, the query string MUST be defined by the *queryParameters* property. 
+An API's resources MAY be filtered (to return a subset of results) or altered (such as transforming a response body from JSON to XML format) by the use of query strings. If the resource or its method supports a query string, the query string MUST be defined by the *queryParameters* property.
 
 The *queryParameters* property is a map in which the key is the query parameter's name, and the value is itself a map specifying the query parameter's attributes, according to the [Named Parameters section](#named-parameters).
 
@@ -1123,7 +1123,7 @@ This example shows a 503 error response that includes a custom header.
             required: yes
             minimum: 1
             maximum: 3600
-            example: 34 
+            example: 34
 ```
 
 Documentation generators MUST include content specified as example information for headers. This information is included in the API definition by using the *example* property.
@@ -1224,7 +1224,7 @@ Collections of resourceTypes may also be combined, as can collections of traits.
 #%RAML 0.8
 title: Example API
 version: v1
-resourceTypes: 
+resourceTypes:
   - !include standardResourceTypes.yaml  # where standardResourceTypes.yaml is a map of standard resource type definitions
   - !include resourceTypes/specialCollection.yaml # where specialCollection.yaml defines one resource type
 traits:
@@ -1269,7 +1269,7 @@ mediaType: application/json
 schemas:
   users: !include schemas/users.json
   user: !include schemas/user.json
-resourceTypes: 
+resourceTypes:
   - collection:
       get:
         responses:
@@ -1300,7 +1300,7 @@ Parameters may not be used within !include tags, that is, within the location of
 
 ##### Optional Properties
 
-When defining resource types and traits, it can be useful to capture patterns that manifest several levels below the inheriting resource or method, without requiring the creation of the intermediate levels. For example, a resource type definition may describe a body parameter that will be used *if* the API defines a post method for that resource, but the processing application should not create the post method itself. 
+When defining resource types and traits, it can be useful to capture patterns that manifest several levels below the inheriting resource or method, without requiring the creation of the intermediate levels. For example, a resource type definition may describe a body parameter that will be used *if* the API defines a post method for that resource, but the processing application should not create the post method itself.
 
 To accommodate this need, a resource type or trait definition MAY append a question mark ("?") suffix to the name of any non-scalar property that should not be applied if it doesn't already exist in the resource or method at the corresponding level. This optional structure key indicates that the value of the property should be applied if the property name itself (without the question mark) is already defined (whether explicitly or implicitly) at the corresponding level in that resource or method.
 
@@ -1315,13 +1315,13 @@ resourceTypes:
         body:
           createAuthority:
             description: |
-              If the resource has a post method defined, expect a createAuthority 
+              If the resource has a post method defined, expect a createAuthority
               property in its body
       delete?:
         body:
           deleteAuthority:
             description: |
-              If the resource has a delete method defined, expect a deleteAuthority 
+              If the resource has a delete method defined, expect a deleteAuthority
               property in its body
 ```
 
@@ -1354,7 +1354,7 @@ traits:
     is: [ paged, rateLimited ]
 ```
 
-To pass parameter values to resource types and traits, use a map when declaring the resource type or trait to be used. 
+To pass parameter values to resource types and traits, use a map when declaring the resource type or trait to be used.
 
 ```yaml
 #%RAML 0.8
@@ -1390,7 +1390,7 @@ This section describes how an API designer MAY include security scheme definitio
 
 ### Declaration
 
-The *securitySchemes* property is declared at the API's root level. 
+The *securitySchemes* property is declared at the API's root level.
 
 The *securitySchemes* property MUST be used to specify an API's security mechanisms, including the required settings and the authentication methods that the API supports.
 one authentication method is allowed if the API supports them.
@@ -1411,13 +1411,13 @@ securitySchemes:
             headers:
                 Authorization:
                     description: |
-                       Used to send a valid OAuth 2 access token. Do not use 
+                       Used to send a valid OAuth 2 access token. Do not use
                        with the "access_token" query string parameter.
                     type: string
             queryParameters:
                 access_token:
                     description: |
-                       Used to send a valid OAuth 2 access token. Do not use together with 
+                       Used to send a valid OAuth 2 access token. Do not use together with
                        the "Authorization" header
                     type: string
             responses:
@@ -1441,7 +1441,7 @@ securitySchemes:
         settings:
           requestTokenUri: https://api.dropbox.com/1/oauth/request_token
           authorizationUri: https://www.dropbox.com/1/oauth/authorize
-          tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token 
+          tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
     - customHeader:
         description:|
             A custom  
@@ -1492,7 +1492,7 @@ The following lists describe the minimum set of properties which any processing 
 |scopes| A list of scopes supported by the API as defined in RFC6749 [RFC6749] Section 3.3
 
 ###### Other
-If the scheme's type is *x-other*, API designers can use the properties in this mapping to provide extra information to clients that understand the *x-other* type. 
+If the scheme's type is *x-other*, API designers can use the properties in this mapping to provide extra information to clients that understand the *x-other* type.
 
 ### Usage: Applying a Security Scheme to an API
 To apply a *securityScheme* definition to every method in an API, the API MAY be defined using the *securedBy* attribute. This specifies that all methods in the API are protected using that security scheme.
@@ -1533,7 +1533,7 @@ securitySchemes:
 
 If the processing application supports custom properties, custom parameters can be provided to the security scheme at the moment of inclusion in a method. In the following example, the parameter *scopes* is being assigned.
 
-RAML does not specify which parameters MUST be provided or supported by each *securityScheme* implementation. 
+RAML does not specify which parameters MUST be provided or supported by each *securityScheme* implementation.
 
 ```yaml
 #%RAML 0.8
@@ -1607,4 +1607,3 @@ References
           Gao, S., Sperberg-McQueen, C., and H. Thompson, "W3C XML
           Schema Definition Language (XSD) 1.1", 2012,
           <http://www.w3.org/XML/Schema>.
-
