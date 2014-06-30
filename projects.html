@@ -2,18 +2,25 @@
   layout: regular
   title: Your New Jekyll Site
 ---
-                <h2>Source</h2>
+                <!-- <div class="projects-subnav">
+                  <ul>
+                    <li><a href="in-the-wild.html">RAML in the Wild</a></li>
+                    <li><a class="active" href="projects.html">RAML Projects</a></li>
+                  </ul>
+                </div> -->
+                <h2>Core</h2>
                 <ul class="projects-source">
                   <li>
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>RAML Spec</h3>
                       <h4>Developed by the RAML workgroup</h4>
-                      <a href="https://github.com/raml-org/raml-spec" class="project-github">View on Github</a>
+                      <a href="https://github.com/raml-org/raml-spec" class="project-github" target="_blank">View on Github</a>
                       <a href="spec.html" class="project-html" target="_blank">View as HTML</a>
                     </div>
                     <div class="project-description">
-                      <p>RESTful API Modeling Language (RAML) is a concise, expressive language for describing RESTful APIs. RAML is built on broadly used standards such as YAML and JSON and is a non-proprietary, vendor-neutral open spec.</p>
+                      <p>The RESTful API Modeling Language (RAML) is a concise, expressive language for describing RESTful APIs.
+                        Built on broadly used standards such as YAML and JSON, RAML is a non-proprietary, vendor-neutral open spec.</p>
                     </div>
                   </li>
                   <li>
@@ -21,12 +28,14 @@
                       <div class="icon"></div>
                       <h3>RAML JavaScript Parser</h3>
                       <h4>Contributed to the RAML workgroup by Mulesoft</h4>
-                      <a href="https://github.com/raml-org/raml-js-parser" class="project-github">View on Github</a>
+                      <h4><i>License: Apache 2</i></h4>
+                      <p>Stable</p>
+                      <a href="https://github.com/raml-org/raml-js-parser" class="project-github" target="_blank">View on Github</a>
                     </div>
                     <div class="project-description">
-                      <p>A reference implementation of a RAML parser for JavaScript. It's based on PyYAML,
-                        written in CoffeeScript, and can be used as a node.js module or in-browser.
-                        It is compliant with RAML 0.8, and provided under an Apache 2.0 license.</p>
+                      <p>A reference implementation of a RAML parser for JavaScript.
+                        The parser is based on PyYAML, written in CoffeeScript, and can be used as a node.js module or in-browser.
+                        Compliant with RAML 0.8.</p>
                     </div>
                   </li>
                   <li>
@@ -34,33 +43,82 @@
                       <div class="icon"></div>
                       <h3>RAML Java Parser</h3>
                       <h4>Contributed to the RAML workgroup by Mulesoft</h4>
-                      <a href="https://github.com/raml-org/raml-java-parser" class="project-github">View on Github</a>
+                      <h4><i>License: Apache 2</i></h4>
+                      <p>Stable</p>
+                      <a href="https://github.com/raml-org/raml-java-parser" class="project-github" target="_blank">View on Github</a>
                     </div>
                     <div class="project-description">
-                      <p>A reference implementation of a RAML parser for Java. It's based on SnakeYAML,
-                        and written in Java. It can be added as a Java library into a project directly or through Apache Maven.
-                        It is compliant with RAML 0.8, and provided under an Apache 2.0 license.</p>
+                      <p>A reference implementation of a RAML parser for Java.
+                        The parser is based on SnakeYAML, and written in Java.
+                        It can be added as a Java library either into a project directly or through Apache Maven.
+                        Compliant with RAML 0.8.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="project-title">
+                      <div class="icon"></div>
+                      <h3>pyraml-parser</h3>
+                      <h4>Developed by an2deg</h4>
+                      <h4><i>License: MIT</i></h4>
+                      <p>Early Release</p>
+                      <a href="https://github.com/an2deg/pyraml-parser" class="project-github" target="_blank">View on Github</a>
+                    </div>
+                    <div class="project-description">
+                      <p>A reference implementation of a RAML parser for Python.
+                        It's based on PyYAML and written in Python.
+                        Compliant with RAML 0.8.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="project-title">
+                      <div class="icon"></div>
+                      <h3>RAML Ruby</h3>
+                      <h4>Developed by kgorin @ coub</h4>
+                      <h4><i>License: MIT</i></h4>
+                      <p>Early Release</p>
+                      <a href="https://github.com/coub/raml_ruby" class="project-github" target="_blank">View on Github</a>
+                    </div>
+                    <div class="project-description">
+                      <p>A reference implementation of a RAML parser in Ruby.
+                        It uses Psych YAML parser and is written in Ruby.
+                        Compliant with RAML 0.8.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="project-title">
+                      <div class="icon"></div>
+                      <h3>PHP RAML Parser</h3>
+                      <h4>Developed by alecsammon</h4>
+                      <h4><i>License: MIT</i></h4>
+                      <p>Early Release</p>
+                      <a href="https://github.com/alecsammon/php-raml-parser" class="project-github" target="_blank">View on Github</a>
+                    </div>
+                    <div class="project-description">
+                      <p>A reference implementation of a RAML parser in PHP.
+                        Compliant with RAML 0.8.</p>
                     </div>
                   </li>
                   <!-- <li class="projects-add">
                     <a href="#"><i>+</i><h3>Submit RAML tools</h3></a>
                   </li> -->
                 </ul>
-                <h2>Projects</h2>
+                <h2>Tools</h2>
                 <ul class="projects-projects">
                   <li>
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>API Designer</h3>
                       <h4>Developed by MuleSoft</h4>
-                      <a href="https://github.com/mulesoft/api-designer" class="project-github">View on Github</a>
-                      <a href="http://api-portal.anypoint.mulesoft.com/raml/api-designer" class="project-html">Try it out</a>
+                      <h4><i>License: CPAL-1.0</i></h4>
+                      <p>Stable</p>
+                      <a href="https://github.com/mulesoft/api-designer" class="project-github" target="_blank">View on Github</a>
+                      <a href="http://api-portal.anypoint.mulesoft.com/raml/api-designer" class="project-html" target="_blank">Try it out</a>
                     </div>
                     <div class="project-description">
                       <p>API Designer is a web-based API development tool that allows API providers to
                         design their API quickly, efficiently, and consistently, and
                         socialize the design. It consists of a RAML editor side-by-side with an embedded
-                        RAML console (the API Console). It is provided under the open-source CPAL license.</p>
+                        RAML console (the API Console).</p>
                     </div>
                   </li>
                   <li>
@@ -68,13 +126,14 @@
                       <div class="icon"></div>
                       <h3>API Console</h3>
                       <h4>Developed by MuleSoft</h4>
-                      <a href="https://github.com/mulesoft/api-console" class="project-github">View on Github</a>
-                      <a href="http://api-portal.anypoint.mulesoft.com/raml-tools" class="project-html">Try it out</a>
+                      <h4><i>License: CPAL-1.0</i></h4>
+                      <p>Stable</p>
+                      <a href="https://github.com/mulesoft/api-console" class="project-github" target="_blank">View on Github</a>
+                      <a href="http://api-portal.anypoint.mulesoft.com/raml-tools" class="project-html" target="_blank">Try it out</a>
                     </div>
                     <div class="project-description">
                       <p>API Console is a graphical user interface for a RAML-defined API that visually
-                      exposes the API’s structure and important patterns and serves as interactive API documentation.
-                      It is provided under the open-source CPAL license.</p>
+                      exposes the API’s structure and important patterns and serves as interactive API documentation.</p>
                     </div>
                   </li>
                   <li>
@@ -82,15 +141,13 @@
                       <div class="icon"></div>
                       <h3>API Notebook</h3>
                       <h4>Developed by MuleSoft</h4>
-                      <a href="https://github.com/mulesoft/api-notebook" class="project-github">View on Github</a>
-                      <a href="http://apinotebook.com" class="project-html">Try it out</a>
+                      <h4><i>License: CPAL-1.0</i></h4>
+                      <p>Stable</p>
+                      <a href="https://github.com/mulesoft/api-notebook" class="project-github" target="_blank">View on Github</a>
+                      <a href="http://apinotebook.com" class="project-html" target="_blank">Try it out</a>
                     </div>
                     <div class="project-description">
-                      <p>API Notebook is a web-based, persistent, JavaScript scripting workspace that enables
-                        live testing and exploring of APIs, and saving API use cases as markdown gists,
-                        so they are versioned, forkable and shareable. It's an example of
-                        <a href="https://en.wikipedia.org/wiki/Literate_programming" target="_blank">literate programming</a>.
-                        It is provided under the open-source CPAL license.</p>
+                      <p>API Notebook is a web-based, persistent, JavaScript scripting workspace that enables live testing and exploring of APIs, and saving API use cases as markdown gists, so they are versioned, forkable and shareable. It's an example of <a href="https://en.wikipedia.org/wiki/Literate_programming" target="_blank">literate programming</a>.</p>
                     </div>
                   </li>
                   <li>
@@ -98,15 +155,16 @@
                       <div class="icon"></div>
                       <h3>SoapUI RAML Plugin</h3>
                       <h4>Developed by SmartBear / Ole Lensmar</h4>
-                      <a href="https://github.com/olensmar/soapui-raml-plugin" class="project-github">View on Github</a>
-                      <a href="http://olensmar.blogspot.se/2013/12/a-raml-apihub-plugin-for-soapui.html" class="project-html">Try it out</a>
+                      <h4><i>License: Apache 2</i></h4>
+                      <p>Stable</p>
+                      <a href="https://github.com/olensmar/soapui-raml-plugin" class="project-github" target="_blank">View on Github</a>
+                      <a href="http://olensmar.blogspot.se/2013/12/a-raml-apihub-plugin-for-soapui.html" class="project-html" target="_blank">Try it out</a>
                     </div>
                     <div class="project-description">
                       <p><a href="http://www.soapui.org/" target="SoapUI">SoapUI</a> is a very popular functional testing tool,
-                        broadly used for testing APIs. It supports not only SOAP but also REST and any other HTTP APIs, as well
-                        as JMS, AMF and JDBC. The RAML plugin for SoapUI allows importing RAML descriptions of APIs into SoapUI
-                        to test those APIs.
-                        The plugin is provided under the open-source Apache 2.0 license.</p>
+                        broadly used for testing any HTTP APIs including both SOAP and REST, as well as JMS, AMF,
+                        and JDBC. The RAML plugin for SoapUI allows the importing of RAML APIs into SoapUI for testing.
+                        </p>
                     </div>
                   </li>
                   <li>
@@ -114,14 +172,15 @@
                       <div class="icon"></div>
                       <h3>APIkit 1.0</h3>
                       <h4>Developed by MuleSoft</h4>
-                      <a href="https://github.com/mulesoft/apikit" class="project-github">View on Github</a>
-                      <a href="http://www.mulesoft.org/documentation/display/current/APIkit" class="project-html">Try it out</a>
+                      <h4><i>License: CPAL-1.0</i></h4>
+                      <p>Stable</p>
+                      <a href="https://github.com/mulesoft/apikit" class="project-github" target="_blank">View on Github</a>
+                      <a href="http://www.mulesoft.org/documentation/display/current/APIkit" class="project-html" target="_blank">Try it out</a>
                     </div>
                     <div class="project-description">
                       <p>APIkit is a declarative toolkit that leverages RAML to facilitate the implementation of APIs.
                         It uses RAML as the definition of the API, which can then be used with APIkit Maven- and Mule Studio-based
-                        tools for mocking the interface and implementing its backend using Mule flows.
-                        It is provided under the open-source CPAL license.</p>
+                        tools for mocking the interface and implementing its backend using Mule flows.</p>
                     </div>
                   </li>
                   <li>
@@ -129,7 +188,9 @@
                       <div class="icon"></div>
                       <h3>RAML Store</h3>
                       <h4>Developed by brianmc</h4>
-                      <a href="https://github.com/brianmc/raml-store" class="project-github">View on Github</a>
+                      <h4><i>License: Apache 2</i></h4>
+                      <p>Stable</p>
+                      <a href="https://github.com/brianmc/raml-store" class="project-github" target="_blank">View on Github</a>
                     </div>
                     <div class="project-description">
                       <p>RAML Store provides a simple storage API plus a persistence plugin which enables you to run
@@ -142,7 +203,9 @@
                       <div class="icon"></div>
                       <h3>JAX-RS Codegen</h3>
                       <h4>Developed by MuleSoft</h4>
-                      <a href="https://github.com/mulesoft/raml-jaxrs-codegen" class="project-github">View on Github</a>
+                      <h4><i>License: Apache 2</i></h4>
+                      <p>Early Release</p>
+                      <a href="https://github.com/mulesoft/raml-jaxrs-codegen" class="project-github" target="_blank">View on Github</a>
                     </div>
                     <div class="project-description">
                       <p>JAX-RS Codegen is a set of Java tools that support an API-first approach to implementing
@@ -150,7 +213,7 @@
                       it generates corresponding JAX-RS-annotated interfaces and supporting classes, which can
                       be used in your project to implement those spec-compliant APIs.
                       <i style="font-style: italic">This project is in early alpha.</i>
-                      It is provided under the open-source Apache 2.0 license.</p>
+                      </p>
                     </div>
                   </li>
                   <li>
@@ -158,11 +221,13 @@
                       <div class="icon"></div>
                       <h3>RAML Sublime Plugin</h3>
                       <h4>Developed by MuleSoft</h4>
-                      <a href="https://github.com/mulesoft/raml-sublime-plugin" class="project-github">View on Github</a>
+                      <h4><i>License: Apache 2</i></h4>
+                      <p>Stable</p>
+                      <a href="https://github.com/mulesoft/raml-sublime-plugin" class="project-github" target="_blank">View on Github</a>
                     </div>
                     <div class="project-description">
-                      <p>This is a simple syntax highlighter for Sublime that provides support for the RESTful API Modeling Language (http://raml.org/).
-                      It is provided under the open-source Apache 2.0 license.</p>
+                      <p>RAML Sublime Plugin is a syntax highlighter for Sublime (the popular text editor).
+                      </p>
                     </div>
                   </li>
                   <li>
@@ -170,11 +235,12 @@
                       <div class="icon"></div>
                       <h3>RAML to HTML</h3>
                       <h4>Developed by kevinrenskers</h4>
-                      <a href="https://github.com/kevinrenskers/raml2html" class="project-github">View on Github</a>
+                      <h4><i>License: MIT</i></h4>
+                      <p>Stable</p>
+                      <a href="https://github.com/kevinrenskers/raml2html" class="project-github" target="_blank">View on Github</a>
                     </div>
                     <div class="project-description">
-                      <p>A simple RAML to HTML documentation generator written for Node.js<br />
-                        RAML to HTML gets a RAML file and outputs the API documentation on a single HTML page.</p>
+                      <p>RAML to HTML is a documentation tool that outputs a single HTML page console based on a RAML definition. It's written in NodeJS and it can be executed as a command line.
                     </div>
                   </li>
                   <li>
@@ -182,10 +248,12 @@
                       <div class="icon"></div>
                       <h3>ATOM RAML package</h3>
                       <h4>Developed by n4ch03</h4>
-                      <a href="https://github.com/n4ch03/atom-raml" class="project-github">View on Github</a>
+                      <h4><i>License: MIT</i></h4>
+                      <p>Early Release</p>
+                      <a href="https://github.com/n4ch03/atom-raml" class="project-github" target="_blank">View on Github</a>
                     </div>
                     <div class="project-description">
-                      <p>A simple package for Atom (Github's text editor) that helps the user to write RAML specs.</p>
+                      <p>ATOM RAML Package is a plugin (package) for ATOM (Github's text editor) that helps the user to write RAML specs by providing highlighting capabilities and snippets autocompletion.</p>
                     </div>
                   </li>
                   <li>
@@ -193,10 +261,12 @@
                       <div class="icon"></div>
                       <h3>GULP RAML plugin</h3>
                       <h4>Developed by JohanObrink</h4>
-                      <a href="https://github.com/JohanObrink/gulp-raml" class="project-github">View on Github</a>
+                      <h4><i>License: MIT</i></h4>
+                      <p>Early Release</p>
+                      <a href="https://github.com/JohanObrink/gulp-raml" class="project-github" target="_blank">View on Github</a>
                     </div>
                     <div class="project-description">
-                      <p>A <a href="http://gulpjs.com/">GULP</a> plugin for parsing and validating RAML (based on the <a href="https://github.com/raml-org/raml-js-parser">RAML Parser</a>)</p>
+                      <p>GULP RAML Plugin is a GULP based add-on that allows to parse and validate a RAML definition as a GULP Task. It's based on the JavaScript RAML Parser.</p>
                     </div>
                   </li>
                   <li>
@@ -204,23 +274,13 @@
                       <div class="icon"></div>
                       <h3>Osprey</h3>
                       <h4>Developed by MuleSoft</h4>
-                      <a href="https://github.com/mulesoft/osprey" class="project-github">View on Github</a>
+                      <h4><i>License: Apache 2</i></h4>
+                      <p>Early Release</p>
+                      <a href="https://github.com/mulesoft/osprey" class="project-github" target="_blank">View on Github</a>
                     </div>
                     <div class="project-description">
-                      <p>Osprey is a JavaScript framework, based on Node and Express, for rapidly building applications that expose APIs described via RAML.
-                         It is provided under the open-source Apache 2.0 license.
+                      <p>Osprey is a JavaScript framework for rapidly building applications that expose RAML APIs. It’s based on Node and Express.
                       </p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="project-title">
-                      <div class="icon"></div>
-                      <h3>RAML Ruby</h3>
-                      <h4>Developed by kgorin @ coub</h4>
-                      <a href="https://github.com/coub/raml_ruby" class="project-github">View on Github</a>
-                    </div>
-                    <div class="project-description">
-                      <p>Implementation of a RAML parser in Ruby (uses Psych YAML parser).</p>
                     </div>
                   </li>
                   <li>
@@ -228,21 +288,12 @@
                       <div class="icon"></div>
                       <h3>RAMLang</h3>
                       <h4>Developed by alexios3d</h4>
-                      <a href="https://github.com/syple/generator-ramlang" class="project-github">View on Github</a>
+                      <h4><i>License: MIT</i></h4>
+                      <p>Early Release</p>
+                      <a href="https://github.com/syple/generator-ramlang" class="project-github" target="_blank">View on Github</a>
                     </div>
                     <div class="project-description">
-                      <p>RAMLang is a simple and easy to use command line tool. It's main goal is to provide AngularJS services which help communicate with RESTful API's.</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="project-title">
-                      <div class="icon"></div>
-                      <h3>pyraml-parser</h3>
-                      <h4>Developed by an2deg</h4>
-                      <a href="https://github.com/an2deg/pyraml-parser" class="project-github">View on Github</a>
-                    </div>
-                    <div class="project-description">
-                      <p>Python parser to RAML, the RESTful API Modeling Language.</p>
+                      <p>RAMLang is a simple, easy-to-use command line tool. It's main goal is to provide AngularJS services to help communicate with RESTful API's.</p>
                     </div>
                   </li>
                   <li>
@@ -250,13 +301,27 @@
                       <div class="icon"></div>
                       <h3>swagger2raml</h3>
                       <h4>Developed by rucek</h4>
-                      <a href="https://github.com/8x8Cloud/swagger2raml" class="project-github">View on Github</a>
+                      <h4><i>License: Apache 2</i></h4>
+                      <p>Early Release</p>
+                      <a href="https://github.com/8x8Cloud/swagger2raml" class="project-github" target="_blank">View on Github</a>
                     </div>
                     <div class="project-description">
-                      <p>A utility to generate RAML documentation from Swagger JSON.</p>
+                      <p>Swagger2RAML is an utility to generate RAML documentation from Swagger JSON.</p>
                     </div>
                   </li>
-
+                  <li>
+                    <div class="project-title">
+                      <div class="icon"></div>
+                      <h3>RAML 2 HTML for PHP</h3>
+                      <h4>Developed by mikestowe</h4>
+                      <h4><i>License: MIT</i></h4>
+                      <p>Stable</p>
+                      <a href="https://github.com/mikestowe/php-raml2html" class="project-github" target="_blank">View on Github</a>
+                    </div>
+                    <div class="project-description">
+                      <p>RAML 2 HTML for PHP is a simple application that makes use of multiple templates to allow you to build and customize your API Docs using RAML.</p>
+                    </div>
+                  </li>
                   <li class="projects-add">
                     <h3>Contact us at <a href="mailto:info@raml.org">info@raml.org</a> to add your RAML projects to this list.</h3>
                   </li>
