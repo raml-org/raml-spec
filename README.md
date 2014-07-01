@@ -69,4 +69,5 @@ Please, follow these steps to contribute with the RAML Spec project:
 Please, follow these steps to accept a contribution
 - Verify the Pull Request.
 - If it's correct: Merge/Accept.
-- Copy the resulting `raml-0.8.md` files from `master` to `gh-pages` and place it in the following path: `./spec.md`
+- Move to `gh-pages` branch (`git checkout gh-pages`)  and run `./specs_publish.sh` (this script copies the resulting `raml-0.8.md` file from `master` to the current branch
+  `gh-pages`  and places it in the following path: `./spec.md` which is needed to have the specs published in the site). **Note: This is a shell script, only working on UNIX based OS**.
