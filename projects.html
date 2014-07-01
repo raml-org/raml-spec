@@ -2,15 +2,17 @@
   layout: regular
   title: Your New Jekyll Site
 ---
-                <div class="projects-subnav">
-                  <ul>
-                    <li><a href="in-the-wild.html">RAML in the Wild</a></li>
-                    <li><a class="active" href="projects.html">RAML Projects</a></li>
-                  </ul>
-                </div>
-                <h2>Core</h2>
+            <div id="section-projects">
+              <div class="projects-subnav">
+                <ul>
+                  <li><a href="#usage">Who's using RAML?</a></li>
+                  <li><a href="#tools" class="active">Tools</a></li>
+                </ul>
+              </div>
+              <section id="section-tools">
                 <ul class="projects-source">
-                  <li>
+                  <li><div class="project-header"><h2>Core</h2></div></li>
+                  <li id="tools-raml-spec">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>RAML Spec</h3>
@@ -23,7 +25,7 @@
                         Built on broadly used standards such as YAML and JSON, RAML is a non-proprietary, vendor-neutral open spec.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-raml-javascript-parser">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>RAML JavaScript Parser</h3>
@@ -38,7 +40,7 @@
                         Compliant with RAML 0.8.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-raml-java-parser">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>RAML Java Parser</h3>
@@ -54,7 +56,7 @@
                         Compliant with RAML 0.8.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-pyraml-parser">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>pyraml-parser</h3>
@@ -69,7 +71,7 @@
                         Compliant with RAML 0.8.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-raml-ruby">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>RAML Ruby</h3>
@@ -84,7 +86,7 @@
                         Compliant with RAML 0.8.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-php-raml-parser">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>PHP RAML Parser</h3>
@@ -102,9 +104,8 @@
                     <a href="#"><i>+</i><h3>Submit RAML tools</h3></a>
                   </li> -->
                 </ul>
-                <h2>Tools</h2>
                 <ul class="projects-projects">
-                  <li>
+                  <li id="tools-api-designer">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>API Designer</h3>
@@ -121,7 +122,7 @@
                         RAML console (the API Console).</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-api-console">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>API Console</h3>
@@ -136,7 +137,7 @@
                       exposes the API’s structure and important patterns and serves as interactive API documentation.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-api-notebook">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>API Notebook</h3>
@@ -150,7 +151,7 @@
                       <p>API Notebook is a web-based, persistent, JavaScript scripting workspace that enables live testing and exploring of APIs, and saving API use cases as markdown gists, so they are versioned, forkable and shareable. It's an example of <a href="https://en.wikipedia.org/wiki/Literate_programming" target="_blank">literate programming</a>.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-soapui-raml-plugin">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>SoapUI RAML Plugin</h3>
@@ -167,7 +168,7 @@
                         </p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-apikit-1.0">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>APIkit 1.0</h3>
@@ -183,7 +184,7 @@
                         tools for mocking the interface and implementing its backend using Mule flows.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-raml-store">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>RAML Store</h3>
@@ -198,7 +199,7 @@
                       and collaborate on your design. The service is built with node.js, using express and mongodb.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-jax-rs-codegen">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>JAX-RS Codegen</h3>
@@ -216,7 +217,7 @@
                       </p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-raml-sublime-plugin">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>RAML Sublime Plugin</h3>
@@ -230,7 +231,7 @@
                       </p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-raml-to-html">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>RAML to HTML</h3>
@@ -243,7 +244,7 @@
                       <p>RAML to HTML is a documentation tool that outputs a single HTML page console based on a RAML definition. It's written in NodeJS and it can be executed as a command line.
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-atom-raml-package">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>ATOM RAML package</h3>
@@ -256,7 +257,7 @@
                       <p>ATOM RAML Package is a plugin (package) for ATOM (Github's text editor) that helps the user to write RAML specs by providing highlighting capabilities and snippets autocompletion.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-gulp-raml-plugin">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>GULP RAML plugin</h3>
@@ -269,7 +270,7 @@
                       <p>GULP RAML Plugin is a GULP based add-on that allows to parse and validate a RAML definition as a GULP Task. It's based on the JavaScript RAML Parser.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-osprey">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>Osprey</h3>
@@ -283,7 +284,7 @@
                       </p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-ramlang">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>RAMLang</h3>
@@ -296,7 +297,7 @@
                       <p>RAMLang is a simple, easy-to-use command line tool. It's main goal is to provide AngularJS services to help communicate with RESTful API's.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-swagger2raml">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>swagger2raml</h3>
@@ -309,7 +310,7 @@
                       <p>Swagger2RAML is an utility to generate RAML documentation from Swagger JSON.</p>
                     </div>
                   </li>
-                  <li>
+                  <li id="tools-raml-2-html-for-php">
                     <div class="project-title">
                       <div class="icon"></div>
                       <h3>RAML 2 HTML for PHP</h3>
@@ -326,3 +327,39 @@
                     <h3>Contact us at <a href="mailto:info@raml.org">info@raml.org</a> to add your RAML projects to this list.</h3>
                   </li>
                 </ul>
+              </section>
+              <section id="section-usage">
+                <div class="cases-hero">
+                  <h1>RAML in the wild</h1>
+                  <h2>Take a look at how others are using the RESTful API Modeling Language</h2>
+                </div>
+                <div class="cases-listing">
+                  <ul>
+                    <li id="usage-facebook">
+                      <h3><a href="http://api-portal.anypoint.mulesoft.com/onpositive/api/facebook-raml-api" target="_blank">Facebook</a></h3>
+                      <p>Nunc auctor bibendum eros. Maecenas porta accumsan mauris. Etiam enim enim, elementum sed, bibendum quis, rhoncus non, metus. Fusce neque dolor, adipiscing sed, consectetuer et, lacinia sit amet, quam. Suspendisse wisi quam, consectetuer in, blandit sed, suscipit eu, eros. Etiam ligula enim, tempor ut, blandit nec, mollis eu, lectus. <a href="project-case-example.html">Read more</a></p>
+                    </li>
+                    <li id="usage-github">
+                      <h3><a href="http://api-portal.anypoint.mulesoft.com/onpositive/api/github" target="_blank">Github</a></h3>
+                      <p>Nunc auctor bibendum eros. Maecenas porta accumsan mauris. Etiam enim enim, elementum sed, bibendum quis, rhoncus non, metus. Fusce neque dolor, adipiscing sed, consectetuer et, lacinia sit amet, quam. Suspendisse wisi quam, consectetuer in, blandit sed, suscipit eu, eros. Etiam ligula enim, tempor ut, blandit nec, mollis eu, lectus. <a href="project-case-example.html">Read more</a></p>
+                    </li>
+                    <li id="usage-box">
+                      <h3><a href="http://api-portal.anypoint.mulesoft.com/onpositive/api/box-api" target="_blank">Box</a></h3>
+                      <p>Nunc auctor bibendum eros. Maecenas porta accumsan mauris. Etiam enim enim, elementum sed, bibendum quis, rhoncus non, metus. Fusce neque dolor, adipiscing sed, consectetuer et, lacinia sit amet, quam. Suspendisse wisi quam, consectetuer in, blandit sed, suscipit eu, eros. Etiam ligula enim, tempor ut, blandit nec, mollis eu, lectus. <a href="project-case-example.html">Read more</a></p>
+                    </li>
+                    <li id="usage-twitter">
+                      <h3><a href="http://api-portal.anypoint.mulesoft.com/onpositive/api/twitter-api" target="_blank">Twitter</a></h3>
+                      <p>Nunc auctor bibendum eros. Maecenas porta accumsan mauris. Etiam enim enim, elementum sed, bibendum quis, rhoncus non, metus. Fusce neque dolor, adipiscing sed, consectetuer et, lacinia sit amet, quam. Suspendisse wisi quam, consectetuer in, blandit sed, suscipit eu, eros. Etiam ligula enim, tempor ut, blandit nec, mollis eu, lectus. <a href="project-case-example.html">Read more</a></p>
+                    </li>
+                    <li id="usage-gmail">
+                      <h3><a href="http://api-portal.anypoint.mulesoft.com/onpositive/api/gmail-raml-api" target="_blank">Gmail</a></h3>
+                      <p>Nunc auctor bibendum eros. Maecenas porta accumsan mauris. Etiam enim enim, elementum sed, bibendum quis, rhoncus non, metus. Fusce neque dolor, adipiscing sed, consectetuer et, lacinia sit amet, quam. Suspendisse wisi quam, consectetuer in, blandit sed, suscipit eu, eros. Etiam ligula enim, tempor ut, blandit nec, mollis eu, lectus. <a href="project-case-example.html">Read more</a></p>
+                    </li>
+                    <li id="usage-bity">
+                      <h3><a href="http://api-portal.anypoint.mulesoft.com/onpositive/api/bitly-api" target="_blank">Bitly</a></h3>
+                      <p>Nunc auctor bibendum eros. Maecenas porta accumsan mauris. Etiam enim enim, elementum sed, bibendum quis, rhoncus non, metus. Fusce neque dolor, adipiscing sed, consectetuer et, lacinia sit amet, quam. Suspendisse wisi quam, consectetuer in, blandit sed, suscipit eu, eros. Etiam ligula enim, tempor ut, blandit nec, mollis eu, lectus. <a href="project-case-example.html">Read more</a></p>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+            </div> <!-- // #section-projects -->
