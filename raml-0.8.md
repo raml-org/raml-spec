@@ -562,7 +562,7 @@ Although URI parameters can be explicitly specified to be optional, they SHOULD 
 
 #### Base URI parameters
 
-A resource or a method can override a base URI template's values. This is useful to restrict or change the default or parameter selection in the base URI. The *baseUriParameters* property MAY be used to override any or all parameters defined at the root level *baseUriParameters* property, as well as base URI parameters not specified at the root level.  
+A resource or a method can override a base URI template's values. This is useful to restrict or change the default or parameter selection in the base URI. The *baseUriParameters* property MAY be used to override any or all parameters defined at the root level *baseUriParameters* property, as well as base URI parameters not specified at the root level.
 
 In the following example, calls to the /files resource must be made to "https://api-content.dropbox.com/{version}". All other calls in the API are made to "https://api.dropbox.com/{version}".
 
@@ -750,9 +750,9 @@ baseUri: https://app.zencoder.com/api/{version}
         displayName: ZEncoder API Key
 ```
 
-If the header name contains the placeholder token {*}, processing applications MUST allow requests to send any number of headers that conform to the format specified, with {*} replaced by 0 or more valid header characters, and offer a way for implementations to add an arbitrary number of such headers. This is particularly useful for APIs that allow HTTP headers that conform to custom naming conventions to send arbitrary, custom data.
+If the header name contains the placeholder token {\*}, processing applications MUST allow requests to send any number of headers that conform to the format specified, with {\*} replaced by 0 or more valid header characters, and offer a way for implementations to add an arbitrary number of such headers. This is particularly useful for APIs that allow HTTP headers that conform to custom naming conventions to send arbitrary, custom data.
 
-In the following example, the header x-metadata-{*} is used to send metadata that will be saved with the job.
+In the following example, the header x-metadata-{\*} is used to send metadata that will be saved with the job.
 
 ```yaml
 #%RAML 0.8
@@ -1444,7 +1444,7 @@ securitySchemes:
           tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
     - customHeader:
         description:|
-            A custom  
+            A custom
 ```
 
 ##### Description
@@ -1466,7 +1466,7 @@ The *type* attribute MAY be used to convey information about authentication flow
 A processing application's developers MAY provide support for these mechanisms. If a mechanism is supported, it MUST conform to specified standard.
 
 ##### describedBy
-The *describedBy* attribute MAY be used to apply a trait-like structure to a security scheme mechanism so as to extend the mechanism, such as specifying response codes, HTTP headers or custom documentation.  
+The *describedBy* attribute MAY be used to apply a trait-like structure to a security scheme mechanism so as to extend the mechanism, such as specifying response codes, HTTP headers or custom documentation.
 
 This extension allows API designers to describe security schemes. As a best practice, even for standard security schemes, API designers SHOULD describe the security schemes' required artifacts, such as headers, URI parameters, and so on. Including the security schemes' description completes an API's documentation.
 
