@@ -30,8 +30,14 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 #section-projects h3 a.anchor span:before {
   content: '\f05c';
 }
+#section-projects ul.projects-source h3 a.anchor {
+  color: #f6f6f6;
+}
+#section-projects ul.projects-projects h3 a.anchor {
+  color: #f2f2f2;
+}
 #section-projects h3:hover a.anchor {
-  color: #262626;
+  color: #262626 !important;
 }
 #section-projects h3 a.anchor:hover {
   background: transparent;
