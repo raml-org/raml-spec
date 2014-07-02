@@ -10,8 +10,15 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 #section-projects #section-usage {
   display: none;
 }
+#section-projects #section-tools {
+  margin-top: 20px;
+}
 #section-projects .projects-subnav {
-  padding: 40px 0 60px 0;
+  padding: 40px 0 25px 0;
+}
+body .content-wrapper-pages section .projects-subnav ul li a.active,
+body .content-wrapper-pages section .projects-subnav ul li a:hover {
+  outline: none;
 }
 #section-projects h3 {
   margin: 0 0 0 -20px;
@@ -75,10 +82,10 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 #section-projects .projects-source li .project-header h2 {
   padding: 0;
 }
-#section-projects .projects-source li .project-title {
+/*#section-projects .projects-source li .project-title {
   border :none;
   background-color: #f6f6f6;
-}
+}*/
 #section-projects .projects-source li .project-description {
   vertical-align: top;  
 }
