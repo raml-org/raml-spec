@@ -6,16 +6,25 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 #section-projects .projects-subnav {
   padding: 40px 0 60px 0;
 }
+#section-projects #projects-core-header {
+  display: table-cell;
+  background: #f2f2f2;
+  border-right: 4px solid #fff;
+}
+#section-projects #projects-core-header h2 {
+  margin: 0;
+  padding: 0 30px;
+}
 #section-projects .projects-source {
   border: none;
+  display: table-cell;
+  padding: 0;
 }
 #section-projects .projects-source li {
-  margin: 0;
-  border-bottom: 1px solid #e9e9e9;
+  margin: 0 0 2px 0;
 }
-#section-projects .projects-source li:first-child,
 #section-projects .projects-source li:last-child {
-  border: none;
+  margin: 0;
 }
 #section-projects .projects-source li .project-header {
   padding: 15px;
@@ -29,7 +38,6 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 #section-projects .projects-source li .project-title {
   border :none;
   background-color: #f6f6f6;
-  padding-left: 50px;
 }
 #section-projects .projects-source li .project-description {
   vertical-align: top;  
@@ -37,6 +45,22 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 #section-projects .projects-source li .project-description p {
   margin-top: 20px;
 }
-#section-projects .cases-hero h1 {
+#section-projects .projects-projects {
+  margin-top: 40px;
+}
+#section-projects .projects-projects .cases-hero h1 {
   padding: 0;
+}
+#section-projects .cases-hero h2 {
+  color: #262626;
+}
+
+@media (max-width: 490px){
+  #section-projects #projects-core-header {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+    padding: 15px 0;
+  }
 }
