@@ -56,7 +56,7 @@ body .content-wrapper-pages section .projects-subnav ul li a:hover {
 #section-projects #projects-core-header {
   display: table-cell;
   background: #f2f2f2;
-  border-right: 4px solid #fff;
+  border-right: 8px solid #fff;
 }
 #section-projects #projects-core-header h2 {
   margin: 0;
@@ -68,7 +68,7 @@ body .content-wrapper-pages section .projects-subnav ul li a:hover {
   padding: 0;
 }
 #section-projects .projects-source li {
-  margin: 0 0 2px 0;
+  margin: 0 0 8px 0;
 }
 #section-projects .projects-source li:last-child {
   margin: 0;
