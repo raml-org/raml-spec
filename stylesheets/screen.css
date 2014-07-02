@@ -15,6 +15,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 }
 #section-projects h3 {
   margin: 0 0 0 -20px;
+  color: #262626;
 }
 #section-projects h3 a.anchor {
   width: 20px;
@@ -93,7 +94,17 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 #section-projects .cases-hero h2 {
   color: #262626;
 }
-
+#section-projects ul li.projects-add h3 {
+  margin-left: 0;
+  font-size: 14px;
+  color: #262626;
+  line-height: 40px;
+  font-family: Arial, sans-serif;
+}
+#section-projects ul li.projects-add h3 a {
+  font-size: 14px;
+  color: #e400ff;
+}
 @media (max-width: 490px) {
   #section-projects #projects-core-header {
     display: block;
