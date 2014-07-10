@@ -11,11 +11,11 @@ baseUri: http://api.e-bookmobile.com/{version}
 version: v1
 ```
 
-Everything you enter in at the [root](https://github.com/raml-org/raml-spec/blob/master/04_b  asic_information.md#root-section) (or top) of the spec applies to the rest of your API. This is going to come in very handy later as you discover patterns in how you build your API. The baseURI you choose will be used with every call made, so make sure it's as clean and concise as can be.
+Everything you enter in at the [root](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#root-section) (or top) of the spec applies to the rest of your API. This is going to come in very handy later as you discover patterns in how you build your API. The baseURI you choose will be used with every call made, so make sure it's as clean and concise as can be.
 
 ## **STEP 2:** ENTER RESOURCES
 
-As a thoughtful API designer, it's important to consider how your API consumers will use your API. It's especially important because in many ways, as the API designer YOU control the consumption. For example, consider the functionality of the BookMobile API. You know you want your users to be able to keep track of what they've read and their favorites. Users should also be able to discover new books and look at other titles written by their favorite authors. To do this, you define various _collections_ as your [resources](https://github.com/raml-org/raml-spec/blob/master/05_resources_and_methods.md#resources-and-nested-resources).
+As a thoughtful API designer, it's important to consider how your API consumers will use your API. It's especially important because in many ways, as the API designer YOU control the consumption. For example, consider the functionality of the BookMobile API. You know you want your users to be able to keep track of what they've read and their favorites. Users should also be able to discover new books and look at other titles written by their favorite authors. To do this, you define various _collections_ as your [resources](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#resources-and-nested-resources).
 
 **Recalling how your API consumers will use your API, enter the following three resources under your root:**
 

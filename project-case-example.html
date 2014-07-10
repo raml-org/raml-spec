@@ -1,0 +1,15 @@
+---
+  layout: regular
+  title: Your New Jekyll Site
+---
+                <div class="projects-subnav">
+                  <ul>
+                    <li class="back-to-cases"><a href="in-the-wild.html">Go back</a></li>
+                    <li><a class="active" href="in-the-wild.html">RAML in the Wild</a></li>
+                    <li><a href="projects.html">RAML Projects</a></li>
+                  </ul>
+                </div>
+                <div class="cases-detail">
+                  {% capture my_include %}{% include project-case-example.md %}{% endcapture %}
+                  {{ my_include | markdownify }}
+                </div>
