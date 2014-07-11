@@ -283,7 +283,7 @@ body:
 
 As you can see in the code example, the schema described in previous sections is now being defined and referenced by the name "song". The name choice is not random, and the correct convention will allow you to parameterize resource types and reuse a lot of code (this will be explained in following sections).
 
-## **STEP 3:** INTRODUCING RESOURCE TYPES
+## **STEP 3:** RESOURCE TYPES
 **The "collection/collection-item" pattern**
 
 **We are definitively not saying that all RESTful APIs are the same.** I don’t want to even suggest it. But there are absolutely some common behaviors. For example, if we are trying to represent resources that could be inferred from a business model, it will likely be analogous with the CRUD model. Given a resource, you can **c**reate a new one, **r**etrieve one or all of them and **u**pdate or **d**elete an existing one.
@@ -546,7 +546,7 @@ get:
 Basically, every piece of code needed to define the **examples**. And this is basically because we have only learned how to use Reserved Parameters. However, we have also mentioned that the idea of parameterizing is to specify "placeholder" to be filled with a specified value.
 That would solve our "examples problem".
 
-## **STEP 4:** FREE PARAMETERS
+## **STEP 4:** PARAMETERS
 
 Reset your workspace:
 
@@ -554,7 +554,7 @@ Reset your workspace:
 git checkout -f step4
 ```
 
-At the moment of defining the parameter in the resourceType (with the placeholder), there is no difference between a free or reserved parameter. The actual difference only appears when passing the parameter at the resource level. For instance, a parameter named as `exampleItem` will need to be passed this way:
+At the moment of defining the parameter in the resourceType (with the placeholder), there is no difference between a parameter and a reserved parameter. The actual difference only appears when passing the parameter at the resource level. For instance, a parameter named as `exampleItem` will need to be passed this way:
 
 ```yaml
 /{songId}:
@@ -751,7 +751,7 @@ The following code snippet shows how to include or "call" the extracted files fr
 
 As shown in the last snippet, RAML features encourage you to reduce the quantity of code you write, while making it more reusable and maintainable.
 
-## **STEP 6:** HARD STOP
+## **STEP 6:** REFACTOR
 
 We have introduced several features and made great progress with our API definition, but aren't we missing something? We have just focused on the "/songs" resource (and its descending branch). If you check your RAML file right now, you will discover that all other resources are still not taking advantage of the work we have done.
 Let's solve that right now! Repeat the same procedures for all the resources:
@@ -1003,7 +1003,7 @@ Reset your workspace:
 git checkout -f step7c
 ```
 
-## **STEP 8:** INCLUDES (SECOND PART)
+## **STEP 8:** FINAL TUNNING
 
 We could say that our RAML file has been properly refactored and is now much more readable, reusable, and maintainable. Maybe a last step would be to double-check which parts of the RAML definition could now be extracted to other files (the same way we have done with the "examples").
 Starting at the root, we find the schemas, and it seems a no-brainer that each JSON (in this case) could be extracted and included as we have learned.
