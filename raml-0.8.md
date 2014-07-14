@@ -631,7 +631,7 @@ baseUri: https://{apiDomain}.someapi.com
 
 ```
 
-The special baseUriParameter *version* is reserved; processing applications MUST replace occurrences of {version} in any baseUri property values with the value of the root-level *version* property. The {version} parameter, if used in a baseUri, is required: if it is ued in a baseUri, the *version* root-level property MUST be provided and MUST be a valid non-empty URI fragment.
+The special baseUriParameter *version* is reserved; processing applications MUST replace occurrences of {version} in any baseUri property values with the value of the root-level *version* property. The {version} parameter, if used in a baseUri, is required: if it is used in a baseUri, the *version* root-level property MUST be provided and MUST be a valid non-empty URI fragment.
 
 #### Absolute URI
 
