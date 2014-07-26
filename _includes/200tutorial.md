@@ -2,7 +2,7 @@
 If you decided to be "hands-on", please clone the GitHub repository
 
 ```
-git clone https://github.com/mulesoft/raml-tutorial-200.git
+git clone https://github.com/raml-org/raml-tutorial-200.git
 ```
 
 **Spoiler alert:** After cloning, the repository will be in its final state. You can browse the code as is, but it will be like reading the last chapter of a book.
