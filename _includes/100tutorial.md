@@ -1,4 +1,4 @@
-## **STEP 1:** ENTER THE ROOT
+## ENTER THE ROOT
 Let's say you are the API designer for a BookMobile startup. You've worked out a business plan, a scaling plan, and Ashton Kutcher is an angel investor. You know you want developers to capitalize on what you've built, so that you can capitalize on what THEY build. You know having a RESTful API is one way to make that happen. So, let's get started by writing a spec.
 
 **First, you'll enter some basic information in a text editor. You can save your API's RAML definition as a text file with a recommended extension .raml:**
@@ -13,7 +13,7 @@ version: v1
 
 Everything you enter in at the [root](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#root-section) (or top) of the spec applies to the rest of your API. This is going to come in very handy later as you discover patterns in how you build your API. The baseURI you choose will be used with every call made, so make sure it's as clean and concise as can be.
 
-## **STEP 2:** ENTER RESOURCES
+## ENTER RESOURCES
 
 As a thoughtful API designer, it's important to consider how your API consumers will use your API. It's especially important because in many ways, as the API designer YOU control the consumption. For example, consider the functionality of the BookMobile API. You know you want your users to be able to keep track of what they've read and their favorites. Users should also be able to discover new books and look at other titles written by their favorite authors. To do this, you define various _collections_ as your [resources](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#resources-and-nested-resources).
 
@@ -36,7 +36,7 @@ Notice that these resources all begin with a backslash (/). In RAML, this is how
 
 This lets the API consumer interact with the key resource and its nested resources. For example a GET request to http://api.e-bookmobile.com/authors/Mary_Roach returns details about science writer and humorist Mary Roach. Now, let's think about what we want developers and API consumers to DO.
 
-## **STEP 3:** ENTER METHODS
+## ENTER METHODS
 
 Here's where it starts to get interesting, as you decide what you want the developer to be able to do with the resources you've made available. **Let's quickly review the 4 most common HTTP verbs:**
 
@@ -60,7 +60,7 @@ In this example, you want developers to be able to work at the collection level.
     post:
     put:
 ```
-## **STEP 4:** ENTER URI PARAMETERS
+## ENTER URI PARAMETERS
 
 The resources that we defined are collections of smaller, relevant objects. You, as the thoughtful API designer, have realized that developers will most likely want to act upon these more granular objects. Remember the example of nested resources above? /authors is made up of individual authors, referenced by {authorName}, for example. This is a URI parameter, denoted by surrounding curly brackets in RAML:
 
@@ -88,7 +88,7 @@ So, to make a request to this nested resource, the URI for Mary Roach's book, St
        get:
 ```
 
-## **STEP 5:** ENTER QUERY PARAMETERS
+## ENTER QUERY PARAMETERS
 
 Great job so far! Now, let's say you want your API to allow even more powerful operations. You already have collections-based resource types that are further defined by object-based URI parameters. But you also want developers to be able perform actions like filtering a collection. Query parameters are a great way to accomplish this.
 
@@ -168,7 +168,7 @@ An API's resources and methods often have a number of associated query parameter
 
 To make a PUT call, your URI looks like http://api.e-bookmobile.com/books/Stiff?access_token=ACCESS TOKEN
 
-## **STEP 6:** ENTER RESPONSES
+## ENTER RESPONSES
 
 Responses MUST be a map of one or more HTTP status codes, and each response may include descriptions, examples, or schemas. Schemas are more fully explained in the Level 200 tutorial.
 

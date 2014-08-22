@@ -30,7 +30,7 @@ Build a music Jukebox. While the physical device will be responsible for display
 
 **Consideration:** This is a jukebox, not a command line. People in pubs might be unable to type lots of characters, so a user friendly UI (paging, image-based, etc) would be very appreciated.
 
-## **STEP 0:** BASE RAML FILE
+## BASE RAML FILE
 
 Reset your workspace:
 
@@ -138,7 +138,7 @@ As you can see in the following example (extracted from jukebox-api.raml), the r
   post:
 ```
 
-## **STEP 1:** BODY PARAMETERS
+## BODY PARAMETERS
 **Form Parameters**
 
 Reset your workspace:
@@ -232,7 +232,7 @@ What the example is basically saying is: "The expected parameter is a valid json
 
 It's not the intention of this tutorial explain how JSON and XML schemas work, but you can learn more at [http://json-schema.org/](http://json-schema.org/) and [http://www.w3.org/XML/Schema.html](http://json-schema.org/).
 
-## **STEP 2:** EXTRACT SCHEMAS
+## EXTRACT SCHEMAS
 
 Reset your workspace:
 
@@ -283,7 +283,7 @@ body:
 
 As you can see in the code example, the schema described in previous sections is now being defined and referenced by the name "song". The name choice is not random, and the correct convention will allow you to parameterize resource types and reuse a lot of code (this will be explained in following sections).
 
-## **STEP 3:** RESOURCE TYPES
+## RESOURCE TYPES
 **The "collection/collection-item" pattern**
 
 **We are definitively not saying that all RESTful APIs are the same.** I don’t want to even suggest it. But there are absolutely some common behaviors. For example, if we are trying to represent resources that could be inferred from a business model, it will likely be analogous with the CRUD model. Given a resource, you can **c**reate a new one, **r**etrieve one or all of them and **u**pdate or **d**elete an existing one.
@@ -546,7 +546,7 @@ get:
 Basically, every piece of code needed to define the **examples**. And this is basically because we have only learned how to use Reserved Parameters. However, we have also mentioned that the idea of parameterizing is to specify "placeholder" to be filled with a specified value.
 That would solve our "examples problem".
 
-## **STEP 4:** PARAMETERS
+## PARAMETERS
 
 Reset your workspace:
 
@@ -675,7 +675,7 @@ resourceTypes:
 As you can see, the same concept shown in the previous example was applied to both the `/songs`, and `/songs/{songId}` resources.
 The code that was repeated at the end of the step 3 is now completely within the resourceType at the point that the POST definition directly disappeared from the resources. **That's correct. Now, every `collection-item` typed resources will have a valid (generic) POST definition without you ever writing it.**
 
-## **STEP 5:** INCLUDES
+## INCLUDES
 
 Reset your workspace:
 
@@ -751,7 +751,7 @@ The following code snippet shows how to include or "call" the extracted files fr
 
 As shown in the last snippet, RAML features encourage you to reduce the quantity of code you write, while making it more reusable and maintainable.
 
-## **STEP 6:** REFACTOR
+## REFACTOR
 
 We have introduced several features and made great progress with our API definition, but aren't we missing something? We have just focused on the "/songs" resource (and its descending branch). If you check your RAML file right now, you will discover that all other resources are still not taking advantage of the work we have done.
 Let's solve that right now! Repeat the same procedures for all the resources:
@@ -831,7 +831,7 @@ git checkout -f step6b
 
 If you are following the code in detail, you will have already noticed something: `collection` and `readOnlyCollection` resourceTypes are repeating some code. Actually, `readOnlyCollection` code is completely included in `collection` code. That’s correct! And there is a way of making this even more efficient. It's all about "types composing" and it will be totally covered in a later tutorial.
 
-## **STEP 7:** TRAITS
+## TRAITS
 We are almost done! We are busy fulfilling all the requirements for the described use case. As usual however, we’ve discovered something while building, and this tutorial cannot be the exception.
 Will I be able to sort my collections? Shouldn't my API give users the chance of paging these? Is the strategy we chose for searching a collection good enough? What if we need to enhance and make more complex queries in the future?
 Let's tackle these issues. But first, we need to understand them correctly
@@ -1003,7 +1003,7 @@ Reset your workspace:
 git checkout -f step7c
 ```
 
-## **STEP 8:** FINAL TUNNING
+## FINAL TUNNING
 
 We could say that our RAML file has been properly refactored and is now much more readable, reusable, and maintainable. Maybe a last step would be to double-check which parts of the RAML definition could now be extracted to other files (the same way we have done with the "examples").
 Starting at the root, we find the schemas, and it seems a no-brainer that each JSON (in this case) could be extracted and included as we have learned.
