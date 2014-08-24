@@ -26,6 +26,14 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Octicons';
+    src: url("../fonts/octicons/octicons.eot");
+    src: url("../fonts/octicons/octicons.eot?#iefix") format("embedded-opentype"), url("../fonts/octicons/octicons.woff") format("woff"), url("../fonts/octicons/octicons.ttf") format("truetype"), url("../fonts/octicons/octicons.svg#iconic") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     -webkit-font-smoothing: antialiased !important;
     color: #262626;
@@ -928,50 +936,87 @@ body {
                 }
               }
             }
-            .projects-subnav {
-              padding: 40px 0 0;
-              ul {
-                position: relative;
-                li {
-                  margin: 0 0 0 20px;
-                  float: right;
-                  a {
-                    padding-bottom: 7px;
-                    display: inline-block;
-                    position: relative;
-                    height: 24px;
-                    font-family: "Montserrat", Helvetica, Arial, sans-serif;
-                    line-height: 24px;
-                    color: #262626;
-                    text-decoration: none;
-                    border-bottom: 1px solid #f2f2f2;
-                    &.active, &:hover {
-                      border-color: #e400ff;
-                    }
-                  }
-                  &.back-to-cases {
-                    margin: 0;
-                    float: left;
+            #section-projects {
+              .projects-subnav {
+                padding: 40px 0 0;
+                ul {
+                  position: relative;
+                  li {
+                    margin: 0 0 0 20px;
+                    float: right;
                     a {
-                      font-family: Arial, sans-serif;
-                      color: #e400ff;
+                      padding-bottom: 7px;
+                      display: inline-block;
+                      position: relative;
+                      height: 24px;
+                      font-family: "Montserrat", Helvetica, Arial, sans-serif;
+                      line-height: 24px;
+                      color: #262626;
+                      text-decoration: none;
+                      border-bottom: 1px solid #f2f2f2;
+                      &.active, &:hover {
+                        border-color: #e400ff;
+                      }
+                    }
+                    &.back-to-cases {
+                      margin: 0;
+                      float: left;
+                      a {
+                        font-family: Arial, sans-serif;
+                        color: #e400ff;
+                      }
+                    }
+                  }
+                  &:before {
+                    content: " ";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 0;
+                    border-top: 1px solid #f2f2f2;
+                  }
+                  &:after { 
+                    content: " ";
+                    display: block;
+                    height: 0; 
+                    clear: both;
+                  }
+                }
+              }
+              #section-tools {
+                margin-top: 60px;
+                #section-core {
+                  #projects-core-header {
+                    display: table-cell;
+                    background: #f2f2f2;
+                    border-right: 8px solid #fff;
+                    h2 {
+                      margin: 0;
+                      padding: 0 30px;
+                    }
+                    @media (max-width: 480px) {
+                      margin: 0 0 5px;
+                      padding: 15px 0;
+                      display: block;
+                      width: 100%;
+                      text-align: center;
+                    }
+                  }
+                  .projects-source {
+                    padding: 0;
+                    display: table-cell;
+                    border: none;
+                    li {
+                      margin: 0 0 8px 0;
+                      &:last-child {
+                        margin: 0;
+                      }
                     }
                   }
                 }
-                &:before {
-                  content: " ";
-                  position: absolute;
-                  bottom: 0;
-                  left: 0;
-                  right: 0;
-                  height: 0;
-                  border-top: 1px solid #f2f2f2;
-                }
-                &:after { 
-                  content: " ";
-                  display: block;
-                  height: 0; 
-                  clear: both;
+                .projects-projects {
+                  margin-top: 40px;
                 }
               }
             }
@@ -985,15 +1030,6 @@ body {
                 @media (max-width: 768px) {
                   display: block !important;
                   background: #f6f6f6;
-                }
-                h3 {
-                  margin: 0;
-                  font: {
-                    family: Arial, sans-serif;
-                    size: 16px;
-                  }
-                  color: #262626;
-                  line-height: 18px;
                 }
                 .project-title {
                   padding: 20px;
@@ -1014,6 +1050,40 @@ body {
                     height: 65px;
                     width: 65px;
                     background: #000;
+                  }
+                  h3 {
+                    margin: 0 0 0 -20px;
+                    font: {
+                      family: Arial, sans-serif;
+                      size: 16px;
+                    }
+                    color: #262626;
+                    line-height: 18px;
+                    .anchor {
+                      margin: 0;
+                      padding: 0;
+                      width: 20px;
+                      font-family: "Octicons";
+                      font-size: 16px;
+                      font-weight: normal;
+                      color: #262626;
+                      line-height: 18px;
+                      border-radius: 0;
+                      opacity: 0;
+                      span {
+                        &:before {
+                          content: "\f05c";
+                        }
+                      }
+                      &:hover {
+                        background: transparent;
+                      }
+                    }
+                    &:hover {
+                      .anchor {
+                        opacity: 1;
+                      }
+                    }
                   }
                   h4 {
                     padding: 5px 0 0;
@@ -1050,7 +1120,7 @@ body {
                     color: #fff;
                     border-radius: 3px;
                     &.project-github {
-                      background: #4183c4;
+                      background: #878787;
                     }
                     &.project-html {
                       background: #50c73e;
@@ -1063,7 +1133,7 @@ body {
                 .project-description {
                   padding: 20px;
                   display: table-cell;
-                  vertical-align: middle;
+                  vertical-align: top;
                   background: #f6f6f6;
                   @media (max-width: 768px) {
                     display: block !important;
