@@ -760,7 +760,7 @@ body {
             .tutorial-intro {
                 margin: 9px 0 0;
                 padding: 11px 20px;
-                background: #f6f6f6;
+                background: #f2f2f2;
             }
             pre {
                 margin: 9px 0;
@@ -937,6 +937,51 @@ body {
               }
             }
             #section-projects {
+              h3 {
+                margin: 0 0 0 -20px;
+                color: #262626;
+                font: {
+                  size: 16px;
+                }
+                line-height: 20px;
+                .anchor {
+                  margin: 0 3px 0 0;
+                  padding: 0;
+                  width: 20px;
+                  font-family: "Octicons";
+                  font-size: 16px;
+                  font-weight: normal;
+                  color: #262626;
+                  line-height: 18px;
+                  border-radius: 0;
+                  opacity: 0;
+                  span {
+                    &:before {
+                      content: "\f05c";
+                    }
+                  }
+                  &:hover {
+                    background: transparent;
+                  }
+                }
+                &:hover {
+                  .anchor {
+                    opacity: 1;
+                  }
+                }
+              }
+              .projects-add {
+                margin: 0;
+                padding: 40px 0 0 !important;
+                h3 {
+                  margin: 0;
+                  font: {
+                    family: Arial, sans-serif;
+                    size: 14px;
+                  }
+                  line-height: 18px;
+                }
+              }
               .projects-subnav {
                 padding: 40px 0 0;
                 ul {
@@ -953,7 +998,7 @@ body {
                       line-height: 24px;
                       color: #262626;
                       text-decoration: none;
-                      border-bottom: 1px solid #f2f2f2;
+                      border-bottom: 1px solid #dddddd;
                       &.active, &:hover {
                         border-color: #e400ff;
                       }
@@ -974,7 +1019,7 @@ body {
                     left: 0;
                     right: 0;
                     height: 0;
-                    border-top: 1px solid #f2f2f2;
+                    border-top: 1px solid #dddddd;
                   }
                   &:after { 
                     content: " ";
@@ -985,7 +1030,9 @@ body {
                 }
               }
               #section-tools {
-                margin-top: 60px;
+                margin: 60px auto 0;
+                padding: 0;
+                width: auto;
                 #section-core {
                   #projects-core-header {
                     display: table-cell;
@@ -1019,6 +1066,28 @@ body {
                   margin-top: 40px;
                 }
               }
+              #section-usage {
+                margin: 60px auto 0;
+                padding: 0;
+                width: auto;
+                display: none;
+                .cases-hero {
+                  padding: 0 0 35px;
+                  h2 {
+                    padding: 0;
+                    font: {
+                      family: Arial, sans-serif;
+                      size: 24px;
+                    }
+                    line-height: 30px;
+                    text-transform: none;
+                  }
+                }
+                li {
+                  padding: 30px 0 15px;
+                  border-top: 1px solid #ddd;
+                }
+              }
             }
             .projects-source, .projects-projects {
               li {
@@ -1026,6 +1095,7 @@ body {
                 overflow: hidden;
                 clear: both;
                 display: table;
+                min-height: 170px;
                 width: 100%;
                 @media (max-width: 768px) {
                   display: block !important;
@@ -1052,37 +1122,8 @@ body {
                     background: #000;
                   }
                   h3 {
-                    margin: 0 0 0 -20px;
-                    font: {
-                      family: Arial, sans-serif;
-                      size: 16px;
-                    }
-                    color: #262626;
-                    line-height: 18px;
                     .anchor {
-                      margin: 0;
-                      padding: 0;
-                      width: 20px;
-                      font-family: "Octicons";
-                      font-size: 16px;
-                      font-weight: normal;
-                      color: #262626;
-                      line-height: 18px;
-                      border-radius: 0;
-                      opacity: 0;
-                      span {
-                        &:before {
-                          content: "\f05c";
-                        }
-                      }
-                      &:hover {
-                        background: transparent;
-                      }
-                    }
-                    &:hover {
-                      .anchor {
-                        opacity: 1;
-                      }
+                      margin: 0 !important;
                     }
                   }
                   h4 {
@@ -1143,7 +1184,6 @@ body {
                   }
                 }
                 &.projects-add {
-                  margin: 36px 0 0;
                   /* background: #e400ff; */
                   a {
                     /* display: block;
@@ -1194,7 +1234,7 @@ body {
                         border: 4px solid #0b9be6;
                         height: 100px;
                         width: 100px;
-                        background: #f6f6f6;
+                        background: #f2f2f2;
                         img {
                             position: absolute;
                             top: 0;
