@@ -44,6 +44,17 @@ Once there, just make the desired changes and, as usual:
 Please, pay attention to the destination of the push.
 Once it's done, you can check that the "gh-pages" branch was have not been modified, hence, the published version isn't either.
 mov
+
+## Styling
+
+The stylesheet language "Sass" (with SCSS syntax) is used for organizing and writing CSS.
+
+All styling is contained in sass/screen.scss and needs to be compiled into stylesheets/screen.css before being committed.
+
+To install Sass and compile your scss into css, you can either do it manually using the command line, or download an application that installs Sass and automatically compiles your scss everytime you make a change to screen.scss (applications Compass or Scout are recommended) Learn more: http://sass-lang.com/install
+
+To learn how to use Sass: http://sass-lang.com/guide
+
 ## Reviewing
 
 The reviewer can just clone and checkout the "gh-pages-staging" branch to have it in his local environment
