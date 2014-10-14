@@ -1003,7 +1003,7 @@ Reset your workspace:
 git checkout -f step7c
 ```
 
-## FINAL TUNNING
+## FINAL TUNING
 
 We could say that our RAML file has been properly refactored and is now much more readable, reusable, and maintainable. Maybe a last step would be to double-check which parts of the RAML definition could now be extracted to other files (the same way we have done with the "examples").
 Starting at the root, we find the schemas, and it seems a no-brainer that each JSON (in this case) could be extracted and included as we have learned.
