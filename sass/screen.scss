@@ -1090,7 +1090,7 @@ body {
               }
             }
             .projects-source, .projects-projects {
-              li {
+              > li {
                 margin: 18px 0 0;
                 overflow: hidden;
                 clear: both;
@@ -1148,7 +1148,7 @@ body {
                     color: #0b9be6;
                     text-transform: uppercase;
                   }
-                  a {
+                  a, > button {
                     margin: 15px 5px 0 0;
                     padding: 7px 10px;
                     display: inline-block;
@@ -1168,6 +1168,43 @@ body {
                     }
                     &:hover {
                       background: #262626;
+                    }
+                  }
+                  > button {
+                    font-weight: normal;
+                    border: none;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    &:focus {
+                      outline: none;
+                    }
+                  }
+                  .popModal {
+                    padding: 20px 25px;
+                    border-radius: 3px;
+                    border: 1px solid #d1d1d1;
+                    background-clip: padding-box;
+                    -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,.05);
+                    box-shadow: 0 0 2px 2px rgba(0,0,0,.05);
+                    .popModal_content {
+                      margin: 0;
+                      h5 {
+                        font-weight: bold;
+                      }
+                      ol {
+                        margin: 10px 0 0;
+                      }
+                    }
+                    .close {
+                      padding: 5px;
+                      font-size: 18px;
+                      top: 2px;
+                      right: 4px;
+                    }
+                    &.bottomCenter:before,
+                    &.bottomLeft:before,
+                    &.bottomRight:before {
+                        border-bottom-color: #d1d1d1;
                     }
                   }
                 }
