@@ -6,7 +6,6 @@
         <title>RAML - RESTful API modeling language</title>
         <link rel="stylesheet" href="stylesheets/normalize.css" />
         <link rel="stylesheet" href="stylesheets/pygments.css" />
-        <link rel="stylesheet" href="stylesheets/popmodal.min.css" />
         <link rel="stylesheet" href="stylesheets/screen.css" />
         <link rel="stylesheet" href="javascripts/source/jquery.fancybox.css?v=2.1.5" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
@@ -89,26 +88,9 @@
         <script src="javascripts/jquery.scrollTo.min.js" ></script>
         <script src="javascripts/waypoints.min.js" ></script>
         <script src="javascripts/jquery.clipboard.js" ></script>
-        <script src="javascripts/popmodal.min.js" ></script>
         <script src="javascripts/custom.js" ></script>
         <script type="text/javascript">
           $(".cta-video").fancybox();
-          $('#test-cta').click(function() {
-            $('#test-cta').popModal({
-              html : $('.pop-modal').html(),
-              placement : 'bottomCenter',
-              showCloseBut : true,
-              onDocumentClickClose : true,
-                onDocumentClickClosePrevent : '',
-                overflowContent : false,
-                inline : true,
-                beforeLoadingContent : 'Please, waiting...',
-              onOkBut : function(){},
-              onCancelBut : function(){},
-              onLoad : function(){},
-              onClose : function(){}
-            });
-          });
         </script>
         <script type="text/javascript">
           var $buoop = {};

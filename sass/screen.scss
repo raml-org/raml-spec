@@ -1179,34 +1179,6 @@ body {
                       outline: none;
                     }
                   }
-                  .popModal {
-                    padding: 20px 25px;
-                    border-radius: 3px;
-                    border: 1px solid #d1d1d1;
-                    background-clip: padding-box;
-                    -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,.05);
-                    box-shadow: 0 0 2px 2px rgba(0,0,0,.05);
-                    .popModal_content {
-                      margin: 0;
-                      h5 {
-                        font-weight: bold;
-                      }
-                      ol {
-                        margin: 10px 0 0;
-                      }
-                    }
-                    .close {
-                      padding: 5px;
-                      font-size: 18px;
-                      top: 2px;
-                      right: 4px;
-                    }
-                    &.bottomCenter:before,
-                    &.bottomLeft:before,
-                    &.bottomRight:before {
-                        border-bottom-color: #d1d1d1;
-                    }
-                  }
                 }
                 .project-description {
                   padding: 20px;
@@ -1218,6 +1190,32 @@ body {
                   }
                   p {
                     padding: 0;
+                  }
+                }
+                .project-steps {
+                  display: table-caption;
+                  caption-side: bottom;
+                  overflow: hidden;
+                  max-height: 0;
+                  background: #dfdfdf;
+                  border-top: 2px solid #fff;
+                  @media (max-width: 768px) {
+                    display: block !important;
+                  }
+                  h5 {
+                    margin: 20px 20px 0;
+                    font-weight: bold;
+                  }
+                  ol {
+                    margin: 10px 20px 20px;
+                    li {
+                      margin: 0;
+                    }
+                  }
+                  &.open {
+                    max-height: 1000px;
+                    -webkit-transition: 0.3s ease-in-out;
+                    transition: 0.3s ease-in-out;
                   }
                 }
                 &.projects-add {
