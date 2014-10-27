@@ -1198,21 +1198,25 @@ body {
                   overflow: hidden;
                   max-height: 0;
                   background: #fff;
-                  border-top: 2px solid #fff;
                   -webkit-transition: 0.3s;
                   transition: 0.3s;
                   @media (max-width: 768px) {
                     display: block !important;
                   }
                   h5 {
-                    margin: 20px 20px 5px;
-                    padding: 0 0 10px;
+                    margin: 0;
+                    padding: 20px 20px 5px;
                     font-size: 16px;
                     font-weight: bold;
-                    border-bottom: 1px solid #f2f2f2;
+                    border-left: 1px solid #f2f2f2;
+                    border-right: 1px solid #f2f2f2;
                   }
                   ol {
-                    margin: 0 20px 20px;
+                    margin: 0;
+                    padding: 0 20px 20px 40px;
+                    border-left: 1px solid #f2f2f2;
+                    border-right: 1px solid #f2f2f2;
+                    border-bottom: 1px solid #f2f2f2;
                     li {
                       margin: 0;
                       p {
