@@ -117,6 +117,8 @@ $(document).ready(function() {
       };
       project_activate_section();
     }
+    
+    /* Project "try it" slidedown interaction */
     $('.project-html').click(function() {
       $(this).closest('li').find('.project-steps').toggleClass('open');
     });
