@@ -1041,7 +1041,7 @@ Responses MUST be a map of one or more HTTP status codes, where each status code
 
 Each response MAY contain a *body* property, which conforms to the same structure as request *body* properties (see [Body](#body)). Responses that can return more than one response code MAY therefore have multiple bodies defined.
 
-For APIs without *a priori* knowledge of the response types for their responses, "\*/\*" MAY be used to indicate that responses that do not matching other defined data types MUST be accepted. Processing applications MUST match the most descriptive media type first if "\*/\*" is used.
+For APIs without *a priori* knowledge of the response types for their responses, "\*/\*" MAY be used to indicate that responses that do not match other defined data types MUST be accepted. Processing applications MUST match the most descriptive media type first if "\*/\*" is used.
 
 ```yaml
 /media/{mediaid}/content:
