@@ -1211,7 +1211,7 @@ body {
                     border-left: 1px solid #f2f2f2;
                     border-right: 1px solid #f2f2f2;
                   }
-                  ol {
+                  ol, ul {
                     margin: 0;
                     padding: 0 20px 20px 40px;
                     border-left: 1px solid #f2f2f2;
@@ -1223,6 +1223,9 @@ body {
                         padding: 5px 0 0;
                       }
                     }
+                  }
+                  ul {
+                    padding: 0 20px 20px;
                   }
                   &.open {
                     max-height: 1000px;
