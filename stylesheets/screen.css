@@ -1032,17 +1032,19 @@ body {
             font-weight: bold;
             border-left: 1px solid #f2f2f2;
             border-right: 1px solid #f2f2f2; }
-          body .content-wrapper-pages section .projects-source > li .project-steps ol, body .content-wrapper-pages section .projects-source > li .project-steps ul, body .content-wrapper-pages section .projects-projects > li .project-steps ol, body .content-wrapper-pages section .projects-projects > li .project-steps ul {
+          body .content-wrapper-pages section .projects-source > li .project-steps ol, body .content-wrapper-pages section .projects-source > li .project-steps ul, body .content-wrapper-pages section .projects-source > li .project-steps > div, body .content-wrapper-pages section .projects-projects > li .project-steps ol, body .content-wrapper-pages section .projects-projects > li .project-steps ul, body .content-wrapper-pages section .projects-projects > li .project-steps > div {
             margin: 0;
             padding: 0 20px 20px 40px;
             border-left: 1px solid #f2f2f2;
             border-right: 1px solid #f2f2f2;
             border-bottom: 1px solid #f2f2f2; }
-            body .content-wrapper-pages section .projects-source > li .project-steps ol li, body .content-wrapper-pages section .projects-source > li .project-steps ul li, body .content-wrapper-pages section .projects-projects > li .project-steps ol li, body .content-wrapper-pages section .projects-projects > li .project-steps ul li {
+            body .content-wrapper-pages section .projects-source > li .project-steps ol li, body .content-wrapper-pages section .projects-source > li .project-steps ul li, body .content-wrapper-pages section .projects-source > li .project-steps > div li, body .content-wrapper-pages section .projects-projects > li .project-steps ol li, body .content-wrapper-pages section .projects-projects > li .project-steps ul li, body .content-wrapper-pages section .projects-projects > li .project-steps > div li {
               margin: 0; }
-              body .content-wrapper-pages section .projects-source > li .project-steps ol li p, body .content-wrapper-pages section .projects-source > li .project-steps ul li p, body .content-wrapper-pages section .projects-projects > li .project-steps ol li p, body .content-wrapper-pages section .projects-projects > li .project-steps ul li p {
+              body .content-wrapper-pages section .projects-source > li .project-steps ol li p, body .content-wrapper-pages section .projects-source > li .project-steps ul li p, body .content-wrapper-pages section .projects-source > li .project-steps > div li p, body .content-wrapper-pages section .projects-projects > li .project-steps ol li p, body .content-wrapper-pages section .projects-projects > li .project-steps ul li p, body .content-wrapper-pages section .projects-projects > li .project-steps > div li p {
                 padding: 5px 0 0; }
           body .content-wrapper-pages section .projects-source > li .project-steps ul, body .content-wrapper-pages section .projects-projects > li .project-steps ul {
+            list-style: disc; }
+          body .content-wrapper-pages section .projects-source > li .project-steps > div, body .content-wrapper-pages section .projects-projects > li .project-steps > div {
             padding: 0 20px 20px; }
           body .content-wrapper-pages section .projects-source > li .project-steps.open, body .content-wrapper-pages section .projects-projects > li .project-steps.open {
             max-height: 1000px;
