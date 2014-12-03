@@ -1,4 +1,5 @@
 # The RESTful API Modeling Language (RAML) Spec
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/raml-org/raml-spec?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ###Licensing
 [Contributors License Agreement](https://github.com/raml-org/raml-spec/blob/master/legal/contribution_agreement.docx)
