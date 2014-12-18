@@ -1020,9 +1020,7 @@ body {
           overflow: hidden;
           max-height: 0;
           background: #fff;
-          opacity: 0;
-          -webkit-transition: 0.1s;
-          transition: 0.1s; }
+          visibility: collapse; }
           @media (max-width: 768px) {
             body .content-wrapper-pages section .projects-source > li .project-steps, body .content-wrapper-pages section .projects-projects > li .project-steps {
               display: block !important; } }
@@ -1049,7 +1047,7 @@ body {
             padding: 0 20px 20px; }
           body .content-wrapper-pages section .projects-source > li .project-steps.open, body .content-wrapper-pages section .projects-projects > li .project-steps.open {
             max-height: 1000px;
-            opacity: 1;
+            visibility: visible;
             -webkit-transition: 0.2s ease-in-out;
             transition: 0.2s ease-in-out; }
         body .content-wrapper-pages section .projects-source > li.projects-add, body .content-wrapper-pages section .projects-projects > li.projects-add {

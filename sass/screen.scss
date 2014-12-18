@@ -1198,9 +1198,7 @@ body {
                   overflow: hidden;
                   max-height: 0;
                   background: #fff;
-                  opacity: 0;
-                  -webkit-transition: 0.1s;
-                  transition: 0.1s;
+                  visibility: collapse;
                   @media (max-width: 768px) {
                     display: block !important;
                   }
@@ -1233,7 +1231,7 @@ body {
                   }
                   &.open {
                     max-height: 1000px;
-                    opacity: 1;
+                    visibility: visible;
                     -webkit-transition: 0.2s ease-in-out;
                     transition: 0.2s ease-in-out;
                   }
