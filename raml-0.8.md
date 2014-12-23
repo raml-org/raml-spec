@@ -319,7 +319,7 @@ baseUriParameters:
 
 ### Protocols
 (Optional)
-A RESTful API can be reached HTTP, HTTPS, or both. The *protocols* property MAY be used to specify the protocols that an API supports. If the *protocols* property is not specified, the protocol specified at the *baseUri* property is used. The *protocols* property MUST be an array of strings, of values __"HTTP"__ and/or __"HTTPS"__.
+A RESTful API can be reached via HTTP, HTTPS, or both. The *protocols* property MAY be used to specify the protocols that an API supports. If the *protocols* property is not specified, the protocol specified at the *baseUri* property is used. The *protocols* property MUST be an array of strings, of values __"HTTP"__ and/or __"HTTPS"__.
 
 ```yaml
 #%RAML 0.8
