@@ -71,3 +71,7 @@ Please, follow these steps to accept a contribution
 - If it's correct: Merge/Accept.
 - Move to `gh-pages` branch (`git checkout gh-pages`)  and run `./specs_publish.sh` (this script copies the resulting `raml-0.8.md` file from `master` to the current branch
   `gh-pages`  and places it in the following path: `./spec.md` which is needed to have the specs published in the site). **Note: This is a shell script, only working on UNIX based OS**.
+
+## Logos
+
+Download the RAML Logos in [JPG](https://github.com/raml-org/raml-spec/raw/master/logos/RAML-logo.jpg) and [EPS](https://github.com/raml-org/raml-spec/raw/master/logos/RAML-logo.eps) format. ( for usage questions email [info@raml.org](mailto:info@raml.org) ).
