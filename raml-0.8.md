@@ -29,7 +29,7 @@ RAML also introduces the innovative concept of resource types and traits for cha
 
 This RAML Specification is organized as follows:
 
-* **Basic Information.** Explains how to describe core aspects of a RESTful API, such as is name, title, and location.
+* **Basic Information.** Explains how to describe core aspects of a RESTful API, such as its name, title, and location.
 * **User Documentation.** Describes how to include supporting documentation for the RESTful API.
 * **Resource Types and Traits.** Describes the optional mechanism for using RAML resource types and traits to characterize resources so as to avoid unnecessary repetition in the RESTful API's definition.
 * **Resources.** Describes how to specify a RESTful API's resources, resources' methods and schema, and the interactions between resources.
