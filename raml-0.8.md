@@ -1120,7 +1120,7 @@ This example shows a 503 error response that includes a custom header.
             description: |
               The number of seconds to wait before you can attempt to make a request again.
             type: integer
-            required: yes
+            required: true
             minimum: 1
             maximum: 3600
             example: 34
