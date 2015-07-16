@@ -34,8 +34,6 @@ This RAML Specification is organized as follows:
 * **Resource Types and Traits.** Describes the optional mechanism for using RAML resource types and traits to characterize resources so as to avoid unnecessary repetition in the RESTful API's definition.
 * **Resources.** Describes how to specify a RESTful API's resources, resources' methods and schema, and the interactions between resources.
 
-RAML is a trademark of MuleSoft, Inc.
-
 ### Terminology
 
 For this specification, *API definition* will be used to denote the description of an API using this specification and *RAML Specification* refers to the current document.
