@@ -2,7 +2,7 @@
 
 ###Licensing
 
-[Branding Guidelines](https://github.com/raml-org/raml-spec/blob/master/legal/brand_guidelines.pdf)
+[Branding Guidelines](http://raml.org/licensing.html)
 
 ## Index
 
