@@ -1,7 +1,6 @@
 # The RESTful API Modeling Language (RAML) Spec
 
 ###Licensing
-[Contributors License Agreement](https://github.com/raml-org/raml-spec/blob/master/legal/contribution_agreement.docx)
 
 [Branding Guidelines](https://github.com/raml-org/raml-spec/blob/master/legal/brand_guidelines.pdf)
 
@@ -54,24 +53,10 @@ Security:
 [Normative References](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#normative-references)  
 [Informative References](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#informative-references)
 
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/2c379a9b36749a80379d5f3f328a8bed "githalytics.com")](http://githalytics.com/raml-org/raml-spec)
-
 ##Contributing
 
-Please, follow these steps to contribute with the RAML Spec project:
-- Check the [Contributors License Agreement](https://github.com/raml-org/raml-spec/blob/master/legal/contribution_agreement.docx)
-- Fork this repository.
-- Clone the forked repository.
-- Apply the changes on master.
-- Commit, Push.
-- Generate Pull Request.
-
-Please, follow these steps to accept a contribution
-- Verify the Pull Request.
-- If it's correct: Merge/Accept.
-- Move to `gh-pages` branch (`git checkout gh-pages`)  and run `./specs_publish.sh` (this script copies the resulting `raml-0.8.md` file from `master` to the current branch
-  `gh-pages`  and places it in the following path: `./spec.md` which is needed to have the specs published in the site). **Note: This is a shell script, only working on UNIX based OS**.
+Please [submit issues in this repository](https://github.com/raml-org/raml-spec/issues) to contribute to the evolution of the RAML specification.
 
 ## Logos
 
-Download the RAML Logos in [JPG](https://github.com/raml-org/raml-spec/raw/master/logos/RAML-logo.jpg) and [EPS](https://github.com/raml-org/raml-spec/raw/master/logos/RAML-logo.eps) format. ( for usage questions email [info@raml.org](mailto:info@raml.org) ).
+Download the RAML Logos in [JPG](https://github.com/raml-org/raml-spec/raw/master/logos/RAML-logo.jpg) and [EPS](https://github.com/raml-org/raml-spec/raw/master/logos/RAML-logo.eps) format. (For usage questions email [info@raml.org](mailto:info@raml.org)).
