@@ -1,6 +1,7 @@
 RAML&trade; Version 0.8: RESTful API Modeling Language
 ===================================
 
+A [newer version of RAML (1.0)](http://raml.org/spec.html) is available.
 
 Abstract
 --------
