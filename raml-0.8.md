@@ -156,6 +156,7 @@ The *type* attribute specifies the primitive type of the parameter's resolved va
 | integer | Value MUST be an integer. Floating point numbers are not allowed. The integer type is a subset of the number type.
 | date    | Value MUST be a string representation of a date as defined in RFC2616 Section 3.3 [RFC2616]. See [Date Representations](#date-representations).
 | boolean | Value MUST be either the string "true" or "false" (without the quotes).
+| uuid    | Value MUST be a Universally unique identifier (UUID). E.g. "f47ac10b-58cc-4372-a567-0e02b2c3d479".
 | file    | (Applicable only to Form properties)<br><br>Value is a file. Client generators SHOULD use this type to handle file uploads correctly.
 
 ##### Date Representations
