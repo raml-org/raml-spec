@@ -1496,7 +1496,7 @@ If the scheme's type is *x-other*, API designers can use the properties in this 
 ### Usage: Applying a Security Scheme to an API
 To apply a *securityScheme* definition to every method in an API, the API MAY be defined using the *securedBy* attribute. This specifies that all methods in the API are protected using that security scheme.
 
-Applying a *securityScheme* definition to a method overrides whichever *securityScheme* has been defined at the root level. To indicate that the method is protected using a specific security scheme, the method MUST be defined by using the *securedBy* attribute. The value of the *securedBy* attribute MUST be a list of any of the security schemas defined in the *securitySchema* declaration.
+Applying a *securityScheme* definition to a method overrides whichever *securityScheme* has been defined at the root level. To indicate that the method is protected using a specific security scheme, the method MUST be defined by using the *securedBy* attribute. The value of the *securedBy* attribute MUST be a list of any of the security schemes defined in the *securitySchemes* declaration.
 
 ```yaml
 #%RAML 0.8
