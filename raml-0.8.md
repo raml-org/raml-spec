@@ -975,7 +975,7 @@ This example shows an inline schema declaration.
           }
 ```
 
-Alternatively, the value of the *schema* field MAY be the name of a schema specified in the root-level *schemas* property (see [Named Parameters](#named-parameters), or it MAY be declared in an external file and included by using the by using the RAML !include user-defined data type.
+Alternatively, the value of the *schema* field MAY be the name of a schema specified in the root-level *schemas* property (see [Named Parameters](#named-parameters), or it MAY be declared in an external file and included by using the RAML !include user-defined data type.
 
 This example repeats the /jobs resource definition, but with the schemas defined in the external files job.xsd and job.schema.json.
 
