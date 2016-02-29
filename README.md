@@ -27,6 +27,8 @@ You can also directly get in touch with us. Simply send us an email to: info@ram
 
 Currently we are working on RC2 inside another branch called `raml-10-rc2`. If you want to fix any spelling or grammar mistake, or an error in our examples, please fork that branch, make your edits, and then submit a pull request.
 
+More information around the current branch structure can be viewed [here](https://github.com/raml-org/raml-spec/wiki/RAML-1.0-RC2---Plan#branch-structure)
+
 ## Licensing
 
 [Branding Guidelines](http://raml.org/licensing.html)
