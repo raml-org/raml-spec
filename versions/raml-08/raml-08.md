@@ -582,7 +582,7 @@ baseUriParameters:
       enum: [ "api-content" ]
 ```
 
-In a resource structure of resources and nested resources with their methods, the most specific baseUriParameter fully overrides any baseUriParameter definition made before. In the following example the resource `/user/{userId}/image` overrides the definition made in `/users`.
+In a resource structure of resources and nested resources with their methods, the most specific baseUriParameter fully overrides any baseUriParameter definition made before. In the following example the resource `/users/{userId}/image` overrides the definition made in `/users`.
 
 ```
 #%RAML 0.8
@@ -601,7 +601,7 @@ baseUri: https://{apiDomain}.someapi.com
         enum: [ "static" ]
 ```
 
-In the following example, the `PUT` method overrides the definition made in `/user/{userId}/image`.
+In the following example, the `PUT` method overrides the definition made in `/users/{userId}/image`.
 
 ```
 #%RAML 0.8
