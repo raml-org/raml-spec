@@ -1,5 +1,9 @@
 # The RESTful API Modeling Language (RAML) Spec
 
+## Note - Updated version
+
+The RAML Workgroup is currently working on a newer version of the specification. All progress can be monitored inside the `raml-10` branch. Please switch to that branch for any information about RAML 1.0.
+
 ###Licensing
 
 [Branding Guidelines](http://raml.org/licensing.html)
