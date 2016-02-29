@@ -584,7 +584,7 @@ baseUriParameters:
       enum: [ "api-content" ]
 ```
 
-In a resource structure of resources and nested resources with their methods, the most specific baseUriParameter fully overrides any baseUriParameter definition made before. In the following example the resource `/user/{userId}/image` overrides the definition made in `/users`.
+In a resource structure of resources and nested resources with their methods, the most specific baseUriParameter fully overrides any baseUriParameter definition made before. In the following example the resource `/users/{userId}/image` overrides the definition made in `/users`.
 
 ```
 #%RAML 0.8
@@ -603,7 +603,7 @@ baseUri: https://{apiDomain}.someapi.com
         enum: [ "static" ]
 ```
 
-In the following example, the `PUT` method overrides the definition made in `/user/{userId}/image`.
+In the following example, the `PUT` method overrides the definition made in `/users/{userId}/image`.
 
 ```
 #%RAML 0.8
@@ -937,7 +937,7 @@ The *schema* key CANNOT be specified if a body's media type is *application/x-ww
 
 All parsers of RAML MUST be able to interpret JSON Schema [JSON_SCHEMA] and XML Schema [XML_SCHEMA].
 
-Schema MAY be declared inline or in an external file. However, if the schema is sufficiently large so as to make it difficult for a person to read the API definition, or the schema is reused across multiple APIs or across multiple miles in the same API, the !include user-defined data type SHOULD be used instead of including the content inline.
+Schema MAY be declared inline or in an external file. However, if the schema is sufficiently large so as to make it difficult for a person to read the API definition, or the schema is reused across multiple APIs or across multiple files in the same API, the !include user-defined data type SHOULD be used instead of including the content inline.
 
 This example shows an inline schema declaration.
 
