@@ -2211,6 +2211,7 @@ Security scheme is declared as follows:
 |Property   |Description|
 |:----------|:----------|
 | type | The security schemes property MUST be used to specify an API's security mechanisms, including the required settings and the authentication methods that the API supports. one authentication method is allowed if the API supports them. The value MUST be one of the following: OAuth 1.0, OAuth 2.0, Basic Authentication, Digest Authentication, Pass Through, x-&lt;other&gt;
+| displayName? | An alternate, human-friendly name for the security scheme part
 | description? | The description MAY be used to describe a security scheme.
 | describedBy? | A description of the request components related to Security that are determined by the scheme: the headers, query parameters or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes an API documentation. See explanation about [describedBy](#describedBy) for more information.
 | settings? | The settings attribute MAY be used to provide security scheme-specific information. The required attributes vary depending on the type of security scheme is being declared. It describes the minimum set of properties which any processing application MUST provide and validate if it chooses to implement the security scheme. Processing applications MAY choose to recognize other properties for things such as token lifetime, preferred cryptographic algorithms, and more. See explanation about [seetings](#settings) for more information.
@@ -2277,8 +2278,6 @@ The value of the **describedBy** property is defined as follows:
 | queryParameters? | Query parameters, used by the schema in order to authorize the request. Mutually exclusive with queryString. See section [Query Strings and Query Parameters](#query-strings-and-query-parameters) for more information.
 | queryString? | Specifies the query string, used by the schema in order to authorize the request. Mutually exclusive with queryParameters. See section [Query Strings and Query Parameters](#query-strings-and-query-parameters) for more information.
 | responses? | Optional array of responses, describing the possible responses that could be sent. See section [Responses](#responses) for more information.
-| displayName? | An alternate, human-friendly name for the security scheme part
-| description? | A longer, human-friendly description of the security scheme part
 | (&lt;annotationName&gt;)? | Annotations to be applied to this security scheme part. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
 
 #### Settings
