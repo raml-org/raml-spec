@@ -937,7 +937,7 @@ The *schema* key CANNOT be specified if a body's media type is *application/x-ww
 
 All parsers of RAML MUST be able to interpret JSON Schema [JSON_SCHEMA] and XML Schema [XML_SCHEMA].
 
-Schema MAY be declared inline or in an external file. However, if the schema is sufficiently large so as to make it difficult for a person to read the API definition, or the schema is reused across multiple APIs or across multiple miles in the same API, the !include user-defined data type SHOULD be used instead of including the content inline.
+Schema MAY be declared inline or in an external file. However, if the schema is sufficiently large so as to make it difficult for a person to read the API definition, or the schema is reused across multiple APIs or across multiple files in the same API, the !include user-defined data type SHOULD be used instead of including the content inline.
 
 This example shows an inline schema declaration.
 
