@@ -2963,7 +2963,7 @@ resourceTypes:
 
 API definitions may need to be extended in a variety of ways for different needs. Annotations allow for adding metadata beyond that which is standardized in this RAML specification. Another set of needs is satisfied by overlaying standard or non-standard metadata on top of an existing API definition without changing its behavior, for example to specify implementation details or provide a translation of human-oriented documentation into different languages. Yet another set of needs requires extending an API definition by adding to its behavior or overriding certain aspects. RAML provides two mechanisms for doing so: overlays and extensions.
 
-Overlays and extensions are RAML documents that add or override properties of a RAML API definition. The first line of an overlay or extension document MUST begin with the text _#%RAML 1.0 Overlay_ or _#%RAML 1.0 Extension_, respectively, followed by nothing but the end of the line. An overlay or extension document MUST contain a root-level masterRef property whose value MUST be the location of a valid RAML API definition, or another overlay or extension; the location is specified equivalently to the location specified in the value of an !include tag (as an absolute or relative path or as a URL). The document specified in the masterRef property is called the master RAML document.
+Overlays and extensions are RAML documents that add or override properties of a RAML API definition. The first line of an overlay or extension document MUST begin with the text _#%RAML 1.0 Overlay_ or _#%RAML 1.0 Extension_, respectively, followed by nothing but the end of the line. An overlay or extension document MUST contain a root-level `extends` property whose value MUST be the location of a valid RAML API definition, or another overlay or extension; the location is specified equivalently to the location specified in the value of an !include tag (as an absolute or relative path or as a URL). The document specified in the `extends` property is called the master RAML document.
 
 The remainder of an overlay or extension document follows the same rules as a RAML API definition, but with certain restrictions in case of an overlay, as discussed in section about [Overlays](#overlays).
 
@@ -3009,7 +3009,7 @@ documentation:
 ```yaml
 #%RAML 1.0 Overlay
 usage: Spanish localization
-masterRef: librarybooks.raml
+extends: librarybooks.raml
 documentation:
   - title: Introducción
     content: El acceso automatizado a los libros
@@ -3022,7 +3022,7 @@ documentation:
 ```yaml
 #%RAML 1.0 Overlay
 usage: Hints for monitoring the library books API
-masterRef: librarybooks.raml
+extends: librarybooks.raml
 annotationTypes:
   monitor:
     parameters:
@@ -3050,7 +3050,7 @@ The following examples build on the examples in the overlays section above, by a
 ```yaml
 #%RAML 1.0 Extension
 usage: Add administrative functionality
-masterRef: librarybooks.raml
+extends: librarybooks.raml
 /books:
   post:
     description: Add a new book to the collection
@@ -3059,7 +3059,7 @@ masterRef: librarybooks.raml
 ```yaml
 #%RAML 1.0 Overlay
 usage: Spanish localization for admin functionality
-masterRef: librarybooks.raml
+extends: librarybooks.raml
 /books:
   post:
     description: A?adir un nuevo libro para la colecci?n
@@ -3068,7 +3068,7 @@ masterRef: librarybooks.raml
 ```yaml
 #%RAML 1.0 Extension
 usage: The location of the public instance of the Piedmont library API
-masterRef: librarybooks.raml
+extends: librarybooks.raml
 baseUri: http://api.piedmont-library.com
 ```
 
