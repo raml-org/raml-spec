@@ -1944,16 +1944,16 @@ Parameter values MAY further be transformed by applying one of the following fun
 
 | Function | Definition |
 |:---------|:-----------|
-| !singularize | The <b>!singularize</b> function MUST act on the value of the parameter by a locale-specific singularization of its original value. The only locale supported by this version of RAML is United States English.
-| !pluralize | The <b>!pluralize</b> function MUST act on the value of the parameter by a locale-specific pluralization of its original value. The only locale supported by this version of RAML is United States English.
-| !uppercase | effect: `userId --> USERID`
-| !lowercase | effect: `userId --> userid`
-| !lowercamelcase | effect: `userId --> userId`
-| !uppercamelcase | effect: `userId --> UserId`
-| !lowerunderscorecase | effect: `userId --> user_id`
-| !upperunderscorecase | effect: `userId --> USER_ID`
-| !lowerhyphencase | `effect: userId --> user-id`
-| !upperhyphencase | effect: userId --> USER-ID`
+| !singularize | The <b>!singularize</b> function MUST act on the value of the parameter by a locale-specific singularization of its original value. The only locale supported by this version of RAML is United States English.<br><br>for example: `users --> user`
+| !pluralize | The <b>!pluralize</b> function MUST act on the value of the parameter by a locale-specific pluralization of its original value. The only locale supported by this version of RAML is United States English.<br><br>for example: `user --> users`
+| !uppercase | The <b>!uppercase</b> function MUST convert the value of the parameter to uppercase letters.<br><br>for example: `userId --> USERID`
+| !lowercase | The <b>!lowercase</b> function MUST convert the value of the parameter to lowercase letters.<br><br>for example: `userId --> userid`
+| !lowercamelcase | The <b>!lowercamelcase</b> function MUST convert the value of the parameter to camel case where the first letter is lowercase.<br><br>for example: `userId --> userId`
+| !uppercamelcase | The <b>!uppercamelcase</b> function MUST convert the value of the parameter to camel case where the first letter is uppercase.<br><br>for example: `userId --> UserId`
+| !lowerunderscorecase | The <b>!lowerunderscorecase</b> function MUST convert the value of the parameter to lowercase letters and if the value is a compound word the function MUST add an additional underscore between each word except when there is already one present.<br><br>for example: `userId --> user_id`
+| !upperunderscorecase | The <b>!upperunderscorecase</b> function MUST convert the value of the parameter to uppercase letters and if the value is a compound word the function MUST add an additional underscore between each word except when there is already one present.<br><br>for example: `userId --> USER_ID`
+| !lowerhyphencase | The <b>!lowerhyphencase</b> function MUST convert the value of the parameter to lowercase letters and if the value is a compound word the function MUST add an additional hyphen between each word except when there is already one present.<br><br>for example: `userId --> user-id`
+| !upperhyphencase | The <b>!upperhyphencase</b> function MUST convert the value of the parameter to uppercase letters and if the value is a compound word the function MUST add an additional hyphen between each word except when there is already one present.<br><br>for example: `userId --> USER-ID`
 
 To apply these functions, append them to the parameter name within the double angle brackets, separated from the parameter name with a pipe ("|") character and optional whitespace padding. Here is an example that uses both functions as well as reserved parameters:
 
