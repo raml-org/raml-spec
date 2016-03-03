@@ -386,8 +386,8 @@ declarations may have; certain type declarations may have other properties.
 |:----------|:----------|
 | schema? | Alias for the equivalent "type" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property, as the "schema" alias for that property name may be removed in a future RAML version. The "type" property allows for XML and JSON schemas.
 | type? | A base type which the current type extends, or more generally a type expression.
-| example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. Cannot be present if the examples property is present.
-| examples? | An object containing named examples of instances of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. Cannot be present if the examples property is present. See section [Examples](#examples) for more information.
+| example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `example` property MUST not be available when the `examples` property is already defined.
+| examples? | An object containing named examples of instances of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `examples` property MUST not be available when the `example` property is already defined. See section [Examples](#examples) for more information.
 | displayName? | An alternate, human-friendly name for the type
 | description? | A longer, human-friendly description of the type
 | (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
