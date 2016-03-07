@@ -2420,7 +2420,7 @@ securitySchemes:
 
 ##### Pass Through
 
-Pass Through authentication does not have any specific settings defined and the implementation is known to RAML. For every header or queryParameter defined in describedBy, the value is required and passed along with the request without modification. The following is an example:
+Pass Through authentication does not have any specific settings defined and the implementation is known to RAML. One MUST provide a value for every header or queryParameter defined in describedBy, and passed along with the request without modification. The following is an example:
 
 ```yaml
 #%RAML 1.0
