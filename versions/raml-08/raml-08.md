@@ -1050,8 +1050,6 @@ For APIs without *a priori* knowledge of the response types for their responses,
       200:
         body:
           "*/*":
-            description: |
-                Returns the media file.
 ```
 
 Responses MAY contain a *description* property that further clarifies why the response was emitted. Response descriptions are particularly useful for describing error conditions.
