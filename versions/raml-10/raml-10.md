@@ -234,8 +234,6 @@ The media types expected from API requests that contain a body, and returned by 
 
 The value of the mediaType property MUST be a media type string conforming to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838).
 
-For any combination of resource, operation, and request or response in the API, if a media type is specified as a key of the body property for that resource and operation and request or response, or if a media type is specified in the mediaType property, the body MUST conform to the specified media type.
-
 This example shows a RAML snippet for an API that accepts and returns JSON-formatted bodies. If the remainder of this API's specification doesn't explicitly specify another media type, this API only accepts and returns JSON-formatted bodies.
 
 ```yaml
@@ -245,6 +243,8 @@ version: v1
 baseUri: https://api.stormpath.com/{version}
 mediaType: application/json
 ```
+
+The default media type can be overridden by defining a `mediaType` node explicitly to a [body](#bodies) of an API request or response.
 
 ### Default Security
 
@@ -386,8 +386,8 @@ declarations may have; certain type declarations may have other properties.
 |:----------|:----------|
 | schema? | Alias for the equivalent "type" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property, as the "schema" alias for that property name may be removed in a future RAML version. The "type" property allows for XML and JSON schemas.
 | type? | A base type which the current type extends, or more generally a type expression.
-| example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. Cannot be present if the examples property is present.
-| examples? | An object containing named examples of instances of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. Cannot be present if the examples property is present. See section [Examples](#examples) for more information.
+| example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `example` property MUST not be available when the `examples` property is already defined.
+| examples? | An object containing named examples of instances of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `examples` property MUST not be available when the `example` property is already defined. See section [Examples](#examples) for more information.
 | displayName? | An alternate, human-friendly name for the type
 | description? | A longer, human-friendly description of the type
 | (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
@@ -1767,7 +1767,7 @@ baseUri: https://api.twitter.com/{version}
 
 The HTTP request **body** for a method is specified using the OPTIONAL body property. For example, to create a resource using a POST or PUT, the body of the request would usually include the details of the resource to be created.
 
-The value of the body property is termed a **body declaration**. The body declaration is an object whose property names are the valid media types of the request body and whose property values are the corresponding data type declaration or data type name describing the request body. If a default media type has been declared at the root of the API via the mediaType property, then the body declaration may alternatively be directly the data type declaration or data type name describing the request body for that media type.
+The value of the body property is termed a **body declaration**. The body declaration is an object whose property names are the valid media types of the request body and whose property values are the corresponding data type declaration or data type name describing the request body. If a [default media type](#default-media-type) has been declared at the root of the API via the mediaType property, then the body declaration may alternatively be directly the data type declaration or data type name describing the request body for that media type.
 
 In the first case above, when the property names represent media types, each property name MUST be a media type string conforming to the media type specification in [RFC6838](#https://tools.ietf.org/html/rfc6838).
 
