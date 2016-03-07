@@ -2020,7 +2020,7 @@ When defining resource types and traits, it can be useful to capture patterns th
 
 To accommodate this need, a resource type or trait definition MAY append a question mark ("?") suffix to the name of any object-valued property that should not be applied if it doesn't already exist in the resource or method at the corresponding level. A property is considered object-valued if its value is of type object or of a type that has object at the base of its inheritance hierarchy. The question mark suffix indicates that the value of the property in the resource type or trait should be applied if the property name itself (without the question mark) is already defined (whether explicitly or implicitly) at the corresponding level in that resource or method.
 
-The following example shows a resource type called corpResource with an optional post? property that defines a required header called X-Chargeback. If the inheriting resource defines a post method, it will include the X-Chargeback header requirement. If the inheriting resource does not define a post method, one will not be defined for it by dint of inheriting from the corpResource resource type.
+The following example shows a resource type called corpResource with an optional post? property that defines a required header called X-Chargeback and also a custom parameter called TextAboutPost. If the inheriting resource defines a post method, it will include the X-Chargeback header requirement and TextAboutPost MUST be defined as well. If the inheriting resource does not define a post method, one will not have to define the X-Chargeback header or forced to define the TextAboutPost parameter by dint of inheriting from the corpResource resource type.
 
 ```yaml
 #%RAML 1.0
@@ -2028,17 +2028,21 @@ title: Example of Optional Properties
 resourceTypes:
   - corpResource:
       post?:
+        description: Some info about <<TextAboutPost>>.
         headers:
           X-Chargeback:
             required: true
 /servers:
-  type: corpResource
+  type:
+    corpResource:
+      TextAboutPost: post method # post defined which will force to define the TextAboutPost parameter
   get:
   post: # will require the X-Chargeback header
 /queues:
   type: corpResource
   get:
-  # will not have a post method defined
+  # will not have a post method defined which means one MUST not have to define
+  # the TextAboutPost parameter
 ```
 
 Note that a question mark can also appear as the last character of a RAML Type property name. If you wish to use this syntax within a Resource Type or Trait you should escape it with a backslash ( "\?"). Consider an example of body type defined inside trait by a properties set:
