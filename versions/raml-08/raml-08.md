@@ -619,9 +619,9 @@ baseUri: https://{apiDomain}.someapi.com
       apiDomain:
         enum: [ "static" ]
     get:
-      displayName: retrieve a user's picture
+      description: retrieve a user's picture
     put:
-      displayName: update a user's picture
+      description: update a user's picture
       baseUriParameters:
         apiDomain:
           enum: [ "content-update" ]
