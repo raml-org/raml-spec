@@ -1271,7 +1271,7 @@ types:
       employeeId: string
   User:
     type: Person
-    discriminatorValue: person
+    discriminatorValue: user
     properties:
       userId: string
 ```
