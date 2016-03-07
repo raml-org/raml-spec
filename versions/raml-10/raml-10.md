@@ -120,7 +120,7 @@ The following table enumerates the possible properties at the root of a RAML doc
 | Property  | Description |
 |:----------|:----------|
 | description? | A longer, human-friendly description of the API
-| (&lt;annotationName&gt;)? | Annotations to be applied to this API. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotation) for more information.
+| (&lt;annotationName&gt;)? | Annotations to be applied to this API. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
 | schemas? | Alias for the equivalent "types" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "types" property, as the "schemas" alias for that property name may be removed in a future RAML version. The "types" property allows for XML and JSON schemas.
 | types? | Declarations of (data) types for use within this API. See section [RAML Data Types](#raml-data-types) for more information.
 | traits? | Declarations of traits for use within this API. See section [Resource Types and Traits](#resource-types-and-traits) for more information.
@@ -1271,7 +1271,7 @@ types:
       employeeId: string
   User:
     type: Person
-    discriminatorValue: person
+    discriminatorValue: user
     properties:
       userId: string
 ```
@@ -1520,7 +1520,27 @@ baseUri: https://api.github.com
        type: integer
 ```
 
-If a URI parameter declaration specifies an array or object type for the value of the header, or if it specifies a union type of non-scalar types, then processors MUST default to treating the format of the URI parameter value as JSON in applying the type to instances of that URI parameter. They MAY allow other treatments based on annotations.
+If a URI parameter declaration specifies an array, object, or union of non-scalar types, then processors MUST default to treating the format of the URI parameter value as JSON in applying the type to instances of that URI parameter. The following demonstrates an extreme example of the expected behavior.
+
+```yaml
+#%RAML 1.0
+title: Serialization API
+
+/users:
+  description: All users
+  /{userIds}:
+   description: A specific user
+   uriParameters:
+     userIds:
+       description: A list of userIds
+       type: array
+       items:
+         type: string
+         minLength: 1
+         uniqueItems: true
+```
+
+In the example above, the URI parameter `userIds` is an array of ids. Let us assume the array should contain `[blue,green]` which then, on the wire may look as: `/users/%5B%22blue%22,%22green%22%5D/`.
 
 If a URI parameter declaration specifies a non-string scalar type for the value of the header, the standard serialization rules for types MUST be invoked in applying the type to instances of that URI parameter.
 
@@ -1567,7 +1587,7 @@ In a RESTful API, methods are operations that are performed on a resource. The O
 |:--------|:------------|
 | displayName? | An alternate, human-friendly name for the method (in the resource's context).
 | description? | A longer, human-friendly description of the method (in the resource's context).
-| (&lt;annotationName&gt;)? | Annotations to be applied to this method. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotation) for more information.
+| (&lt;annotationName&gt;)? | Annotations to be applied to this method. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
 | queryParameters? | Detailed information about any query parameters needed by this method. Mutually exclusive with queryString.
 | headers? | Detailed information about any request headers needed by this method.
 | queryString? | Specifies the query string needed by this method. Mutually exclusive with queryParameters.
@@ -1695,7 +1715,7 @@ If a query parameter declaration specifies an array type for the value of the qu
 
 If a query parameter declaration specifies a non-array type for the value of the query parameter (or doesn't specify a type, which is equivalent to specifying a string type), processors MUST interpret this as disallowing multiple instances of that query parameter in the request.
 
-If a query parameter declaration specifies an object type or a union of non-scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is an object type or union of non-scalar types, then processors MUST default to treating the format of the query parameter value as JSON in applying the type to instances of that query parameter. They MAY allow other treatments based on annotations.
+If a query parameter declaration specifies an object type or a union of non-scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is an object type or union of non-scalar types, then processors MUST default to treating the format of the query parameter value as JSON in applying the type to instances of that query parameter.
 
 If a query parameter declaration specifies a non-string scalar type or union of non-string scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is a non-string scalar type or union of non-string scalar types, the standard serialization rules for types MUST be invoked in applying the type to instances of that query parameter.
 
