@@ -2089,9 +2089,9 @@ It is important to note that this feature applies only to object-valued properti
 
 ### Applying Resource Types and Traits
 
-The OPTIONAL **type** property applies a resource type to a resource, so that the resource inherits the resource type's characteristics. The value of the **type** property is either a) a name of a resource type declared in the resourceTypes declaration, or b) an inline (anonymous) resource type declaration.
+The OPTIONAL **type** property applies a resource type to a resource, so that the resource inherits the resource type's characteristics. The value of the **type** property is either a) a name of a resource type declared in the resourceTypes declaration, or b) an inline (anonymous) resource type declaration. Resource type definitions MUST NOT incorporate nested resources; they cannot be used to generate nested resources when they are applied to a resource, and they do not apply to its existing nested resources.
 
-The OPTIONAL **is** property applies any number of traits to a method, so that the method inherits the trait's or traits' characteristics. The value of the is attribute is an array of any number of elements, each of which is either a) a name of a trait declared in the traits declaration, or b) an inline (anonymous) trait declaration.
+The OPTIONAL **is** property applies any number of traits to a method, so that the method inherits the trait's or traits' characteristics. The value of the is attribute is an array of any number of elements, each of which is either a) a name of a trait declared in the traits declaration, or b) an inline (anonymous) trait declaration. Trait definitions MUST NOT incorporate nested resources.
 
 A trait may also be applied to a resource by using the **is** key, which is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type.
 
@@ -2259,6 +2259,7 @@ Security scheme is declared as follows:
 | settings? | The settings attribute MAY be used to provide security scheme-specific information. The required attributes vary depending on the type of security scheme is being declared. It describes the minimum set of properties which any processing application MUST provide and validate if it chooses to implement the security scheme. Processing applications MAY choose to recognize other properties for things such as token lifetime, preferred cryptographic algorithms, and more. See explanation about [settings](#settings) for more information.
 
 An optional **securitySchemes** property is defined for RAML document root.
+
 As value it has an object whose properties map security scheme names to security scheme declarations.
 Each authentication pattern supported by the API must be expressed as component of **securitySchemes** property value.
 
@@ -2527,7 +2528,7 @@ securitySchemes:
         securedBy: [null, oauth_2_0]
 ```
 
-A resource can also be applied a list of security schemes using the **securedBy** attribute. This specifies that all methods of this particular resource (unless they have their own securedBy attribute) can be authenticated by any mentioned security scheme. Value of resources attribute overrides that of the root attribute.
+A resource can also be applied a list of security schemes using the **securedBy** attribute. This specifies that all methods of this particular resource (unless they have their own securedBy attribute) can be authenticated by any mentioned security scheme. Value of resources attribute overrides that of the root attribute. Security Schemes applied to a resource MUST NOT incorporate nested resources; they do not apply to its existing nested resources.
 
 Applying a security scheme to a method overrides security schemes applied to the API and resources having the method as sibling.
 
