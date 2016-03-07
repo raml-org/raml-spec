@@ -214,6 +214,28 @@ baseUriParameters:
     description: The name of the bucket
 ```
 
+When the base URI ends in one or more slashes (`/`), those trailing slashes are to be omitted in constructing the absolute paths for the resources using that base URI.
+
+For example, in
+
+```yaml
+baseUri: http://api.test.com/common/
+/users:
+  /groups:
+```
+
+the absolute paths for the two resources are `http://api.test.com/common/users` and `http://api.test.com/common/users/groups`.
+
+In a more complicated examples with consecutive slashes in multiple places, note that only trailing slashes in the base URI are collapsed:
+
+```yaml
+baseUri: //api.test.com//common//
+/:
+  /users/:
+    /groups//:
+```
+leads to the following 3 resource absolute paths: `//api.test.com//common/`, `//api.test.com//common//users/` and `//api.test.com//common//users//groups//`.
+
 ### Protocols
 
 The OPTIONAL **protocols** property specifies the protocols that an API supports. If the protocols property is not explicitly included, the protocol(s) specified at the baseUri property is (are) used; if the protocols property is specified explicitly, it overrides any protocol specified in the baseUri property. The protocols property MUST be a non-empty array of strings, of values HTTP and/or HTTPS, and is case-insensitive.
