@@ -2042,7 +2042,7 @@ resourceTypes:
   type: corpResource
   get:
   # will not have a post method defined which means the TextAboutPost parameter is
-  # not required
+  # not required; same for the X-Chargeback header
 ```
 
 Note that a question mark can also appear as the last character of a RAML Type property name. If you wish to use this syntax within a Resource Type or Trait you should escape it with a backslash ( "\?"). Consider an example of body type defined inside trait by a properties set:
