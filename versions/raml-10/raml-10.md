@@ -29,14 +29,6 @@ A **resource** is the conceptual mapping to an entity or set of entities.
 
 Optional properties are indicated with trailing question marks (e.g. **description?**).
 
-### Markdown
-
-Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/).
-
-### Media Types
-
-The value of a specific media type property MUST conform to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838).
-
 ### Template URI
 
 A template URI refers to any URI parameters using curly brackets ({}) to mark a section inside a resource's relative URI as variable element.
