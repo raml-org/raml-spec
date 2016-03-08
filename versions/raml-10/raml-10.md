@@ -19,15 +19,21 @@ The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SH
 
 ## Definitions and Terminology
 
-For this specification, **API definition** will be used to denote the description of an API using this specification and **RAML Specification** refers to the current document.
+### General
 
-**REST** is used in the context of an API implemented using some or all of the principles of REST. The REST acronym stands for Representational State Transfer and was first introduced and defined in 2000 by Roy Fielding in his doctoral dissertation [REST].
+For this specification, **API definition** is used to denote the description of an API using this specification and **RAML Specification** refers to the current document.
+
+**REST** is used in the context of an API implemented using some or all of the principles of REST. The REST acronym stands for Representational State Transfer and was first introduced and defined in 2000 by Roy Fielding in his doctoral dissertation [REST](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm).
 
 A **resource** is the conceptual mapping to an entity or set of entities.
 
-Throughout this specification, **markdown** means [GitHub-Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/).
-
 Optional properties are indicated with trailing question marks (e.g. **description?**).
+
+### Template URI
+
+A template URI refers to any URI parameters using curly brackets ({}) to mark a section inside a resource's relative URI as variable element.
+
+RAML fully supports Level 2 as defined in [RFC6570](https://tools.ietf.org/html/rfc6570) for any template URIs.
 
 ## Introduction
 
@@ -130,7 +136,7 @@ The following table enumerates the possible properties at the root of a RAML doc
 | uses? | Importing external libraries that can be used within the API. See section [Libraries](#libraries) for more information.
 | title | Short plain-text label for the API
 | version? | The version of the API, e.g. "v1"
-| baseUri? | A URI that's to be used as the base of all the resources' URIs. Often used as the base of the URL of each resource, containing the location of the API. Can be a template URI. See section [Base URI and Base URI Parameters](#base-uri-and-base-uri-parameters) for more information.
+| baseUri? | A URI that's to be used as the base of all the resources' URIs. Often used as the base of the URL of each resource, containing the location of the API. Can be a [template URI](#template-uri). See section [Base URI and Base URI Parameters](#base-uri-and-base-uri-parameters) for more information.
 | baseUriParameters? | Named parameters used in the baseUri (template). See section [Base URI and Base URI Parameters](#base-uri-and-base-uri-parameters) for more information.
 | protocols? | The protocols supported by the API. The protocols property MUST contain one or more of the supported protocols: "HTTP", "HTTPS". (case-insensitive).
 | mediaType? | The default media type to use for request and response bodies (payloads), e.g. "application/json"
@@ -183,9 +189,9 @@ documentation:
 
 ### Base URI and Base URI Parameters
 
-The OPTIONAL **baseUri** property specifies a URI as an identifier for the API as a whole, and MAY be used the specify the URL at which the API is served (its service endpoint), and which forms the base of the URLs of each of its resources. The baseUri property's value is a string that MUST conform to the URI specification [RFC2396](https://www.ietf.org/rfc/rfc2396.txt) or a Level 1 Template URI as defined in [RFC 6570](https://tools.ietf.org/html/rfc6570).
+The OPTIONAL **baseUri** property specifies a URI as an identifier for the API as a whole, and MAY be used the specify the URL at which the API is served (its service endpoint), and which forms the base of the URLs of each of its resources. The baseUri property's value is a string that MUST conform to the URI specification [RFC2396](https://www.ietf.org/rfc/rfc2396.txt) or a [Template URI](#template-uri).
 
-If the baseUri value is a Level 1 Template URI, the following reserved base URI parameter is available.
+If the baseUri value is a [Template URI](#template-uri), the following reserved base URI parameter is available.
 
 | URI Parameter | Value |
 |:----------|:----------|
@@ -193,7 +199,7 @@ If the baseUri value is a Level 1 Template URI, the following reserved base URI 
 
 Any other URI template variables appearing in the baseUri MAY be described explicitly within a **baseUriParameters** property at the root of the API definition. The baseUriParameters property has the same structure and semantics as the uriParameters property on a resource property, except that it specifies parameters in the base URI rather than a resource's relative URI. See the section [Template URIs and URI parameters](#template-uris-and-uri-parameters) for information about the uriParameters property.
 
-The following example RAML API definition uses a Level 1 Template URI as the base URI.
+The following example RAML API definition uses a [Template URI](#template-uri) as the base URI.
 
 ```yaml
 #%RAML 1.0
@@ -1528,7 +1534,7 @@ The OPTIONAL **description** property can be used to provide a longer descriptio
 
 ### Template URIs and URI Parameters
 
-Template URIs containing URI parameters can be used to define a resource's relative URI when it contains variable elements. The following example shows a top-level resource with a key /jobs and a nested resource with a key /{jobId}.
+[Template URIs](#template-uri) containing URI parameters can be used to define a resource's relative URI when it contains variable elements. The following example shows a top-level resource with a key /jobs and a nested resource with a key /{jobId}.
 
 ```yaml
 #%RAML 1.0
@@ -1541,13 +1547,13 @@ baseUri: https://app.zencoder.com/api/{version}
     description: A specific job, a member of the jobs collection
 ```
 
-The OPTIONAL **uriParameters** property is used to explicitly specify URI parameters in a template URI. The value of the uriParameters property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **URI parameter declaration**. The name of each such property corresponds to the name of a parameter in the template URI, while its value specifies the URI parameter's type, as the name of a type or an inline type declaration.
+The OPTIONAL **uriParameters** property is used to explicitly specify URI parameters in a [Template URI](#template-uri). The value of the uriParameters property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **URI parameter declaration**. The name of each such property corresponds to the name of a parameter in the [Template URI](#template-uri), while its value specifies the URI parameter's type, as the name of a type or an inline type declaration.
 
 Every property in a uriParameters declaration MUST correspond exactly to the name of a URI parameter in the resource's relative URI. But not every URI parameter in the resource's relative URI must be explicitly specified in the uriParameters property. Every parameter in the relative URI not specified in the uriParameters property MUST still be treated as a URI parameter, of type string, and required.
 
 Just as is the case for [the baseUriParameters root property](#base-uri-and-base-uri-parameters), the version parameter is a reserved parameter name in the uriParameters properties declaration, with a value corresponding to the value of the version root-level property.
 
-The example below shows two top-level resources (/user and /users) and a nested resource specified by its template URI, /{userId}. The URI parameter userId is explicitly declared, and given a description and an integer type.
+The example below shows two top-level resources (/user and /users) and a nested resource specified by its [Template URI](#template-uri), /{userId}. The URI parameter userId is explicitly declared, and given a description and an integer type.
 
 ```yaml
 #%RAML 1.0
