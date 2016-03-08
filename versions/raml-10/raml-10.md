@@ -260,19 +260,36 @@ baseUri: https://na1.salesforce.com/services/data/{version}/chatter
 
 The media types expected from API requests that contain a body, and returned by API responses, can be defaulted by specifying the OPTIONAL **mediaType** property, so they do not need to be specified within every body definition.
 
-The value of the mediaType property MUST be a media type string conforming to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838).
+The value of the mediaType property MUST be a sequence of media type strings conforming to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838); with the premise that all of them are described by exactly the same types and/or examples.
 
-This example shows a RAML snippet for an API that accepts and returns JSON-formatted bodies. If the remainder of this API's specification doesn't explicitly specify another media type, this API only accepts and returns JSON-formatted bodies.
+This example shows a RAML snippet for an API that accepts and returns JSON- and XML-formatted bodies. If the remainder of this API's specification doesn't explicitly specify another media type, this API only accepts and returns JSON- and XML-formatted bodies.
 
 ```yaml
 #%RAML 1.0
-title: Stormpath REST API
-version: v1
-baseUri: https://api.stormpath.com/{version}
-mediaType: application/json
+title: New API
+mediaType: [ application/json, application/xml ]
 ```
 
-The default media type can be overridden by defining a `mediaType` node explicitly to a [body](#bodies) of an API request or response.
+The default media type can be overridden by defining a `mediaType` node explicitly to a [body](#bodies) of an API request or response. When one defines a root-level `mediaType` and then override that in a body by defining explicitly a media type node, none of the root level media types apply to that node, other than the media types explicitly defined within that node. The example below shows a RAML snippet that illustrates that behavior. The resource `/list` returns a `Person[]` body represented as either JSON or XML. On the other hand, the resource `/send` overrides the default media types with an explicit definition of an `application/json` node and therefore only accepts a JSON-formatted body.
+
+```yaml
+#%RAML 1.0
+title: New API
+mediaType: [ application/json, application/xml ]
+types:
+  Person:
+  Another:
+/list:
+  get:
+    responses:
+      200:
+        body: Person[]
+/send:
+  post:
+    body:
+      application/json:
+        type: Another
+```
 
 ### Default Security
 
