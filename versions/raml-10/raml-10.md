@@ -604,7 +604,7 @@ types:
 
 ### Array Types
 
-Array Types are declared by using the array qualifier at the end of a Type Expression. If you are defining a top-level Array Type ( like the example below ), you can pass the following additional properties to further restrict its behaviour.
+Array Types are declared by using the array qualifier at the end of a Type Expression. If you are defining a top-level Array Type ( like the example below ), you can pass the following additional properties to further restrict its behavior.
 
 | Property  | Description |
 |:----------|:----------|
