@@ -2682,6 +2682,72 @@ annotationTypes:
   (testHarness): usersTest
 ```
 
+#### Annotating Scalar-valued Nodes
+
+It is often useful to annotate scalar-valued nodes, e.g. `baseUri`. Since annotations are applied as extra key-value pairs to nodes that accept key-value pairs already (i.e. map-valued nodes), they cannot be easily applied to scalar-valued nodes. To apply annotations to any scalar-valued node, a RAML processor MUST also support scalar-valued nodes to be expressed as a map, with the single allowed key `value`, as an alternative to the normal syntax.
+
+The example below shows a scalar-valued node which is normally expressed as:
+
+```yaml
+baseUri: http://www.example.com/api
+```
+
+and the alternative map syntax, with `value` as key:
+
+```yaml
+baseUri:
+  value: http://www.example.com/api
+```
+
+and then annotations may be applied as usual, e.g.:
+
+```yaml
+baseUri:
+  value: http://www.example.com/api
+  (redirectable): true
+```
+
+The following is a list of all available scalar-valued nodes supported in RAML:
+<a name="scalar-valued-nodes"></a>
+```
+displayName
+description
+type
+schema
+default
+example
+usage
+repeat
+required
+content
+strict
+minLength
+maxLength
+uniqueItems
+minItems
+maxItems
+discriminator
+minProperties
+maxProperties
+discriminatorValue
+pattern
+format
+minimum
+maximum
+multipleOf
+requestTokenUri
+authorizationUri
+tokenCredentialsUri
+accessTokenUri
+title
+version
+baseUri
+mediaType
+extends
+```
+
+#### Annotation Targets
+
 The location within an API specification where annotations may be applied MUST be one of the target locations in the following Target Locations table. The targets are the locations themselves, not sub-properties within the locations; for example, the Method target refers to the method property and not to the method's display name, description, etc.
 
 <a name='annotation-target-location'></a>
@@ -2696,6 +2762,7 @@ The location within an API specification where annotations may be applied MUST b
 | RequestBody | The body property of a method
 | ResponseBody | The body property of a response
 | TypeDeclaration | A data type declaration (inline or in a global types collection), header declaration, query parameter declaration, or URI parameter declaration, or property within any of these declarations, where the type property may be used.
+| Scalar | A scalar-valued node listed in [Annotating Scalar-valued Nodes](#scalar-valued-nodes).
 | NamedExample | A property of the examples property, whose key is a name of an example and whose value describes the example.
 | ResourceType | A resource type property
 | Trait | A trait property
