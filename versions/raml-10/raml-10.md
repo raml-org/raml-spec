@@ -2012,12 +2012,12 @@ In trait declarations, there is an additional reserved parameter named **methodN
 
 The processing application MUST set the value of the methodName parameter to the inheriting method's name.
 
-Parameter values MAY further be transformed by applying one of the following functions.
+Parameter values MAY further be transformed by applying one of the following functions. The only locale supported by this version of RAML is United States English.
 
 | Function | Definition |
 |:---------|:-----------|
-| !singularize | The <b>!singularize</b> function MUST act on the value of the parameter by a locale-specific singularization of its original value. The only locale supported by this version of RAML is United States English.<br><br>for example: `users --> user`
-| !pluralize | The <b>!pluralize</b> function MUST act on the value of the parameter by a locale-specific pluralization of its original value. The only locale supported by this version of RAML is United States English.<br><br>for example: `user --> users`
+| !singularize | The <b>!singularize</b> function MUST act on the value of the parameter by a locale-specific singularization of its original value.<br><br>for example: `users --> user`
+| !pluralize | The <b>!pluralize</b> function MUST act on the value of the parameter by a locale-specific pluralization of its original value. <br><br>for example: `user --> users`
 | !uppercase | The <b>!uppercase</b> function MUST convert the value of the parameter to uppercase letters.<br><br>for example: `userId --> USERID`
 | !lowercase | The <b>!lowercase</b> function MUST convert the value of the parameter to lowercase letters.<br><br>for example: `userId --> userid`
 | !lowercamelcase | The <b>!lowercamelcase</b> function MUST convert the value of the parameter to camel case where the first letter is lowercase.<br><br>for example: `userId --> userId`
