@@ -105,7 +105,7 @@ This example shows a small part of a RAML API definition for the GitHub v3 publi
 title: GitHub API
 version: v3
 baseUri: https://api.github.com
-mediaType:  application/json
+mediaTypes:  [ application/json ]
 securitySchemes:
   - oauth_2_0: !include securitySchemes/oauth_2_0.raml
 types:
@@ -139,7 +139,7 @@ The following table enumerates the possible properties at the root of a RAML doc
 | baseUri? | A URI that's to be used as the base of all the resources' URIs. Often used as the base of the URL of each resource, containing the location of the API. Can be a [template URI](#template-uri). See section [Base URI and Base URI Parameters](#base-uri-and-base-uri-parameters) for more information.
 | baseUriParameters? | Named parameters used in the baseUri (template). See section [Base URI and Base URI Parameters](#base-uri-and-base-uri-parameters) for more information.
 | protocols? | The protocols supported by the API. The protocols property MUST contain one or more of the supported protocols: "HTTP", "HTTPS". (case-insensitive).
-| mediaType? | The default media type to use for request and response bodies (payloads), e.g. "application/json"
+| mediaTypes? | Default media types to use for request and response bodies (payloads), e.g. "application/json"
 | securedBy? | The security schemes that apply to every resource and method in the API. See section [Applying Security Schemes](#applying-security-schemes) for more information.
 | /&lt;relativeUri&gt;? | The resources of the API, identified as relative URIs that begin with a slash (/). Every property whose key begins with a slash (/), and is either at the root of the API definition or is the child property of a resource property, is a resource property, e.g.: /users, /{groupId}, etc.
 | documentation? | Additional overall documentation for the API. See section [User Documentation](#user-documentation) for more information.
@@ -256,26 +256,26 @@ protocols: [ HTTP, HTTPS ]
 baseUri: https://na1.salesforce.com/services/data/{version}/chatter
 ```
 
-### Default Media Type
+### Default Media Types
 
-The media types expected from API requests that contain a body, and returned by API responses, can be defaulted by specifying the OPTIONAL **mediaType** property, so they do not need to be specified within every body definition.
+The media types expected from API requests that contain a body, and returned by API responses, can be defaulted by specifying the OPTIONAL **mediaTypes** property, so they do not need to be specified within every body definition.
 
-The value of the mediaType property MUST be a sequence of media type strings conforming to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838); with the premise that all of them are described by exactly the same types and/or examples.
+The value of the mediaTypes property MUST be a sequence of media type strings conforming to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838); with the premise that all of them are described by exactly the same types and/or examples.
 
 This example shows a RAML snippet for an API that accepts and returns JSON- and XML-formatted bodies. If the remainder of this API's specification doesn't explicitly specify another media type, this API only accepts and returns JSON- and XML-formatted bodies.
 
 ```yaml
 #%RAML 1.0
 title: New API
-mediaType: [ application/json, application/xml ]
+mediaTypes: [ application/json, application/xml ]
 ```
 
-The default media type can be overridden by defining a `mediaType` node explicitly to a [body](#bodies) of an API request or response. When one defines a root-level `mediaType` and then override that in a body by defining explicitly a media type node, none of the root level media types apply to that node, other than the media types explicitly defined within that node. The example below shows a RAML snippet that illustrates that behavior. The resource `/list` returns a `Person[]` body represented as either JSON or XML. On the other hand, the resource `/send` overrides the default media types with an explicit definition of an `application/json` node and therefore only accepts a JSON-formatted body.
+Default media types can be overridden by defining a `mediaType` node explicitly to a [body](#bodies) of an API request or response. When one defines a root-level `mediaTypes` node and then override that in a body by defining explicitly another or the same media type node, none of the root level media types apply to that node, other than the media types explicitly defined within that node. The example below shows a RAML snippet that illustrates that behavior. The resource `/list` returns a `Person[]` body represented as either JSON or XML. On the other hand, the resource `/send` overrides the default media types with an explicit definition of an `application/json` node and therefore only accepts a JSON-formatted body.
 
 ```yaml
 #%RAML 1.0
 title: New API
-mediaType: [ application/json, application/xml ]
+mediaTypes: [ application/json, application/xml ]
 types:
   Person:
   Another:
@@ -348,7 +348,7 @@ succinct than JSON and XML schemas while retaining their flexibility and express
 ```yaml
 #%RAML 1.0
 title: My API with Types
-mediaType: application/json
+mediaTypes: [ application/json ]
 types:
   Org:
     type: object
@@ -1836,7 +1836,7 @@ baseUri: https://api.twitter.com/{version}
 
 The HTTP request **body** for a method is specified using the OPTIONAL body property. For example, to create a resource using a POST or PUT, the body of the request would usually include the details of the resource to be created.
 
-The value of the body property is termed a **body declaration**. The body declaration is an object whose property names are the valid media types of the request body and whose property values are the corresponding data type declaration or data type name describing the request body. If a [default media type](#default-media-type) has been declared at the root of the API via the mediaType property, then the body declaration may alternatively be directly the data type declaration or data type name describing the request body for that media type.
+The value of the body property is termed a **body declaration**. The body declaration is an object whose property names are the valid media types of the request body and whose property values are the corresponding data type declaration or data type name describing the request body. If [default media types](#default-media-type) has been declared at the root of the API, then the body declaration may alternatively be directly the data type declaration or data type name describing the request body for that media type.
 
 In the first case above, when the property names represent media types, each property name MUST be a media type string conforming to the media type specification in [RFC6838](#https://tools.ietf.org/html/rfc6838).
 
@@ -1845,7 +1845,7 @@ The following example illustrates various combinations of both default and non-d
 ```yaml
 #%RAML 1.0
 title: Example of request bodies
-mediaType: application/json
+mediaTypes: [ application/json ]
 types:
   User:
     properties:
@@ -1892,7 +1892,7 @@ The following example illustrates some possible responses.
 ```yaml
 #%RAML 1.0
 title: Example with responses
-mediaType: application/json
+mediaTypes: [ application/json ]
 types:
   Invoice:
     properties:
@@ -2050,7 +2050,7 @@ To apply these functions, append them to the parameter name within the double an
 #%RAML 1.0
 title: Example API
 version: v1
-mediaType: application/json
+mediaTypes: [ application/json ]
 types:
   Users: !include types/users.raml
   User:  !include types/user.raml
@@ -2612,7 +2612,7 @@ The following is an example of various annotation type declarations and the appl
 ```yaml
 #%RAML 1.0
 title: Illustrating annotations
-mediaType: application/json
+mediaTypes: [ application/json ]
 annotationTypes:
   experimental:
   feedbackRequested:
@@ -2679,7 +2679,7 @@ The example below, a small subset of the previous example, shows an explicit dec
 ```yaml
 #%RAML 1.0
 title: Testing annotations
-mediaType: application/json
+mediaTypes: [ application/json ]
 annotationTypes:
   testHarness:
     type: string
@@ -2692,7 +2692,7 @@ The following is semantically equivalent but relies on the implicit default decl
 ```yaml
 #%RAML 1.0
 title: Testing annotations
-mediaType: application/json
+mediaTypes: [ application/json ]
 annotationTypes:
   testHarness:
 /users:
@@ -2728,7 +2728,7 @@ The following example illustrates applying some restrictions on the allowed targ
 ```yaml
 #%RAML 1.0
 title: Illustrating allowed targets
-mediaType: application/json
+mediaTypes: [ application/json ]
 annotationTypes:
   meta-resource-method:
     allowedTargets: [ Resource, Method ]
