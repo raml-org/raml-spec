@@ -1940,7 +1940,6 @@ Resource type and trait declarations can have the following properties, in addit
 |:---------|:-----------|
 | usage? | Instructions on how and when to use this resource type in a RAML spec
 | uses? | You may import library locally here it contents is accessible only inside of this trait
-| parameters? | Optional declaration of the parameters that the resource type employs.
 
 The following example illustrates the declaration of several resource types and traits.
 
