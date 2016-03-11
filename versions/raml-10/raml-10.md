@@ -1522,7 +1522,7 @@ The value of a resource property is an object whose properties are described in 
 | type? | The resource type which this resource inherits. See section [Applying Resource Types and Traits](#applying-resource-types-and-traits) for more information.
 | securedBy? | The security schemes that apply to all methods declared (implicitly or explicitly) for this resource. See section [Applying Security Schemes](#applying-security-schemes) for more information.
 | uriParameters? | Detailed information about any URI parameters of this resource
-| /&lt;relativeUri&gt; | A nested resource is identified as any property whose name begins with a slash ("/") and is therefore treated as a relative URI.
+| /&lt;relativeUri&gt;? | A nested resource is identified as any property whose name begins with a slash ("/") and is therefore treated as a relative URI.
 
 ### Resource Display Name
 
