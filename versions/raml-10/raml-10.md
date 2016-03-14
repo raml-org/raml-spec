@@ -2065,11 +2065,11 @@ traits:
 
 Parameters may not be used within !include tags, that is, within the location of the file to be included.
 
-### Optional Properties
+### Declaring HTTP Methods as Optional
 
-When defining resource types and traits, it can be useful to capture patterns that manifest several levels below the inheriting resource or method, without mandating the creation of the intermediate levels. For example, a resource type declaration may describe a body parameter that would be used if the API defines a post method for that resource, but applying the resource type to a resource without a post method should not create the post method.
+When defining resource types, it can be useful to capture patterns that manifest several levels below the inheriting resource, without mandating the creation of the intermediate levels. For example, a resource type declaration may describe a body parameter that would be used if the API defines a post method for that resource, but applying the resource type to a resource without a post method should not create the post method.
 
-To accommodate this need, a resource type or trait definition MAY append a question mark ("?") suffix to the name of any object-valued property that should not be applied if it doesn't already exist in the resource or method at the corresponding level. A property is considered object-valued if its value is of type object or of a type that has object at the base of its inheritance hierarchy. The question mark suffix indicates that the value of the property in the resource type or trait should be applied if the property name itself (without the question mark) is already defined (whether explicitly or implicitly) at the corresponding level in that resource or method.
+To accommodate this need, a resource type definition MAY append a question mark ("?") suffix to the name of any method that should not be applied if it doesn't already exist in the resource at the corresponding level. The question mark suffix indicates that the value of the method property in the resource type should be applied if the method name itself (without the question mark) is already defined (whether explicitly or implicitly) at the corresponding level in that resource.
 
 The following example shows a resource type called corpResource with an optional post? property that defines a required header called X-Chargeback and also a custom parameter called TextAboutPost. If the inheriting resource defines a post method, it will include the X-Chargeback header requirement and TextAboutPost MUST be defined as well. If the inheriting resource does not define a post method, one will not have to define the X-Chargeback header or be forced to define the TextAboutPost parameter by dint of inheriting from the corpResource resource type.
 
@@ -2096,29 +2096,7 @@ resourceTypes:
   # not required; same for the X-Chargeback header
 ```
 
-Note that a question mark can also appear as the last character of a RAML Type property name. If you wish to use this syntax within a Resource Type or Trait you should escape it with a backslash ( "\?"). Consider an example of body type defined inside trait by a properties set:
-
-```yaml
-#%RAML 1.0
-title: Example of Optional Properties of Types Defined in Trait
-traits:
-  - hasPayload:
-      body:
-        application/json:
-          properties:
-            name:
-            address\?:
-            location?:
-/servers:
-  post:
-    is: [ hasPayload ]
-    # will have application/json body with 'name' required property,
-    # 'address' optional property, but without 'location' property
-```
-
-The POST:/servers method obtains an application/json body with with 'name' required property, 'address' optional property, but without 'location' property.
-
-It is important to note that this feature applies only to object-valued properties; the appending of the optional marker ("?") to a scalar- or array-valued property such as description or security schemes MUST be rejected by RAML parsers.
+Note that a question mark can also appear as the last character of a RAML Type property name. If you wish to use this syntax within a resource type you should escape it with a backslash ( "\?").
 
 ### Applying Resource Types and Traits
 
