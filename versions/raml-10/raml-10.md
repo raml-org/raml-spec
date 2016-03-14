@@ -2124,7 +2124,7 @@ It is important to note that this feature applies only to object-valued properti
 
 The OPTIONAL **type** property applies a resource type to a resource, so that the resource inherits the resource type's characteristics. The value of the **type** property is either a) a name of a resource type declared in the resourceTypes declaration, or b) an inline (anonymous) resource type declaration. Resource type definitions MUST NOT incorporate nested resources; they cannot be used to generate nested resources when they are applied to a resource, and they do not apply to its existing nested resources.
 
-The OPTIONAL **is** property applies any number of traits to a method, so that the method inherits the trait's or traits' characteristics. The value of the is attribute is an array of any number of elements, each of which is either a) a name of a trait declared in the traits declaration, or b) an inline (anonymous) trait declaration. Trait definitions MUST NOT incorporate nested resources.
+The OPTIONAL **is** property applies any number of traits to a method, so that the method inherits the trait's or traits' characteristics. The value of the is attribute is an array of any number of elements, each of which is either a) a name of a trait declared in the traits declaration, or b) an inline (anonymous) trait declaration. The order of a trait getting applied to a method is from left to right; according to the traits defined in the **is** property. Trait definitions MUST NOT incorporate nested resources.
 
 A trait may also be applied to a resource by using the **is** key, which is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type.
 
