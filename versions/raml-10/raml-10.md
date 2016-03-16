@@ -415,7 +415,7 @@ declarations may have; certain type declarations may have other properties.
 | schema? | Alias for the equivalent "type" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property, as the "schema" alias for that property name may be removed in a future RAML version. The "type" property allows for XML and JSON schemas.
 | type? | A base type which the current type extends, or more generally a type expression.
 | example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `example` property MUST not be available when the `examples` property is already defined.
-| examples? | An object containing named examples of instances of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `examples` property MUST not be available when the `example` property is already defined. See section [Examples](#examples) for more information.
+| examples? | An object containing named examples of instances of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `examples` property MUST not be available when the `example` property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | displayName? | An alternate, human-friendly name for the type
 | description? | A longer, human-friendly description of the type
 | (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
@@ -1362,34 +1362,66 @@ types:
     discriminator: true
 ```
 
-### Examples
+### Defining Examples in RAML
 
-It is highly RECOMMENDED that API documentation include a rich selection of examples.
+It is highly RECOMMENDED that API documentation include a rich selection of examples. RAML supports either the definition of multiple examples or a single one for any given instance of a type declaration.
 
-The OPTIONAL **example** property may be used to attach an example of a type's instance to the type declaration. Its value is an instance of the type.
+#### Multiple Examples
 
-The OPTIONAL **examples** property may be used to attach multiple examples. Its value can be
+The OPTIONAL **examples** property may be used to attach multiple examples to a type declaration. Its value is a map of key-value pairs, where each key represent a unique identifier for an example and the value is a [single example](#single-example) property.
 
-1. an object whose property names are to be interpreted as names of examples, and whose values are objects that describe each example
-2. an array of objects that describe each example
+The following is an example of the value of an **examples** property:
 
-Each example object has the following properties:
+```yaml
+message: # {key} - unique id
+  title: Attention needed
+  content: You have been added to group 274
+record: # {key} - unique id
+  name: log item
+  value: permission check
+```
+
+#### Single Example
+
+The OPTIONAL **example** property may be used to attach an example of a type's instance to the type declaration. There are two different ways to represents its value.
+
+##### The value is a explicit description of a specific type instance
+
+For example:
+
+```yaml
+title: Attention needed
+content: You have been added to group 274
+```
+
+##### The value is a map that contains the following additional facets
 
 |Property | Description |
 |:--------|:------------|
-| displayName? | An alternate, human-friendly name for the example
-| description? | A longer, human-friendly description of the example
+| displayName? | An alternate, human-friendly name for the example. If the example is part of an examples node, the default value is the unique identifier that is defined for this example.
+| description? | A longer, human-friendly description of the example.
 | (&lt;annotationName&gt;)? | Annotations to be applied to this example. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
-| content | The example itself
-| strict? | By default, examples are validated against any type declaration. Set this to false to allow examples that need not validate.
+| value | The actual example of a type instance.
+| strict? | By default, an example is validated against any type declaration. Set this to false avoid that.
 
-The example and examples properties are mutually-exclusive in any given type declaration.
+For example:
 
-The following illustrates usage of both example and examples properties.
+```yaml
+(pii): true
+strict: false
+value:
+  title: Attention needed
+  content: You have been added to group 274
+```
+
+#### Example on how to define example/examples in RAML
+
+The following illustrates usage of both example and examples properties at different levels of a RAML API.
 
 ```yaml
 #%RAML 1.0
 title: API with Examples
+
 types:
   User:
     type: object
@@ -1404,28 +1436,36 @@ types:
     properties:
       name: string
       address?: string
-    examples:
-      - content:
-          name: Acme
-      - content:
-          name: Software Corp
-          address: 35 Central Street
-  Org_alt:
-    type: object
-    properties:
-      name: string
-      address?: string
-    examples:
-      acme:
-        content:
-          name: Acme
-      softwareCorp:
-        content:
-          name: Software Corp
-          address: 35 Central Street
+      value? : string
+/organisation:
+  post:
+    headers:
+      UserID:
+        description: the identifier for the user that posts a new organisation
+        type: string
+        example: SWED-123 # single scalar example
+    body:
+      application/json:
+        type: Org
+        example: # single request body example
+          name: Doe Enterprise
+          value: Silver
+  get:
+    description: Returns an organisation entity.
+    responses:
+      201:
+        body:
+          application/json:
+            type: Org
+            examples:
+              acme:
+                name: Acme
+              softwareCorp:
+                value: # validate against the available facets for the map value of an example
+                  name: Software Corp
+                  address: 35 Central Street
+                  value: Gold # validate against instance of the `value` property
 ```
-
-RAML Type declarations with examples
 
 ### Using Types in RAML
 
@@ -2837,7 +2877,7 @@ A file to be included MAY begin with a RAML fragment identifier line, which cons
 |:--------|:------------|
 | DocumentationItem | An item in the collection of items that is the value of the root-level documentation property; see the section on [User Documentation](#user-documentation).
 | DataType | A data type declaration, where the type property may be used; see the section on [Types](#types)
-| NamedExample | A property of the examples property, whose key is a name of an example and whose value describes the example; see the section on [Examples](#examples)
+| NamedExample | A property of the examples property, whose key is a name of an example and whose value describes the example; see the section on [Examples](#defining-examples-in-raml)
 | ResourceType | A single resource type declaration; see the section on [Resource Types and Traits](#resource-types-and-traits)
 | Trait | A single trait declaration; see the section on [Resource Types and Traits](#resource-types-and-traits)
 | AnnotationTypeDeclaration | A single annotation type declaration; see the section on [Annotations](#annotations)
