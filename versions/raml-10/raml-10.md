@@ -1416,11 +1416,12 @@ value:
 
 #### Example on how to define example/examples in RAML
 
-The following illustrates usage of both example and examples properties.
+The following illustrates usage of both example and examples properties at different levels of a RAML API.
 
 ```yaml
 #%RAML 1.0
 title: API with Examples
+
 types:
   User:
     type: object
@@ -1436,14 +1437,34 @@ types:
       name: string
       address?: string
       value? : string
-    examples:
-      acme:
-        name: Acme
-      softwareCorp:
-        value: # validate against the available facets for the map value of an example
-          name: Software Corp
-          address: 35 Central Street
-          value: Gold # validate against instance of the `value` property
+/organisation:
+  post:
+    headers:
+      UserID:
+        description: the identifier for the user that posts a new organisation
+        type: string
+        example: SWED-123 # single scalar example
+    body:
+      application/json:
+        type: Org
+        example: # single request body example
+          name: Doe Enterprise
+          value: Silver
+  get:
+    description: Returns an organisation entity.
+    responses:
+      201:
+        body:
+          application/json:
+            type: Org
+            examples:
+              acme:
+                name: Acme
+              softwareCorp:
+                value: # validate against the available facets for the map value of an example
+                  name: Software Corp
+                  address: 35 Central Street
+                  value: Gold # validate against instance of the `value` property
 ```
 
 ### Using Types in RAML
