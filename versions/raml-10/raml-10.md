@@ -3036,9 +3036,11 @@ resourceTypes:
 
 #### Applying Libraries
 
-Any number of libraries may be applied by using the OPTIONAL **uses** property. The value of the uses property is an object whose property names are treated as library names and whose property values are libraries, usually included from an external RAML library fragment document.
+Any number of libraries may be applied by using the OPTIONAL **uses** property which may ONLY be used at the root of a RAML file (either a root ["master"] RAML file or a RAML fragment file). The value of the uses property is a map of key-value pairs where its keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
 
-When a library is applied, the data types, resource types, traits, security schemes, and annotation types which it declared are made available in the document in which it was applied, but are referenced via names formed by concatenating the library name followed by a period (".") followed by the name of the data type, resource type, trait, security scheme, or annotation type. In this way the library name defines a namespace for the library's objects within the context in which the library was applied. Libraries may be applied in RAML fragment documents such as trait and resource type fragment documents to make such documents more standalone by including their dependencies.
+When a library is applied, the data types, resource types, traits, security schemes, and annotation types which it declared are made available in the document in which it was applied, but are referenced via names formed by concatenating the library name followed by a period (".") followed by the name of the data type, resource type, trait, security scheme, or annotation type. In this way the library name defines a namespace for the library's objects within the context in which the library was applied. That means, namespaces defined in a **uses** statement in a specific file are only consumable within that file, i.e. they are only used to disambiguate the included libraries from each other within that file. Therefore, any processor MUST not be permitted to allow any composition of namespaces using "." across multiple libraries.
+
+Using **uses** does NOT automatically import the remote library's assets into the local file, but it allows the local file to import those assets by referring to them in its contents: e.g., a RAML type fragment file that uses a library of remote types can then import one of those types by referring to it, and that remote type will be included as if it were defined locally within the RAML type fragment file.
 
 The following examples demonstrate the use of a library in a second library, and the use of that second library in a resource type fragment as well as in RAML API definition.
 
@@ -3059,7 +3061,7 @@ types:
 usage: |
   Use to define some basic file-related constructs.
 uses:
-  file-type: !include libraries/file-type.raml
+  file-type: libraries/file-type.raml
 traits:
   drm:
     headers:
@@ -3068,33 +3070,39 @@ resourceTypes:
   file:
     get:
       is: drm
+      responses:
+        201:
+          body:
+            application/json:
+              type: file-type.File
     put:
       is: drm
+
 ```
 
 ```yaml
 #%RAML 1.0 ResourceType
 # This file is located at files-resource.raml
 uses:
-  files: !include libraries/files.raml
+  files: libraries/files.raml
+get:
+  is: files.drm
+```
+
+The following example is not valid according to the restriction that chaining namespaces is not allowed.
+
+```yaml
+#%RAML 1.0 ResourceType
+# Invalid RAML Fragment
+uses:
+  files: libraries/files.raml
 get:
   is: files.drm
   responses:
     200:
       body:
         application/json:
-          type: files.file-type.File
-```
-
-```yaml
-#%RAML 1.0
-title: Files API
-uses:
-  files: !include libraries/files.raml
-resourceTypes:
-  file: !include files-resource.raml
-/files:
-  type: file
+          type: files.file-type.File # invalid - no chaining allowed
 ```
 
 ### Overlays and Extensions
