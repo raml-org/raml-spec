@@ -3075,8 +3075,14 @@ resourceTypes:
   file:
     get:
       is: drm
+      responses:
+        201:
+          body:
+            application/json:
+              type: file-type.File
     put:
       is: drm
+
 ```
 
 ```yaml
@@ -3101,7 +3107,7 @@ get:
     200:
       body:
         application/json:
-          type: files.file-type.File
+          type: files.file-type.File # invalid - no chaining allowed
 ```
 
 ### Overlays and Extensions
