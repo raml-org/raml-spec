@@ -2096,8 +2096,6 @@ resourceTypes:
   # not required; same for the X-Chargeback header
 ```
 
-Note that a question mark can also appear as the last character of a RAML Type property name. If you wish to use this syntax within a resource type you should escape it with a backslash ( "\?").
-
 ### Applying Resource Types and Traits
 
 The OPTIONAL **type** property applies a resource type to a resource, so that the resource inherits the resource type's characteristics. The value of the **type** property is either a) a name of a resource type declared in the resourceTypes declaration, or b) an inline (anonymous) resource type declaration. Resource type definitions MUST NOT incorporate nested resources; they cannot be used to generate nested resources when they are applied to a resource, and they do not apply to its existing nested resources.
