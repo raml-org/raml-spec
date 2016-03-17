@@ -139,7 +139,7 @@ The following table enumerates the possible properties at the root of a RAML doc
 | baseUri? | A URI that's to be used as the base of all the resources' URIs. Often used as the base of the URL of each resource, containing the location of the API. Can be a [template URI](#template-uri). See section [Base URI and Base URI Parameters](#base-uri-and-base-uri-parameters) for more information.
 | baseUriParameters? | Named parameters used in the baseUri (template). See section [Base URI and Base URI Parameters](#base-uri-and-base-uri-parameters) for more information.
 | protocols? | The protocols supported by the API. The protocols property MUST contain one or more of the supported protocols: "HTTP", "HTTPS". (case-insensitive).
-| mediaType? | The default media type to use for request and response bodies (payloads), e.g. "application/json"
+| mediaType? | Default media types to use for request and response bodies (payloads), e.g. "application/json"
 | securedBy? | The security schemes that apply to every resource and method in the API. See section [Applying Security Schemes](#applying-security-schemes) for more information.
 | /&lt;relativeUri&gt;? | The resources of the API, identified as relative URIs that begin with a slash (/). Every property whose key begins with a slash (/), and is either at the root of the API definition or is the child property of a resource property, is a resource property, e.g.: /users, /{groupId}, etc.
 | documentation? | Additional overall documentation for the API. See section [User Documentation](#user-documentation) for more information.
@@ -256,23 +256,48 @@ protocols: [ HTTP, HTTPS ]
 baseUri: https://na1.salesforce.com/services/data/{version}/chatter
 ```
 
-### Default Media Type
+### Default Media Types
 
 The media types expected from API requests that contain a body, and returned by API responses, can be defaulted by specifying the OPTIONAL **mediaType** property, so they do not need to be specified within every body definition.
 
-The value of the mediaType property MUST be a media type string conforming to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838).
+The value of the mediaType property MUST be a sequence of media type strings or a single string if there is only one default media; with the premise that all of them are described by exactly the same types and/or examples. Each value  need to conform to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838).
 
-This example shows a RAML snippet for an API that accepts and returns JSON-formatted bodies. If the remainder of this API's specification doesn't explicitly specify another media type, this API only accepts and returns JSON-formatted bodies.
+This example shows a RAML snippet for an API that accepts and returns a JSON-formatted body. If the remainder of this API's specification doesn't explicitly specify another media type, this API only accepts and returns JSON-formatted bodies.
 
 ```yaml
 #%RAML 1.0
-title: Stormpath REST API
-version: v1
-baseUri: https://api.stormpath.com/{version}
+title: New API
 mediaType: application/json
 ```
 
-The default media type can be overridden by defining a `mediaType` node explicitly to a [body](#bodies) of an API request or response.
+Or the alternative syntax if there is more than one default media type.
+
+```yaml
+#%RAML 1.0
+title: New API
+mediaType: [ application/json, application/xml ]
+```
+
+Default media types can be overridden by defining a `mediaType` node explicitly to a [body](#bodies) of an API request or response. When one defines a root-level `mediaType` node and then override that in a body by defining explicitly another or the same media type node, none of the root level media types apply to that node, other than the media types explicitly defined within that node. The example below shows a RAML snippet that illustrates that behavior. The resource `/list` returns a `Person[]` body represented as either JSON or XML. On the other hand, the resource `/send` overrides the default media types with an explicit definition of an `application/json` node and therefore only accepts a JSON-formatted body.
+
+```yaml
+#%RAML 1.0
+title: New API
+mediaType: [ application/json, application/xml ]
+types:
+  Person:
+  Another:
+/list:
+  get:
+    responses:
+      200:
+        body: Person[]
+/send:
+  post:
+    body:
+      application/json:
+        type: Another
+```
 
 ### Default Security
 
@@ -1859,7 +1884,7 @@ baseUri: https://api.twitter.com/{version}
 
 The HTTP request **body** for a method is specified using the OPTIONAL body property. For example, to create a resource using a POST or PUT, the body of the request would usually include the details of the resource to be created.
 
-The value of the body property is termed a **body declaration**. The body declaration is an object whose property names are the valid media types of the request body and whose property values are the corresponding data type declaration or data type name describing the request body. If a [default media type](#default-media-type) has been declared at the root of the API via the mediaType property, then the body declaration may alternatively be directly the data type declaration or data type name describing the request body for that media type.
+The value of the body property is termed a **body declaration**. The body declaration is an object whose property names are the valid media types of the request body and whose property values are the corresponding data type declaration or data type name describing the request body. If [default media types](#default-media-type) has been declared at the root of the API, then the body declaration may alternatively be directly the data type declaration or data type name describing the request body for that media type.
 
 In the first case above, when the property names represent media types, each property name MUST be a media type string conforming to the media type specification in [RFC6838](#https://tools.ietf.org/html/rfc6838).
 
