@@ -107,12 +107,12 @@ version: v3
 baseUri: https://api.github.com
 mediaType:  application/json
 securitySchemes:
-  - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+  oauth_2_0: !include securitySchemes/oauth_2_0.raml
 types:
-    Gist:  !include types/gist.raml
-    Gists: !include types/gists.raml
+  Gist:  !include types/gist.raml
+  Gists: !include types/gists.raml
 resourceTypes:
-    collection: !include types/collection.raml
+  collection: !include types/collection.raml
 traits:
 securedBy: [ oauth_2_0 ]
 /search:
@@ -312,8 +312,8 @@ version: 1
 baseUri: https://api.dropbox.com/{version}
 securedBy: [ oauth_2_0, oauth_1_0 ]
 securitySchemes:
-    - oauth_2_0: !include securitySchemes/oauth_2_0.raml
-    - oauth_1_0: !include securitySchemes/oauth_1_0.raml
+  oauth_2_0: !include securitySchemes/oauth_2_0.raml
+  oauth_1_0: !include securitySchemes/oauth_1_0.raml
 ```
 
 ## RAML Data Types
@@ -2038,11 +2038,11 @@ The following example builds on the previous one, but the the resource types and
 title: Example API
 version: v1
 resourceTypes:
-   - collection: !include resourceTypes/collection.raml
-   - member: !include resourceTypes/member.raml
+  collection: !include resourceTypes/collection.raml
+  member: !include resourceTypes/member.raml
 traits:
-   - secured: !include traits/secured.raml
-   - rateLimited: !include traits/rate-limited.raml
+  secured: !include traits/secured.raml
+  rateLimited: !include traits/rate-limited.raml
 ```
 
 Neither resource types nor traits are allowed to incorporate nested resources. Therefore, the following example is invalid:
@@ -2113,30 +2113,30 @@ types:
   Users: !include types/users.raml
   User:  !include types/user.raml
 resourceTypes:
-  - collection:
-      get:
-        responses:
-          200:
-            body:
-              type: <<resourcePathName>> # e.g. Users
-      post:
-        responses:
-          200:
-            body:
-              type: <<resourcePathName | !singularize>>  # e.g. User
-  - member:
-      get:
-        responses:
-          200:
-            body:
-              type: <<resourcePathName>> # e.g. User
+  collection:
+    get:
+      responses:
+        200:
+          body:
+            type: <<resourcePathName>> # e.g. Users
+    post:
+      responses:
+        200:
+          body:
+            type: <<resourcePathName | !singularize>>  # e.g. User
+  member:
+    get:
+      responses:
+        200:
+          body:
+            type: <<resourcePathName>> # e.g. User
 traits:
-  - secured:
-      description: Some requests require authentication
-      queryParameters:
-        <<methodName>>: # e.g. get:
-          description: A <<methodName>>-token pair is required  # e.g. A get-token pair...
-          example: <<methodName>>=h8duh3uhhu38   # e.g. get=h8duh3uhhu38
+  secured:
+    description: Some requests require authentication
+    queryParameters:
+      <<methodName>>: # e.g. get:
+        description: A <<methodName>>-token pair is required  # e.g. A get-token pair...
+        example: <<methodName>>=h8duh3uhhu38   # e.g. get=h8duh3uhhu38
 ```
 
 Parameters may not be used within !include tags, that is, within the location of the file to be included.
@@ -2153,12 +2153,12 @@ The following example shows a resource type called corpResource with an optional
 #%RAML 1.0
 title: Example of Optional Properties
 resourceTypes:
-  - corpResource:
-      post?:
-        description: Some info about <<TextAboutPost>>.
-        headers:
-          X-Chargeback:
-            required: true
+  corpResource:
+    post?:
+      description: Some info about <<TextAboutPost>>.
+      headers:
+        X-Chargeback:
+          required: true
 /servers:
   type:
     corpResource:
@@ -2355,45 +2355,45 @@ title: Dropbox API
 version: 1
 baseUri: https://api.dropbox.com/{version}
 securitySchemes:
-    - oauth_2_0:
-        description: |
-            Dropbox supports OAuth 2.0 for authenticating all API requests.
-        type: OAuth 2.0
-        describedBy:
-            headers:
-                Authorization:
-                    description: |
-                       Used to send a valid OAuth 2 access token. Do not use
-                       with the "access_token" query string parameter.
-                    type: string
-            queryParameters:
-                access_token:
-                    description: |
-                       Used to send a valid OAuth 2 access token. Do not use together with
-                       the "Authorization" header
-                    type: string
-            responses:
-                401:
-                    description: |
-                        Bad or expired token. This can happen if the user or Dropbox
-                        revoked or expired an access token. To fix, you should re-
-                        authenticate the user.
-                403:
-                    description: |
-                        Bad OAuth request (wrong consumer key, bad nonce, expired
-                        timestamp...). Unfortunately, re-authenticating the user won't help here.
-        settings:
-          authorizationUri: https://www.dropbox.com/1/oauth2/authorize
-          accessTokenUri: https://api.dropbox.com/1/oauth2/token
-          authorizationGrants: [ authorization_code, refresh_token ]
-    - oauth_1_0:
-        description: |
-            OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
-        type: OAuth 1.0
-        settings:
-          requestTokenUri: https://api.dropbox.com/1/oauth/request_token
-          authorizationUri: https://www.dropbox.com/1/oauth/authorize
-          tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+  oauth_2_0:
+    description: |
+      Dropbox supports OAuth 2.0 for authenticating all API requests.
+    type: OAuth 2.0
+    describedBy:
+      headers:
+        Authorization:
+          description: |
+             Used to send a valid OAuth 2 access token. Do not use
+             with the "access_token" query string parameter.
+          type: string
+      queryParameters:
+        access_token:
+          description: |
+             Used to send a valid OAuth 2 access token. Do not use together with
+             the "Authorization" header
+          type: string
+      responses:
+        401:
+          description: |
+              Bad or expired token. This can happen if the user or Dropbox
+              revoked or expired an access token. To fix, you should re-
+              authenticate the user.
+        403:
+          description: |
+              Bad OAuth request (wrong consumer key, bad nonce, expired
+              timestamp...). Unfortunately, re-authenticating the user won't help here.
+    settings:
+      authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+      accessTokenUri: https://api.dropbox.com/1/oauth2/token
+      authorizationGrants: [ authorization_code, refresh_token ]
+  oauth_1_0:
+    description: |
+      OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
+    type: OAuth 1.0
+    settings:
+      requestTokenUri: https://api.dropbox.com/1/oauth/request_token
+      authorizationUri: https://www.dropbox.com/1/oauth/authorize
+      tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
 ```
 
 #### describedBy
@@ -2432,14 +2432,14 @@ title: Dropbox API
 version: 1
 baseUri: https://api.dropbox.com/{version}
 securitySchemes:
-    - oauth_1_0:
-        description: |
-            OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
-        type: OAuth 1.0
-        settings:
-          requestTokenUri: https://api.dropbox.com/1/oauth/request_token
-          authorizationUri: https://www.dropbox.com/1/oauth/authorize
-          tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+  oauth_1_0:
+    description: |
+      OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
+    type: OAuth 1.0
+    settings:
+      requestTokenUri: https://api.dropbox.com/1/oauth/request_token
+      authorizationUri: https://www.dropbox.com/1/oauth/authorize
+      tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
 ```
 
 ##### OAuth 2.0
@@ -2461,37 +2461,37 @@ title: Dropbox API
 version: 1
 baseUri: https://api.dropbox.com/{version}
 securitySchemes:
-    - oauth_2_0:
-        description: |
-            Dropbox supports OAuth 2.0 for authenticating all API requests.
-        type: OAuth 2.0
-        describedBy:
-            headers:
-                Authorization:
-                    description: |
-                       Used to send a valid OAuth 2 access token. Do not use
-                       with the "access_token" query string parameter.
-                    type: string
-            queryParameters:
-                access_token:
-                    description: |
-                       Used to send a valid OAuth 2 access token. Do not use together with
-                       the "Authorization" header
-                    type: string
-            responses:
-                401:
-                    description: |
-                        Bad or expired token. This can happen if the user or Dropbox
-                        revoked or expired an access token. To fix, you should re-
-                        authenticate the user.
-                403:
-                    description: |
-                        Bad OAuth request (wrong consumer key, bad nonce, expired
-                        timestamp...). Unfortunately, re-authenticating the user won't help here.
-        settings:
-          authorizationUri: https://www.dropbox.com/1/oauth2/authorize
-          accessTokenUri: https://api.dropbox.com/1/oauth2/token
-          authorizationGrants: [ authorization_code, refresh_token ]
+  oauth_2_0:
+    description: |
+      Dropbox supports OAuth 2.0 for authenticating all API requests.
+    type: OAuth 2.0
+    describedBy:
+      headers:
+        Authorization:
+          description: |
+             Used to send a valid OAuth 2 access token. Do not use
+             with the "access_token" query string parameter.
+          type: string
+      queryParameters:
+        access_token:
+          description: |
+             Used to send a valid OAuth 2 access token. Do not use together with
+             the "Authorization" header
+          type: string
+      responses:
+        401:
+          description: |
+              Bad or expired token. This can happen if the user or Dropbox
+              revoked or expired an access token. To fix, you should re-
+              authenticate the user.
+        403:
+          description: |
+              Bad OAuth request (wrong consumer key, bad nonce, expired
+              timestamp...). Unfortunately, re-authenticating the user won't help here.
+    settings:
+      authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+      accessTokenUri: https://api.dropbox.com/1/oauth2/token
+      authorizationGrants: [ authorization_code, refresh_token ]
 ```
 
 ##### Basic Authentication
@@ -2504,10 +2504,10 @@ title: Dropbox API
 version: 1
 baseUri: https://api.dropbox.com/{version}
 securitySchemes:
-    - basic:
-        description: |
-            This API supports Basic Authentication.
-        type: Basic Authentication
+  basic:
+    description: |
+      This API supports Basic Authentication.
+    type: Basic Authentication
 ```
 
 ##### Digest Authentication
@@ -2520,10 +2520,10 @@ title: Dropbox API
 version: 1
 baseUri: https://api.dropbox.com/{version}
 securitySchemes:
-    - digest:
-        description: |
-            This API supports DigestSecurityScheme Authentication.
-        type: Digest Authentication
+  digest:
+    description: |
+      This API supports DigestSecurityScheme Authentication.
+    type: Digest Authentication
 ```
 
 ##### Pass Through
@@ -2536,17 +2536,17 @@ title: Dropbox API
 version: 1
 baseUri: https://api.dropbox.com/{version}
 securitySchemes:
-    - passthrough:
-        description: |
-            This API supports Pass Through Authentication.
-        type: Pass Through
-        describedBy:
-            queryParameters:
-                query:
-                    type: string
-            headers:
-                api_key:
-                    type: string
+  passthrough:
+    description: |
+      This API supports Pass Through Authentication.
+    type: Pass Through
+    describedBy:
+      queryParameters:
+        query:
+          type: string
+      headers:
+        api_key:
+          type: string
 ```
 
 ##### x-&lt;other&gt;
@@ -2559,21 +2559,21 @@ title: Custom API
 version: 1
 baseUri: https://api.custom.com/{version}
 securitySchemes:
-    - custom_scheme:
-        description: |
-            A custom security scheme for authenticating requests.
-        type: x-custom
-        describedBy:
-            headers:
-                SpecialToken:
-                    description: |
-                       Used to send a custom token.
-                    type: string
-            responses:
-                401:
-                    description: |
-                        Bad token.
-                403:
+  custom_scheme:
+    description: |
+      A custom security scheme for authenticating requests.
+    type: x-custom
+    describedBy:
+      headers:
+        SpecialToken:
+          description: |
+            Used to send a custom token.
+          type: string
+      responses:
+        401:
+          description: |
+            Bad token.
+        403:
 ```
 
 #### Applying Security Schemes
@@ -2592,8 +2592,8 @@ version: 1
 baseUri: https://api.dropbox.com/{version}
 securedBy: [oauth_2_0]
 securitySchemes:
-  - oauth_2_0: !include securitySchemes/oauth_2_0.raml
-  - oauth_1_0: !include securitySchemes/oauth_1_0.raml
+  oauth_2_0: !include securitySchemes/oauth_2_0.raml
+  oauth_1_0: !include securitySchemes/oauth_1_0.raml
 /users:
   get:
     securedBy: [oauth_2_0, oauth_1_0]
@@ -2607,10 +2607,10 @@ title: GitHub API
 version: v3
 baseUri: https://api.github.com
 securitySchemes:
-    - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+  oauth_2_0: !include securitySchemes/oauth_2_0.raml
 /users/{userid}/gists:
-    get:
-        securedBy: [null, oauth_2_0]
+  get:
+    securedBy: [null, oauth_2_0]
 ```
 
 A resource can also be applied a list of security schemes using the **securedBy** attribute. This specifies that all methods of this particular resource (unless they have their own securedBy attribute) can be authenticated by any mentioned security scheme. Value of resources attribute overrides that of the root attribute. Security Schemes applied to a resource MUST NOT incorporate nested resources; they do not apply to its existing nested resources.
@@ -2627,10 +2627,10 @@ title: GitHub API
 version: v3
 baseUri: https://api.github.com
 securitySchemes:
-    - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+  oauth_2_0: !include securitySchemes/oauth_2_0.raml
 /users/{userid}/gists:
-    get:
-        securedBy: [null, oauth_2_0: { scopes: [ ADMINISTRATOR ] } ]
+  get:
+    securedBy: [null, oauth_2_0: { scopes: [ ADMINISTRATOR ] } ]
 ```
 
 The list of parameters that must and may be provided to the security scheme is specified by the security scheme type.
