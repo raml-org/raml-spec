@@ -1927,13 +1927,12 @@ The value of a response declaration is an object that may contain any of the fol
 
 |Property | Description |
 |:--------|:------------|
-| displayName? | An alternate, human-friendly name for the response
 | description? | A longer, human-friendly description of the response
 | (&lt;annotationName&gt;) | Annotations to be applied to this response. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
 | headers? | Detailed information about any response headers returned by this method
 | body? |  The body of the response
 
-The OPTIONAL properties **displayName**, **description**, **headers**, **body**, and **annotations** have the same syntax and semantics as they do for [method declarations](methods), but applied to HTTP responses rather than HTTP requests.
+The OPTIONAL properties **description**, **headers**, **body**, and **annotations** have the same syntax and semantics as they do for [method declarations](methods), but applied to HTTP responses rather than HTTP requests.
 
 The following example illustrates some possible responses.
 
@@ -3060,7 +3059,8 @@ A library is an object whose allowed properties are enumerated in the following 
 
 |Property | Description |
 |:--------|:------------|
-| types?<br>chemas?<br>resourceTypes?<br>traits?<br>securitySchemes?<br>annotationTypes?<br>(&lt;annotationName&gt;)?<br>uses? | The definition of each property is the same as that of the corresponding property in the root of a RAML document. Annotation properties are allowed as in any other RAML document.
+| types?<br>schemas?<br>resourceTypes?<br>traits?<br>securitySchemes?<br>annotationTypes?<br>(&lt;annotationName&gt;)?<br>uses? | The definition of each property is the same as that of the corresponding property in the root of a RAML document. Annotation properties are allowed as in any other RAML document.
+| usage | Describes the content or purpose of a specific library. The content may be described in markdown.
 
 The following example shows a simple library as a standalone, reusable RAML fragment document.
 
@@ -3181,7 +3181,7 @@ The behavior-invariance restrictions of an overlay are defined as follows: after
 
 |Property | Allowed differences |
 |:--------|:------------|
-| title<br>description<br>documentation<br>displayName<br>usage<br>example | The merged tree may include new properties of this type, or properties with different values than those in the master tree.
+| title<br>description<br>documentation<br>usage<br>example | The merged tree may include new properties of this type, or properties with different values than those in the master tree.
 | types | In addition to allowed differences described elsewhere in this table, the merged tree may also include new data types.
 | annotationTypes | The merged tree may include new annotation types, or new values for existing annotation types, as long as all annotations in the merged API definition validate against the annotation types in the merged tree.
 | any annotation property | The merged tree may include new annotations of annotation types declared in the merged tree, or annotations with different values than those in the master tree.
