@@ -1986,23 +1986,23 @@ A resource type is a partial resource definition that, like a resource, can spec
 
 A trait is a partial method definition that, like a method, can provide method-level properties such as description, headers, query string parameters, and responses. Methods that use one or more traits inherit those traits' properties. Resources and resource types can also use, and thus inherit from, one or more traits, which then apply to all of their methods. Traits are related to methods through a mixing pattern.
 
-Resources may specify the resource type from which they inherit using the type property. The resource type may be defined inline as the value of the type property (directly or via an !include), or the value of the type property may be the name of a resource type defined within the root-level resourceTypes property or in a library.
+Resources may specify the resource type from which they inherit using the type property. The resource type may be the name of a resource type defined within the root-level resourceTypes property or in a library.
 
-Similarly, methods may specify one or more traits from which they inherit using the is property. Its value is an array of traits. A resource may also use this property, in which case the array of traits is applied to all its methods. Each trait element in that array may be defined inline  (directly or via an !include), or it may be the name of a trait defined within the root-level traits property or in a library.
+Similarly, methods may specify one or more traits from which they inherit using the is property. Its value is an array of traits. A resource may also use this property, in which case the array of traits is applied to all its methods. Each trait element in that array may be the name of a trait defined within the root-level traits property or in a library.
 
 Resource type definitions MUST NOT incorporate nested resources; they cannot be used to generate nested resources when they are applied to a resource, and they do not apply to its existing nested resources.
 
 ### Declaration
 
-Resource types may be declared via the OPTIONAL **resourceTypes** property at the root of the API definition. The value of this property is an object whose property names become names of resource types that can be referenced throughout the API, and whose property values are resource type declarations. Resource types may also be declared inline, anonymously.
+Resource types may be declared via the OPTIONAL **resourceTypes** property at the root of the API definition. The value of this property is an object whose property names become names of resource types that can be referenced throughout the API, and whose property values are resource type declarations.
 
-Similarly, traits may be declared via the OPTIONAL **traits** property at the root of the API definition. The value of this property is an object whose property names become names of traits that can be referenced throughout the API, and whose property values are trait declarations. Traits may also be declared inline, anonymously.
+Similarly, traits may be declared via the OPTIONAL **traits** property at the root of the API definition. The value of this property is an object whose property names become names of traits that can be referenced throughout the API, and whose property values are trait declarations.
 
 Resource type and trait declarations can have the following properties, in addition to all the properties that resources and methods may have, respectively (except that resource type declarations MUST NOT have nested resource properties).
 
 | Property | Definition |
 |:---------|:-----------|
-| usage? | Instructions on how and when to use this resource type in a RAML spec
+| usage? | The OPTIONAL **usage** property of a resource type or trait provides instructions on how and when the resource type or trait should be used. Documentation generators MUST convey this property as characteristics of the resource and method, respectively. However, the resources and methods MUST NOT inherit the usage property: neither resources nor methods allow a property named usage.
 | uses? | You may import library locally here it contents is accessible only inside of this trait
 
 The following example illustrates the declaration of several resource types and traits.
@@ -2054,10 +2054,6 @@ resourceTypes:
     delete:
     /groups:
 ```
-
-### Usage
-
-The OPTIONAL **usage** property of a resource type or trait provides instructions on how and when the resource type or trait should be used. Documentation generators MUST convey this property as characteristics of the resource and method, respectively. However, the resources and methods MUST NOT inherit the usage property: neither resources nor methods allow a property named usage.
 
 ### Resource Type and Trait Parameters
 
@@ -2173,9 +2169,9 @@ resourceTypes:
 
 ### Applying Resource Types and Traits
 
-The OPTIONAL **type** property applies a resource type to a resource, so that the resource inherits the resource type's characteristics. The value of the **type** property is either a) a name of a resource type declared in the resourceTypes declaration, or b) an inline (anonymous) resource type declaration. Resource type definitions do not apply to existing nested resources.
+The OPTIONAL **type** property applies a resource type to a resource, so that the resource inherits the resource type's characteristics. The value of the **type** property is a name of a resource type declared in the resourceTypes declaration. Resource type definitions do not apply to existing nested resources.
 
-The OPTIONAL **is** property applies any number of traits to a method, so that the method inherits the trait's or traits' characteristics. The value of the is attribute is an array of any number of elements, each of which is either a) a name of a trait declared in the traits declaration, or b) an inline (anonymous) trait declaration. The order of a trait getting applied to a method is from left to right; according to the traits defined in the **is** property. Trait definitions do not apply to nested resources.
+The OPTIONAL **is** property applies any number of traits to a method, so that the method inherits the trait's or traits' characteristics. The value of the is attribute is an array of any number of elements, each of which is a name of a trait declared in the traits declaration. The order of a trait getting applied to a method is from left to right; according to the traits defined in the **is** property. Trait definitions do not apply to nested resources.
 
 A trait may also be applied to a resource by using the **is** key, which is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type.
 
