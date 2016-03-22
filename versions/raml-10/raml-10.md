@@ -82,9 +82,13 @@ RAML API definitions are YAML 1.2-compliant documents that begin with a REQUIRED
 title: My API
 ```
 
-The first line of a RAML API definition document MUST begin with the text _#%RAML_ followed by a single space followed by the text _1.0_ and nothing else before the end of the line. (RAML fragment documents begin similarly with the RAML version comment and a fragment identifier, but are not in themselves RAML API definition documents. See the section about [Modularization](#modularization) for more information.)
+The first line of a RAML specification compliant document MUST match the [IETF RFC5234](https://tools.ietf.org/html/rfc5234) – Augmented BNF for Syntax Specifications:
 
-This specification defines the media type _application/raml+yaml_ for RAML API definition documents, for documents that contain sections of RAML markup to be included in such API definitions and that are not more specifically described by another media type such as _application/schema+json_, and for overlay and extension documents that yield RAML API definition documents upon processing. The recommended filename extension for such files is _.raml_.
+“#%RAML” SP “1.0” SP [FragmentType] CRLF
+
+With the _FragmentType_ being NOT ALLOWED in API definitions, and is OPTIONAL for the specification of RAML fragment documents. RAML fragment documents are reusable RAML modules that are referenced or included into a larger API definition. Please refer to the [Modularization](#modularization) section for more information about RAML fragments.
+
+The media type _application/raml+yaml_ and its associated file extension _.raml_ SHALL be used to designate files containing RAML API definitions, RAML fragments and files that contain RAML markup. RAML is also capable of including documents with other media types, e.g., “application/schema+json”, “application/yaml”.
 
 In order to facilitate the automated processing of RAML documents, RAML imposes some restrictions and requirements in addition to the core YAML 1.2 specification. The following list enumerates some of these requirements and restrictions:
 
