@@ -460,8 +460,8 @@ All types that have the built-in object type at the root of their inheritance tr
 | maxProperties? | The maximum number of properties allowed for instances of this type.
 | additionalProperties? | JSON schema style syntax for declaring maps. See section [Map Types](#map-types) for more information.
 | patternProperties? | JSON schema style syntax for declaring key restricted maps. See section [Map Types](#map-types) for more information.
-| discriminator? | You may use the `discriminator` property to be able to discriminate the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types (achieved via unions or inheritance). The value must correspond to a name of one of the `properties` that are defined inside a type declaration. The `discriminator` property can not be defined for inline type declarations and should only be used for scalar-valued properties. See an example on how to use `discriminator` [here](#using-discriminator-example).<br/><br/>**Default:** the name of the type
-| discriminatorValue? | You may use the `discriminatorValue` property if a type also defined the `discriminator` property. The value of this property should be a valid value of the property with the name equal to the value of the `discriminator` property; and its being used to identify the declaring type. This value should be unique in the hierarchy of the type. See an example on how to use `discriminatorValue` [here](#using-discriminator-example).
+| discriminator? | You may use the `discriminator` property to be able to discriminate the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types (achieved via unions or inheritance). The value must correspond to a name of one of the `properties` that are defined inside a type declaration. The `discriminator` property can not be defined for inline type declarations and should only be used for scalar-valued properties. See section [Using Discriminator](#using-discriminator) for more information.
+| discriminatorValue? | You may use the `discriminatorValue` property if a type also defined the `discriminator` property. The value of this property should be a valid value of the property with the name equal to the value of the `discriminator` property; and its being used to identify the declaring type. This value should be unique in the hierarchy of the type. See section [Using Discriminator](#using-discriminator) for more information.<br/><br/>**Default:** the name of the type where the discriminator is applied to
 
 An object type is created by explicitly inheriting from the built-in type object:
 
@@ -659,7 +659,13 @@ types:
         type: Method
 ```
 
-#### Using Discriminator Example
+#### Using Discriminator
+
+When payloads contain ambiguous types (achieved via unions or inheritance) it is often impossible to discriminate the concrete type of an individual object at runtime (for example when deserializing the payload into a statically typed language).
+
+A RAML processor may provide an implementation that automatically select a concrete type from a set of possible types, but one of the simplest options is to actually store some unique value associated with the type inside the object.
+
+The `discriminator` property allows you to set the name of an object property which will be used to discriminate the concrete type, and `discriminatorValue` stores the actual value that may identify the type of an individual object. By default, the value of `discriminatorValue` is the name of the type.   
 
 Here's an example that illustrates how to use `discriminator`:
 
@@ -673,11 +679,11 @@ types:
     properties:
       kind: string # contains name of the kind of a `Person` instance
       name: string
-  Employee: # kind may equal to `Employee`
+  Employee: # kind may equal to `Employee; default value for `discriminatorValue`
     type: Person
     properties:
       employeeId: string
-  User: # kind may equal to `User`
+  User: # kind may equal to `User`; default value for `discriminatorValue`
     type: Person
     properties:
       userId: string
@@ -693,7 +699,7 @@ data:
     kind: Employee
 ```
 
-You can also override the value of the discriminator for each individual concrete class. In the following example we will replace the default type discriminator values by their lowercase versions using `discriminatorValue`:
+You can also override the default for `discriminatorValue` for each individual concrete class. In the following example we will replace the default by their lowercase versions using `discriminatorValue`:
 
 ```yaml
 #%RAML 1.0
