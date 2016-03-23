@@ -733,10 +733,10 @@ data:
     kind: employee
 ```
 
-Neither `discriminator` nor `discriminatorValue` are allowed to be defined for any inline type declarations.
+Neither `discriminator` nor `discriminatorValue` are allowed to be defined for any inline type declarations or union types.
 
 ```yaml
-# valid
+# valid when ever there is a key name that can identify a type
 types:
   Device:
     discriminator: kind
@@ -745,11 +745,18 @@ types:
 ```
 
 ```yaml
-# invalid
+# invalid in any inline type declarations
 application/json:
    discriminator: kind
    properties:
      kind: string
+```
+
+```yaml
+# invalid for union types
+PersonOrDog:
+   type: Person | Dog
+   discriminator: hasTail
 ```
 
 ### Array Types
