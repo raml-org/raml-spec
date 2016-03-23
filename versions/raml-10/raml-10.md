@@ -461,7 +461,7 @@ All types that have the built-in object type at the root of their inheritance tr
 | additionalProperties? | JSON schema style syntax for declaring maps. See section [Map Types](#map-types) for more information.
 | patternProperties? | JSON schema style syntax for declaring key restricted maps. See section [Map Types](#map-types) for more information.
 | discriminator? | You may use the `discriminator` property to be able to discriminate the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types (achieved via unions or inheritance). The value must correspond to a name of one of the `properties` that are defined inside a type declaration. The `discriminator` property can not be defined for inline type declarations and should only be used for scalar-valued properties. See section [Using Discriminator](#using-discriminator) for more information.
-| discriminatorValue? | You may use the `discriminatorValue` property if a type also defined the `discriminator` property. The value of this property should be a valid value of the property with the name equal to the value of the `discriminator` property; and its being used to identify the declaring type. This value should be unique in the hierarchy of the type. See section [Using Discriminator](#using-discriminator) for more information.<br/><br/>**Default:** the name of the type where the discriminator is applied to
+| discriminatorValue? | You may use the `discriminatorValue` property if a type also defined the `discriminator` property. The value of this property should be a valid value of the property with the name equal to the value of the `discriminator` property; and its being used to identify the declaring type. This value should be unique in the hierarchy of the type. The `discriminatorValue` property can not be defined for inline type declarations. See section [Using Discriminator](#using-discriminator) for more information.<br/><br/>**Default:** the name of the type where the discriminator is applied to
 
 An object type is created by explicitly inheriting from the built-in type object:
 
@@ -731,6 +731,25 @@ data:
   - name: An Employee
     employeeId: 222
     kind: employee
+```
+
+Neither `discriminator` nor `discriminatorValue` are allowed to be defined for any inline type declarations.
+
+```yaml
+# valid
+types:
+  Device:
+    discriminator: kind
+    properties:
+      kind: string
+```
+
+```yaml
+# invalid
+application/json:
+   discriminator: kind
+   properties:
+     kind: string
 ```
 
 ### Array Types
