@@ -449,6 +449,26 @@ declarations may have; certain type declarations may have other properties.
 | description? | A longer, human-friendly description of the type
 | (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
 
+The `schema` and `type` properties are mutually exclusive: processors MUST NOT allow both to be specified (explicitly or implicitly) inside the same type declaration. Therefore, the following examples are both invalid.
+
+```yaml
+types:
+  Person:
+    schema: # invalid as mutually exclusive with `type`
+    type: # invalid as mutually exclusive with `schema`
+```
+
+```yaml
+/resource:
+  get:
+    responses:
+      200:
+        body:
+          application/json: # start type declaration
+            schema: # invalid as mutually exclusive with `type`
+            type: # invalid as mutually exclusive with `schema`
+```
+
 ### Object Types
 
 All types that have the built-in object type at the root of their inheritance tree may use the following properties in their type declarations.
