@@ -459,8 +459,8 @@ All types that have the built-in object type at the root of their inheritance tr
 | minProperties? | The minimum number of properties allowed for instances of this type.
 | maxProperties? | The maximum number of properties allowed for instances of this type.
 | additionalProperties? | Boolean that indicates if an object instance has additional properties. See section [Additional Properties](#additional-properties) for more information.<br/><br/>**Default:** `true`
-| discriminator? | Type property name to be used as discriminator, or boolean
-| discriminatorValue? | The value of discriminator for the type.
+| discriminator? | You may use the `discriminator` property to be able to discriminate the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types (achieved via unions or inheritance). The value must correspond to a name of one of the `properties` that are defined inside a type declaration. The `discriminator` property can not be defined for inline type declarations and should only be used for scalar-valued properties. See section [Using Discriminator](#using-discriminator) for more information.
+| discriminatorValue? | You may use the `discriminatorValue` property if a type also defined the `discriminator` property. The value of this property should be a valid value of the property with the name equal to the value of the `discriminator` property; and its being used to identify the declaring type. This value should be unique in the hierarchy of the type. The `discriminatorValue` property can not be defined for inline type declarations. See section [Using Discriminator](#using-discriminator) for more information.<br/><br/>**Default:** the name of the type where the discriminator is applied to
 
 An object type is created by explicitly inheriting from the built-in type object:
 
@@ -626,6 +626,106 @@ types:
 ```
 
 For more details see [Object Type Inheritance](#object-type-inheritance)
+
+#### Using Discriminator
+
+When payloads contain ambiguous types (achieved via unions or inheritance) it is often impossible to discriminate the concrete type of an individual object at runtime (for example when deserializing the payload into a statically typed language).
+
+A RAML processor may provide an implementation that automatically select a concrete type from a set of possible types, but one of the simplest options is to actually store some unique value associated with the type inside the object.
+
+The `discriminator` property allows you to set the name of an object property which will be used to discriminate the concrete type, and `discriminatorValue` stores the actual value that may identify the type of an individual object. By default, the value of `discriminatorValue` is the name of the type.   
+
+Here's an example that illustrates how to use `discriminator`:
+
+```yaml
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    type: object
+    discriminator: kind # refers to the `kind` property of object `Person`
+    properties:
+      kind: string # contains name of the kind of a `Person` instance
+      name: string
+  Employee: # kind may equal to `Employee; default value for `discriminatorValue`
+    type: Person
+    properties:
+      employeeId: string
+  User: # kind may equal to `User`; default value for `discriminatorValue`
+    type: Person
+    properties:
+      userId: string
+```
+
+```yaml
+data:
+  - name: A User
+    userId: 111
+    kind: User
+  - name: An Employee
+    employeeId: 222
+    kind: Employee
+```
+
+You can also override the default for `discriminatorValue` for each individual concrete class. In the following example we will replace the default by their lowercase versions using `discriminatorValue`:
+
+```yaml
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    type: object
+    discriminator: kind
+    properties:
+      name: string
+      kind: string
+  Employee:
+    type: Person
+    discriminatorValue: employee # override default
+    properties:
+      employeeId: string
+  User:
+    type: Person
+    discriminatorValue: user # override default
+    properties:
+      userId: string
+```
+
+```yaml
+data:
+  - name: A User
+    userId: 111
+    kind: user
+  - name: An Employee
+    employeeId: 222
+    kind: employee
+```
+
+Neither `discriminator` nor `discriminatorValue` are allowed to be defined for any inline type declarations or union types.
+
+```yaml
+# valid when ever there is a key name that can identify a type
+types:
+  Device:
+    discriminator: kind
+    properties:
+      kind: string
+```
+
+```yaml
+# invalid in any inline type declarations
+application/json:
+   discriminator: kind
+   properties:
+     kind: string
+```
+
+```yaml
+# invalid for union types
+PersonOrDog:
+   type: Person | Dog
+   discriminator: hasTail
+```
 
 ### Array Types
 
@@ -1225,137 +1325,6 @@ title: My API With Types
                 type: string
               age:
                 type: number
-```
-
-### Runtime Polymorphism (Discriminators)
-
-When payloads contain ambiguous types ( achieved via unions or inheritance ) it is often impossible to discriminate the concrete type of an individual object at runtime ( for example when deserializing the payload into a statically typed language )
-
-RAML provides a pragmatic solution to this problem: You can store the actual type of an object as a string.
-
-To indicate that a certain family of types is using the "discriminator" convention, simply set it to true on a common supertype.
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    type: object
-    discriminator: true
-    properties:
-      name: string
-  Employee:
-    type: Person
-    properties:
-      employeeId: string
-  User:
-    type: Person
-    properties:
-      userId: string
-```
-
-```yaml
-#%RAML 1.0
-data:
-  - name: A User
-    userId: 111
-    discriminator: User
-  - name: An Employee
-    employeeId: 222
-    discriminator: Employee
-```
-
-When a type belongs to a family of types that has the discriminator facet set to true, then instances of such class must have a discriminator property holding the name of the class. You can customize the name of the discriminator property by using a string value instead of a boolean value.
-
-Here's the same example, but this time we customize the property that holds the type name:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    type: object
-    discriminator: kind
-    properties:
-      kind: string
-      name: string
-  Employee:
-    type: Person
-    properties:
-      employeeId: string
-  User:
-    type: Person
-    properties:
-      userId: string
-```
-
-```yaml
-#%RAML 1.0
-data:
-  - name: A User
-    userId: 111
-    kind: User
-  - name: An Employee
-    employeeId: 222
-    kind: Employee
-```
-
-You can also override the value of the discriminator for each individual concrete class. In the following example we will replace the default type discriminator values by their lowercase versions:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    type: object
-    discriminator: kind
-    properties:
-      name: string
-      kind: string
-  Employee:
-    type: Person
-    discriminatorValue: employee
-    properties:
-      employeeId: string
-  User:
-    type: Person
-    discriminatorValue: user
-    properties:
-      userId: string
-```
-
-```yaml
-#%RAML 1.0
-data:
-  - name: A User
-    userId: 111
-    kind: user
-  - name: An Employee
-    employeeId: 222
-    kind: employee
-```
-
-When defining a discriminator for a family of types, all member types must be object types and have the discriminator property present ( or, if the name has been customized, the corresponding custom property ). This property must be of type string.
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  X:
-    type: object
-    properties:
-      discriminator: string
-  Y:
-    type: object
-    properties:
-      discriminator: string
-  Z:
-    type: object
-    properties:
-      discriminator: string
-  XYZ:
-    type: X | Y | Z
-    discriminator: true
 ```
 
 ### Defining Examples in RAML
