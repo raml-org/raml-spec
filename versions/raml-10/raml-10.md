@@ -458,8 +458,7 @@ All types that have the built-in object type at the root of their inheritance tr
 | properties? | The properties that instances of this type may or must have. See section [Properties Declarations](#property-declarations) for more information.
 | minProperties? | The minimum number of properties allowed for instances of this type.
 | maxProperties? | The maximum number of properties allowed for instances of this type.
-| additionalProperties? | JSON schema style syntax for declaring maps. See section [Map Types](#map-types) for more information.
-| patternProperties? | JSON schema style syntax for declaring key restricted maps. See section [Map Types](#map-types) for more information.
+| additionalProperties? | Boolean that indicates if an object instance has additional properties. See section [Additional Properties](#additional-properties) for more information.<br/><br/>**Default:** `true`
 | discriminator? | Type property name to be used as discriminator, or boolean
 | discriminatorValue? | The value of discriminator for the type.
 
@@ -484,6 +483,7 @@ Properties of object types are defined using the OPTIONAL **properties** propert
 In addition to the properties available in normal type declarations, properties can specify whether they are required and provide an optional default value.
 
 Note:
+
 When an Object Type does not contain the "properties" property, the object is assumed to be unconstrained. That means, it may contain any properties of any type.
 
 | Property  | Description |
@@ -506,6 +506,70 @@ types:
         required: false
         type: number
 ```
+
+#### Additional Properties
+
+By default any instance of an object can have additional properties beyond those specified in its data type `properties` node. Lets assume the following is an instance of the data type `Person` that is described in the previous section.
+
+```yaml
+Person:
+  name: "John"
+  age: 35
+  note: "US" # valid additional property `note`
+```
+
+The property `note` has been not explicitly declared in the `Person` data type, but is valid based on the fact that all additional properties are by default valid.
+
+To restrict that, one can either use the `additionalProperties` facet to not allow any additional properties by setting the value to `false`, or by specifying regular expression patterns that matches sets of keys and restricts their values: these are called "pattern properties". The patterns are delineated by pairs of opening and closing `/` characters, as follows:
+
+```yaml
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    properties:
+      name:
+        required: true
+        type: string
+      age:
+        required: false
+        type: number
+      /^note\d+$/: # restrict any properties whose keys start with "note"
+                   # followed by one or more digits to be a string
+        type: string
+```
+
+This restricts any additional properties whose keys start with "note" followed by one or more digits to be a string. Where as the  example of an object instance with an additional `note` property with value "US" is valid, the following is not:
+
+```yaml
+Person:
+  name: "John"
+  age: 35
+  note: 123 # not valid as it is not a string
+  address: "US" # valid is it does not match the pattern
+```
+
+To force all additional properties to be strings, regardless of their keys, use:
+
+```yaml
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    properties:
+      name:
+        required: true
+        type: string
+      age:
+        required: false
+        type: number
+      //: # force all additional properties to be a string
+        type: string
+```
+
+If a pattern property regular expression also matches an explicitly declared property, the explicitly declared property's definition prevails. If two or more pattern property regular expressions match a property name in an instance of the data type, the first one prevails.
+
+Moreover, if `additionalProperties` is `false` (explicitly or by inheritance) in a given type definition, then pattern properties are not allowed to be set explicitly in that definition. If it is `true` (or omitted) in a given type definition, then pattern properties are allowed and further restrict the allowed additional properties in that type.
 
 ##### Alternative Syntax
 
@@ -562,102 +626,6 @@ types:
 ```
 
 For more details see [Object Type Inheritance](#object-type-inheritance)
-
-##### Map Types
-
-Maps (aka Dictionaries) can be declared by creating an object type and declaring a special property called "[]":
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  MapOfNumbers:
-    type: object
-    properties:
-      []:
-        type: number
-```
-
-Optionally, you can restrict the set of valid keys by specifying a regular expression within the square brackets:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  MapOfNumbers:
-    type: object
-    properties:
-      [a-zA-Z]:
-        type: number
-```
-
-To maximize syntax compatibility with JSON Schema you can alternatively use additionalProperties and patternProperties. They will be internally rewritten
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-
-types:
-  Person:
-    type: object
-    properties:
-      name:
-        type: string
-  Org:
-    type: object
-    additionalProperties: Person
-```
-
-to
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    type: object
-    properties:
-      name:
-        type: string
-  Org:
-    properties:
-      []:
-        type: Person
-```
-
-and
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Method:
-    type: object
-    properties:
-      name:
-        type: string
-  Resource:
-    type: object
-    patternProperties:
-      "post|get|put": Method
-```
-
-to
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Method:
-      type: object
-      properties:
-        name:
-          type: string
-  Resource:
-    properties:
-      [post|get|put]:
-        type: Method
-```
 
 ### Array Types
 
@@ -872,7 +840,6 @@ The simplest Type Expression is just the name of a type. But Type expressions al
 | `string[][]` | A bi-dimensional array of string scalars
 | `string \| Person` | Union type made of members of string OR Person
 | `(string \| Person)[]` | An array of the above type
-| `number{}` | A map/dictionary of numbers
 
 Type Expressions can be used wherever a Type is expected:
 
