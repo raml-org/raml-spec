@@ -840,7 +840,6 @@ The simplest Type Expression is just the name of a type. But Type expressions al
 | `string[][]` | A bi-dimensional array of string scalars
 | `string \| Person` | Union type made of members of string OR Person
 | `(string \| Person)[]` | An array of the above type
-| `number{}` | A map/dictionary of numbers
 
 Type Expressions can be used wherever a Type is expected:
 
