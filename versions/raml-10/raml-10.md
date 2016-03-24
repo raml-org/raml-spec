@@ -1980,6 +1980,133 @@ types:
             error: Amount cannot be negative
 ```
 
+## Overloading Rules
+
+RAML overloading allows to define similar resources, which vary only on "secondary" characteristics, such as URI parameter types and methods.
+
+### Motivation
+
+RAML 0.8 already supports several cases of overloading, but they are not formalized. Introducing formally defined overloading rules facilitates tooling supports for those APIs which do not allow to map enough clearly their operations to resource-method pairs.
+
+
+### Levels of Overloading
+
+RAML allows the following level of overloading:
+
+* **Resource level**: two or more resources having paths, which become equal with certain values of URI parameters.
+
+RAML does not allow the following levels of overloading:
+
+* **Method level**: two or more methods with the same names share the same resource as parent
+* **Method body level**: two or more bodies with the same media type share the same method as parent
+* **Response level**: two or more responses with the same code are located in responses list of the same method		
+* **Response body level**: two or more bodies with the same media type share the same response as parent
+
+### Overloading Resources
+
+#### Meaning of Overloading on Resources
+
+Overloading resources semantically defines two or more different operations that share potentially colliding URLs or methods. Having an ambiguous specification means that it is not possible to formally distinguish which definition was called, based on its HTTP request and RAML file content.
+
+#### Ambiguity
+
+Consider a couple of resources:
+
+```yaml
+baseUri: http://www.example.com
+
+/{pictureId}:
+  uriParameters:
+    pictureId:
+      type: number
+  description: post a picture
+  get:
+    headers:
+      Accept:
+
+/{videoId}:
+  uriParameters:
+    videoId:
+      type: number
+  description: post video
+  get:
+    headers:
+      Accept:
+```
+
+Having an HTTP request
+
+```
+GET http://www.example.com/01
+Accept: image/jpeg
+```
+
+one can not say that it is related with one `get` method rather then another, because it satisfies both.
+
+RAML allows you to write ambiguous specifications for documentation purposes, however not every RAML-based tool are able to deal with ambiguous specifications correctly. Generally, tools that need overloading resolving assume that in case of unresolvable overloading any of the matching options is possible.
+
+The example above can be slightly modified in order to eliminate ambiguity:
+
+```yaml
+baseUri: http://www.example.com
+
+/{pictureId}:
+  uriParameters:
+    pictureId:
+      type: number
+  description: post a picture
+  get:
+    headers:
+      Accept:
+        enum:
+          - image/jpeg
+          - image/png
+
+/{videoId}:
+  uriParameters:
+    videoId:
+      type: number
+  description: post video
+  get:
+    headers:
+      Accept:
+        enum:
+          - video/mpeg
+          - video/quicktime
+```
+
+Now it becomes clear, which method is related with the HAR request, as only one of them allows `image/jpeg` as `Accept` header value. Moreover, disjoint sets of required `Accept` header values allow to detect for a given HTTP request, which `get` method is related with it.
+
+#### Ambiguity Detection
+
+##### Examination of URI
+
+If two resources have different number of segments in their URIs, they are considered unambiguous. If URIs have different static segments on a certain position, resources are also considered unambiguous.
+
+For a URI parameter segment we define its `erasure` as a string obtained by removing URI parameter names. For example, erasure of `/picture{mediaTypeExtension}` is `picture{}`.
+
+For those segments which have same `erasure` we compare if types of corresponding URI parameters can be used to explicitly differentiate the segments. In example, `boolean` and `number` type values can be always differentiated, while `string` can not be always differentiated from `number`.
+
+If there is a segment with `differentiating` parameter types, the resources are not considered ambiguous. Otherwise, resources are considered ambiguous until the opposite is proved by examination of methods.
+
+##### Examination of Methods
+
+Two different HTTP methods are always unambiguous.
+
+Suppose two methods having the same name belong to resources which were not proved unambiguous by examining their URI parameters.
+
+If each method has a required query parameter which does not belong to the set of all query parameters of another method, the methods are considered unambiguous. Otherwise we examine such pairs of query parameters with the same name, which contain at least one required parameter. If at least one pair have parameters with `differentiating` types, the methods are considered unambiguous.
+
+If query parameters examination does not reflect absence of ambiguity, we apply the same procedure to headers.
+
+If it does not help either, and methods do have bodies or responses, the same procedure is applied to: response codes, media types of bodies, types and schemas of bodies.
+
+If no one of two resources have a method with an ambiguous counterpart in another resource, such resources are considered unambiguous.
+
+##### Resolution
+
+If all kinds of examination listed in previous sections could not prove two resources being unambiguous, such resources are considered ambiguous. RAML tools, which expect two operations to be always clearly distinguishable should issue an error.
+
 ## Resource Types and Traits
 
 There are many advantages to reusing patterns across multiple resources and methods.  For example, after defining a collection-type resource's characteristics, that definition can be applied to multiple resources. This use of patterns encourages consistency and reduces complexity for both servers and clients.
