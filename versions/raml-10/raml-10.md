@@ -1986,9 +1986,9 @@ A resource type is a partial resource definition that, like a resource, can spec
 
 A trait is a partial method definition that, like a method, can provide method-level properties such as description, headers, query string parameters, and responses. Methods that use one or more traits inherit those traits' properties. Resources and resource types can also use, and thus inherit from, one or more traits, which then apply to all of their methods. Traits are related to methods through a mixing pattern.
 
-Resources may specify the resource type from which they inherit using the type property. The resource type may be the name of a resource type defined within the root-level resourceTypes property or in a library.
+Resources may specify the resource type from which they inherit using the type property. The resource type MUST be the name of a resource type defined within the root-level resourceTypes property or in a library.
 
-Similarly, methods may specify one or more traits from which they inherit using the is property. Its value is an array of traits. A resource may also use this property, in which case the array of traits is applied to all its methods. Each trait element in that array may be the name of a trait defined within the root-level traits property or in a library.
+Similarly, methods may specify one or more traits from which they inherit using the is property. Its value is an array of traits. A resource may also use this property, in which case the array of traits is applied to all its methods. Each trait element in that array MUST be the name of a trait defined within the root-level traits property or in a library.
 
 Resource type definitions MUST NOT incorporate nested resources; they cannot be used to generate nested resources when they are applied to a resource, and they do not apply to its existing nested resources.
 
