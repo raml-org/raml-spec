@@ -504,10 +504,6 @@ Properties of object types are defined using the OPTIONAL **properties** propert
 
 In addition to the properties available in normal type declarations, properties can specify whether they are required and provide an optional default value.
 
-Note:
-
-When an Object Type does not contain the "properties" property, the object is assumed to be unconstrained. That means, it may contain any properties of any type.
-
 | Property  | Description |
 |:----------|:----------|
 | default? | Provides default value for a property.
@@ -528,6 +524,53 @@ types:
         required: false
         type: number
 ```
+
+In order to achieve a more "object oriented" experience, a series of shortcuts are available (see [Shortcuts and Syntactic Sugar](#shortcuts-and-syntactic-sugar)). The example below shows a common idiom:
+
+```yaml
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    properties:
+      name: string # equals to `type: string`
+      age?: number # optional property; equals to `required: false`
+```
+
+Furthermore, when the `required` facet on a property is specified explicitly in a type declaration, any question mark in its property name is treated as part of the property name rather than as an indicator that the property is optional.
+
+For example, in
+
+```yaml
+types:
+  profile:
+    properties:
+      preference?:
+        required: true
+```
+
+the `profile` type has a property whose name is `preference?` (including the trailing question mark) and that is required. The same property could be made optional in two equivalent ways:
+
+```yaml
+types:
+  profile:
+    properties:
+      preference?:
+        required: false
+```
+
+or
+
+```yaml
+types:
+  profile:
+    properties:
+      preference??:
+```
+
+Note:
+
+When an Object Type does not contain the "properties" property, the object is assumed to be unconstrained. That means, it may contain any properties of any type.
 
 #### Additional Properties
 
@@ -592,20 +635,6 @@ types:
 If a pattern property regular expression also matches an explicitly declared property, the explicitly declared property's definition prevails. If two or more pattern property regular expressions match a property name in an instance of the data type, the first one prevails.
 
 Moreover, if `additionalProperties` is `false` (explicitly or by inheritance) in a given type definition, then pattern properties are not allowed to be set explicitly in that definition. If it is `true` (or omitted) in a given type definition, then pattern properties are allowed and further restrict the allowed additional properties in that type.
-
-##### Alternative Syntax
-
-In order to achieve a more "object oriented" experience, a series of shortcuts are available (see [Shortcuts and Syntactic Sugar](#shortcuts-and-syntactic-sugar)). The example below shows a common idiom:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    properties:
-      name: string
-      age?: number
-```
 
 #### Inheritance
 
