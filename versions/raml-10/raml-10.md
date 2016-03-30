@@ -1319,11 +1319,6 @@ RAML Types are meant to be easy to read and write. To make the syntax more conci
 <td><pre>Person:<br>&nbsp;&nbsp;properties:<br>&nbsp;&nbsp;&nbsp;&nbsp;nick?: string</pre></td>
 <td><pre>Person:<br>&nbsp;&nbsp;type: object<br>&nbsp;&nbsp;properties:<br>&nbsp;&nbsp;&nbsp;&nbsp;nick:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: string<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required: false</pre></td>
 </tr>
-<tr>
-<td>Inline Map</td>
-<td><pre>Person:<br>&nbsp;&nbsp;properties:<br>&nbsp;&nbsp;&nbsp;&nbsp;pets: Pet{}</pre></td>
-<td><pre>Person:<br>&nbsp;&nbsp;properties:<br>&nbsp;&nbsp;&nbsp;&nbsp;pets: PetMap<br>PetMap:<br>&nbsp;&nbsp;properties:<br>&nbsp;&nbsp;&nbsp;&nbsp;[]: Pet</pre></td>
-</tr>
 </table>
 
 ### Inline Type Declarations
