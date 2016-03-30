@@ -1211,8 +1211,6 @@ types:
     type: [ A, B ]
 ```
 
-Note: Multiple inheritance is only allowed if all Type Expressions are simple object Types. See [Inheritance Restrictions](#inheritance-restrictions).
-
 ##### Property Overrides
 
 If multiple parent types define a property with the same name:
@@ -1279,15 +1277,26 @@ Validation of instances of external types is delegated to standard json/xsd sche
 
 #### Inheritance Restrictions
 
-* You cannot inherit from types of different kind at the same moment ( kinds are: union types, array types, object types, scalar types )
-* You cannot inherit from types extending union types ( ex: you cannot extend from `Pet` if `Pet = Dog | Cat` )
-* You cannot inherit from multiple primitive types ( Multiple inheritance is only allowed for object types )
-* You cannot inherit from a type that extends Array type ( this will result in simple type aliasing/wrapping )
-* Facets are always inherited
-* You can fix a previously defined facet to a value if the facet is defined on a superclass
-* Properties are only allowed on object types
 * You cannot create cyclic dependencies when inheriting
-* You cannot inherit from "external" types
+* You cannot extend from external types including JSON Schemas, XSDs, and DataType fragments
+* When you are extending from multiple types of different kind (except of union types); validation of resulting type is done by applying usual type validation rules
+* extending a union type (or a type having a union type anywhere in its inheritance chain) is allowed if, and only if, all combinations of extensions you get by distributing across all the types that are part in the union type are valid
+
+The last rule is important for the support of union types and inheritance (possible multiple inheritance). For example, imagine the following type declaration:
+
+```yaml
+types:
+   HomeAnimal: [ HasHome ,  Dog | Cat ]
+```
+
+The type `HomeAnimal` has two base types `HasHome` and an anonymous union type defined by a type expression - `Dog | Cat`. Testing if the `HomeAnimal` type is valid involves taking each of its base types, and checking that a type which is a derived type of this type and each of the union types is a valid type. That means a RAML processor must test that `[HasHome, Dog]` and `[HasHome, Cat]` are valid types. When extending from two union types, a RAML processor should do the same for every possible combination. For example, in:
+
+```yaml
+types:
+   HomeAnimal: [ HasHome | IsOnFarm ,  Dog | Cat | Parrot ]
+```
+
+a RAML processor must test for all 6 possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
 
 ### Shortcuts and Syntactic Sugar
 
