@@ -2758,23 +2758,22 @@ The location within an API specification where annotations may be applied MUST b
 |Target | Description |
 |:--------|:------------|
 | API | The root of a RAML document
-| DocumentationItem | An item in the collection of items that is the value of the root-level documentation property.
+| DocumentationItem | An item in the collection of items that is the value of the root-level documentation property
 | Resource | A resource (relative URI) property, root-level or nested
 | Method | A method property
 | Response | A property of the responses property, whose key is an HTTP status code
 | RequestBody | The body property of a method
 | ResponseBody | The body property of a response
 | TypeDeclaration | A data type declaration (inline or in a global types collection), header declaration, query parameter declaration, or URI parameter declaration, or property within any of these declarations, where the type property may be used.
-| Scalar | A scalar-valued node listed in [Annotating Scalar-valued Nodes](#scalar-valued-nodes).
-| NamedExample | A property of the examples property, whose key is a name of an example and whose value describes the example.
+| Example | Either an example or examples property
 | ResourceType | A resource type property
 | Trait | A trait property
 | SecurityScheme | A security scheme declaration
 | SecuritySchemeSettings | The settings property of a security scheme declaration
-| AnnotationTypeDeclaration | A property of the annotationTypes property, whose key is a name of an annotation type and whose value describes the annotation.
-| Library | The root of a library declaration.
-| Overlay | The root of an overlay declaration.
-| Extension | The root of an extension declaration.
+| AnnotationType | A property of the annotationTypes property, whose key is a name of an annotation type and whose value describes the annotation.
+| Library | The root of a library
+| Overlay | The root of an overlay
+| Extension | The root of an extension
 
 The following example illustrates applying some restrictions on the allowed targets of annotations.
 
