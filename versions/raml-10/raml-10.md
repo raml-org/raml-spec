@@ -1944,17 +1944,11 @@ There are many advantages to reusing patterns across multiple resources and meth
 
 Moreover, resource and method declarations are frequently repetitive. For example, an API that requires OAuth authentication might require an X-Access-Token header for all methods across all resources. For many reasons it may be preferable to define such a pattern in a single place and apply it consistently everywhere.
 
-A resource type is a partial resource definition that, like a resource, can specify security schemes and methods and other properties. Resources that use a resource type inherit its properties. A resource type can also use, and thus inherit from, another resource type. Resource types and resources are related through an inheritance chain pattern.
+A resource type, like a resource, can specify security schemes and methods and other properties. Resources that use a resource type inherit its properties. A resource type can also use, and thus inherit from, another resource type. Resource types and resources are related through an inheritance chain pattern. Resource type definitions MUST NOT incorporate nested resources; they cannot be used to generate nested resources when they are applied to a resource, and they do not apply to its existing nested resources.
 
-A trait is a partial method definition that, like a method, can provide method-level properties such as description, headers, query string parameters, and responses. Methods that use one or more traits inherit those traits' properties. Resources and resource types can also use, and thus inherit from, one or more traits, which then apply to all of their methods. Traits are related to methods through a mixing pattern.
+A trait, like a method, can provide method-level properties such as description, headers, query string parameters, and responses. Methods that use one or more traits inherit those traits' properties. Resources and resource types can also use, and thus inherit from, one or more traits, which then apply to all of their methods. Traits are related to methods through a mixing pattern.
 
-Resources may specify the resource type from which they inherit using the type property. The resource type MUST be the name of a resource type defined within the root-level resourceTypes property or in a library.
-
-Similarly, methods may specify one or more traits from which they inherit using the is property. Its value is an array of traits. A resource may also use this property, in which case the array of traits is applied to all its methods. Each trait element in that array MUST be the name of a trait defined within the root-level traits property or in a library.
-
-Resource type definitions MUST NOT incorporate nested resources; they cannot be used to generate nested resources when they are applied to a resource, and they do not apply to its existing nested resources.
-
-### Declaration
+### Declaration Resource Types and Traits
 
 Resource types may be declared via the OPTIONAL **resourceTypes** property at the root of the API definition. The value of this property is an object whose property names become names of resource types that can be referenced throughout the API, and whose property values are resource type declarations.
 
@@ -2015,6 +2009,62 @@ resourceTypes:
     patch:
     delete:
     /groups:
+```
+
+### Applying Resource Types and Traits
+
+Resources may specify the resource type from which they inherit using the OPTIONAL **type** property. The resource type MUST be the name of a resource type defined within the root-level resourceTypes property or in a library. Resource type definitions do not apply to existing nested resources.
+
+Similarly, methods may specify one or more traits from which they inherit using the OPTIONAL **is** property. Its value is an array of any number of elements where each MUST be the name of a trait defined within the root-level traits property or in a library. A trait may also be applied to a resource by using the **is** property, which is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type. The order of a trait getting applied to a method is from left to right; according to the traits defined in the **is** property. Trait definitions do not apply to nested resources.
+
+The following example illustrates the application of resource types and traits.
+
+```yaml
+#%RAML 1.0
+title: Example API
+version: v1
+resourceTypes:
+  collection:  !include resourceTypes/collection.raml
+  member:      !include resourceTypes/member.raml
+traits:
+  secured:     !include traits/secured.raml
+  paged:       !include traits/paged.raml
+  rateLimited: !include traits/rate-limited.raml
+/users:
+  type: collection
+  is: [ secured ]
+  get:
+    is: [ paged, rateLimited ] # this method is also secured
+  post:                        # this method is also secured
+```
+
+To pass parameter values to resource types and traits, use a map when declaring the resource type or trait to be used, as illustrated in the following example.
+
+```yaml
+#%RAML 1.0
+title: Example API
+version: v1
+resourceTypes:
+  searchableCollection:
+   get:
+      queryParameters:
+        <<queryParamName>>:
+          description: Return <<resourcePathName>> that have their <<queryParamName>> matching the given value
+        <<fallbackParamName>>:
+          description: If no values match the value given for <<queryParamName>>, use <<fallbackParamName>> instead
+traits:
+  secured:
+    queryParameters:
+      <<tokenName>>:
+        description: A valid <<tokenName>> is required
+  paged:
+    queryParameters:
+      numPages:
+        description: The number of pages to return, not to exceed <<maxPages>>
+/books:
+  type: { searchableCollection: { queryParamName: title, fallbackParamName: digest_all_fields } }
+  get:
+    is: [ secured: { tokenName: access_token }, paged: { maxPages: 10 } ]
 ```
 
 ### Resource Type and Trait Parameters
@@ -2127,64 +2177,6 @@ resourceTypes:
   get:
   # will not have a post method defined which means the TextAboutPost parameter is
   # not required; same for the X-Chargeback header
-```
-
-### Applying Resource Types and Traits
-
-The OPTIONAL **type** property applies a resource type to a resource, so that the resource inherits the resource type's characteristics. The value of the **type** property is a name of a resource type declared in the resourceTypes declaration. Resource type definitions do not apply to existing nested resources.
-
-The OPTIONAL **is** property applies any number of traits to a method, so that the method inherits the trait's or traits' characteristics. The value of the is attribute is an array of any number of elements, each of which is a name of a trait declared in the traits declaration. The order of a trait getting applied to a method is from left to right; according to the traits defined in the **is** property. Trait definitions do not apply to nested resources.
-
-A trait may also be applied to a resource by using the **is** key, which is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type.
-
-The following example illustrates the application of resource types and traits.
-
-```yaml
-#%RAML 1.0
-title: Example API
-version: v1
-resourceTypes:
-  collection:  !include resourceTypes/collection.raml
-  member:      !include resourceTypes/member.raml
-traits:
-  secured:     !include traits/secured.raml
-  paged:       !include traits/paged.raml
-  rateLimited: !include traits/rate-limited.raml
-/users:
-  type: collection
-  is: [ secured ]
-  get:
-    is: [ paged, rateLimited ] # this method is also secured
-  post:                        # this method is also secured
-```
-
-To pass parameter values to resource types and traits, use a map when declaring the resource type or trait to be used, as illustrated in the following example.
-
-```yaml
-#%RAML 1.0
-title: Example API
-version: v1
-resourceTypes:
-  searchableCollection:
-   get:
-      queryParameters:
-        <<queryParamName>>:
-          description: Return <<resourcePathName>> that have their <<queryParamName>> matching the given value
-        <<fallbackParamName>>:
-          description: If no values match the value given for <<queryParamName>>, use <<fallbackParamName>> instead
-traits:
-  secured:
-    queryParameters:
-      <<tokenName>>:
-        description: A valid <<tokenName>> is required
-  paged:
-    queryParameters:
-      numPages:
-        description: The number of pages to return, not to exceed <<maxPages>>
-/books:
-  type: { searchableCollection: { queryParamName: title, fallbackParamName: digest_all_fields } }
-  get:
-    is: [ secured: { tokenName: access_token }, paged: { maxPages: 10 } ]
 ```
 
 ### Algorithm of Merging Traits With Methods
