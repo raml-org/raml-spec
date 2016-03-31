@@ -136,7 +136,7 @@ The following table enumerates the possible properties at the root of a RAML doc
 | traits? | Declarations of traits for use within this API. See section [Resource Types and Traits](#resource-types-and-traits) for more information.
 | resourceTypes? | Declarations of resource types for use within this API. See section [Resource Types and Traits](#resource-types-and-traits) for more information.
 | annotationTypes? | Declarations of annotation types for use by annotations. See section [Annotation Types](#declaring-annotation-types) for more information.
-| securitySchemes? | Declarations of security schemes for use within this API. See section [Security Schemes](#security-schemes) for more information. See section [Security Schemes](#security-schemes) for more information.
+| securitySchemes? | Declarations of security schemes for use within this API. See section [Security Schemes](#security-schemes) for more information.
 | uses? | Importing external libraries that can be used within the API. See section [Libraries](#libraries) for more information.
 | title | Short plain-text label for the API
 | version? | The version of the API, e.g. "v1"
