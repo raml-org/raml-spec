@@ -448,6 +448,7 @@ declarations may have; certain type declarations may have other properties.
 | displayName? | An alternate, human-friendly name for the type
 | description? | A longer, human-friendly description of the type
 | (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
+| facets? | A map of user defined restrictions that are being inherited by a specific sub type. See section [User defined Facets](#user-defined-facets) for more information.
 
 The `schema` and `type` properties are mutually exclusive and synonymous: processors MUST NOT allow both to be specified (explicitly or implicitly) inside the same type declaration. Therefore, the following examples are both invalid.
 
@@ -777,18 +778,28 @@ types:
 
 ### Scalar Types
 
-RAML provides a predefined set of Scalar Types. You can "extend" these types and add further restrictions. These restrictions are called "facets" and they exist both for scalar and object types. Each scalar type has a predefined set of facets.
+RAML defines a set of built-in types and each of them has a predefined set of restrictions. All built-in types, except the file type, can declare an `enum` property.
 
 |Property Name | Description |
 |:--------|:------------|
-| facets? | When extending from a scalar type you can define new facets (which can then be set to concrete values by subtypes). The value is an object whose properties map facets names to their types.
-| enum? | Enumeration of possible values for this primitive type. Cannot be used with the file type. The value is an array containing string representations of possible values, or a single string if there is only one possible value.
+| enum? | Enumeration of possible values for this built-in type. The value is an array containing string representations of possible values, or a single string if there is only one possible value.
 
-#### Built-in Scalar Types
+Example usage of enums:
 
-RAML defines the following built-in types and additional facets.
+```yaml
+#%RAML 1.0
+title: My API With Types
+types:
+  country:
+    type: string
+    enum: [ usa, rus ]
 
-##### String
+  sizes:
+    type: number
+    enum: [ 1, 2, 3 ]
+```
+
+#### String
 
 A JSON string with the following additional facets:
 
@@ -808,7 +819,7 @@ types:
     maxLength: 6
 ```
 
-##### Number
+#### Number
 
 Any JSON number including [integer](#integer) with the following additional facets:
 
@@ -831,7 +842,7 @@ types:
     multipleOf: 4
 ```
 
-##### Integer
+#### Integer
 
 A subset of JSON numbers that are positive and negative multiples of 1. The integer type inherits its facets from the [number type](#number).
 
@@ -845,7 +856,7 @@ types:
     multipleOf: 1
 ```
 
-##### Boolean
+#### Boolean
 
 A JSON boolean without any additional facets.
 
@@ -855,7 +866,7 @@ types:
     type: boolean
 ```
 
-##### Date
+#### Date
 
 The following date type representations MUST be supported:
 
@@ -889,7 +900,7 @@ types:
     format: rfc2616 # this time it's required as otherwise the example is in an invalid format
 ```
 
-##### File
+#### File
 
 The ​**file**​ type can be used to constrain the content to send through forms. When it is used in the context of web forms it SHOULD be represented as a valid file upload, and in JSON representation, it SHOULD be represented as a base64 encoded string with a file content.
 
@@ -899,55 +910,29 @@ The ​**file**​ type can be used to constrain the content to send through for
 | minLength? | Specifies the parameter value's minimum number of bytes. Value MUST be equal or greater than 0. Defaults to 0
 | maxLength? | Specifies the parameter value's maximum number of bytes. Value MUST be equal or greater than 0. Defaults to 2147483647
 
-#### Enums
+### User defined Facets
 
-All custom primitive types, except for the file type, can declare an "enum" property. It should contain a set of fixed values.
-
-Example usage of enums
+RAML provides a way to also declare user defined restrictions (facets) that extend the predefined set of built-in restrictions for any scalar, array or object type. These can be defined using the `facets` property and its value is a map of user defined facets, specifically the value follows the syntax of a [property declaration](#property-declarations), that may or must be defined in any sub type that extend from the type that declares these facets. For example:
 
 ```yaml
 #%RAML 1.0
-title: My API With Types
+title: API with Types
 types:
-  country:
-    type: string
-    enum: [ usa, rus ]
-
-  sizes:
-    type: number
-    enum: [ 1, 2, 3 ]
-```
-
-#### Custom Scalar Types
-
-Defining a scalar type is similar to defining a custom object type in that you "specialize" a parent type. Here's a custom scalar type that "specializes" the number type and restricts one of its facets (minimum):
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  positiveNumber:
-    type: number
-    minimum: 1
-```
-
-For convenience, you may specialize the built-in primitive types ( string, number, etc ). However, if you don't wish your custom scalar type to inherit the predefined facets of built-in types you can inherit directly from the "scalar" type.
-
-You can define your own facets:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Date:
-    type: string
+  CustomDate:
+    type: date
     facets:
-      format: string
-
-  MyDate:
-    type: Date
-    format: 'dd.mm.yyyy'
+      onlyFutureDates?: boolean # optional  in `PossibleMeetingDate`
+      noHolidays: boolean # required in `PossibleMeetingDate`
+  PossibleMeetingDate:
+    type: CustomDate
+    noHolidays: true
 ```
+
+A RAML processor must follow specific rules when validating user defined facets:
+
+* You can not start facet name with `(` (this is needed to avoid ambiguity with annotations).
+* You can not redeclare built-in facets; for example you can not declare facet with name `properties` in any type which inherits from object type.
+* You can not redeclare facets which were defined earlier in hierarchy any more. This also means that you can not inherit facets with same name from two different types.
 
 ### Type Expressions
 
