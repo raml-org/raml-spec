@@ -1273,10 +1273,6 @@ types:
 
 External types cannot participate in type inheritance or specialization. In other words: You cannot define sub-types of external types that declare new properties or set facets. You can, however, create simple type wrappers that add metadata, examples and a description.
 
-##### Validation of instances
-
-Validation of instances of external types is delegated to standard json/xsd schema validation. To this end objects are automatically converted if needed to JSON or XML before validation. In the case of JSON this transformation is straightforward. In the case of XML serialization, the canonical XML serialization algorithm is used.
-
 #### Inheritance Restrictions
 
 * You cannot inherit from types of different kind at the same moment ( kinds are: union types, array types, object types, scalar types )
@@ -1448,6 +1444,97 @@ types:
                   address: 35 Central Street
                   value: Gold # validate against instance of the `value` property
 ```
+
+### RAML Data Type Validation
+
+#### Validating Type Instances
+
+An instance of a type passes validation if it satisfies one of the following conditions:
+
+1) It passes all restrictions associated with the type.
+
+For example,
+
+```yaml
+types:
+  User:
+    type: object
+    properties:
+      firstName: string
+      lastName: string
+      age:
+        type: number
+        minimum: 0
+```
+
+the `User` type has three properties that are required: `firstName`, `lastName`, and `age`. Each instance of this type must have these three properties defined and each value must be valid according to their individual type declaration. Therefore, the following instances are both valid:
+
+```yaml
+User:
+  firstName: "John",
+  lastName: "Doe",
+  age: 35
+```
+
+```yaml
+User:
+  firstName: "John",
+  lastName: "Doe",
+  status: "single", # valid; additional properties are always allowed
+  age: 35
+```
+
+On the other side, the example below is not valid since the `age` property has the wrong type.
+
+```yaml
+User:
+  firstName: "John",
+  lastName: "Doe",
+  age: "dfgfdgsd" # not valid; it needs to be of type number
+```
+
+To complete the different possibilities, these are other examples that illustrate not valid type instances of the type `User`
+
+```yaml
+User:  # not valid; missing required property 'lastName'
+  firstName: "John",
+  age: 35
+```
+
+```yaml
+User:
+  firstName: "John",
+  lastName: "Doe",
+  age: -10 # not valid; minimum value for age is 0
+```
+
+2) If the type is a union type then it should pass all restrictions associated with at least one of the union type options.
+
+```yaml
+types:
+  CatOrDog:
+    type: Cat | Dog # options: Cat or Dog
+  Cat:
+    type: object
+    properties:
+      name: string
+      color: string
+  Dog:
+    type: object
+    properties:
+      name: string
+      fangs: string
+```
+
+A valid instance of the type `CatOrDog` for example looks like the following:
+
+```yaml
+CatOrDog: # follows restrictions applied to the type 'Cat'
+  name: "Musia",
+  color: "brown"
+```
+
+3) If the type is an external type using JSON schema or XSD, a RAML processor may delegated validation to standard JSON Schema/XSD validation using third party libraries.
 
 ### Using Types in RAML
 
