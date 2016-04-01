@@ -441,6 +441,7 @@ declarations may have; certain type declarations may have other properties.
 
 | Property  | Description |
 |:----------|:----------|
+| default? | Provides a default value for a type.
 | schema? | Alias for the equivalent "type" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property, as the "schema" alias for that property name may be removed in a future RAML version. The "type" property allows for XML and JSON schemas.
 | type? | A base type which the current type extends, or more generally a type expression.
 | example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `example` property MUST not be available when the `examples` property is already defined.
@@ -502,18 +503,15 @@ types:
 
 Properties of object types are defined using the OPTIONAL **properties** property. The value of the properties property is called a "properties declaration" in this spec. It is an object whose property names specify the allowed property names of the type being declared, and whose property values are either names of types or inline type declarations.
 
-In addition to the properties available in normal type declarations, properties can specify whether they are required and provide an optional default value.
+In addition to the properties available in normal type declarations, properties can specify whether they are required or not.
 
 | Property  | Description |
 |:----------|:----------|
-| default? | Provides default value for a property.
-| required? | Sets if property is optional or not. Default value is `true`.
+| required? | Sets if property is optional or not.<br /><br />**Default:** `true`.
 
 The following example declares an object type with two properties:
 
 ```yaml
-#%RAML 1.0
-title: My API With Types
 types:
   Person:
     properties:
@@ -528,13 +526,16 @@ types:
 In order to achieve a more "object oriented" experience, a series of shortcuts are available (see [Shortcuts and Syntactic Sugar](#shortcuts-and-syntactic-sugar)). The example below shows a common idiom:
 
 ```yaml
-#%RAML 1.0
-title: My API With Types
 types:
   Person:
     properties:
-      name: string # equals to `type: string`
-      age?: number # optional property; equals to `required: false`
+      name: string # equivalent to ->
+                   # name:
+                   #  type: string
+      age?: number # optional property; equivalent to ->
+                   # age:
+                   #  type: number
+                   #  required: false
 ```
 
 Furthermore, when the `required` facet on a property is specified explicitly in a type declaration, any question mark in its property name is treated as part of the property name rather than as an indicator that the property is optional.
