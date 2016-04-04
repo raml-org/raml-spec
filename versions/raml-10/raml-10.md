@@ -2223,9 +2223,9 @@ resourceTypes:
           application/json:
 ```
 
-The only overlay between the `collection` resource type and the resource declaration is `description` which is defined in both. In this example, the final version will have the description that has been explicitly defined in the resource.
+The only overlap between the `collection` resource type and the resource declaration is `description` which is defined in both. In this example, the final version will have the description that has been explicitly defined in the resource.
 
-Every explicit node will win over the ones that are declared in a resource type or trait. The rest get's simple merged. The final merged result must be:
+Every explicit node will win over the ones that are declared in a resource type or trait. The rest is simply merged. The final merged result must be:
 
 ```yaml
 /resource:
