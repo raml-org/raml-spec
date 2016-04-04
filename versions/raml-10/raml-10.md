@@ -980,12 +980,19 @@ types:
       name: # no type or schema necessary since the default type is `string`
 ```
 
-* The default type `any` is applied to any `body` node regardless if it is a response or request declaration that does not contain `properties`, `types`, or `schema`. That rule is necessary since the value of a `body` node has the same structure like a type declaration except that the key is always a media type. For example:
+* The default type `any` is applied to any `body` node that does not contain `properties`, `type`, or `schema`. For example:
 
 ```yaml
 body:
-  application/json: # key
+  application/json:
     # default type is `any`
+```
+
+Or in case that a default media type has been defined
+
+```yaml
+body:
+  # default type is `any`
 ```
 
 The last rule is important for validation purposes and needs to be defined in the specification. Of course, each rule can be overridden by explicitly define a type. For example:
