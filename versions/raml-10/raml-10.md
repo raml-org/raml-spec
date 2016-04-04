@@ -1088,11 +1088,6 @@ types:
 ### Union Types
 
 Union Types are declared using pipes (|) in your type expressions. Union Types are useful to model common scenarios in JSON based applications, for example an array containing objects which can be instances of more than one type.
-If you are defining Type Alias for a Union Type ( like the example below ), you can also specify the discriminator property. See [Runtime Polymorphism (Discriminators)](#runtime-polymorphism-discriminators-).
-
-|Property | Description |
-|:--------|:------------|
-| discriminator? | Type property name to be used as a discriminator or boolean
 
 ```yaml
 #%RAML 1.0
@@ -1116,7 +1111,6 @@ types:
       kind: string
   Device:
     type: Phone | Notebook
-    discriminator: kind
 ```
 
 ### Inheritance and Specialization
