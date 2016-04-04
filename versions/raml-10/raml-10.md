@@ -449,6 +449,7 @@ declarations may have; certain type declarations may have other properties.
 | displayName? | An alternate, human-friendly name for the type
 | description? | A longer, human-friendly description of the type
 | (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
+| xml? | The ability to configure serialization of an instance of this type into XML. See section [XML Serialization of Type Instances](#xml-serialization-of-type-instances) for more information.
 
 The `schema` and `type` properties are mutually exclusive and synonymous: processors MUST NOT allow both to be specified (explicitly or implicitly) inside the same type declaration. Therefore, the following examples are both invalid.
 
@@ -1471,6 +1472,50 @@ types:
                   name: Software Corp
                   address: 35 Central Street
                   value: Gold # validate against instance of the `value` property
+```
+
+### XML Serialization of Type Instances
+
+As the serialization to XML may be a complex process, RAML introduces an additional `xml` node for [type declarations](#type-declarations) that allows to configure how type instances should be serialized to XML. The value of the `xml` node is a map that contains the following nodes.
+
+| Name | Type | Description |
+|:---------|:------:|:-----------------|
+| attribute? | `boolean` | If `attribute` is set to `true`, a type instance should be serialized as an XML attribute. It can only be `true` for scalar types.<br/><br/>**Default:** `false`
+| wrapped? | `boolean` | If `wrapped` is set to `true`, a type instance should be wrapped in its own XML element. It can not  be `true` for scalar types and it can not  be `true` at the same moment when `attribute` is `true`. <br/><br/>**Default:** `false`
+|  name? | `string` | Allows to override the name of the XML element or XML attribute in it's XML representation.<br/><br/>**Default:** the name of the type
+| namespace? | `string` | Allows to configure the name of the XML namespace.
+| prefix? | `string` |  Allows to configure the prefix which will be used during serialization to XML.
+
+The following is a type declaration example that uses the `xml` node:
+
+```yaml
+types:
+  Person:
+    properties:
+      name:
+        type: string
+        xml:
+          attribute: true # serialize it as an XML attribute
+          name: "fullname" # attribute should be called fullname
+      addresses:
+        type: Address[]
+        xml:
+          wrapped: true # serialize it into it's own <addresses>...</addresses> XML element
+  Address:
+    properties:
+      street: string
+      city: string
+```
+
+The example above may be serialized into the following XML:
+
+```xml
+<Person fullname="John Doe">
+  <addresses>
+     <Address>…</Address>
+     ...
+  </addresses>
+</Person>
 ```
 
 ### Using Types in RAML
