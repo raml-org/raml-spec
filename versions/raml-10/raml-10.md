@@ -778,11 +778,11 @@ types:
 
 ### Scalar Types
 
-RAML defines a set of built-in types and each of them has a predefined set of restrictions. All built-in types, except the file type, can declare an `enum` property.
+RAML defines a set of built-in scalar types and each of them has a predefined set of restrictions. All these types, except the file type, can have an additional `enum` property.
 
 |Property Name | Description |
 |:--------|:------------|
-| enum? | Enumeration of possible values for this built-in type. The value is an array containing string representations of possible values, or a single string if there is only one possible value.
+| enum? | Enumeration of possible values for this built-in scalar type. The value is an array containing string representations of possible values, or a single string if there is only one possible value.
 
 Example usage of enums:
 
@@ -910,9 +910,9 @@ The ​**file**​ type can be used to constrain the content to send through for
 | minLength? | Specifies the parameter value's minimum number of bytes. Value MUST be equal or greater than 0. Defaults to 0
 | maxLength? | Specifies the parameter value's maximum number of bytes. Value MUST be equal or greater than 0. Defaults to 2147483647
 
-### User defined Facets
+### User-defined Facets
 
-RAML provides a way to also declare user defined restrictions (facets) that extend the predefined set of built-in restrictions for any scalar, array or object type. These can be defined using the `facets` property and its value is a map of user defined facets, specifically the value follows the syntax of a [property declaration](#property-declarations), that may or must be defined in any sub type that extend from the type that declares these facets. For example:
+RAML provides a way to also declare user-defined restrictions (facets) that extend the predefined set of built-in restrictions for any scalar, array or object type. These can be defined using the `facets` property and its value is a map of user defined facets, specifically the value follows the syntax of a [property declaration](#property-declarations). Depending on whether a facet is optional or required, any subtype may or must define the facets that are declared in the type it extends. For example:
 
 ```yaml
 #%RAML 1.0
@@ -928,11 +928,12 @@ types:
     noHolidays: true
 ```
 
-A RAML processor must follow specific rules when validating user defined facets:
+A RAML processor must follow specific rules when validating user-defined facets:
 
 * You can not start facet name with `(` (this is needed to avoid ambiguity with annotations).
 * You can not redeclare built-in facets; for example you can not declare facet with name `properties` in any type which inherits from object type.
 * You can not redeclare facets which were defined earlier in hierarchy any more. This also means that you can not inherit facets with same name from two different types.
+* You can not validate an instance of a type against user-defined facets.
 
 ### Type Expressions
 
