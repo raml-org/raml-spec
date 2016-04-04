@@ -136,7 +136,7 @@ The following table enumerates the possible properties at the root of a RAML doc
 | traits? | Declarations of traits for use within this API. See section [Resource Types and Traits](#resource-types-and-traits) for more information.
 | resourceTypes? | Declarations of resource types for use within this API. See section [Resource Types and Traits](#resource-types-and-traits) for more information.
 | annotationTypes? | Declarations of annotation types for use by annotations. See section [Annotation Types](#declaring-annotation-types) for more information.
-| securitySchemes? | Declarations of security schemes for use within this API. See section [Security Schemes](#security-schemes) for more information. See section [Security Schemes](#security-schemes) for more information.
+| securitySchemes? | Declarations of security schemes for use within this API. See section [Security Schemes](#security-schemes) for more information.
 | uses? | Importing external libraries that can be used within the API. See section [Libraries](#libraries) for more information.
 | title | Short plain-text label for the API
 | version? | The version of the API, e.g. "v1"
@@ -432,6 +432,7 @@ declarations may have; certain type declarations may have other properties.
 
 | Property  | Description |
 |:----------|:----------|
+| default? | Provides a default value for a type.
 | schema? | Alias for the equivalent "type" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property, as the "schema" alias for that property name may be removed in a future RAML version. The "type" property allows for XML and JSON schemas.
 | type? | A base type which the current type extends, or more generally a type expression.
 | example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `example` property MUST not be available when the `examples` property is already defined.
@@ -493,22 +494,15 @@ types:
 
 Properties of object types are defined using the OPTIONAL **properties** property. The value of the properties property is called a "properties declaration" in this spec. It is an object whose property names specify the allowed property names of the type being declared, and whose property values are either names of types or inline type declarations.
 
-In addition to the properties available in normal type declarations, properties can specify whether they are required and provide an optional default value.
-
-Note:
-
-When an Object Type does not contain the "properties" property, the object is assumed to be unconstrained. That means, it may contain any properties of any type.
+In addition to the properties available in normal type declarations, properties can specify whether they are required or not.
 
 | Property  | Description |
 |:----------|:----------|
-| default? | Provides default value for a property.
-| required? | Sets if property is optional or not. Default value is `true`.
+| required? | Sets if property is optional or not.<br /><br />**Default:** `true`.
 
 The following example declares an object type with two properties:
 
 ```yaml
-#%RAML 1.0
-title: My API With Types
 types:
   Person:
     properties:
@@ -519,6 +513,56 @@ types:
         required: false
         type: number
 ```
+
+In order to achieve a more "object oriented" experience, a series of shortcuts are available (see [Shortcuts and Syntactic Sugar](#shortcuts-and-syntactic-sugar)). The example below shows a common idiom:
+
+```yaml
+types:
+  Person:
+    properties:
+      name: string # equivalent to ->
+                   # name:
+                   #  type: string
+      age?: number # optional property; equivalent to ->
+                   # age:
+                   #  type: number
+                   #  required: false
+```
+
+Furthermore, when the `required` facet on a property is specified explicitly in a type declaration, any question mark in its property name is treated as part of the property name rather than as an indicator that the property is optional.
+
+For example, in
+
+```yaml
+types:
+  profile:
+    properties:
+      preference?:
+        required: true
+```
+
+the `profile` type has a property whose name is `preference?` (including the trailing question mark) and that is required. The same property could be made optional in two equivalent ways:
+
+```yaml
+types:
+  profile:
+    properties:
+      preference?:
+        required: false
+```
+
+or
+
+```yaml
+types:
+  profile:
+    properties:
+      preference??:
+```
+
+Note:
+
+When an Object Type does not contain the "properties" property, the object is assumed to be unconstrained. That means, it may contain any properties of any type.
 
 #### Additional Properties
 
@@ -583,20 +627,6 @@ types:
 If a pattern property regular expression also matches an explicitly declared property, the explicitly declared property's definition prevails. If two or more pattern property regular expressions match a property name in an instance of the data type, the first one prevails.
 
 Moreover, if `additionalProperties` is `false` (explicitly or by inheritance) in a given type definition, then pattern properties are not allowed to be set explicitly in that definition. If it is `true` (or omitted) in a given type definition, then pattern properties are allowed and further restrict the allowed additional properties in that type.
-
-##### Alternative Syntax
-
-In order to achieve a more "object oriented" experience, a series of shortcuts are available (see [Shortcuts and Syntactic Sugar](#shortcuts-and-syntactic-sugar)). The example below shows a common idiom:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    properties:
-      name: string
-      age?: number
-```
 
 #### Inheritance
 
@@ -1049,11 +1079,6 @@ types:
 ### Union Types
 
 Union Types are declared using pipes (|) in your type expressions. Union Types are useful to model common scenarios in JSON based applications, for example an array containing objects which can be instances of more than one type.
-If you are defining Type Alias for a Union Type ( like the example below ), you can also specify the discriminator property. See [Runtime Polymorphism (Discriminators)](#runtime-polymorphism-discriminators-).
-
-|Property | Description |
-|:--------|:------------|
-| discriminator? | Type property name to be used as a discriminator or boolean
 
 ```yaml
 #%RAML 1.0
@@ -1077,7 +1102,6 @@ types:
       kind: string
   Device:
     type: Phone | Notebook
-    discriminator: kind
 ```
 
 A valid instance of a union type must pass all restrictions associated with at least one of the union type options. For example:
@@ -2217,6 +2241,41 @@ Finally, the resource can have its own traits, and it can be applied a chain of 
 5. etc.
 
 Merging resource types with resources obeys similar rules.
+
+The following example illustrates how a resource type gets merged into the `/products` resource.
+
+```yaml
+resourceTypes:
+  collection:
+    get:
+      description: a list
+      headers:
+        APIKey:
+/products:
+  type: collection
+  get:
+    description: override the description
+    responses:
+      200:
+        body:
+          application/json:
+```
+
+The only overlap between the `collection` resource type and the resource declaration is `description` which is defined in both. In this example, the final version will have the description that has been explicitly defined in the resource.
+
+Every explicit node will win over the ones that are declared in a resource type or trait. The rest is simply merged. The final merged result must be:
+
+```yaml
+/resource:
+  get:
+    headers:
+      APIKey:
+    description: override the description
+    responses:
+      200:
+        body:
+          application/json:
+```
 
 ### Resource Types and Traits Effect on Collections
 
