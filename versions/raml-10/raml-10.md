@@ -2234,6 +2234,41 @@ Finally, the resource can have its own traits, and it can be applied a chain of 
 
 Merging resource types with resources obeys similar rules.
 
+The following example illustrates how a resource type gets merged into the `/products` resource.
+
+```yaml
+resourceTypes:
+  collection:
+    get:
+      description: a list
+      headers:
+        APIKey:
+/products:
+  type: collection
+  get:
+    description: override the description
+    responses:
+      200:
+        body:
+          application/json:
+```
+
+The only overlap between the `collection` resource type and the resource declaration is `description` which is defined in both. In this example, the final version will have the description that has been explicitly defined in the resource.
+
+Every explicit node will win over the ones that are declared in a resource type or trait. The rest is simply merged. The final merged result must be:
+
+```yaml
+/resource:
+  get:
+    headers:
+      APIKey:
+    description: override the description
+    responses:
+      200:
+        body:
+          application/json:
+```
+
 ### Resource Types and Traits Effect on Collections
 
 All the collections or sequences which fall under effect of applying traits and resource types are merged. Consider an example of query parameter which has its enum values defined in both resource and trait:
