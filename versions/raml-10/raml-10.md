@@ -1978,7 +1978,6 @@ Resource type and trait declarations can have the following properties, in addit
 | Property | Definition |
 |:---------|:-----------|
 | usage? | The OPTIONAL **usage** property of a resource type or trait provides instructions on how and when the resource type or trait should be used. Documentation generators MUST convey this property as characteristics of the resource and method, respectively. However, the resources and methods MUST NOT inherit the usage property: neither resources nor methods allow a property named usage.
-| uses? | You may import library locally here it contents is accessible only inside of this trait
 
 The following example illustrates the declaration of several resource types and traits.
 
