@@ -2,7 +2,7 @@
 
 ## Abstract
 
-RAML is a language for the definition of HTTP-based APIs that embody most or all of the principles of Representational State Transfer (REST). The RAML specification (this document) defines an application of the [YAML 1.2 specification](http://yaml.org/spec/1.2/spec.html) that provides mechanisms for the definition of practically-RESTful APIs while providing provisions with which source code generators for client and server source code and comprehensive user documentation can be created.
+RAML is a language for the definition of HTTP-based APIs that embody most or all of the principles of Representational State Transfer (REST). This document constitutes the RAML specification, an application of the [YAML 1.2 specification](http://yaml.org/spec/1.2/spec.html). The RAML specification provides mechanisms for defining practically-RESTful APIs, creating client/server source code, and comprehensively documenting the APIs for users.
 
 ## Status of this Document
 
@@ -136,7 +136,7 @@ The following table enumerates the possible properties at the root of a RAML doc
 | traits? | Declarations of traits for use within this API. See section [Resource Types and Traits](#resource-types-and-traits) for more information.
 | resourceTypes? | Declarations of resource types for use within this API. See section [Resource Types and Traits](#resource-types-and-traits) for more information.
 | annotationTypes? | Declarations of annotation types for use by annotations. See section [Annotation Types](#declaring-annotation-types) for more information.
-| securitySchemes? | Declarations of security schemes for use within this API. See section [Security Schemes](#security-schemes) for more information. See section [Security Schemes](#security-schemes) for more information.
+| securitySchemes? | Declarations of security schemes for use within this API. See section [Security Schemes](#security-schemes) for more information.
 | uses? | Importing external libraries that can be used within the API. See section [Libraries](#libraries) for more information.
 | title | Short plain-text label for the API
 | version? | The version of the API, e.g. "v1"
@@ -324,15 +324,9 @@ securitySchemes:
 
 ### Introduction
 
-RAML 1.0 introduces the notion of data **types**, which provide a concise and powerful way to describe the data in
-your API. The data can be in a URI parameter (base or resource URI), a query parameter, a request or response header,
-or of course a request or response body. Some types are built in, while custom types may be defined by extending
-(inheriting from) the built-in types. In any place where the API expects data, a built-in type may be used to describe
-the data, or a type may be extended inline to describe that data. Custom types may also be named and then used
-like any built-in type.
+RAML 1.0 introduces the notion of **data types**, which provide a concise and powerful way of describing the data in your API, and add rules for validating instances of data against the type declaration, so an instance is valid when it adheres to all rules for the type. The data can be in a URI parameter (base or resource URI), a query parameter, a request or response header, or of course a request or response body. Some types are built in, while custom types may be defined by extending (inheriting from) the built-in types. In any place where the API expects data, a built-in type may be used to describe the data, or a type may be extended inline to describe that data. Custom types may also be named and then used like any built-in type.
 
-The RAML example below defines a User type with three properties: firstname and lastname of (built-in) type string,
-and age of (built-in) type number. This User type is later used to describe the type (schema) for a payload.
+The RAML example below defines a User type with three properties: firstname and lastname of (built-in) type string, and age of (built-in) type number. This User type is later used to describe the type (schema) for a payload.
 
 ```yaml
 #%RAML 1.0
@@ -353,9 +347,7 @@ types:
             type: User
 ```
 
-A RAML type declaration looks somewhat like a JSON schema definition. In fact, RAML types can be used instead of JSON
-and XML schemas, or coexist with them. The RAML type syntax, however, is designed to be considerably easier and more
-succinct than JSON and XML schemas while retaining their flexibility and expressiveness. Below is a larger example.
+A RAML type declaration looks somewhat like a JSON schema definition. In fact, RAML types can be used instead of JSON and XML schemas, or coexist with them. The RAML type syntax, however, is designed to be considerably easier and more succinct than JSON and XML schemas while retaining their flexibility and expressiveness. Below is a larger example.
 
 ```yaml
 #%RAML 1.0
@@ -412,8 +404,7 @@ The example above contains a few advanced features.
 
 ### Overview
 
-The RAML type system borrows from object oriented programming languages such as Java,
-as well as from XSD and JSON Schemas.
+The RAML type system borrows from object oriented programming languages such as Java, as well as from XSD and JSON Schemas.
 
 RAML Types in a nutshell:
 
@@ -441,6 +432,7 @@ declarations may have; certain type declarations may have other properties.
 
 | Property  | Description |
 |:----------|:----------|
+| default? | Provides a default value for a type.
 | schema? | Alias for the equivalent "type" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property, as the "schema" alias for that property name may be removed in a future RAML version. The "type" property allows for XML and JSON schemas.
 | type? | A base type which the current type extends, or more generally a type expression.
 | example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `example` property MUST not be available when the `examples` property is already defined.
@@ -449,6 +441,7 @@ declarations may have; certain type declarations may have other properties.
 | description? | A longer, human-friendly description of the type
 | (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
 | facets? | A map of user defined restrictions that are being inherited by a specific sub type. See section [User defined Facets](#user-defined-facets) for more information.
+| xml? | The ability to configure serialization of an instance of this type into XML. See section [XML Serialization of Type Instances](#xml-serialization-of-type-instances) for more information.
 
 The `schema` and `type` properties are mutually exclusive and synonymous: processors MUST NOT allow both to be specified (explicitly or implicitly) inside the same type declaration. Therefore, the following examples are both invalid.
 
@@ -503,22 +496,15 @@ types:
 
 Properties of object types are defined using the OPTIONAL **properties** property. The value of the properties property is called a "properties declaration" in this spec. It is an object whose property names specify the allowed property names of the type being declared, and whose property values are either names of types or inline type declarations.
 
-In addition to the properties available in normal type declarations, properties can specify whether they are required and provide an optional default value.
-
-Note:
-
-When an Object Type does not contain the "properties" property, the object is assumed to be unconstrained. That means, it may contain any properties of any type.
+In addition to the properties available in normal type declarations, properties can specify whether they are required or not.
 
 | Property  | Description |
 |:----------|:----------|
-| default? | Provides default value for a property.
-| required? | Sets if property is optional or not. Default value is `true`.
+| required? | Sets if property is optional or not.<br /><br />**Default:** `true`.
 
 The following example declares an object type with two properties:
 
 ```yaml
-#%RAML 1.0
-title: My API With Types
 types:
   Person:
     properties:
@@ -529,6 +515,56 @@ types:
         required: false
         type: number
 ```
+
+In order to achieve a more "object oriented" experience, a series of shortcuts are available (see [Shortcuts and Syntactic Sugar](#shortcuts-and-syntactic-sugar)). The example below shows a common idiom:
+
+```yaml
+types:
+  Person:
+    properties:
+      name: string # equivalent to ->
+                   # name:
+                   #  type: string
+      age?: number # optional property; equivalent to ->
+                   # age:
+                   #  type: number
+                   #  required: false
+```
+
+Furthermore, when the `required` facet on a property is specified explicitly in a type declaration, any question mark in its property name is treated as part of the property name rather than as an indicator that the property is optional.
+
+For example, in
+
+```yaml
+types:
+  profile:
+    properties:
+      preference?:
+        required: true
+```
+
+the `profile` type has a property whose name is `preference?` (including the trailing question mark) and that is required. The same property could be made optional in two equivalent ways:
+
+```yaml
+types:
+  profile:
+    properties:
+      preference?:
+        required: false
+```
+
+or
+
+```yaml
+types:
+  profile:
+    properties:
+      preference??:
+```
+
+Note:
+
+When an Object Type does not contain the "properties" property, the object is assumed to be unconstrained. That means, it may contain any properties of any type.
 
 #### Additional Properties
 
@@ -593,20 +629,6 @@ types:
 If a pattern property regular expression also matches an explicitly declared property, the explicitly declared property's definition prevails. If two or more pattern property regular expressions match a property name in an instance of the data type, the first one prevails.
 
 Moreover, if `additionalProperties` is `false` (explicitly or by inheritance) in a given type definition, then pattern properties are not allowed to be set explicitly in that definition. If it is `true` (or omitted) in a given type definition, then pattern properties are allowed and further restrict the allowed additional properties in that type.
-
-##### Alternative Syntax
-
-In order to achieve a more "object oriented" experience, a series of shortcuts are available (see [Shortcuts and Syntactic Sugar](#shortcuts-and-syntactic-sugar)). The example below shows a common idiom:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    properties:
-      name: string
-      age?: number
-```
 
 #### Inheritance
 
@@ -778,7 +800,7 @@ types:
 
 ### Scalar Types
 
-RAML defines a set of built-in scalar types and each of them has a predefined set of restrictions. All these types, except the file type, can have an additional `enum` property.
+RAML defines a set of built-in scalar types and each of them has a predefined set of restrictions. All these types, except the file type, may have an additional `enum` property.
 
 |Property Name | Description |
 |:--------|:------------|
@@ -932,8 +954,64 @@ A RAML processor must follow specific rules when validating user-defined facets:
 
 * You can not start facet name with `(` (this is needed to avoid ambiguity with annotations).
 * You can not redeclare built-in facets; for example you can not declare facet with name `properties` in any type which inherits from object type.
-* You can not redeclare facets which were defined earlier in hierarchy any more. This also means that you can not inherit facets with same name from two different types.
+* You can not redeclare facets which has been defined in a super type. This also means that you can not inherit facets with the same name from two different types.
 * You can not validate an instance of a type against user-defined facets.
+
+### Determine Default Types
+
+A RAML processor must be able to determine the default type of a type declaration by using the following rules:
+
+* If, and only if, a type declaration contains a `properties` node; the default type is `object`. For example (based on this rule):
+
+```yaml
+types:
+  Person:
+    type: object
+    properties:
+```
+
+can also be written
+
+```yaml
+types:
+  Person:
+    # default type is `object`, no need to explicitly define it
+    properties:
+```
+
+* If, and only if, a type declaration contains neither a `properties` node nor a `type` or `schema` node, then the default type is `string`. For example (based on this rule):
+
+```yaml
+types:
+  Person:
+    properties:
+      name: # no type or schema necessary since the default type is `string`
+```
+
+* The default type `any` is applied to any `body` node that does not contain `properties`, `type`, or `schema`. For example:
+
+```yaml
+body:
+  application/json:
+    # default type is `any`
+```
+
+Or in case that a default media type has been defined
+
+```yaml
+body:
+  # default type is `any`
+```
+
+Of course, each rule can be overridden by explicitly define a type. For example:
+
+```yaml
+types:
+  Person:
+    properties:
+      name:
+        type: number
+```
 
 ### Type Expressions
 
@@ -1044,11 +1122,6 @@ types:
 ### Union Types
 
 Union Types are declared using pipes (|) in your type expressions. Union Types are useful to model common scenarios in JSON based applications, for example an array containing objects which can be instances of more than one type.
-If you are defining Type Alias for a Union Type ( like the example below ), you can also specify the discriminator property. See [Runtime Polymorphism (Discriminators)](#runtime-polymorphism-discriminators-).
-
-|Property | Description |
-|:--------|:------------|
-| discriminator? | Type property name to be used as a discriminator or boolean
 
 ```yaml
 #%RAML 1.0
@@ -1072,7 +1145,32 @@ types:
       kind: string
   Device:
     type: Phone | Notebook
-    discriminator: kind
+```
+
+A valid instance of a union type must pass all restrictions associated with at least one of the union type options. For example:
+
+```yaml
+types:
+  CatOrDog:
+    type: Cat | Dog # options: Cat or Dog
+  Cat:
+    type: object
+    properties:
+      name: string
+      color: string
+  Dog:
+    type: object
+    properties:
+      name: string
+      fangs: string
+```
+
+A valid instance of the type `CatOrDog` for example looks like the following:
+
+```yaml
+CatOrDog: # follows restrictions applied to the type 'Cat'
+  name: "Musia",
+  color: "brown"
 ```
 
 ### Inheritance and Specialization
@@ -1232,6 +1330,7 @@ types:
     type: number[]
     uniqueItems: true
 ```
+
 #### External Types
 
 The RAML 1.0 Type system allows seamless integration of json/xsd schemas as type definitions. This is achieved by implicitly converting references to json/xsd schemas to subtypes of the **external** built-in type.
@@ -1258,10 +1357,6 @@ types:
 ##### External Types and Inheritance
 
 External types cannot participate in type inheritance or specialization. In other words: You cannot define sub-types of external types that declare new properties or set facets. You can, however, create simple type wrappers that add metadata, examples and a description.
-
-##### Validation of instances
-
-Validation of instances of external types is delegated to standard json/xsd schema validation. To this end objects are automatically converted if needed to JSON or XML before validation. In the case of JSON this transformation is straightforward. In the case of XML serialization, the canonical XML serialization algorithm is used.
 
 #### Inheritance Restrictions
 
@@ -1433,6 +1528,50 @@ types:
                   name: Software Corp
                   address: 35 Central Street
                   value: Gold # validate against instance of the `value` property
+```
+
+### XML Serialization of Type Instances
+
+As the serialization to XML may be a complex process, RAML introduces an additional `xml` node for [type declarations](#type-declarations) that allows to configure how type instances should be serialized to XML. The value of the `xml` node is a map that contains the following nodes.
+
+| Name | Type | Description |
+|:---------|:------:|:-----------------|
+| attribute? | `boolean` | If `attribute` is set to `true`, a type instance should be serialized as an XML attribute. It can only be `true` for scalar types.<br/><br/>**Default:** `false`
+| wrapped? | `boolean` | If `wrapped` is set to `true`, a type instance should be wrapped in its own XML element. It can not  be `true` for scalar types and it can not  be `true` at the same moment when `attribute` is `true`. <br/><br/>**Default:** `false`
+|  name? | `string` | Allows to override the name of the XML element or XML attribute in it's XML representation.<br/><br/>**Default:** the name of the type
+| namespace? | `string` | Allows to configure the name of the XML namespace.
+| prefix? | `string` |  Allows to configure the prefix which will be used during serialization to XML.
+
+The following is a type declaration example that uses the `xml` node:
+
+```yaml
+types:
+  Person:
+    properties:
+      name:
+        type: string
+        xml:
+          attribute: true # serialize it as an XML attribute
+          name: "fullname" # attribute should be called fullname
+      addresses:
+        type: Address[]
+        xml:
+          wrapped: true # serialize it into it's own <addresses>...</addresses> XML element
+  Address:
+    properties:
+      street: string
+      city: string
+```
+
+The example above may be serialized into the following XML:
+
+```xml
+<Person fullname="John Doe">
+  <addresses>
+     <Address>…</Address>
+     ...
+  </addresses>
+</Person>
 ```
 
 ### Using Types in RAML
@@ -1940,7 +2079,6 @@ Resource type and trait declarations can have the following properties, in addit
 | Property | Definition |
 |:---------|:-----------|
 | usage? | The OPTIONAL **usage** property of a resource type or trait provides instructions on how and when the resource type or trait should be used. Documentation generators MUST convey this property as characteristics of the resource and method, respectively. However, the resources and methods MUST NOT inherit the usage property: neither resources nor methods allow a property named usage.
-| uses? | You may import library locally here it contents is accessible only inside of this trait
 
 The following example illustrates the declaration of several resource types and traits.
 
@@ -2189,6 +2327,41 @@ Finally, the resource can have its own traits, and it can be applied a chain of 
 5. etc.
 
 Merging resource types with resources obeys similar rules.
+
+The following example illustrates how a resource type gets merged into the `/products` resource.
+
+```yaml
+resourceTypes:
+  collection:
+    get:
+      description: a list
+      headers:
+        APIKey:
+/products:
+  type: collection
+  get:
+    description: override the description
+    responses:
+      200:
+        body:
+          application/json:
+```
+
+The only overlap between the `collection` resource type and the resource declaration is `description` which is defined in both. In this example, the final version will have the description that has been explicitly defined in the resource.
+
+Every explicit node will win over the ones that are declared in a resource type or trait. The rest is simply merged. The final merged result must be:
+
+```yaml
+/resource:
+  get:
+    headers:
+      APIKey:
+    description: override the description
+    responses:
+      200:
+        body:
+          application/json:
+```
 
 ### Resource Types and Traits Effect on Collections
 
