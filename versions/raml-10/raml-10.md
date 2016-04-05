@@ -971,7 +971,7 @@ types:
     properties:
 ```
 
-* If, and only if, a type declaration does not contain either a `properties` node or no explicit `type`/`schema` node; the default type is always `string`. For example (based on this rule):
+* If, and only if, a type declaration contains neither a `properties` node nor a `type` or `schema` node, then the default type is `string`. For example (based on this rule):
 
 ```yaml
 types:
@@ -995,7 +995,7 @@ body:
   # default type is `any`
 ```
 
-The last rule is important for validation purposes and needs to be defined in the specification. Of course, each rule can be overridden by explicitly define a type. For example:
+Of course, each rule can be overridden by explicitly define a type. For example:
 
 ```yaml
 types:
