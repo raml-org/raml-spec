@@ -324,15 +324,9 @@ securitySchemes:
 
 ### Introduction
 
-RAML 1.0 introduces the notion of data **types**, which provide a concise and powerful way to describe the data in
-your API. The data can be in a URI parameter (base or resource URI), a query parameter, a request or response header,
-or of course a request or response body. Some types are built in, while custom types may be defined by extending
-(inheriting from) the built-in types. In any place where the API expects data, a built-in type may be used to describe
-the data, or a type may be extended inline to describe that data. Custom types may also be named and then used
-like any built-in type.
+RAML 1.0 introduces the notion of **data types**, which provide a concise and powerful way of describing the data in your API, and add rules for validating instances of data against the type declaration, so an instance is valid when it adheres to all rules for the type. The data can be in a URI parameter (base or resource URI), a query parameter, a request or response header, or of course a request or response body. Some types are built in, while custom types may be defined by extending (inheriting from) the built-in types. In any place where the API expects data, a built-in type may be used to describe the data, or a type may be extended inline to describe that data. Custom types may also be named and then used like any built-in type.
 
-The RAML example below defines a User type with three properties: firstname and lastname of (built-in) type string,
-and age of (built-in) type number. This User type is later used to describe the type (schema) for a payload.
+The RAML example below defines a User type with three properties: firstname and lastname of (built-in) type string, and age of (built-in) type number. This User type is later used to describe the type (schema) for a payload.
 
 ```yaml
 #%RAML 1.0
@@ -353,9 +347,7 @@ types:
             type: User
 ```
 
-A RAML type declaration looks somewhat like a JSON schema definition. In fact, RAML types can be used instead of JSON
-and XML schemas, or coexist with them. The RAML type syntax, however, is designed to be considerably easier and more
-succinct than JSON and XML schemas while retaining their flexibility and expressiveness. Below is a larger example.
+A RAML type declaration looks somewhat like a JSON schema definition. In fact, RAML types can be used instead of JSON and XML schemas, or coexist with them. The RAML type syntax, however, is designed to be considerably easier and more succinct than JSON and XML schemas while retaining their flexibility and expressiveness. Below is a larger example.
 
 ```yaml
 #%RAML 1.0
@@ -412,8 +404,7 @@ The example above contains a few advanced features.
 
 ### Overview
 
-The RAML type system borrows from object oriented programming languages such as Java,
-as well as from XSD and JSON Schemas.
+The RAML type system borrows from object oriented programming languages such as Java, as well as from XSD and JSON Schemas.
 
 RAML Types in a nutshell:
 
@@ -1169,6 +1160,32 @@ types:
     type: Phone | Notebook
 ```
 
+A valid instance of a union type must pass all restrictions associated with at least one of the union type options. For example:
+
+```yaml
+types:
+  CatOrDog:
+    type: Cat | Dog # options: Cat or Dog
+  Cat:
+    type: object
+    properties:
+      name: string
+      color: string
+  Dog:
+    type: object
+    properties:
+      name: string
+      fangs: string
+```
+
+A valid instance of the type `CatOrDog` for example looks like the following:
+
+```yaml
+CatOrDog: # follows restrictions applied to the type 'Cat'
+  name: "Musia",
+  color: "brown"
+```
+
 ### Inheritance and Specialization
 
 When declaring a RAML Type you are always inheriting from, or specializing, an existing type. The general syntax for inheritance is:
@@ -1326,6 +1343,7 @@ types:
     type: number[]
     uniqueItems: true
 ```
+
 #### External Types
 
 The RAML 1.0 Type system allows seamless integration of json/xsd schemas as type definitions. This is achieved by implicitly converting references to json/xsd schemas to subtypes of the **external** built-in type.
@@ -1352,10 +1370,6 @@ types:
 ##### External Types and Inheritance
 
 External types cannot participate in type inheritance or specialization. In other words: You cannot define sub-types of external types that declare new properties or set facets. You can, however, create simple type wrappers that add metadata, examples and a description.
-
-##### Validation of instances
-
-Validation of instances of external types is delegated to standard json/xsd schema validation. To this end objects are automatically converted if needed to JSON or XML before validation. In the case of JSON this transformation is straightforward. In the case of XML serialization, the canonical XML serialization algorithm is used.
 
 #### Inheritance Restrictions
 
