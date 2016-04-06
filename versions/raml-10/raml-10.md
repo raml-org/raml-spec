@@ -434,7 +434,7 @@ declarations may have; certain type declarations may have other properties.
 |:----------|:----------|
 | default? | Provides a default value for a type.
 | schema? | Alias for the equivalent "type" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property, as the "schema" alias for that property name may be removed in a future RAML version. The "type" property allows for XML and JSON schemas.
-| type? | A base type which the current type extends, or more generally a type expression.
+| type? | A base type which the current type extends, or more generally a type expression. The value of a type node must be the name of either a user-defined type or one of the built-in types (object, array, or a scalar type), or a JSON or XML Schema.
 | example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `example` property MUST not be available when the `examples` property is already defined.
 | examples? | An object containing named examples of instances of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `examples` property MUST not be available when the `example` property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | displayName? | An alternate, human-friendly name for the type
