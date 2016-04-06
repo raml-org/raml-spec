@@ -3012,6 +3012,7 @@ A file to be included MAY begin with a RAML fragment identifier line, which cons
 | Library | A RAML library; see the section on [Libraries](#libraries).
 | Overlay | An overlay file; see the section on [Overlays](#overlays).
 | Extension | An extension file; see the section on [Extensions](#extensions).
+| SecurityScheme | A definition of a security scheme; see section on [Security Schemes](#security-schemes)
 
 If a file begins with a RAML fragment identifier line, and the fragment identifier is neither Library nor Overlay nor Extension, the contents of the file after removal of the RAML fragment identifier line MUST be valid structurally according to the corresponding section of this RAML specification. For example, a RAML file beginning with `#%RAML 1.0 Trait` must have the structure of a RAML trait declaration as defined in the [specification for traits](#resource-types-and-traits), such that including the file in a location where a trait declaration is called for results in a valid RAML file.
 
