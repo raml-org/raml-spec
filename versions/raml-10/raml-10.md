@@ -956,6 +956,8 @@ A RAML processor must follow specific rules when validating user-defined facets:
 * You can not redeclare built-in facets; for example you can not declare facet with name `properties` in any type which inherits from object type.
 * You can not redeclare facets which has been defined in a super type. This also means that you can not inherit facets with the same name from two different types.
 * You can not validate an instance of a type against user-defined facets.
+* A RAML processors MAY be not required to validate an instance of a type against user-defined facets.
+* A sub-type does not automatically inherit the user-defined facets from its parent type; hence a type that extends from `PossibleMeetingDate` must not define any of the user-defined facets that are part of `CustomDate`.
 
 ### Determine Default Types
 
