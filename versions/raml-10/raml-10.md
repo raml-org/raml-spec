@@ -1268,9 +1268,18 @@ types:
             type: !include person.json
 ```
 
-A RAML processor MUST not allow types that define an XML or JSON schema to participate in type inheritance or specialization. In other words: You cannot define sub-types of external types that declare new properties or set facets. You can, however, create simple type wrappers that add metadata, examples and a description.
+A RAML processor MUST not allow types that define an XML or JSON schema to participate in type inheritance or specialization. In other words: You cannot define sub-types of these types that declare new properties, add restrictions, and set or declare facets. You can, however, create simple type wrappers that add annotations, examples or a description.
 
-This example shows an invalid case where a type inherits the characteristics of a JSON schema and adds additional properties.
+The following is a fully valid example.
+
+```yaml
+types:
+  Person:
+    type: !include person.json
+    description: this is a schema describing person
+```
+
+However, this example shows an invalid case where a type inherits the characteristics of a JSON schema and adds additional properties.
 
 ```yaml
 types:
