@@ -1671,6 +1671,26 @@ https://api.github.com/users/{userId}/keys
 https://api.github.com/users/{userId}/keys/{keyId}
 ```
 
+A RAML processor MUST not allow a fully-combined path, which you get from combining the resource's path with all of its parents, to be identical to another fully-combined path, WITHOUT consideration to the possible values of any URI parameter.
+
+This example would be FORBIDDEN.
+
+```yaml
+/users:
+  /foo:
+/users/foo:
+```
+
+(both paths combine to the same `/users/foo`), and on the other hand this would ALWAYS be ALLOWED.
+
+```yaml
+/users/{userId}:
+/users/{username}:
+/users/me:
+```
+
+### Resource Property
+
 The value of a resource property is an object whose properties are described in the following table.
 
 |Property | Description |
