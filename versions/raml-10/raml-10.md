@@ -1904,20 +1904,49 @@ An API's methods may support or require a query string in the URL on which they 
 
 #### The Query String as a Whole
 
-The queryString property is used to specify the query string as a whole, rather than as name-value pairs. Its value is either the name of a type or an inline type declaration.
+The queryString property is used to specify the query string as a whole, rather than as name-value pairs. Its value is either the name of a type, including union types; or an inline type declaration. The type must be derived from a scalar type or from an object type.
 
-If the queryString property specifies a non-scalar type or a union of non-scalar types, then processors MUST default to treating the format of the query string as JSON in applying the type to instances of that query string. They MAY allow other treatments based on annotations.
+If the type is derived from a scalar type, the query string as a whole MUST be described by the type.
 
-The following example shows a get method with a query string that is expected to be in JSON format.
+If the type is derived from an object type, processors MUST regard the query string as a URL-encoded serialization of an instance of this object type; that is, the query string must be of the form "parameter1=value1&parameter2=value2&..." where "parameter1", "parameter2", etc. correspond to the properties in the object type, and the values to the corresponding value specifications in the object type. If a value of a property in the object type is an array type, processors MUST interpret this as allowing multiple instances of that query parameter in the query string. In such a case, the underlying type of the array -- namely, the type of the elements of the array -- MUST be applied as the type of the value of instances of this query parameter.
+
+In the following example, union types and extending from multiple types are used to constrain the query parameters to specific alternatives:
 
 ```yaml
 #%RAML 1.0
-title: Example with query string
-/users:
+title: Illustrate query parameter variations
+types:
+  lat-long: # lat & long required; mutually exclusive with location
+    properties:
+      lat: number
+      long: number
+  loc: # location required; mutually exclusive with lat & long
+    properties:
+      location:
+  paging: # each is optional, not exclusive with anything
+    properties:
+      start?: number
+      page-size?: number
+/locations:
   get:
     queryString:
-      description: We filter based on a JSON-formatted query string
-      type: !include schemas/usersFilter.json
+      type: [paging,  lat-long | loc ]
+      examples:
+        first:
+          content:
+            start: 2
+            lat: 12
+            long: 13
+        second:
+          content:
+            start: 2
+            page-size: 20
+            location: 1,2
+        third:  # not valid
+          content:
+            lat: 12
+            location: 2
+          strict: false # because it's not valid
 ```
 
 #### Query Parameters in a Query String
