@@ -773,7 +773,7 @@ PersonOrDog:
 
 ### Array Types
 
-Array Types are declared by using the array qualifier at the end of a Type Expression. If you are defining a top-level Array Type ( like the example below ), you can pass the following additional properties to further restrict its behavior.
+Array Types are declared by either using the array qualifier `[]` at the end of a [type expression](#type-expressions) or `array` as the value of a `type` node. If you are defining a top-level array type (like the example below), you can pass the following additional properties to further restrict its behavior.
 
 | Property  | Description |
 |:----------|:----------|
@@ -782,20 +782,36 @@ Array Types are declared by using the array qualifier at the end of a Type Expre
 | minItems? | Minimum amount of items in array. Value MUST be equal or greater than 0. Defaults to 0.
 | maxItems? | Maximum amount of items in array. Value MUST be equal or greater than 0. Defaults to 2147483647.
 
+So following are both valid examples:
+
 ```yaml
-#%RAML 1.0
-title: My API With Types
 types:
   Email:
     type: object
     properties:
       name:
         type: string
-  emails:
+  Emails:
     type: Email[]
     minItems: 1
     uniqueItems: true
 ```
+
+```yaml
+types:
+  Email:
+    type: object
+    properties:
+      name:
+        type: string
+  Emails:
+    type: array
+    items: Email
+    minItems: 1
+    uniqueItems: true
+```
+
+Using `Email[]` is equivalent to use `type: array` and specifically define the type each items in the array inherit from using the `items` facet.
 
 ### Scalar Types
 
