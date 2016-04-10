@@ -132,7 +132,7 @@ The following table enumerates the possible properties at the root of a RAML doc
 | description? | A longer, human-friendly description of the API
 | (&lt;annotationName&gt;)? | Annotations to be applied to this API. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
 | schemas? | Alias for the equivalent "types" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "types" property, as the "schemas" alias for that property name may be removed in a future RAML version. The "types" property allows for XML and JSON schemas.
-| types? | Declarations of (data) types for use within this API. See section [RAML Data Types](#raml-data-types) for more information.
+| types? | Declarations of (data) types for use within this API. The value is a map where each key represents the name of the type and the value a type declaration. See section [RAML Data Types](#raml-data-types) for more information.
 | traits? | Declarations of traits for use within this API. See section [Resource Types and Traits](#resource-types-and-traits) for more information.
 | resourceTypes? | Declarations of resource types for use within this API. See section [Resource Types and Traits](#resource-types-and-traits) for more information.
 | annotationTypes? | Declarations of annotation types for use by annotations. See section [Annotation Types](#declaring-annotation-types) for more information.
