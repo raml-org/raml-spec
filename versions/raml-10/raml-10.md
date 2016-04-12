@@ -962,13 +962,6 @@ In the above example, the possibility of restricting date instances based on whe
 
 Because user-defined facets are by definition not built into this RAML specification, and hence their semantic may not be understood by all RAML processors, a RAML processor may or may not choose to use user-defined facets on a type in validating instances of that type.  In the example above, a RAML processor may or may not assign a meaning to `noHolidays` and so may choose to ignore the `noHolidays: true` value in validating instances of `PossibleMeetingDate`.
 
-A RAML processor must follow specific rules when validating user-defined facets:
-
-* You can not start facet name with `(` (this is needed to avoid ambiguity with annotations).
-* You can not redeclare built-in facets; for example you can not declare facet with name `properties` in any type which inherits from object type.
-* You can not redeclare facets which has been defined in a super type. This also means that you can not inherit facets with the same name from two different types.
-* A sub-type does not automatically inherit the user-defined facets from its parent type; hence a type that extends from `PossibleMeetingDate` must not define any of the user-defined facets that are part of `CustomDate`.
-
 ### Determine Default Types
 
 A RAML processor must be able to determine the default type of a type declaration by using the following rules:
