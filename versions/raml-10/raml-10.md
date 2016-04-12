@@ -1622,7 +1622,7 @@ baseUri: https://api.github.com
 
 The key of a resource property, i.e. its relative URI, MAY consist of multiple URI path fragments separated by slashes; e.g. /bom/items may indicate the collection of items in a bill of materials as a single resource. However, if the individual URI path fragments are themselves resources, the API definition SHOULD use nested resources to describe this structure; e.g. if /bom is itself a resource then /items should be a nested resource of /bom, vs using /bom/items as a non-nested resource.
 
-Absolute URIs are not explicitly specified. They are computed by starting with the baseUri and appending the relative URI of the top-level resource, and then successively appending the relative URI values for each nested resource until the target resource is reached.
+Absolute URIs are not explicitly specified. They are computed by appending the relative URI of the top-level resource, and then successively appending the relative URI values for each nested resource until the target resource is reached. If, and only if, a baseUri has been defined, each relative URI of the top-level resource needs to start with the base URI.
 
 Taking the previous example, the absolute URI of the public gists resource is formed as follows.
 
@@ -1671,7 +1671,7 @@ https://api.github.com/users/{userId}/keys
 https://api.github.com/users/{userId}/keys/{keyId}
 ```
 
-A RAML processor MUST not allow a fully-combined path, which you get from combining the resource's path with all of its parents, to be identical to another fully-combined path, WITHOUT consideration to the possible values of any URI parameter.
+A RAML processor MUST NOT allow one of the computed absolute URIs to be identical to another one, WITHOUT consideration to the possible values of any URI parameter.
 
 This example would be FORBIDDEN.
 
