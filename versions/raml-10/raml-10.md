@@ -1904,7 +1904,7 @@ An API's methods may support or require a query string in the URL on which they 
 
 #### The Query String as a Whole
 
-The queryString property is used to specify the query string as a whole, rather than as name-value pairs. Its value is either the name of a type, including union types; or an inline type declaration. The type must be derived from a scalar type or from an object type.
+The queryString property is used to specify the query string as a whole, rather than as name-value pairs. Its value is either the name of a data type or an inline data type declaration (including a data type expression). In either case the types at the root of the type hierarchy of the data type MUST all be either a scalar type or the object type, after fully expanding any union type expressions at every level of the type hierarchy.
 
 If the type is derived from a scalar type, the query string as a whole MUST be described by the type.
 
