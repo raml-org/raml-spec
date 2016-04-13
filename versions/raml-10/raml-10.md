@@ -1208,7 +1208,7 @@ types:
             type: !include person.json
 ```
 
-A RAML processor MUST not allow types that define an XML or JSON schema to participate in type inheritance or specialization. In other words: You cannot define sub-types of these types that declare new properties, add restrictions, and set or declare facets. You can, however, create simple type wrappers that add annotations, examples or a description.
+A RAML processor MUST not allow types that define an XML or JSON schema to participate in type inheritance or specialization, or effectively in any [type expression](#type-expressions). In other words: You cannot define sub-types of these types that declare new properties, add restrictions, and set or declare facets. You can, however, create simple type wrappers that add annotations, examples or a description.
 
 The following is a fully valid example.
 
@@ -1228,6 +1228,18 @@ types:
     properties: # invalid
       single: boolean
 ```
+
+Another invalid case is the following example where the type `Person` is being used for a property type.
+
+```yaml
+types:
+  Person:
+    type: !include person.json
+    description: this is a schema describing person
+  Board:
+    properties:
+      members: Person[] # invalid use of type expression '[]' and as a property type
+ ```
 
 A RAML Processor MUST be able to interpret JSON Schema and XML Schema.
 
