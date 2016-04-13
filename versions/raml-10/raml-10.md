@@ -1189,67 +1189,7 @@ CatOrDog: # follows restrictions applied to the type 'Cat'
 
 ### Using XML and JSON Schema
 
-RAML allows to not only define data using the type system, although it is recommended, but also provides mechanism to define them in XML and/or JSON schemas.
-
-A RAML Processor MUST be able to interpret JSON Schema and XML Schema.
-
-#### Schemas Node
-
-The root-level **schemas** node specifies a map of schemas that could be used anywhere in the API definition. The value of the **schemas** node is a map; in which each key is the schema name, and the values are [schema definitions](#schema-node). The schema definitions MAY be included inline or by using `!include`.
-
-The following example shows how to define a global definition that includes an external file which contains the schema.
-
-```yaml
-schemas:
-  Person: !include person.json
-```
-
-Please note that "schemas" is an alias for the equivalent "types" node, for compatibility with RAML 0.8 and is deprecated. API definitions should use the "types" node, as the "schemas" alias may be removed in a future RAML version. The "types" node also allows for XML and JSON schemas (see [Using RAML Data Type System](#using-raml-data-type-system)).
-
-#### Schema Node
-
-The **schema** node specifies a schema that MAY be declared inline or in an external file. Alternatively, the value of the **schema** node MAY be the name of a schema specified in the root-level **schemas** node. If the schema is sufficiently large so as to make it difficult for a person to read the API definition, or the schema is reused across multiple APIs or across multiple miles in the same API, an external file SHOULD be used instead of including the content inline.
-
-This example shows a schema declaration for both; inline and included from an external file.
-
-```yaml
-/person:
-  get:
-    responses:
-      200:
-        body:
-          application/json:
-            schema: |
-              {
-                "title": "Example Schema",
-                "type": "object",
-                "properties": {
-                  "firstName": {
-                    "type": "string"
-                  },
-                  "lastName": {
-                    "type": "string"
-                  },
-                  "age": {
-                    "description": "Age in years",
-                    "type": "integer",
-                    "minimum": 0
-                  }
-                }
-              }
-  post:
-    body:
-      application/json:
-        schema: !include person.json
-```
-
-The **schema** node CANNOT be specified if a body's media type is application/x-www-form-urlencoded or multipart/form-data, or if a "type" node has been specified already (see [Using RAML Data Type System](#using-raml-data-type-system)).
-
-Please note that "schema" is an alias for the equivalent "type" node, for compatibility with RAML 0.8 and is deprecated. API definitions should use the "type" node, as the "schema" alias may be removed in a future RAML version. The "type" node allows for XML and JSON schemas (see [Using RAML Data Type System](#using-raml-data-type-system)).
-
-#### Using RAML Data Type System
-
-RAML's type system allows seamless integration of JSON and XML schemas as type definitions. That follows the same rules as using **schemas** or **schema**. Both are synonymous to **types** and **type**, with the restriction that **type** and **schema** are mutually exclusive.
+RAML allows to not only define data using the type system, although it is recommended, but also provides mechanism to define them in XML and/or JSON schemas. RAML's type system allows seamless integration of JSON and XML schemas as type definitions.
 
 The following examples show how to include an external JSON schema into a root-level type definition and a body declaration.
 
@@ -1288,6 +1228,10 @@ types:
     properties: # invalid
       single: boolean
 ```
+
+A RAML Processor MUST be able to interpret JSON Schema and XML Schema.
+
+Please note that the properties "schemas" and "types" are completely synonymous, so are "schema" and "type" for compatibility with RAML 0.8, but "schemas" and "schema" are deprecated. API definitions should use "types" and "type", as "schemas" and "schema" may be removed in a future RAML version.
 
 ### Inheritance and Specialization
 
