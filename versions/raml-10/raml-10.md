@@ -389,7 +389,7 @@ types:
       200:
         body:
           application/json:
-            schema: Org
+            type: Org
 ```
 
 The example above contains a few advanced features.
