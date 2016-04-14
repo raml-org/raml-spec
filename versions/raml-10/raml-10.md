@@ -6,29 +6,29 @@ RAML is a language for the definition of HTTP-based APIs that embody most or all
 
 ## Status of this Document
 
-This document constitutes the RAML 1.0 specification. The consensus  of specification authors and RAML 0.8 users determines the contents of this document. We strongly recommend that implementers and users of the RAML 0.8 specification update their software and API definitions to this version of the RAML specification.
+This document constitutes the RAML 1.0 specification. The consensus of specification authors and RAML 0.8 users determines the contents of this document. We strongly recommend that implementers and users of the RAML 0.8 specification update their software and API definitions to this version of the RAML specification.
 
 
 ## Terminology and Conformance Language
 
-Normative text is text that describes one or both of the following kind of elements: 
+Normative text describes one or both of the following kinds of elements: 
 
-* Indispensable elements of the specification
-* Elements that contain the conformance language keywords as defined by [IETF RFC 2119](https://www.ietf.org/rfc/rfc2119.txt) "Key words for use in RFCs to Indicate Requirement Levels"
+* Vital elements of the specification
+* Elements that contain the conformance language key words as defined by [IETF RFC 2119](https://www.ietf.org/rfc/rfc2119.txt) "Key words for use in RFCs to Indicate Requirement Levels"
 
-Informative text is text that is potentially helpful to the user, but not indispensable to the specification and can be changed, added, or deleted editorially without a negative impact on the implementation of the specification. Informative text does not contain any conformance keywords.
+Informative text is potentially helpful to the user, but dispensable. Informative text can be changed, added, or deleted editorially without negatively affecting the implementation of the specification. Informative text does not contain conformance keywords.
 
 All text in this document is, by default, normative.
 
-The meanings of the following keywords in this document are as described in [IETF RFC 2119](https://www.ietf.org/rfc/rfc2119.txt) "Keywords for use in RFCs to Indicate Requirement Levels": "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL".
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [IETF RFC 2119](https://www.ietf.org/rfc/rfc2119.txt) "Key words for use in RFCs to Indicate Requirement Levels".
 
 ## Definitions and Terminology
 
 ### General
 
-In this specification, **API definition** denotes the description of an API using this specification. 
+In this specification, **API definition** means an API using this specification. 
 
-**RAML Specification** refers to the current document.
+**RAML Specification** refers to this document.
 
 **REST** is used in the context of an API implemented using some or all of the principles of REST (Representational State Transfer), which was introduced and first defined in 2000 in Chapter 5, [REST](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm), of the doctoral dissertation *"Architectural Styles and the Design of Network-based Software Architecture"* by Roy Fielding.
 
@@ -38,45 +38,45 @@ A trailing question mark, for example **description?**, indicates an optional pr
 
 ### Template URI
 
-A template URI refers to a URI parameter using curly brackets ({}) to mark a section inside a relative URI of a resource as variable element.
+A template URI refers to a URI parameter, which is a variable element, enclosed in curly brackets ({}) inside a relative URI of a resource.
 
-RAML fully supports Level 2 as defined in [RFC6570](https://tools.ietf.org/html/rfc6570) for any template URIs.
+RAML fully supports Level 2 as defined in [RFC6570](https://tools.ietf.org/html/rfc6570) for URI Templates.
 
 ## Introduction
 
-This specification describes the RESTful API Modeling Language (RAML). RAML is a human- and machine-readable language for the definition of a RESTful application programming interface (API). RAML is designed to improve the specification of such interfaces by providing a format that can serve as a useful contract between the API provider and API consumers. RAML can, for example, facilitate providing user documentation and source code stubs for client and server implementations, thereby streamlining and enhancing the definition and development of interoperable applications that utilize RESTful APIs.
+This specification describes the RESTful API Modeling Language (RAML). RAML is a human- and machine-readable language for the definition of a RESTful application programming interface (API). RAML is designed to improve the specification of the API by providing a format that the API provider and API consumers can use as a mutual contract. RAML can, for example, facilitate providing user documentation and source code stubs for client and server implementations. Such provisions streamline and enhance the definition and development of interoperable applications that utilize RESTful APIs.
 
-RAML introduces the innovative concept of resource types and traits for characterizing and reusing patterns of resources and methods on those resources. This technique minimizes the amount of repetition required to specify a RESTful API design and promotes consistency within and across APIs.
+RAML introduces the innovative concept of resource types and traits for characterizing and reusing patterns of resources and associated methods. Using resource types and traits minimizes the repetition in a RESTful API design and promotes consistency within and across APIs.
 
 This document is organized as follows:
 
-* **Basic Information**. Explains how to describe core aspects of the API, such as its name, title, location (or URI), and defaults. Describes how to include supporting documentation for the API.
-* **Data Types**. Describes modeling API data through a streamlined type system that encompasses JSON and XML Schema.
-* **Resources**. Describes how to specify API resources and nested resources, as well as URI parameters in any URI templates.
-* **Methods**. Describes how to specify the methods on API resources and their request headers, query parameters, and request bodies.
-* **Responses**. Describes the specification of API responses, including status codes, media types, response headers, and response bodies.
-* **Resource Types and Traits**. Describes optionally using RAML resource types and traits to characterize resources, avoiding redundancy in an API definition and promoting consistency and reuse.
-* **Security**. Describes specifying an API security scheme in RAML.
-* **Annotations**. Describes extending a RAML specification by defining strongly-typed annotations and applying them throughout the specification.
-* **Includes, Libraries, Overlays, and Extensions**. Describes how an API definition can consist of externalized definition documents, packaging collections of such definitions into libraries, separating and overlaying layers of metadata on a RAML document, and extending an API specification with additional functionality.
+* **Basic Information**. How to describe core aspects of the API, such as its name, title, location (or URI), and defaults and how to include supporting documentation for the API
+* **Data Types**. Modeling API data through a streamlined type system that encompasses JSON and XML Schema
+* **Resources**. How to specify API resources and nested resources, as well as URI parameters in any URI templates
+* **Methods**. How to specify the methods on API resources and their request headers, query parameters, and request bodies
+* **Responses**. The specification of API responses, including status codes, media types, response headers, and response bodies
+* **Resource Types and Traits**. The optional use of RAML resource types and traits to characterize resources
+* **Security**. Specifying an API security scheme in RAML
+* **Annotations**. Extending a RAML specification by defining strongly-typed annotations and applying them throughout the specification
+* **Includes, Libraries, Overlays, and Extensions**. How an API definition can consist of externalized definition documents, packaging collections of such definitions into libraries, separating and overlaying layers of metadata on a RAML document, and extending an API specification with additional functionality
 
 ## What's New and Different in RAML 1.0
 
 * **Data types**: a unified, streamlined, and powerful way to model data wherever it appears in an API.
   * Uniformly covers bodies, URI parameters, headers, and query parameters and eliminates the need for a separate formParameters construct
-  * Supports wrapping XML Schema and JSON Schema and even referring to sub-schemas within them, but in many cases just obviates them
-  * Simplifies coding compared to the JSON Schema or XML Schema--all code is YAML
-* **Examples**: multiple examples, expressible in YAML, support annotations, so semantics can be injected
+  * Supports wrapping XML Schema and JSON Schema and even referring to sub-schemas, but in many cases just obviates the schemas
+  * Simplifies coding, compared to the JSON Schema or XML Schema, by using YAML
+* **Examples**: multiple examples in YAML support annotations, so semantics can be injected
 * **Annotations**: a tried-and-tested, strongly-typed mechanism for extensibility
-* **Libraries**: more capable modularization for broad reuse of API artifacts
-* **Overlays** and **Extensions**: further extensibility through separated files
+* **Libraries**: improved modularity for broad reuse of API artifacts
+* **Overlays** and **Extensions**: increased extensibility through separated files
 * **Improved Security Schemes**:
-  * More complete OAuth support
+  * Wider OAuth support
   * Support for pass-through (key-based) security schemes
   * Extension points
 * **Several smaller changes** for consistency and articulation, for example:
   * Array-valued properties can be expressed as scalars when the array has only one member
-  * Clarifications, such as the baseUri being optional and overloading rules
+  * Clarifications, such as stating that the baseUri is optional and articulating the overloading rules
 
 ## Markup Language
 
