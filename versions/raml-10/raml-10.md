@@ -65,7 +65,7 @@ This document is organized as follows:
 * **Data types**: a unified, streamlined, and powerful way to model data wherever it appears in an API.
   * Uniformly covers bodies, URI parameters, headers, and query parameters and eliminates the need for a separate formParameters construct
   * Supports wrapping XML Schema and JSON Schema and even referring to sub-schemas, but in many cases just obviates the schemas
-  * Simplifies coding, compared to the JSON Schema or XML Schema, by using YAML
+  * Simplifies coding, compared to the JSON Schema or XML Schema, by virtue of being YAML-based
 * **Examples**: multiple examples in YAML support annotations, so semantics can be injected
 * **Annotations**: a tried-and-tested, strongly-typed mechanism for extensibility
 * **Libraries**: improved modularity for broad reuse of API artifacts
@@ -80,34 +80,34 @@ This document is organized as follows:
 
 ## Markup Language
 
-This specification uses [YAML 1.2](http://www.yaml.org/spec/1.2/spec.html) as its underlying format. YAML is a human-readable data format that aligns well with the design goals of this specification. As in YAML, all nodes (keys, values, tags, etc) are case-sensitive.
+This specification uses [YAML 1.2](http://www.yaml.org/spec/1.2/spec.html) as its underlying format. YAML is a human-readable data format that aligns well with the design goals of this specification. As in YAML, all nodes such as keys, values, and tags, are case-sensitive.
 
-RAML API definitions are YAML 1.2-compliant documents that begin with a REQUIRED YAML-comment line that indicates the RAML version, as follows.
+RAML API definitions are YAML 1.2-compliant documents that begin with a REQUIRED YAML-comment line that indicates the RAML version, as follows:
 
 ```yaml
 #%RAML 1.0
 title: My API
 ```
 
-The first line of a RAML specification compliant document MUST match the [IETF RFC5234](https://tools.ietf.org/html/rfc5234) – Augmented BNF for Syntax Specifications:
+The first line of a RAML specification-compliant document MUST match the [IETF RFC5234](https://tools.ietf.org/html/rfc5234) – Augmented BNF for Syntax Specifications:
 
 “#%RAML” SP “1.0” SP [FragmentType] CRLF
 
-With the _FragmentType_ being NOT ALLOWED in API definitions, and is OPTIONAL for the specification of RAML fragment documents. RAML fragment documents are reusable RAML modules that are referenced or included into a larger API definition. Please refer to the [Modularization](#modularization) section for more information about RAML fragments.
+The _FragmentType_ is NOT ALLOWED in API definitions and is OPTIONAL for the specification of [RAML fragment](#typed-fragments) documents. RAML fragment documents are reusable RAML modules that a larger API definition references or includes. 
 
-The media type _application/raml+yaml_ and its associated file extension _.raml_ SHALL be used to designate files containing RAML API definitions, RAML fragments and files that contain RAML markup. RAML is also capable of including documents with other media types, e.g., “application/schema+json”, “application/yaml”.
+The media type _application/raml+yaml_ and its associated file extension _.raml_ SHALL be used to designate files containing RAML API definitions, RAML fragments, and files that contain RAML markup. RAML is also capable of including documents of other media types, such as “application/schema+json” and “application/yaml”.
 
-In order to facilitate the automated processing of RAML documents, RAML imposes some restrictions and requirements in addition to the core YAML 1.2 specification. The following list enumerates some of these requirements and restrictions:
+To facilitate the automated processing of RAML documents, RAML imposes the following restrictions and requirements in addition to the core YAML 1.2 specification:
 
-1. The first line of a RAML file consists of a YAML comment that specifies the RAML version. Therefore RAML processors cannot completely ignore all YAML comments.
-2. The order of some properties at given levels within a RAML document has significance. Therefore processors are expected to preserve this ordering.
-3. Property names, also known as Keys, at given levels are not repeatable. Although YAML allows such repetition duplicate-keys will overwriting previously specified values.
+* The first line of a RAML file consists of a YAML comment that specifies the RAML version. Therefore, RAML processors cannot completely ignore all YAML comments.
+* The order of some properties at certain levels within a RAML document is significant. Therefore, processors are expected to preserve this ordering.
+* Property names, also known as Keys, at certain levels are not repeatable. Although YAML allows such repetition, the value of a duplicate key, key 2 for example, overwrites the value of the duplicated key 1.
 
 ## The Root of the Document
 
-The root section of the RAML document describes the basic information of an API, such as its title and version, as well as defining assets used elsewhere in the RAML document such as types and traits.
+The root section of the RAML document describes the basic information about an API, such as its title and version. The root section also defines assets used elsewhere in the RAML document, such as types and traits.
 
-RAML-documented API definition properties MAY appear in any order. Processors MUST preserve the order of properties of the same kind within the same node of the definition tree, for example resources that appear at the same level of the resource tree, methods for a given resource, parameters for a given method, properties at the same level in a given type, etc. Processors MUST also preserve the order of items within arrays.
+RAML-documented API definition properties MAY appear in any order. Processors MUST preserve the order of properties of the same kind within the same node of the definition tree. Examples of such properties are resources that appear at the same level of the resource tree, methods for a given resource, parameters for a given method, and properties at the same level in a given type. Processors MUST also preserve the order of items within arrays.
 
 This example shows a small part of a RAML API definition for the GitHub v3 public API.
 
@@ -136,50 +136,66 @@ The following table enumerates the possible properties at the root of a RAML doc
 
 | Property  | Description |
 |:----------|:----------|
-| description? | A longer, human-friendly description of the API
-| (&lt;annotationName&gt;)? | Annotations to be applied to this API. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
-| schemas? | Alias for the equivalent "types" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "types" property, as the "schemas" alias for that property name may be removed in a future RAML version. The "types" property allows for XML and JSON schemas.
-| types? | Declarations of (data) types for use within this API. See section [RAML Data Types](#raml-data-types) for more information.
-| traits? | Declarations of traits for use within this API. See section [Resource Types and Traits](#resource-types-and-traits) for more information.
-| resourceTypes? | Declarations of resource types for use within this API. See section [Resource Types and Traits](#resource-types-and-traits) for more information.
-| annotationTypes? | Declarations of annotation types for use by annotations. See section [Annotation Types](#declaring-annotation-types) for more information.
-| securitySchemes? | Declarations of security schemes for use within this API. See section [Security Schemes](#security-schemes) for more information. See section [Security Schemes](#security-schemes) for more information.
-| uses? | Importing external libraries that can be used within the API. See section [Libraries](#libraries) for more information.
-| title | Short plain-text label for the API
-| version? | The version of the API, e.g. "v1"
-| baseUri? | A URI that's to be used as the base of all the resources' URIs. Often used as the base of the URL of each resource, containing the location of the API. Can be a [template URI](#template-uri). See section [Base URI and Base URI Parameters](#base-uri-and-base-uri-parameters) for more information.
-| baseUriParameters? | Named parameters used in the baseUri (template). See section [Base URI and Base URI Parameters](#base-uri-and-base-uri-parameters) for more information.
-| protocols? | The protocols supported by the API. The protocols property MUST contain one or more of the supported protocols: "HTTP", "HTTPS". (case-insensitive).
-| mediaType? | Default media types to use for request and response bodies (payloads), e.g. "application/json"
-| securedBy? | The security schemes that apply to every resource and method in the API. See section [Applying Security Schemes](#applying-security-schemes) for more information.
-| /&lt;relativeUri&gt;? | The resources of the API, identified as relative URIs that begin with a slash (/). Every property whose key begins with a slash (/), and is either at the root of the API definition or is the child property of a resource property, is a resource property, e.g.: /users, /{groupId}, etc.
-| documentation? | Additional overall documentation for the API. See section [User Documentation](#user-documentation) for more information.
+| description? | A substantial, human-friendly description of the API.
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this API. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
+| schemas? | An alias for the equivalent "types" property for compatibility with RAML 0.8. Deprecated - API definitions should use the "types" property because a future RAML version might remove the "schemas" alias for that property name. The "types" property supports XML and JSON schemas.
+| types? | Declarations of [(data) types](#raml-data-types) for use within the API.
+| traits? | Declarations of [traits](#resource-types-and-traits) for use within the API.
+| resourceTypes? | Declarations of [resource types](#resource-types-and-traits) for use within the API.
+| annotationTypes? | Declarations of [annotation types](#declaring-annotation-types) for use by annotations.
+| securitySchemes? | Declarations of [security schemes](#security-schemes) for use within the API.
+| uses? | Imported external [libraries](#libraries) for use within the API.
+| title | A short, plain-text label for the API.
+| version? | The version of the API, for example "v1".
+| baseUri? | A URI that serves as the [base for URIs](#base-uri-and-base-uri-parameters) of all resources. Often used as the base of the URL of each resource containing the location of the API. Can be a [template URI](#template-uri).
+| baseUriParameters? | Named parameters used in the [baseUri](#base-uri-and-base-uri-parameters) (template). 
+| protocols? | The [protocols](#protocols) supported by the API.
+| mediaType? | Default media types to use for request and response bodies (payloads), for example "application/json".
+| securedBy? | The [security schemes](#applying-security-schemes) that apply to every resource and method in the API.
+| /&lt;relativeUri&gt;? | The resources of the API, identified as relative URIs that begin with a slash (/). A resource property is one that begins with the slash and is either at the root of the API definition or a child of a resource property. For example, /users and /{groupId}.
+| documentation? | Additional overall [documentation](#user-documentation) for the API.
 
 ### API Title
-The **title** property is a short plain text label for the API. It MUST be specified, and its value is a string. Its value SHOULD be suitable for use as a title for the contained user documentation.
+
+| Key Name | Value Type        | Default | Description                                                  |
+|:---------|:------------------|:--------|:-------------------------------------------------------------|
+| title    | [string](#string) | title   | A short, plain text label for the API that MUST be specified |
+| content  | [string](#string) | My API  | The title of the contained user documentation                |
 
 ### API Version
 
-The OPTIONAL **version** property specifies a version of the API (as a whole). Its value is a string. API owners SHOULD consider carefully their versioning approach and communicate the current version through the version property.
+API owners SHOULD consider carefully their versioning approach and communicate the current version through the version property.
+
+| Key Name | Value Type        | Default | Description                               |
+|:---------|:------------------|:--------|:------------------------------------------|
+| version  | [string](#string) | version | A version of the API as a whole. OPTIONAL |
+| content  | [string](#string) | v0.1    | The current version                       |
 
 ### API Description
 
-The OPTIONAL **description** property describes the overall API in a human friendly, extended manner. The value of the description property is a markdown string. More structured documentation SHOULD be included throughout the structure of the API definition and in the documentation property.
+Structured documentation SHOULD be included throughout the structure of the API definition and in the documentation property.
+
+| Key Name    | Value Type        | Default     | Description                                                    |
+|:------------|:------------------|:------------|:---------------------------------------------------------------|
+| description | [string](#string) | description | A description of the overall API. OPTIONAL                     |
+| content     | markdown string   | none        | Definitive text presented in a human friendly, extended manner |
 
 ### User Documentation
 
-The OPTIONAL **documentation** property includes a variety of documents that serve as user guides and reference documentation for the API. Such documents can clarify how the API works or provide technical and business context.
+| Key Name      | Value Type            | Default       | Description                                                                                                                                          |
+|:--------------|:----------------------|:--------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| documentation | [string](#string)     | documentation | Documents that serve as user guides and reference for the API, and can clarify how the API works or provide technical and business context. OPTIONAL |
+| content       | [array](#array-types) | none          | An array of one or more documents                                                                                                                    |
 
-The value of the documentation property is an array of one or more documents. Each document is an object that MUST contain exactly two properties, **title** and **content**, with non-empty string values. The content property's value is a markdown string.
 
-The structure of documentation object is described by following table.
+The following table describes the structure of documentation object:
 
-| Property  | Description |
-|:----------|:----------|
-| title | Title of documentation section
-| content | Content of documentation section
+| Key Name | Value Type        | Default | Description                      |
+|:---------|:------------------|:--------|:---------------------------------|
+| title    | [string](#string) | title   | Title of a documentation section |
+| content  | markdown string   | none    | Documentation content            |
 
-This example shows an API definition with two user documents.
+This example shows an API definition having two user documents.
 
 ```yaml
 #%RAML 1.0
@@ -200,7 +216,10 @@ documentation:
 
 ### Base URI and Base URI Parameters
 
-The OPTIONAL **baseUri** property specifies a URI as an identifier for the API as a whole, and MAY be used the specify the URL at which the API is served (its service endpoint), and which forms the base of the URLs of each of its resources. The baseUri property's value is a string that MUST conform to the URI specification [RFC2396](https://www.ietf.org/rfc/rfc2396.txt) or a [Template URI](#template-uri).
+| Key Name | Value Type        | Default                     | Description                                                                                                                                                                                           |
+|:---------|:------------------|:----------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| baseUri  | [string](#string) | baseUri                     | An identifier for the API as a whole, which MAY be used to specify the URL at which the API is served (its service endpoint), and which forms the base of the URLs of each of its resources. OPTIONAL |
+| content  | [string](#string) | http://server/api/{version} | A string that MUST conform to the URI specification [RFC2396](https://www.ietf.org/rfc/rfc2396.txt) or a [Template URI](#template-uri)                                                                |
 
 If the baseUri value is a [Template URI](#template-uri), the following reserved base URI parameter is available.
 
@@ -208,7 +227,7 @@ If the baseUri value is a [Template URI](#template-uri), the following reserved 
 |:----------|:----------|
 | version | The value of the root-level version property
 
-Any other URI template variables appearing in the baseUri MAY be described explicitly within a **baseUriParameters** property at the root of the API definition. The baseUriParameters property has the same structure and semantics as the uriParameters property on a resource property, except that it specifies parameters in the base URI rather than a resource's relative URI. See the section [Template URIs and URI parameters](#template-uris-and-uri-parameters) for information about the uriParameters property.
+Any other URI template variables appearing in the baseUri MAY be described explicitly within a **baseUriParameters** property at the root of the API definition. The baseUriParameters property has the same structure and semantics as the [uriParameters](#template-uris-and-uri-parameters) property on a resource property, except that it specifies parameters in the base URI rather than the relative URI of a resource.
 
 The following example RAML API definition uses a [Template URI](#template-uri) as the base URI.
 
@@ -231,9 +250,7 @@ baseUriParameters:
     description: The name of the bucket
 ```
 
-When the base URI ends in one or more slashes (`/`), those trailing slashes are to be omitted in constructing the absolute paths for the resources using that base URI.
-
-For example, in
+When the base URI ends in one or more slashes (`/`), those trailing slashes are omitted in the absolute paths for the resources using that base URI. For example, in the following snippet, the absolute paths for the resources are `http://api.test.com/common/users` and `http://api.test.com/common/users/groups`.
 
 ```yaml
 baseUri: http://api.test.com/common/
@@ -241,9 +258,7 @@ baseUri: http://api.test.com/common/
   /groups:
 ```
 
-the absolute paths for the two resources are `http://api.test.com/common/users` and `http://api.test.com/common/users/groups`.
-
-In a more complicated examples with consecutive slashes in multiple places, note that only trailing slashes in the base URI are collapsed:
+In the following, more complicated example with consecutive slashes in multiple places, only trailing slashes in the base URI are collapsed, leading to these absolute paths to resources: `//api.test.com//common/`, `//api.test.com//common//users/`, and `//api.test.com//common//users//groups//`.
 
 ```yaml
 baseUri: //api.test.com//common//
@@ -251,13 +266,15 @@ baseUri: //api.test.com//common//
   /users/:
     /groups//:
 ```
-leads to the following 3 resource absolute paths: `//api.test.com//common/`, `//api.test.com//common//users/` and `//api.test.com//common//users//groups//`.
 
 ### Protocols
 
-The OPTIONAL **protocols** property specifies the protocols that an API supports. If the protocols property is not explicitly included, the protocol(s) specified at the baseUri property is (are) used; if the protocols property is specified explicitly, it overrides any protocol specified in the baseUri property. The protocols property MUST be a non-empty array of strings, of values HTTP and/or HTTPS, and is case-insensitive.
+| Key Name  | Value Type                            --    | Default   | Description                                                  |
+|-----------|---------------------------------------------|-----------|--------------------------------------------------------------|
+| protocols | [string](#string)                           | protocols | Protocols that an API supports. OPTIONAL                     |
+| content   | [array](#array-types) of [string](#string)s | none      | HTTP or HTTPS or both (case-insensitive). MUST be non-empty. |
 
-The following is an example of an API endpoint that accepts both HTTP and HTTPS requests.
+If the protocols property is not explicitly specified, one or more protocols included in the baseUri property is used; if the protocols property is explicitly specified, the property specification overrides any protocol included in the baseUri property. The following example of an API endpoint accepts both HTTP and HTTPS requests.
 
 ```yaml
 #%RAML 1.0
