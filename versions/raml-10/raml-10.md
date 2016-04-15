@@ -93,7 +93,7 @@ The first line of a RAML specification-compliant document MUST match the [IETF R
 
 “#%RAML” SP “1.0” SP [FragmentType] CRLF
 
-The _FragmentType_ is NOT ALLOWED in API definitions and is OPTIONAL for the specification of [RAML fragment](#modularization) documents. RAML fragment documents are reusable RAML modules that a larger API definition references or includes. 
+The _FragmentType_ is NOT ALLOWED in API definitions and is OPTIONAL for the specification of [RAML fragment](#typed-fragments) documents. RAML fragment documents are reusable RAML modules that a larger API definition references or includes. 
 
 The media type _application/raml+yaml_ and its associated file extension _.raml_ SHALL be used to designate files containing RAML API definitions, RAML fragments, and files that contain RAML markup. RAML is also capable of including documents of other media types, such as “application/schema+json” and “application/yaml”.
 
@@ -136,7 +136,7 @@ The following table enumerates the possible properties at the root of a RAML doc
 
 | Property  | Description |
 |:----------|:----------|
-| description? | A longer, human-friendly description of the API.
+| description? | A substantial, human-friendly description of the API.
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this API. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | schemas? | An alias for the equivalent "types" property for compatibility with RAML 0.8. Deprecated - API definitions should use the "types" property because a future RAML version might remove the "schemas" alias for that property name. The "types" property supports XML and JSON schemas.
 | types? | Declarations of [(data) types](#raml-data-types) for use within the API.
@@ -145,14 +145,14 @@ The following table enumerates the possible properties at the root of a RAML doc
 | annotationTypes? | Declarations of [annotation types](#declaring-annotation-types) for use by annotations.
 | securitySchemes? | Declarations of [security schemes](#security-schemes) for use within the API.
 | uses? | Imported external [libraries](#libraries) for use within the API.
-| title | Short, plain-text label for the API.
+| title | A short, plain-text label for the API.
 | version? | The version of the API, for example "v1".
 | baseUri? | A URI that serves as the [base for URIs](#base-uri-and-base-uri-parameters) of all resources. Often used as the base of the URL of each resource containing the location of the API. Can be a [template URI](#template-uri).
 | baseUriParameters? | Named parameters used in the [baseUri](#base-uri-and-base-uri-parameters) (template). 
-| protocols? | The protocols supported by the API. The protocols property MUST contain one or more of the following supported protocol names, which are case-insensitive: "HTTP", "HTTPS".
+| protocols? | The [protocols](#protocols) supported by the API.
 | mediaType? | Default media types to use for request and response bodies (payloads), for example "application/json".
 | securedBy? | The [security schemes](#applying-security-schemes) that apply to every resource and method in the API.
-| /&lt;relativeUri&gt;? | The resources of the API, identified as relative URIs that begin with a slash (/). A resource property is one that begins with the slash and is either at the root of the API definition or a child of a resource property. For example: /users, /{groupId}.
+| /&lt;relativeUri&gt;? | The resources of the API, identified as relative URIs that begin with a slash (/). A resource property is one that begins with the slash and is either at the root of the API definition or a child of a resource property. For example, /users and /{groupId}.
 | documentation? | Additional overall [documentation](#user-documentation) for the API.
 
 ### API Title
@@ -250,9 +250,7 @@ baseUriParameters:
     description: The name of the bucket
 ```
 
-When the base URI ends in one or more slashes (`/`), those trailing slashes are omitted in the absolute paths for the resources using that base URI.
-
-For example, in the following snippet, the absolute paths for the two resources are `http://api.test.com/common/users` and `http://api.test.com/common/users/groups`.
+When the base URI ends in one or more slashes (`/`), those trailing slashes are omitted in the absolute paths for the resources using that base URI. For example, in the following snippet, the absolute paths for the resources are `http://api.test.com/common/users` and `http://api.test.com/common/users/groups`.
 
 ```yaml
 baseUri: http://api.test.com/common/
@@ -260,7 +258,7 @@ baseUri: http://api.test.com/common/
   /groups:
 ```
 
-In the following more complicated example with consecutive slashes in multiple places, only trailing slashes in the base URI are collapsed, leading to these absolute paths to resources: `//api.test.com//common/`, `//api.test.com//common//users/` and `//api.test.com//common//users//groups//`.
+In the following, more complicated example with consecutive slashes in multiple places, only trailing slashes in the base URI are collapsed, leading to these absolute paths to resources: `//api.test.com//common/`, `//api.test.com//common//users/`, and `//api.test.com//common//users//groups//`.
 
 ```yaml
 baseUri: //api.test.com//common//
@@ -271,12 +269,12 @@ baseUri: //api.test.com//common//
 
 ### Protocols
 
-| Key Name  | Value Type                                | Default   | Description                                                  |
-|-----------|-------------------------------------------|-----------|--------------------------------------------------------------|
-| protocols | [string](#string)                         | protocols | Protocols that an API supports. OPTIONAL                     |
-| content   | [array](#array-types)of [string](#string) | none      | HTTP or HTTPS or both (case-insensitive). MUST be non-empty. |
+| Key Name  | Value Type                            --    | Default   | Description                                                  |
+|-----------|---------------------------------------------|-----------|--------------------------------------------------------------|
+| protocols | [string](#string)                           | protocols | Protocols that an API supports. OPTIONAL                     |
+| content   | [array](#array-types) of [string](#string)s | none      | HTTP or HTTPS or both (case-insensitive). MUST be non-empty. |
 
-If the protocols property is not explicitly included, one or more protocols specified in the baseUri property is used; if the protocols property is specified explicitly, it overrides any protocol specified in the baseUri property. The following example of an API endpoint accepts both HTTP and HTTPS requests.
+If the protocols property is not explicitly specified, one or more protocols included in the baseUri property is used; if the protocols property is explicitly specified, the property specification overrides any protocol included in the baseUri property. The following example of an API endpoint accepts both HTTP and HTTPS requests.
 
 ```yaml
 #%RAML 1.0
