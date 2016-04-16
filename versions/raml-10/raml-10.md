@@ -251,11 +251,11 @@ baseUri: https://na1.salesforce.com/services/data/{version}/chatter
 
 ### Default Media Types
 
-The media types expected from API requests that contain a body, and returned by API responses, can be defaulted by specifying the OPTIONAL **mediaType** property, so they do not need to be specified within every body definition.
+Specifying the OPTIONAL **mediaType** property sets the default for return by API requests having a body and for the expected responses. You do not need to specify the media type within every body definition.
 
-The value of the mediaType property MUST be a sequence of media type strings or a single string if there is only one default media; with the premise that all of them are described by exactly the same types and/or examples. Each value  need to conform to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838).
+The value of the mediaType property MUST be a sequence of type name strings or a single type name string. The mediatype applies to requests having a body, the expected responses, and examples using the same sequence of type name strings. Each value needs to conform to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838).
 
-This example shows a RAML snippet for an API that accepts and returns a JSON-formatted body. If the remainder of this API's specification doesn't explicitly specify another media type, this API only accepts and returns JSON-formatted bodies.
+This example shows a RAML snippet for an API that accepts and returns a JSON-formatted body. If the remainder of this API specification does not explicitly specify another media type, this API accepts and returns only JSON-formatted bodies.
 
 ```yaml
 #%RAML 1.0
@@ -263,7 +263,7 @@ title: New API
 mediaType: application/json
 ```
 
-Or the alternative syntax if there is more than one default media type.
+This example shows a RAML snippet for an API that accepts and returns JSON- or XML-formatted bodies.
 
 ```yaml
 #%RAML 1.0
@@ -271,7 +271,7 @@ title: New API
 mediaType: [ application/json, application/xml ]
 ```
 
-Default media types can be overridden by defining a `mediaType` node explicitly to a [body](#bodies) of an API request or response. When one defines a root-level `mediaType` node and then override that in a body by defining explicitly another or the same media type node, none of the root level media types apply to that node, other than the media types explicitly defined within that node. The example below shows a RAML snippet that illustrates that behavior. The resource `/list` returns a `Person[]` body represented as either JSON or XML. On the other hand, the resource `/send` overrides the default media types with an explicit definition of an `application/json` node and therefore only accepts a JSON-formatted body.
+Explicitly defining a `mediaType` node for a [body](#bodies) of an API request or response overrides the default media type, as shown in the following example. The resource `/list` returns a `Person[]` body represented as either JSON or XML. The resource `/send` overrides the default media type by explicitly defining an `application/json` node. Therefore, the resource `/send` returns only a JSON-formatted body.
 
 ```yaml
 #%RAML 1.0
@@ -562,7 +562,7 @@ When an Object Type does not contain the "properties" property, the object is as
 
 #### Additional Properties
 
-By default any instance of an object can have additional properties beyond those specified in its data type `properties` node. Lets assume the following is an instance of the data type `Person` that is described in the previous section.
+By default any instance of an object can have additional properties beyond those specified in its data type `properties` node. Let's assume the following is an instance of the data type `Person` that is described in the previous section.
 
 ```yaml
 Person:
@@ -592,7 +592,7 @@ types:
         type: string
 ```
 
-This restricts any additional properties whose keys start with "note" followed by one or more digits to be a string. Where as the  example of an object instance with an additional `note` property with value "US" is valid, the following is not:
+This restricts any additional properties whose keys start with "note" followed by one or more digits to be a string. Where as the example of an object instance with an additional `note` property with value "US" is valid, the following is not:
 
 ```yaml
 Person:
