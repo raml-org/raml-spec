@@ -190,7 +190,7 @@ documentation:
 The OPTIONAL **baseUri** property specifies a URI as an identifier for the API as a whole, and MAY be used the specify the URL at which the API is served (its service endpoint), and which forms the base of the URLs of each of its resources. The baseUri property's value is a string that MUST conform to the URI specification [RFC2396](https://www.ietf.org/rfc/rfc2396.txt) or a [Template URI](#template-uri).
 
 If the baseUri value is a [Template URI](#template-uri), the following reserved base URI parameter is available.
-r
+
 | URI Parameter | Value |
 |:----------|:----------|
 | version | The value of the root-level version property
