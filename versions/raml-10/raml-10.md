@@ -1671,9 +1671,9 @@ https://api.github.com/users/{userId}/keys
 https://api.github.com/users/{userId}/keys/{keyId}
 ```
 
-A RAML processor MUST NOT allow one of the computed absolute URIs to be identical to another one, WITHOUT consideration to the possible values of any URI parameter.
+A RAML processor MUST NOT allow one of the computed absolute URIs to be identical to another one, without consideration to the possible values of any URI parameter.
 
-This example would be FORBIDDEN.
+The following example would be forbidden.
 
 ```yaml
 /users:
