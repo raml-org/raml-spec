@@ -294,7 +294,7 @@ types:
 
 ### Default Security
 
-The security schemes to be applied to every method of every resource in the API can be defaulted by specifying the OPTIONAL **securedBy** property. Its value is an array of security scheme names. If this property is specified, every method of every resource is protected by the specified security schemes. See section [Applying Security Schemes](#applying-security-schemes) for more information, including how to resolve application of multiple security schemes via inheritance.
+Specifying the OPTIONAL **securedBy** property sets the default security schemes for, and protects, every method of every resource in the API. The value of the property is an array of security scheme names. See section [Applying Security Schemes](#applying-security-schemes) for more information, including how to resolve the application of multiple security schemes through inheritance.
 
 The following example shows an API allowing access through either an OAuth 2.0 security scheme or an OAuth 1.1 security scheme.
 
