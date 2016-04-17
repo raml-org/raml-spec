@@ -414,8 +414,7 @@ RAML Types in a nutshell:
 
 ### Type Declarations
 
-Types may be declared inline, wherever the API expects data, or in an OPTIONAL **types** property at the root of the API
-or in an included library. The value is a map where each key represents the name of the type and its value is a type declaration.
+Types can be declared inline where the API expects data, in an OPTIONAL **types** property at the root of the API, or in an included library. To declare a type, you use a map where the key represents the name of the type and its value is a type declaration.
 
 ```yaml
 types:
@@ -423,21 +422,21 @@ types:
     # value is a type declaration
 ```
 
-Types declarations are used to extend built-in types or other custom types, as well as to add more information to types such as specific examples or annotations. Here are the properties that all type declarations may have; certain type declarations may have other properties.
+A type declaration can extend a built-in type or other custom type, or add more information to types, such as specific examples or annotations. Here are the properties that all type declarations can have; certain type declarations might have other properties:
 
 | Property  | Description |
 |:----------|:----------|
-| default? | Provides a default value for a type.
-| schema? | Alias for the equivalent "type" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property, as the "schema" alias for that property name may be removed in a future RAML version. The "type" property allows for XML and JSON schemas.
-| type? | A base type which the current type extends, or more generally a type expression.
-| example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `example` property MUST not be available when the `examples` property is already defined.
-| examples? | An object containing named examples of instances of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `examples` property MUST not be available when the `example` property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
+| default? | A default value for a type
+| schema? | An alias for the equivalent "type" property for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property because the "schema" alias for that property name might be removed in a future RAML version. The "type" property supports XML and JSON schemas.
+| type? | A base type that the current type extends, or more often a type expression
+| example? | An example of an instance of this type that can be used, for example, by documentation generators to generate sample values for an object of this type. The "example" property MUST not be available when the "examples" property is already defined.
+| examples? | An object containing named examples of instances of this type. This can be used, for example, by documentation generators to generate sample values for an object of this type. The "examples" property MUST not be available when the "example" property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | displayName? | An alternate, human-friendly name for the type
-| description? | A longer, human-friendly description of the type
-| (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
-| xml? | The ability to configure serialization of an instance of this type into XML. See section [XML Serialization of Type Instances](#xml-serialization-of-type-instances) for more information.
+| description? | A substantial, human-friendly description of the type
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this type. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
+| xml? | The capability to configure [XML serialization of this type instance](#xml-serialization-of-type-instances)
 
-The `schema` and `type` properties are mutually exclusive and synonymous: processors MUST NOT allow both to be specified (explicitly or implicitly) inside the same type declaration. Therefore, the following examples are both invalid.
+The "schema" and "type" properties are mutually exclusive and synonymous: processors MUST NOT allow both to be specified, explicitly or implicitly, inside the same type declaration. Therefore, the following examples are invalid:
 
 ```yaml
 types:
@@ -457,7 +456,7 @@ types:
             type: # invalid as mutually exclusive with `schema`
 ```
 
-It is recommended to use the `type` property instead of `schema`, as the `schema` alias is deprecated and may be removed in a future RAML version. The `type` property also allows for XML and JSON schemas.
+We recommended using the "type" property instead of "schema" because the schema alias is deprecated and might be removed in a future RAML version. Also, the "type" property supports XML and JSON schemas.
 
 ### Object Types
 
