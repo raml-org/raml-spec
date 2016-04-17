@@ -1622,7 +1622,7 @@ baseUri: https://api.github.com
 
 The key of a resource property, i.e. its relative URI, MAY consist of multiple URI path fragments separated by slashes; e.g. /bom/items may indicate the collection of items in a bill of materials as a single resource. However, if the individual URI path fragments are themselves resources, the API definition SHOULD use nested resources to describe this structure; e.g. if /bom is itself a resource then /items should be a nested resource of /bom, vs using /bom/items as a non-nested resource.
 
-Absolute URIs are not explicitly specified. They are computed by appending the relative URI of the top-level resource, and then successively appending the relative URI values for each nested resource until the target resource is reached. If, and only if, a baseUri has been defined, each relative URI of the top-level resource needs to start with the base URI.
+Absolute URIs are not explicitly specified. They are computed by appending the relative URI of the top-level resource, and then successively appending the relative URI values for each nested resource until the target resource is reached. If and only if the baseUri is defined, the baseUri is appended to the first segment, which represents the top-level resource, of relative URIs.
 
 Taking the previous example, the absolute URI of the public gists resource is formed as follows.
 
