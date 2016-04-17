@@ -416,8 +416,7 @@ The following diagram shows the type families and examples of these custom types
 
 ### Type Declarations
 
-Types may be declared inline, wherever the API expects data, or in an OPTIONAL **types** property at the root of the API
-or in an included library. The value is a map where each key represents the name of the type and its value is a type declaration.
+Types may be declared inline, wherever the API expects data, or in an OPTIONAL **types** property at the root of the API or in an included library. The value is a map where each key represents the name of the type and its value is a type declaration.
 
 ```yaml
 types:
@@ -490,7 +489,7 @@ types:
 
 #### Property Declarations
 
-Properties of object types are defined using the OPTIONAL **properties** property. The value of the properties property is called a "properties declaration" in this spec. It is an object whose property names specify the allowed property names of the type being declared, and whose property values are either names of types or inline type declarations.
+Properties of object types are defined using the OPTIONAL **properties** property. The value of the properties property is called a "properties declaration" in the RAML Specification. It is a map where each key represents the name of a property allowed to be declared for a type instance, and its value either a name of a type or an inline type declaration.
 
 In addition to the properties available in normal type declarations, properties can specify whether they are required or not.
 
@@ -776,8 +775,8 @@ Array Types are declared by either using the array qualifier `[]` at the end of 
 |:----------|:----------|
 | uniqueItems? | Boolean value that indicates if items in the array MUST be unique.
 | items? |  Indicates what type all items in the array inherit from. Can be a reference to an existing type or an inline [type declaration](#type-declaration)
-| minItems? | Minimum amount of items in array. Value MUST be equal or greater than 0. Defaults to 0.
-| maxItems? | Maximum amount of items in array. Value MUST be equal or greater than 0. Defaults to 2147483647.
+| minItems? | Minimum amount of items in array. Value MUST be equal or greater than 0.<br /><br />**Default:** `0`.
+| maxItems? | Maximum amount of items in array. Value MUST be equal or greater than 0.<br /><br />**Default:** `2147483647`.
 
 So following are both valid examples:
 
@@ -830,8 +829,8 @@ A JSON string with the following additional facets:
 |Property Name | Description |
 |:--------|:------------|
 | pattern? | Regular expression that this string should pass.
-| minLength? | Minimum length of the string. Value MUST be equal or greater than 0. Defaults to 0
-| maxLength? | Maximum length of the string. Value MUST be equal or greater than 0. Defaults to 2147483647
+| minLength? | Minimum length of the string. Value MUST be equal or greater than 0.<br /><br />**Default:** `0`
+| maxLength? | Maximum length of the string. Value MUST be equal or greater than 0.<br /><br />**Default:** `2147483647`
 
 Example:
 
@@ -930,9 +929,9 @@ The ​**file**​ type can be used to constrain the content to send through for
 
 |Property Name | Description |
 |:--------|:------------|
-| fileTypes? | List of valid content-types for the file. The file type `*/*`` should be a valid value.
-| minLength? | Specifies the parameter value's minimum number of bytes. Value MUST be equal or greater than 0. Defaults to 0
-| maxLength? | Specifies the parameter value's maximum number of bytes. Value MUST be equal or greater than 0. Defaults to 2147483647
+| fileTypes? | List of valid content-types for the file. The file type `*/*` should be a valid value.
+| minLength? | Specifies the parameter value's minimum number of bytes. Value MUST be equal or greater than 0.<br /><br />**Default:** `0`
+| maxLength? | Specifies the parameter value's maximum number of bytes. Value MUST be equal or greater than 0.<br /><br />**Default:** `2147483647`
 
 #### Enums
 
@@ -1051,8 +1050,8 @@ The simplest Type Expression is just the name of a type. But Type expressions al
 | `Person[]` | An array of Person objects
 | `string[]` | An array of string scalars
 | `string[][]` | A bi-dimensional array of string scalars
-| `string \| Person` | Union type made of members of string OR Person
-| `(string \| Person)[]` | An array of the above type
+| `string | Person` | Union type made of members of string OR Person
+| `(string | Person)[]` | An array of the above type
 
 Type Expressions can be used wherever a Type is expected:
 
@@ -1209,7 +1208,7 @@ MyType:
   type: ParentTypeExpression
 ```
 
-Depending on the value of ParentTypeExpression, though, the meaning of inheritance will change. It is important to understand the differences:
+Depending on the value of `ParentTypeExpression`, though, the meaning of inheritance will change. It is important to understand the differences:
 
 ```yaml
 #%RAML 1.0
@@ -1285,7 +1284,7 @@ types:
 
 Each Inheritance type is explained in detail in the following sections:
 
-#### Object Type Inheritance
+#### Object Type Specialization
 
 Object inheritance works like normal Object Oriented inheritance. A subtype inherits all the properties of its parent type.
 
@@ -1303,8 +1302,8 @@ types:
 
 Subtypes can override properties defined in parent types. There are two restrictions:
 
-If a property is required in the parent, it cannot be made optional in the subtype
-The type of an already defined property can only be changed to a narrower type ( a type that specializes the parent type )
+1) If a property is required in the parent, it cannot be made optional in the subtype
+2) The type of an already defined property can only be changed to a narrower type ( a type that specializes the parent type )
 
 ##### Multiple Inheritance
 
