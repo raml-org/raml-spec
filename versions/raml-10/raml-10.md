@@ -313,9 +313,9 @@ securitySchemes:
 
 ### Introduction
 
-RAML 1.0 introduces the notion of **data types**, which provide a concise and powerful way of describing the data in your API, and add rules for validating instances of data against the type declaration, so an instance is valid when it adheres to all rules for the type. The data can be in a URI parameter (base or resource URI), a query parameter, a request or response header, or of course a request or response body. Some types are built in, while custom types may be defined by extending (inheriting from) the built-in types. In any place where the API expects data, a built-in type may be used to describe the data, or a type may be extended inline to describe that data. Custom types may also be named and then used like any built-in type.
+RAML 1.0 introduces the notion of **data types**, which provide a concise and powerful way of describing the data in an API. Data types add rules for validating data against a type declaration. Valid data adheres to all rules for the type. Data types can describe a base or resource URI parameter, a query parameter, a request or response header, or a request or response body. Data types are built-in or custom. A built-in type can be used anywhere the API expects data. Custom types can be defined by extending the built-in types. A type can be extended inline. Custom types can be named and then used like a built-in type.
 
-The RAML example below defines a User type with three properties: firstname and lastname of (built-in) type string, and age of (built-in) type number. This User type is later used to describe the type (schema) for a payload.
+The following RAML example defines a User type that includes type declarations for the firstname, lastname, and age properties. The example declares the properties to be of built-in types string and number. Later, the User type serves to describe the type (schema) for a payload.
 
 ```yaml
 #%RAML 1.0
@@ -336,7 +336,7 @@ types:
             type: User
 ```
 
-A RAML type declaration looks somewhat like a JSON schema definition. In fact, RAML types can be used instead of JSON and XML schemas, or coexist with them. The RAML type syntax, however, is designed to be considerably easier and more succinct than JSON and XML schemas while retaining their flexibility and expressiveness. Below is a larger example.
+A RAML type declaration resembles a JSON schema definition. In fact, RAML types can be used instead of JSON and XML schemas, or coexist with them. The RAML type syntax, however, is designed to be considerably easier and more succinct than JSON and XML schemas while retaining their flexibility and expressiveness. The following snippet shows a number of examples of type declarations:
 
 ```yaml
 #%RAML 1.0
@@ -381,7 +381,7 @@ types:
             type: Org
 ```
 
-The example above contains a few advanced features.
+These examples of type declarations contain the following advanced features:
 
 - Optional properties
 - [Scalar Type Specialization](#scalar-type-specialization)
