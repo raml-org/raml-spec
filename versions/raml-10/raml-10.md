@@ -253,7 +253,7 @@ baseUri: https://na1.salesforce.com/services/data/{version}/chatter
 
 Specifying the OPTIONAL **mediaType** property sets the default for return by API requests having a body and for the expected responses. You do not need to specify the media type within every body definition.
 
-The value of the mediaType property MUST be a sequence of type name strings or a single type name string. The mediatype applies to requests having a body, the expected responses, and examples using the same sequence of type name strings. Each value needs to conform to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838).
+The value of the mediaType property MUST be a sequence of media type strings or a single media type string. The media type applies to requests having a body, the expected responses, and examples using the same sequence of media type strings. Each value needs to conform to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838).
 
 This example shows a RAML snippet for an API that accepts and returns a JSON-formatted body. If the remainder of this API specification does not explicitly specify another media type, this API accepts and returns only JSON-formatted bodies.
 
