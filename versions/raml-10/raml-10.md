@@ -1302,8 +1302,8 @@ types:
 
 Subtypes can override properties defined in parent types. There are two restrictions:
 
-1) If a property is required in the parent, it cannot be made optional in the subtype
-2) The type of an already defined property can only be changed to a narrower type ( a type that specializes the parent type )
+* If a property is required in the parent, it cannot be made optional in the subtype
+* The type of an already defined property can only be changed to a narrower type ( a type that specializes the parent type )
 
 ##### Multiple Inheritance
 
@@ -1322,8 +1322,6 @@ types:
 ```
 
 Note: Multiple inheritance is only allowed if all Type Expressions are simple object Types. See [Inheritance Restrictions](#inheritance-restrictions).
-
-##### Property Overrides
 
 If multiple parent types define a property with the same name:
 
