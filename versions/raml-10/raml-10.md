@@ -1190,6 +1190,26 @@ CatOrDog: # follows restrictions applied to the type 'Cat'
   color: "brown"
 ```
 
+Imagine a more complex example where a union type is used in a multiple inheritance type expression.
+
+```yaml
+types:
+   HomeAnimal: [ HasHome ,  Dog | Cat ]
+```
+
+In this case type `HomeAnimal` has two base types `HasHome` and anonymous union type defined by a type expression - `Dog | Cat`  
+
+So testing if the `HomeAnimal` type is a valid involves  taking each of its base types, and checking that a type which is derived type of this type and each of union type option types is a valid type. In this particular case you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
+
+If you are extending from two union types you should do the same for every possible combination for example in this case:
+
+```yaml
+types:
+   HomeAnimal: [ HasHome | IsOnFarm ,  Dog | Cat | Parrot ]
+```
+
+In summary, you need to test 6 possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
+
 ### Using XML and JSON Schema
 
 RAML allows the use of XML and JSON schema to describe the body of an API request or response, by integrating them into its data type system.
