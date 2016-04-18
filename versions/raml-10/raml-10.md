@@ -436,6 +436,7 @@ Types declarations are used to extend built-in types or other custom types, as w
 | displayName? | An alternate, human-friendly name for the type
 | description? | A longer, human-friendly description of the type
 | (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
+| facets? | A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section [User defined Facets](#user-defined-facets) for more information.
 | xml? | The ability to configure serialization of an instance of this type into XML. See section [XML Serialization of Type Instances](#xml-serialization-of-type-instances) for more information.
 
 The `schema` and `type` properties are mutually exclusive and synonymous: processors MUST NOT allow both to be specified (explicitly or implicitly) inside the same type declaration. Therefore, the following examples are both invalid.
@@ -811,18 +812,28 @@ Using `Email[]` is equivalent to use `type: array` and specifically define the t
 
 ### Scalar Types
 
-RAML provides a predefined set of Scalar Types. You can "extend" these types and add further restrictions. These restrictions are called "facets" and they exist both for scalar and object types. Each scalar type has a predefined set of facets.
+RAML defines a set of built-in scalar types and each of them has a predefined set of restrictions. All these types, except the file type, may have an additional `enum` facet.
 
-|Property Name | Description |
+| Name | Description |
 |:--------|:------------|
-| facets? | When extending from a scalar type you can define new facets (which can then be set to concrete values by subtypes). The value is an object whose properties map facets names to their types.
-| enum? | Enumeration of possible values for this primitive type. Cannot be used with the file type. The value is an array containing string representations of possible values, or a single string if there is only one possible value.
+| enum? | Enumeration of possible values for this built-in scalar type. The value is an array containing representations of possible values, or a single value if there is only one possible value.
 
-#### Built-in Scalar Types
+Example usage of enums:
 
-RAML defines the following built-in types and additional facets.
+```yaml
+#%RAML 1.0
+title: My API With Types
+types:
+  country:
+    type: string
+    enum: [ usa, rus ]
 
-##### String
+  sizes:
+    type: number
+    enum: [ 1, 2, 3 ]
+```
+
+#### String
 
 A JSON string with the following additional facets:
 
@@ -842,7 +853,7 @@ types:
     maxLength: 6
 ```
 
-##### Number
+#### Number
 
 Any JSON number including [integer](#integer) with the following additional facets:
 
@@ -865,7 +876,7 @@ types:
     multipleOf: 4
 ```
 
-##### Integer
+#### Integer
 
 A subset of JSON numbers that are positive and negative multiples of 1. The integer type inherits its facets from the [number type](#number).
 
@@ -879,7 +890,7 @@ types:
     multipleOf: 1
 ```
 
-##### Boolean
+#### Boolean
 
 A JSON boolean without any additional facets.
 
@@ -889,7 +900,7 @@ types:
     type: boolean
 ```
 
-##### Date
+#### Date
 
 The following date type representations MUST be supported:
 
@@ -923,7 +934,7 @@ types:
     format: rfc2616 # this time it's required as otherwise the example is in an invalid format
 ```
 
-##### File
+#### File
 
 The ​**file**​ type can be used to constrain the content to send through forms. When it is used in the context of web forms it SHOULD be represented as a valid file upload, and in JSON representation, it SHOULD be represented as a base64 encoded string with a file content.
 
@@ -933,55 +944,35 @@ The ​**file**​ type can be used to constrain the content to send through for
 | minLength? | Specifies the parameter value's minimum number of bytes. Value MUST be equal or greater than 0.<br /><br />**Default:** `0`
 | maxLength? | Specifies the parameter value's maximum number of bytes. Value MUST be equal or greater than 0.<br /><br />**Default:** `2147483647`
 
-#### Enums
+### User-defined Facets
 
-All custom primitive types, except for the file type, can declare an "enum" property. It should contain a set of fixed values.
+Facets express various additional restrictions which types impose on their instances, such as the optional `minimum` and `maximum` facets for numbers, or the `enum` facet for scalars. RAML provides a way to declare additional user-defined facets for any data type.
 
-Example usage of enums
+User-defined facets are defined using the OPTIONAL `facets` property on a type declaration. Its value is a map whose keys name the user-defined facets and whose corresponding values define the concrete values which the corresponding facet may take, following the same syntax as [property declaration](#property-declarations). That is, a facet declaration in the declaration of a type specifies the concrete values which subtypes may use for that facet to restrict instances of those subtypes. Note that this implies that user-defined facets on a type do not restrict instances of that type but rather only instances of subtypes of that type.
 
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  country:
-    type: string
-    enum: [ usa, rus ]
+Facet names MUST NOT begin with open parentheses, to disambiguate them from annotations. User-defined facet names on a type MUST NOT match built-in facets on that type, nor facet names of any ancestor type in the type's inheritance chain.
 
-  sizes:
-    type: number
-    enum: [ 1, 2, 3 ]
-```
+If a facet of a type is declared as required, then any subtype of that type MUST define a value for that facet.
 
-#### Custom Scalar Types
-
-Defining a scalar type is similar to defining a custom object type in that you "specialize" a parent type. Here's a custom scalar type that "specializes" the number type and restricts one of its facets (minimum):
+Here is an example which defines the capability to add restrictions on dates that indicate they may not fall on holidays:
 
 ```yaml
 #%RAML 1.0
-title: My API With Types
+title: API with Types
 types:
-  positiveNumber:
-    type: number
-    minimum: 1
-```
-
-For convenience, you may specialize the built-in primitive types ( string, number, etc ). However, if you don't wish your custom scalar type to inherit the predefined facets of built-in types you can inherit directly from the "scalar" type.
-
-You can define your own facets:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Date:
-    type: string
+  CustomDate:
+    type: date
     facets:
-      format: string
-
-  MyDate:
-    type: Date
-    format: 'dd.mm.yyyy'
+      onlyFutureDates?: boolean # optional  in `PossibleMeetingDate`
+      noHolidays: boolean # required in `PossibleMeetingDate`
+  PossibleMeetingDate:
+    type: CustomDate
+    noHolidays: true
 ```
+
+In the above example, the possibility of restricting date instances based on whether they fall on holidays is introduced by declaring the `noHolidays` facet and defining its values to be boolean. Then instances of any inheriting type, such as the `PossibleMeetingDate` type, must have values that do not fall on holidays.
+
+Because user-defined facets are by definition not built into this RAML specification, and hence their semantic may not be understood by all RAML processors, a RAML processor may or may not choose to use user-defined facets on a type in validating instances of that type.  In the example above, a RAML processor may or may not assign a meaning to `noHolidays` and so may choose to ignore the `noHolidays: true` value in validating instances of `PossibleMeetingDate`.
 
 ### Determine Default Types
 
