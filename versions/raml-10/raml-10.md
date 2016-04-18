@@ -512,7 +512,7 @@ types:
         type: number
 ```
 
-In order to achieve a more "object oriented" experience, a series of shortcuts are available (see [Shortcuts and Syntactic Sugar](#shortcuts-and-syntactic-sugar)). The example below shows a common idiom:
+In order to achieve a more "object oriented" experience, a series of shortcuts are available. The example below shows a common idiom:
 
 ```yaml
 types:
@@ -1425,38 +1425,6 @@ types:
     type: number[]
     uniqueItems: true
 ```
-
-### Shortcuts and Syntactic Sugar
-
-RAML Types are meant to be easy to read and write. To make the syntax more concise and in line with traditional object oriented programming languages, as well as familiar for developers who have used JSON schema before, the following shortcuts have been defined:
-
-<table>
-<tr>
-<td><b></b></td>
-<td><b>Example</b></td>
-<td><b>Expanded Equivalent</b></td>
-</tr>
-<tr>
-<td>Inline type expression gets expanded to a proper type declaration</td>
-<td><pre>Email: string</pre></td>
-<td><pre>Email: <br>&nbsp;&nbsp;type: string</pre></td>
-</tr>
-<tr>
-<td>`string` is default type when nothing else defined </td>
-<td><pre>Email:</pre></td>
-<td><pre>Email:<br>&nbsp;&nbsp;type: string</pre></td>
-</tr>
-<tr>
-<td>`object` is default type when `properties` is defined</td>
-<td><pre>Person:<br>&nbsp;&nbsp;properties:</pre></td>
-<td><pre>Person:<br>&nbsp;&nbsp;type: object<br>&nbsp;&nbsp;properties:</pre></td>
-</tr>
-<tr>
-<td>Shorthand for Optional Property Syntax (?)</td>
-<td><pre>Person:<br>&nbsp;&nbsp;properties:<br>&nbsp;&nbsp;&nbsp;&nbsp;nick?: string</pre></td>
-<td><pre>Person:<br>&nbsp;&nbsp;type: object<br>&nbsp;&nbsp;properties:<br>&nbsp;&nbsp;&nbsp;&nbsp;nick:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: string<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required: false</pre></td>
-</tr>
-</table>
 
 ### Inline Type Declarations
 
