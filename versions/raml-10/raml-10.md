@@ -1199,6 +1199,66 @@ CatOrDog: # follows restrictions applied to the type 'Cat'
   color: "brown"
 ```
 
+### Using XML and JSON Schema
+
+RAML allows the use of XML and JSON schema to describe the body of an API request or response, by integrating them into its data type system.
+
+The following examples show how to include an external JSON schema into a root-level type definition and a body declaration.
+
+```yaml
+types:
+  Person: !include person.json
+```
+
+```yaml
+/person:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include person.json
+```
+
+A RAML processor MUST not allow types that define an XML or JSON schema to participate in type inheritance or specialization, or effectively in any [type expression](#type-expressions). In other words: You cannot define sub-types of these types that declare new properties, add restrictions, and set or declare facets. You can, however, create simple type wrappers that add annotations, examples or a description.
+
+The following is a fully valid example.
+
+```yaml
+types:
+  Person:
+    type: !include person.json
+    description: this is a schema describing person
+```
+
+However, this example shows an invalid case where a type inherits the characteristics of a JSON schema and adds additional properties.
+
+```yaml
+types:
+  Person:
+    type: !include person.json
+    properties: # invalid
+      single: boolean
+```
+
+Another invalid case is the following example where the type `Person` is being used for a property type.
+
+```yaml
+types:
+  Person:
+    type: !include person.json
+    description: this is a schema describing person
+  Board:
+    properties:
+      members: Person[] # invalid use of type expression '[]' and as a property type
+ ```
+
+A RAML Processor MUST be able to interpret and apply JSON Schema and XML Schema.
+
+XML schema MUST NOT be used where the media type does not allow XML-formatted data, and JSON schema MUST NOT be used where the media type does not allow JSON-formatted data. XML and JSON schemas are also forbidden in any declaration of query parameters, query string, URI parameters, and headers.
+
+Please note that the properties "schemas" and "types" are completely synonymous, so are "schema" and "type" for compatibility with RAML 0.8, but "schemas" and "schema" are deprecated. API definitions should use "types" and "type", as "schemas" and "schema" may be removed in a future RAML version.
+
 ### Inheritance and Specialization
 
 When declaring a RAML Type you are always inheriting from, or specializing, an existing type. The general syntax for inheritance is:
@@ -1354,33 +1414,6 @@ types:
     type: number[]
     uniqueItems: true
 ```
-
-#### External Types
-
-The RAML 1.0 Type system allows seamless integration of json/xsd schemas as type definitions. This is achieved by implicitly converting references to json/xsd schemas to subtypes of the **external** built-in type.
-
-These types can then be used freely within the RAML Type system as normal types except for one restriction: You cannot inherit from them.
-
-The following type declarations create subclasses of external types.
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    type: !include schemas/PersonSchema.json
-```
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person: !include schemas/PersonSchema.xsd
-```
-
-##### External Types and Inheritance
-
-External types cannot participate in type inheritance or specialization. In other words: You cannot define sub-types of external types that declare new properties or set facets. You can, however, create simple type wrappers that add metadata, examples and a description.
 
 #### Inheritance Restrictions
 
