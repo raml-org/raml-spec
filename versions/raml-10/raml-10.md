@@ -440,7 +440,7 @@ declarations may have; certain type declarations may have other properties.
 | displayName? | An alternate, human-friendly name for the type
 | description? | A longer, human-friendly description of the type
 | (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
-| facets? | A map of user defined restrictions that are being inherited by a specific sub type. See section [User defined Facets](#user-defined-facets) for more information.
+| facets? | A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section [User defined Facets](#user-defined-facets) for more information.
 | xml? | The ability to configure serialization of an instance of this type into XML. See section [XML Serialization of Type Instances](#xml-serialization-of-type-instances) for more information.
 
 The `schema` and `type` properties are mutually exclusive and synonymous: processors MUST NOT allow both to be specified (explicitly or implicitly) inside the same type declaration. Therefore, the following examples are both invalid.
@@ -800,11 +800,11 @@ types:
 
 ### Scalar Types
 
-RAML defines a set of built-in scalar types and each of them has a predefined set of restrictions. All these types, except the file type, may have an additional `enum` property.
+RAML defines a set of built-in scalar types and each of them has a predefined set of restrictions. All these types, except the file type, may have an additional `enum` facet.
 
-|Property Name | Description |
+| Name | Description |
 |:--------|:------------|
-| enum? | Enumeration of possible values for this built-in scalar type. The value is an array containing string representations of possible values, or a single string if there is only one possible value.
+| enum? | Enumeration of possible values for this built-in scalar type. The value is an array containing representations of possible values, or a single value if there is only one possible value.
 
 Example usage of enums:
 
