@@ -381,16 +381,6 @@ types:
             type: Org
 ```
 
-These examples of type declarations contain the following advanced features:
-
-- Optional properties
-- [Scalar Type Specialization](#scalar-type-specialization)
-- [Inheritance](#inheritance)
-- [Arrays](#array-types)
-- [Enumerations](#enums)
-- [Union Types](#union-types)
-- [Maps](#map-types)
-
 ### Overview
 
 The RAML type system borrows from object oriented programming languages such as Java, as well as from XSD and JSON Schemas.
@@ -626,9 +616,9 @@ If a pattern property regular expression also matches an explicitly declared pro
 
 Moreover, if `additionalProperties` is `false` (explicitly or by inheritance) in a given type definition, then pattern properties are not allowed to be set explicitly in that definition. If it is `true` (or omitted) in a given type definition, then pattern properties are allowed and further restrict the allowed additional properties in that type.
 
-#### Inheritance
+#### Object Type Specialization
 
-You can declare object types that inherit from other object types:
+You can declare object types that inherit from other object types a sub-type inherits all the properties of its parent type. In the example below, the type `Employee` inherits all properties of its parent type `Person`.
 
 ```yaml
 #%RAML 1.0
@@ -646,27 +636,7 @@ types:
         type: string
 ```
 
-You can inherit from more than one type:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    type: object
-    properties:
-      name: string
-  EmailOwner:
-    type: object
-    properties:
-      email: string
-  Employee:
-    type: [ Person, EmailOwner ]
-    properties:
-      id: string
-```
-
-For more details see [Object Type Inheritance](#object-type-inheritance)
+Any sub-types can override properties defined in its parent types with the following two restrictions: 1) if a property is required in the parent type, it cannot be made optional in the sub-type, and 2) the type of an already defined property can only be changed to a narrower type (a type that specializes the parent type).
 
 #### Using Discriminator
 
@@ -1109,33 +1079,6 @@ Type expressions are composed of names of built-in or custom types and certain s
 | (type expression)[] | Array operator: a unary postfix operator placed after another type expression (enclosed in parentheses, as needed) and indicating that the resulting type is an array of instances of that type expression. | `string[]:` an array of strings<br><br>`Person[][]:` an array of arrays of Person instances
 | (type expression 1) &#124; (type expression 2) | Union operator: an infix operator indicating that the resulting type may be either of type expression 1 or of type expression 2. Multiple union operators may be combined between pairs of type expressions. | `string | number:` either a string or a number <br><br> `X | Y | Z`: either an X or a Y or a Z <br><br>`(Manager | Admin)[]:` an array whose members consist of Manager or Admin instances<br><br>`Manager[] | Admin[]:` an array of Manager instances or an array of Admin instances.
 
-There are additional constraints on type expressions when used to define inheritance. They are described at [Rules of Inheritance](#inheritance-and-specialization). For example, the following is not valid (you cannot add properties to a union type).
-
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Phone:
-    type: object
-    properties:
-      manufacturer:
-        type: string
-      numberOfSIMCards:
-        type: number
-  Notebook:
-    type: object
-    properties:
-      manufacturer:
-        type: string
-      numberOfUSBPorts:
-        type: number
-  Device:
-    type: Phone | Notebook
-    properties:
-      weight: number
-```
-
 ### Union Types
 
 Union Types are declared using pipes (|) in your type expressions. Union Types are useful to model common scenarios in JSON based applications, for example an array containing objects which can be instances of more than one type.
@@ -1270,113 +1213,7 @@ XML schema MUST NOT be used where the media type does not allow XML-formatted da
 
 Please note that the properties "schemas" and "types" are completely synonymous, so are "schema" and "type" for compatibility with RAML 0.8, but "schemas" and "schema" are deprecated. API definitions should use "types" and "type", as "schemas" and "schema" may be removed in a future RAML version.
 
-### Inheritance and Specialization
-
-When declaring a RAML Type you are always inheriting from, or specializing, an existing type. The general syntax for inheritance is:
-
-```yaml
-MyType:
-  type: ParentTypeExpression
-```
-
-Depending on the value of `ParentTypeExpression`, though, the meaning of inheritance will change. It is important to understand the differences:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    type: object
-    properties:
-      name: string
-  MyType:
-    type: Person
-    properties:
-      x: string
-```
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    type: object
-    properties:
-      name: string
-  Auditable:
-    type: object
-    properties:
-      personalId: number
-  Employee:
-    type: [Person, Auditable]
-    properties:
-      positionName: string
-```
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  MyType:
-    type: number
-    minimum: 0
-```
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    type: object
-    properties:
-      name: string
-  MyType:
-    type: Person[]
-    uniqueItems: true
-```
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Phone:
-    type: object
-    properties:
-      someNumberProperty:
-        type: number
-  Notebook:
-    type: object
-    properties:
-      someStringProperty:
-        type: string
-  MyType:
-    type: Notebook | Phone
-```
-
-Each Inheritance type is explained in detail in the following sections:
-
-#### Object Type Specialization
-
-Object inheritance works like normal Object Oriented inheritance. A subtype inherits all the properties of its parent type.
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  B:
-    type: object
-  A:
-    type: B
-```
-
-##### Property Overrides
-
-Subtypes can override properties defined in parent types. There are two restrictions:
-
-* If a property is required in the parent, it cannot be made optional in the subtype
-* The type of an already defined property can only be changed to a narrower type ( a type that specializes the parent type )
-
-##### Multiple Inheritance
+### Multiple Inheritance
 
 RAML Types support multiple inheritance for object types. This is achieved by passing a sequence of types:
 
@@ -1398,33 +1235,6 @@ If multiple parent types define a property with the same name:
 
 * The property will be required if at least one of the declarations are required
 * The type of the property will be the narrowest type
-
-
-#### Scalar Type Specialization
-
-If the type expression is a simple scalar type, specialization is achieved by setting values for previously defined facets.
-
-#### Array Type Specialization
-
-If the outer type of the type expression is an array you can set a value for the available array type facets:
-
-| Property  | Description |
-|:----------|:----------|
-| uniqueItems? | Boolean value that indicates if items in the array MUST be unique.
-| items? |  Indicates what type all items in the array inherit from. Can be a reference to an existing type or an inline [type declaration](#type-declaration)
-| minItems? | Minimum amount of items in array. Value MUST be equal or greater than 0. Defaults to 0.
-| maxItems? | Maximum amount of items in array. Value MUST be equal or greater than 0. Defaults to 2147483647.
-
-The example below defines an array of numbers and sets its "uniqueItems" facet to true.
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  NumberSet:
-    type: number[]
-    uniqueItems: true
-```
 
 ### Inline Type Declarations
 
