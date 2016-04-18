@@ -2254,7 +2254,7 @@ All the collections or sequences which fall under effect of applying traits and 
 title: Example API
 version: v1
 traits:
-  parameters:
+  withQueryParameters:
     queryParameters:
       platform:
         enum:
@@ -2647,8 +2647,8 @@ annotationTypes:
         pattern: "\\d{3}-\\w{12}"
         required: true
 /groups:
-  (experimental):
-  (feedbackRequested):
+  (experimental): testingPurpose
+  (feedbackRequested): fromQA
 /users:
   (testHarness): usersTest
   (badge): tested.gif
@@ -2656,8 +2656,8 @@ annotationTypes:
     level: high
     signature: 230-ghtwvfrs1itr
   get:
-    (experimental):
-    (feedbackRequested):
+    (experimental): userPerspective
+    (feedbackRequested): fromUser
     responses:
       200:
 ```
@@ -3209,19 +3209,16 @@ usage: Hints for monitoring the library books API
 extends: librarybooks.raml
 annotationTypes:
   monitor:
-    parameters:
-      frequency:
-        properties:
-          interval: integer
-          unitOfMeasure:
-            enum: [ seconds, minutes, hours ]
+    properties:
+      interval: integer
+      unitOfMeasure:
+        enum: [ seconds, minutes, hours ]
       script:
 /books:
   get:
     (monitor):
-      frequency:
-        interval: 5
-        unitOfMeasure: minutes
+      interval: 5
+      unitOfMeasure: minutes
       script: randomBooksFetch
 ```
 
