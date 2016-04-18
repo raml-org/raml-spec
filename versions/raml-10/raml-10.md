@@ -1230,22 +1230,22 @@ types:
     type: [ Person, Employee ]
 ```
 
-The type `Teacher` inherits all properties from `Person` and `Employee`.
+In the example above, the type `Teacher` inherits all restrictions from `Person` and `Employee`.
 
-Note: Multiple inheritance is only allowed if the resulting type is a valid type declaration. For example, the type `Number3` is fully valid:
+Multiple inheritance is only allowed if the sub-type is still a valid type declaration after inheriting all restrictions from its parent types. For example, the type `Number3` is fully valid:
 
 ```yaml
 types:
-   Number1:
-     type: number
-     minimum: 4
-   Number2:
-     type: number
-     maximum: 10
-   Number3: [ Number1, Number2]
+  Number1:
+    type: number
+    minimum: 4
+  Number2:
+    type: number
+    maximum: 10
+  Number3: [ Number1, Number2]
 ```
 
-Where as using the same example and only change the maximum value of type `Number2` from 10 to 2 would result into an invalid type `Number3`.
+Whereas using the same example and only change the maximum value of type `Number2` from 10 to 2 would result into an invalid type `Number3`.
 
 ```yaml
 types:
@@ -1257,6 +1257,8 @@ types:
     maximum: 2
   Number3: [ Number1, Number2] # invalid, maximum value cannot be lesser than minimum value
 ```
+
+If a sub-type inherits properties with the same name from at least two of its parent types, the sub-type keeps all restrictions applied to those properties except if a parent type already declares a "pattern" facet and if there are two user-defined facets with the same value, which in both cases ends as an invalid type declaration. 
 
 ### Inline Type Declarations
 
