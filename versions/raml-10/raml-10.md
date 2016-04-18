@@ -462,18 +462,18 @@ It is recommended to use the `type` property instead of `schema`, as the `schema
 
 ### Object Types
 
-All types that have the built-in object type at the root of their inheritance tree may use the following properties in their type declarations.
+All types that have the built-in object type at the root of their inheritance tree can use the following properties in their type declarations:
 
 | Property  | Description |
 |:----------|:----------|
-| properties? | The properties that instances of this type may or must have. See section [Properties Declarations](#property-declarations) for more information.
+| properties? | The [properties](#property-declarations) that instances of this type can or must have.
 | minProperties? | The minimum number of properties allowed for instances of this type.
 | maxProperties? | The maximum number of properties allowed for instances of this type.
-| additionalProperties? | Boolean that indicates if an object instance has additional properties. See section [Additional Properties](#additional-properties) for more information.<br/><br/>**Default:** `true`
-| discriminator? | You may use the `discriminator` property to be able to discriminate the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types (achieved via unions or inheritance). The value must correspond to a name of one of the `properties` that are defined inside a type declaration. The `discriminator` property can not be defined for inline type declarations and should only be used for scalar-valued properties. See section [Using Discriminator](#using-discriminator) for more information.
-| discriminatorValue? | You may use the `discriminatorValue` property if a type also defined the `discriminator` property. The value of this property should be a valid value of the property with the name equal to the value of the `discriminator` property; and its being used to identify the declaring type. This value should be unique in the hierarchy of the type. The `discriminatorValue` property can not be defined for inline type declarations. See section [Using Discriminator](#using-discriminator) for more information.<br/><br/>**Default:** the name of the type where the discriminator is applied to
+| additionalProperties? | A Boolean that indicates if an object instance has [additional properties](#additional-properties).<br/><br/>**Default:** `true`
+| discriminator? | Determines the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types due to unions or inheritance. The value must match the name of one of the declared `properties` of a type. Unsupported practices are inline type declarations and [using `discriminator`](#using-discriminator) with non-scalar properties. 
+| discriminatorValue? | Identifies the declaring type. Requires including a `discriminator` property in the type declaration. A valid value is an actual value that might identify the type of an individual object and is unique in the hierarchy of the type. Inline type declarations are not supported.<br/><br/>**Default:** The name of the type
 
-An object type is created by explicitly inheriting from the built-in type object:
+An object type is created by explicit inheritance from the built-in type object:
 
 ```yaml
 #%RAML 1.0
