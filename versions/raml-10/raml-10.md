@@ -313,7 +313,7 @@ securitySchemes:
 
 ### Introduction
 
-RAML 1.0 introduces the notion of **data types**, which provide a concise and powerful way of describing the data in an API. Data types add rules for validating data against a type declaration. Valid data adheres to all rules for the type. Data types can describe a base or resource URI parameter, a query parameter, a request or response header, or a request or response body. Data types are built-in or custom. A built-in type can be used anywhere the API expects data. Custom types can be defined by extending the built-in types. A type can be extended inline. Custom types can be named and then used like a built-in type.
+RAML 1.0 introduces the notion of **data types**, which provide a concise and powerful way of describing the data in an API. Data types add rules for validating data against a type declaration. Valid data adheres to all rules for the type. Data types can describe a base or resource URI parameter, a query parameter, a request or response header, or a request or response body. Data types are built-in or custom. A built-in type can be used anywhere the API expects data. Custom types can be defined by extending the built-in types as well as named and used like built-in type. Extending types MUST NOT create any cyclic dependencies. A type can be extended inline.
 
 The following RAML example defines a User type that includes type declarations for the firstname, lastname, and age properties. The example declares the properties to be of built-in types string and number. Later, the User type serves to describe the type (schema) for a payload.
 
@@ -381,16 +381,6 @@ types:
             type: Org
 ```
 
-These examples of type declarations contain the following advanced features:
-
-- Optional properties
-- [Scalar Type Specialization](#scalar-type-specialization)
-- [Inheritance](#inheritance)
-- [Arrays](#array-types)
-- [Enumerations](#enums)
-- [Union Types](#union-types)
-- [Maps](#map-types)
-
 ### Overview
 
 The RAML type system borrows from object oriented programming languages such as Java, as well as from XSD and JSON Schemas.
@@ -430,12 +420,13 @@ Types declarations are used to extend built-in types or other custom types, as w
 |:----------|:----------|
 | default? | Provides a default value for a type.
 | schema? | Alias for the equivalent "type" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property, as the "schema" alias for that property name may be removed in a future RAML version. The "type" property allows for XML and JSON schemas.
-| type? | A base type which the current type extends, or more generally a type expression.
+| type? | A base type which the current type extends or just wraps. The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.
 | example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `example` property MUST not be available when the `examples` property is already defined.
 | examples? | An object containing named examples of instances of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `examples` property MUST not be available when the `example` property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | displayName? | An alternate, human-friendly name for the type
 | description? | A longer, human-friendly description of the type
 | (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
+| facets? | A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section [User defined Facets](#user-defined-facets) for more information.
 | xml? | The ability to configure serialization of an instance of this type into XML. See section [XML Serialization of Type Instances](#xml-serialization-of-type-instances) for more information.
 
 The `schema` and `type` properties are mutually exclusive and synonymous: processors MUST NOT allow both to be specified (explicitly or implicitly) inside the same type declaration. Therefore, the following examples are both invalid.
@@ -625,9 +616,9 @@ If a pattern property regular expression also matches an explicitly declared pro
 
 Moreover, if `additionalProperties` is `false` (explicitly or by inheritance) in a given type definition, then pattern properties are not allowed to be set explicitly in that definition. If it is `true` (or omitted) in a given type definition, then pattern properties are allowed and further restrict the allowed additional properties in that type.
 
-#### Inheritance
+#### Object Type Specialization
 
-You can declare object types that inherit from other object types:
+You can declare object types that inherit from other object types a sub-type inherits all the properties of its parent type. In the example below, the type `Employee` inherits all properties of its parent type `Person`.
 
 ```yaml
 #%RAML 1.0
@@ -645,27 +636,7 @@ types:
         type: string
 ```
 
-You can inherit from more than one type:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    type: object
-    properties:
-      name: string
-  EmailOwner:
-    type: object
-    properties:
-      email: string
-  Employee:
-    type: [ Person, EmailOwner ]
-    properties:
-      id: string
-```
-
-For more details see [Object Type Inheritance](#object-type-inheritance)
+Any sub-types can override properties defined in its parent types with the following two restrictions: 1) if a property is required in the parent type, it cannot be made optional in the sub-type, and 2) the type of an already defined property can only be changed to a narrower type (a type that specializes the parent type).
 
 #### Using Discriminator
 
@@ -811,18 +782,28 @@ Using `Email[]` is equivalent to use `type: array` and specifically define the t
 
 ### Scalar Types
 
-RAML provides a predefined set of Scalar Types. You can "extend" these types and add further restrictions. These restrictions are called "facets" and they exist both for scalar and object types. Each scalar type has a predefined set of facets.
+RAML defines a set of built-in scalar types and each of them has a predefined set of restrictions. All these types, except the file type, may have an additional `enum` facet.
 
-|Property Name | Description |
+| Name | Description |
 |:--------|:------------|
-| facets? | When extending from a scalar type you can define new facets (which can then be set to concrete values by subtypes). The value is an object whose properties map facets names to their types.
-| enum? | Enumeration of possible values for this primitive type. Cannot be used with the file type. The value is an array containing string representations of possible values, or a single string if there is only one possible value.
+| enum? | Enumeration of possible values for this built-in scalar type. The value is an array containing representations of possible values, or a single value if there is only one possible value.
 
-#### Built-in Scalar Types
+Example usage of enums:
 
-RAML defines the following built-in types and additional facets.
+```yaml
+#%RAML 1.0
+title: My API With Types
+types:
+  country:
+    type: string
+    enum: [ usa, rus ]
 
-##### String
+  sizes:
+    type: number
+    enum: [ 1, 2, 3 ]
+```
+
+#### String
 
 A JSON string with the following additional facets:
 
@@ -842,7 +823,7 @@ types:
     maxLength: 6
 ```
 
-##### Number
+#### Number
 
 Any JSON number including [integer](#integer) with the following additional facets:
 
@@ -865,7 +846,7 @@ types:
     multipleOf: 4
 ```
 
-##### Integer
+#### Integer
 
 A subset of JSON numbers that are positive and negative multiples of 1. The integer type inherits its facets from the [number type](#number).
 
@@ -879,7 +860,7 @@ types:
     multipleOf: 1
 ```
 
-##### Boolean
+#### Boolean
 
 A JSON boolean without any additional facets.
 
@@ -889,7 +870,7 @@ types:
     type: boolean
 ```
 
-##### Date
+#### Date
 
 The following date type representations MUST be supported:
 
@@ -923,7 +904,7 @@ types:
     format: rfc2616 # this time it's required as otherwise the example is in an invalid format
 ```
 
-##### File
+#### File
 
 The ​**file**​ type can be used to constrain the content to send through forms. When it is used in the context of web forms it SHOULD be represented as a valid file upload, and in JSON representation, it SHOULD be represented as a base64 encoded string with a file content.
 
@@ -933,55 +914,35 @@ The ​**file**​ type can be used to constrain the content to send through for
 | minLength? | Specifies the parameter value's minimum number of bytes. Value MUST be equal or greater than 0.<br /><br />**Default:** `0`
 | maxLength? | Specifies the parameter value's maximum number of bytes. Value MUST be equal or greater than 0.<br /><br />**Default:** `2147483647`
 
-#### Enums
+### User-defined Facets
 
-All custom primitive types, except for the file type, can declare an "enum" property. It should contain a set of fixed values.
+Facets express various additional restrictions which types impose on their instances, such as the optional `minimum` and `maximum` facets for numbers, or the `enum` facet for scalars. RAML provides a way to declare additional user-defined facets for any data type.
 
-Example usage of enums
+User-defined facets are defined using the OPTIONAL `facets` property on a type declaration. Its value is a map whose keys name the user-defined facets and whose corresponding values define the concrete values which the corresponding facet may take, following the same syntax as [property declaration](#property-declarations). That is, a facet declaration in the declaration of a type specifies the concrete values which subtypes may use for that facet to restrict instances of those subtypes. Note that this implies that user-defined facets on a type do not restrict instances of that type but rather only instances of subtypes of that type.
 
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  country:
-    type: string
-    enum: [ usa, rus ]
+Facet names MUST NOT begin with open parentheses, to disambiguate them from annotations. User-defined facet names on a type MUST NOT match built-in facets on that type, nor facet names of any ancestor type in the type's inheritance chain.
 
-  sizes:
-    type: number
-    enum: [ 1, 2, 3 ]
-```
+If a facet of a type is declared as required, then any subtype of that type MUST define a value for that facet.
 
-#### Custom Scalar Types
-
-Defining a scalar type is similar to defining a custom object type in that you "specialize" a parent type. Here's a custom scalar type that "specializes" the number type and restricts one of its facets (minimum):
+Here is an example which defines the capability to add restrictions on dates that indicate they may not fall on holidays:
 
 ```yaml
 #%RAML 1.0
-title: My API With Types
+title: API with Types
 types:
-  positiveNumber:
-    type: number
-    minimum: 1
-```
-
-For convenience, you may specialize the built-in primitive types ( string, number, etc ). However, if you don't wish your custom scalar type to inherit the predefined facets of built-in types you can inherit directly from the "scalar" type.
-
-You can define your own facets:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Date:
-    type: string
+  CustomDate:
+    type: date
     facets:
-      format: string
-
-  MyDate:
-    type: Date
-    format: 'dd.mm.yyyy'
+      onlyFutureDates?: boolean # optional  in `PossibleMeetingDate`
+      noHolidays: boolean # required in `PossibleMeetingDate`
+  PossibleMeetingDate:
+    type: CustomDate
+    noHolidays: true
 ```
+
+In the above example, the possibility of restricting date instances based on whether they fall on holidays is introduced by declaring the `noHolidays` facet and defining its values to be boolean. Then instances of any inheriting type, such as the `PossibleMeetingDate` type, must have values that do not fall on holidays.
+
+Because user-defined facets are by definition not built into this RAML specification, and hence their semantic may not be understood by all RAML processors, a RAML processor may or may not choose to use user-defined facets on a type in validating instances of that type.  In the example above, a RAML processor may or may not assign a meaning to `noHolidays` and so may choose to ignore the `noHolidays: true` value in validating instances of `PossibleMeetingDate`.
 
 ### Determine Default Types
 
@@ -1118,33 +1079,6 @@ Type expressions are composed of names of built-in or custom types and certain s
 | (type expression)[] | Array operator: a unary postfix operator placed after another type expression (enclosed in parentheses, as needed) and indicating that the resulting type is an array of instances of that type expression. | `string[]:` an array of strings<br><br>`Person[][]:` an array of arrays of Person instances
 | (type expression 1) &#124; (type expression 2) | Union operator: an infix operator indicating that the resulting type may be either of type expression 1 or of type expression 2. Multiple union operators may be combined between pairs of type expressions. | `string | number:` either a string or a number <br><br> `X | Y | Z`: either an X or a Y or a Z <br><br>`(Manager | Admin)[]:` an array whose members consist of Manager or Admin instances<br><br>`Manager[] | Admin[]:` an array of Manager instances or an array of Admin instances.
 
-There are additional constraints on type expressions when used to define inheritance. They are described at [Rules of Inheritance](#inheritance-and-specialization). For example, the following is not valid (you cannot add properties to a union type).
-
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Phone:
-    type: object
-    properties:
-      manufacturer:
-        type: string
-      numberOfSIMCards:
-        type: number
-  Notebook:
-    type: object
-    properties:
-      manufacturer:
-        type: string
-      numberOfUSBPorts:
-        type: number
-  Device:
-    type: Phone | Notebook
-    properties:
-      weight: number
-```
-
 ### Union Types
 
 Union Types are declared using pipes (|) in your type expressions. Union Types are useful to model common scenarios in JSON based applications, for example an array containing objects which can be instances of more than one type.
@@ -1199,113 +1133,87 @@ CatOrDog: # follows restrictions applied to the type 'Cat'
   color: "brown"
 ```
 
-### Inheritance and Specialization
-
-When declaring a RAML Type you are always inheriting from, or specializing, an existing type. The general syntax for inheritance is:
+Imagine a more complex example where a union type is used in a multiple inheritance type expression.
 
 ```yaml
-MyType:
-  type: ParentTypeExpression
+types:
+   HomeAnimal: [ HasHome ,  Dog | Cat ]
 ```
 
-Depending on the value of `ParentTypeExpression`, though, the meaning of inheritance will change. It is important to understand the differences:
+In this case type `HomeAnimal` has two base types `HasHome` and anonymous union type defined by a type expression - `Dog | Cat`  
+
+So testing if the `HomeAnimal` type is a valid involves  taking each of its base types, and checking that a type which is derived type of this type and each of union type option types is a valid type. In this particular case you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
+
+If you are extending from two union types you should do the same for every possible combination for example in this case:
 
 ```yaml
-#%RAML 1.0
-title: My API With Types
+types:
+   HomeAnimal: [ HasHome | IsOnFarm ,  Dog | Cat | Parrot ]
+```
+
+In summary, you need to test 6 possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
+
+### Using XML and JSON Schema
+
+RAML allows the use of XML and JSON schema to describe the body of an API request or response, by integrating them into its data type system.
+
+The following examples show how to include an external JSON schema into a root-level type definition and a body declaration.
+
+```yaml
+types:
+  Person: !include person.json
+```
+
+```yaml
+/person:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include person.json
+```
+
+A RAML processor MUST not allow types that define an XML or JSON schema to participate in type inheritance or specialization, or effectively in any [type expression](#type-expressions). In other words: You cannot define sub-types of these types that declare new properties, add restrictions, and set or declare facets. You can, however, create simple type wrappers that add annotations, examples or a description.
+
+The following is a fully valid example.
+
+```yaml
 types:
   Person:
-    type: object
-    properties:
-      name: string
-  MyType:
-    type: Person
-    properties:
-      x: string
+    type: !include person.json
+    description: this is a schema describing person
 ```
 
+However, this example shows an invalid case where a type inherits the characteristics of a JSON schema and adds additional properties.
+
 ```yaml
-#%RAML 1.0
-title: My API With Types
 types:
   Person:
-    type: object
-    properties:
-      name: string
-  Auditable:
-    type: object
-    properties:
-      personalId: number
-  Employee:
-    type: [Person, Auditable]
-    properties:
-      positionName: string
+    type: !include person.json
+    properties: # invalid
+      single: boolean
 ```
 
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  MyType:
-    type: number
-    minimum: 0
-```
+Another invalid case is the following example where the type `Person` is being used for a property type.
 
 ```yaml
-#%RAML 1.0
-title: My API With Types
 types:
   Person:
-    type: object
+    type: !include person.json
+    description: this is a schema describing person
+  Board:
     properties:
-      name: string
-  MyType:
-    type: Person[]
-    uniqueItems: true
-```
+      members: Person[] # invalid use of type expression '[]' and as a property type
+ ```
 
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Phone:
-    type: object
-    properties:
-      someNumberProperty:
-        type: number
-  Notebook:
-    type: object
-    properties:
-      someStringProperty:
-        type: string
-  MyType:
-    type: Notebook | Phone
-```
+A RAML Processor MUST be able to interpret and apply JSON Schema and XML Schema.
 
-Each Inheritance type is explained in detail in the following sections:
+XML schema MUST NOT be used where the media type does not allow XML-formatted data, and JSON schema MUST NOT be used where the media type does not allow JSON-formatted data. XML and JSON schemas are also forbidden in any declaration of query parameters, query string, URI parameters, and headers.
 
-#### Object Type Specialization
+Please note that the properties "schemas" and "types" are completely synonymous, so are "schema" and "type" for compatibility with RAML 0.8, but "schemas" and "schema" are deprecated. API definitions should use "types" and "type", as "schemas" and "schema" may be removed in a future RAML version.
 
-Object inheritance works like normal Object Oriented inheritance. A subtype inherits all the properties of its parent type.
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  B:
-    type: object
-  A:
-    type: B
-```
-
-##### Property Overrides
-
-Subtypes can override properties defined in parent types. There are two restrictions:
-
-* If a property is required in the parent, it cannot be made optional in the subtype
-* The type of an already defined property can only be changed to a narrower type ( a type that specializes the parent type )
-
-##### Multiple Inheritance
+### Multiple Inheritance
 
 RAML Types support multiple inheritance for object types. This is achieved by passing a sequence of types:
 
@@ -1321,110 +1229,12 @@ types:
     type: [ A, B ]
 ```
 
-Note: Multiple inheritance is only allowed if all Type Expressions are simple object Types. See [Inheritance Restrictions](#inheritance-restrictions).
+Note: Multiple inheritance is only allowed if all Type Expressions are simple object Types.
 
 If multiple parent types define a property with the same name:
 
 * The property will be required if at least one of the declarations are required
 * The type of the property will be the narrowest type
-
-
-#### Scalar Type Specialization
-
-If the type expression is a simple scalar type, specialization is achieved by setting values for previously defined facets.
-
-#### Array Type Specialization
-
-If the outer type of the type expression is an array you can set a value for the available array type facets:
-
-| Property  | Description |
-|:----------|:----------|
-| uniqueItems? | Boolean value that indicates if items in the array MUST be unique.
-| items? |  Indicates what type all items in the array inherit from. Can be a reference to an existing type or an inline [type declaration](#type-declaration)
-| minItems? | Minimum amount of items in array. Value MUST be equal or greater than 0. Defaults to 0.
-| maxItems? | Maximum amount of items in array. Value MUST be equal or greater than 0. Defaults to 2147483647.
-
-The example below defines an array of numbers and sets its "uniqueItems" facet to true.
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  NumberSet:
-    type: number[]
-    uniqueItems: true
-```
-
-#### External Types
-
-The RAML 1.0 Type system allows seamless integration of json/xsd schemas as type definitions. This is achieved by implicitly converting references to json/xsd schemas to subtypes of the **external** built-in type.
-
-These types can then be used freely within the RAML Type system as normal types except for one restriction: You cannot inherit from them.
-
-The following type declarations create subclasses of external types.
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person:
-    type: !include schemas/PersonSchema.json
-```
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  Person: !include schemas/PersonSchema.xsd
-```
-
-##### External Types and Inheritance
-
-External types cannot participate in type inheritance or specialization. In other words: You cannot define sub-types of external types that declare new properties or set facets. You can, however, create simple type wrappers that add metadata, examples and a description.
-
-#### Inheritance Restrictions
-
-* You cannot inherit from types of different kind at the same moment ( kinds are: union types, array types, object types, scalar types )
-* You cannot inherit from types extending union types ( ex: you cannot extend from `Pet` if `Pet = Dog | Cat` )
-* You cannot inherit from multiple primitive types ( Multiple inheritance is only allowed for object types )
-* You cannot inherit from a type that extends Array type ( this will result in simple type aliasing/wrapping )
-* Facets are always inherited
-* You can fix a previously defined facet to a value if the facet is defined on a superclass
-* Properties are only allowed on object types
-* You cannot create cyclic dependencies when inheriting
-* You cannot inherit from "external" types
-
-### Shortcuts and Syntactic Sugar
-
-RAML Types are meant to be easy to read and write. To make the syntax more concise and in line with traditional object oriented programming languages, as well as familiar for developers who have used JSON schema before, the following shortcuts have been defined:
-
-<table>
-<tr>
-<td><b></b></td>
-<td><b>Example</b></td>
-<td><b>Expanded Equivalent</b></td>
-</tr>
-<tr>
-<td>Inline type expression gets expanded to a proper type declaration</td>
-<td><pre>Email: string</pre></td>
-<td><pre>Email: <br>&nbsp;&nbsp;type: string</pre></td>
-</tr>
-<tr>
-<td>`string` is default type when nothing else defined </td>
-<td><pre>Email:</pre></td>
-<td><pre>Email:<br>&nbsp;&nbsp;type: string</pre></td>
-</tr>
-<tr>
-<td>`object` is default type when `properties` is defined</td>
-<td><pre>Person:<br>&nbsp;&nbsp;properties:</pre></td>
-<td><pre>Person:<br>&nbsp;&nbsp;type: object<br>&nbsp;&nbsp;properties:</pre></td>
-</tr>
-<tr>
-<td>Shorthand for Optional Property Syntax (?)</td>
-<td><pre>Person:<br>&nbsp;&nbsp;properties:<br>&nbsp;&nbsp;&nbsp;&nbsp;nick?: string</pre></td>
-<td><pre>Person:<br>&nbsp;&nbsp;type: object<br>&nbsp;&nbsp;properties:<br>&nbsp;&nbsp;&nbsp;&nbsp;nick:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: string<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required: false</pre></td>
-</tr>
-</table>
 
 ### Inline Type Declarations
 
@@ -1632,7 +1442,7 @@ baseUri: https://api.github.com
 
 The key of a resource property, i.e. its relative URI, MAY consist of multiple URI path fragments separated by slashes; e.g. /bom/items may indicate the collection of items in a bill of materials as a single resource. However, if the individual URI path fragments are themselves resources, the API definition SHOULD use nested resources to describe this structure; e.g. if /bom is itself a resource then /items should be a nested resource of /bom, vs using /bom/items as a non-nested resource.
 
-Absolute URIs are not explicitly specified. They are computed by starting with the baseUri and appending the relative URI of the top-level resource, and then successively appending the relative URI values for each nested resource until the target resource is reached.
+Absolute URIs are not explicitly specified. They are computed by appending the relative URI of the top-level resource, and then successively appending the relative URI values for each nested resource until the target resource is reached. In this formation of the absolute URI, if a baseUri is defined, it is prepended before the relative URI of the top-level resource; any trailing slashes in the baseUri are removed before prepending.
 
 Taking the previous example, the absolute URI of the public gists resource is formed as follows.
 
@@ -1680,6 +1490,26 @@ https://api.github.com/users/{userId}/following
 https://api.github.com/users/{userId}/keys
 https://api.github.com/users/{userId}/keys/{keyId}
 ```
+
+A RAML processor MUST NOT allow one of the computed absolute URIs to be identical to another one; comparison of absolute URIs is done without consideration to the possible values of any URI parameter, i.e. any URI parameters are not expanded or evaluated but rather left as is.
+
+The following example would be forbidden.
+
+```yaml
+/users:
+  /foo:
+/users/foo:
+```
+
+(both paths combine to the same `/users/foo`), and on the other hand this would ALWAYS be ALLOWED.
+
+```yaml
+/users/{userId}:
+/users/{username}:
+/users/me:
+```
+
+### Resource Property
 
 The value of a resource property is an object whose properties are described in the following table.
 
