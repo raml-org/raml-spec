@@ -1214,26 +1214,49 @@ Please note that the properties "schemas" and "types" are completely synonymous,
 
 ### Multiple Inheritance
 
-RAML Types support multiple inheritance for object types. This is achieved by passing a sequence of types:
+RAML Types support multiple inheritance. This is achieved by passing a sequence of types:
 
 ```yaml
-#%RAML 1.0
-title: My API With Types
 types:
-  A:
+  Person:
     type: object
-  B:
+    properties:
+      name: string
+  Employee:
     type: object
-  C:
-    type: [ A, B ]
+    properties:
+      employeeNr: integer
+  Teacher:
+    type: [ Person, Employee ]
 ```
 
-Note: Multiple inheritance is only allowed if all Type Expressions are simple object Types.
+The type `Teacher` inherits all properties from `Person` and `Employee`.
 
-If multiple parent types define a property with the same name:
+Note: Multiple inheritance is only allowed if the resulting type is a valid type declaration. For example, the type `Number3` is fully valid:
 
-* The property will be required if at least one of the declarations are required
-* The type of the property will be the narrowest type
+```yaml
+types:
+   Number1:
+     type: number
+     minimum: 4
+   Number2:
+     type: number
+     maximum: 10
+   Number3: [ Number1, Number2]
+```
+
+Where as using the same example and only change the maximum value of type `Number2` from 10 to 2 would result into an invalid type `Number3`.
+
+```yaml
+types:
+  Number1:
+    type: number
+    minimum: 4
+  Number2:
+    type: number
+    maximum: 2
+  Number3: [ Number1, Number2] # invalid, maximum value cannot be lesser than minimum value
+```
 
 ### Inline Type Declarations
 
