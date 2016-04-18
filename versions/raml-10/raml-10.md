@@ -1189,7 +1189,7 @@ CatOrDog: # follows restrictions applied to the type 'Cat'
 
 ### Using XML and JSON Schema
 
-RAML allows to not only define data using the type system, although it is recommended, but also provides mechanism to define them in XML and/or JSON schemas. RAML's type system allows seamless integration of JSON and XML schemas as type definitions.
+RAML allows the use of XML and JSON schema to describe the body of an API request or response, by integrating them into its data type system.
 
 The following examples show how to include an external JSON schema into a root-level type definition and a body declaration.
 
@@ -1241,9 +1241,9 @@ types:
       members: Person[] # invalid use of type expression '[]' and as a property type
  ```
 
-A RAML Processor MUST be able to interpret JSON Schema and XML Schema.
+A RAML Processor MUST be able to interpret and apply JSON Schema and XML Schema.
 
-XML schema MUST NOT be used where the media type does not allow XML-formatted data, and JSON schema MUST NOT be used where the media type does not allow JSON-formatted data. XML and JSON schemas are also FORBIDDEN in any declaration of query parameters, query string, and headers.
+XML schema MUST NOT be used where the media type does not allow XML-formatted data, and JSON schema MUST NOT be used where the media type does not allow JSON-formatted data. XML and JSON schemas are also forbidden in any declaration of query parameters, query string, URI parameters, and headers.
 
 Please note that the properties "schemas" and "types" are completely synonymous, so are "schema" and "type" for compatibility with RAML 0.8, but "schemas" and "schema" are deprecated. API definitions should use "types" and "type", as "schemas" and "schema" may be removed in a future RAML version.
 
