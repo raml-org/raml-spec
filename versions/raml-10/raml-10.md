@@ -480,15 +480,15 @@ types:
 
 #### Property Declarations
 
-Properties of object types are defined using the OPTIONAL **properties** property. The value of the properties property is called a "properties declaration" in the RAML Specification. It is a map where each key represents the name of a property allowed to be declared for a type instance, and its value either a name of a type or an inline type declaration.
+Properties of object types are defined using the OPTIONAL **properties** property. The RAML Specification calls the value of the properties property a "properties declaration". The properties declaration is a map of keys and values. The keys are valid property names for declaring a type instance. The values are either a name of a type or an inline type declaration.
 
-In addition to the properties available in normal type declarations, properties can specify whether they are required or not.
+The properties declaration can specify whether a property is required or optional.
 
 | Property  | Description |
 |:----------|:----------|
-| required? | Sets if property is optional or not.<br /><br />**Default:** `true`.
+| required? | Specifies that the property is required or not.<br /><br />**Default:** `true`.
 
-The following example declares an object type with two properties:
+The following example declares an object type having two properties:
 
 ```yaml
 types:
@@ -502,7 +502,7 @@ types:
         type: number
 ```
 
-In order to achieve a more "object oriented" experience, a series of shortcuts are available. The example below shows a common idiom:
+The following example shows a common idiom:
 
 ```yaml
 types:
@@ -517,7 +517,7 @@ types:
                    #  required: false
 ```
 
-Furthermore, when the `required` facet on a property is specified explicitly in a type declaration, any question mark in its property name is treated as part of the property name rather than as an indicator that the property is optional.
+When the `required` facet on a property is specified explicitly in a type declaration, any question mark in its property name is treated as part of the property name rather than as an indicator that the property is optional.
 
 For example, in
 
@@ -529,7 +529,7 @@ types:
         required: true
 ```
 
-the `profile` type has a property whose name is `preference?` (including the trailing question mark) and that is required. The same property could be made optional in two equivalent ways:
+The `profile` type has a property named `preference?` that includes the trailing question mark. The following snippets show two ways of making `preference?` optional:
 
 ```yaml
 types:
@@ -550,7 +550,7 @@ types:
 
 Note:
 
-When an Object Type does not contain the "properties" property, the object is assumed to be unconstrained. That means, it may contain any properties of any type.
+When an object type does not contain the "properties" property, the object is assumed to be unconstrained and therefore capable of containing any properties of any type.
 
 #### Additional Properties
 
