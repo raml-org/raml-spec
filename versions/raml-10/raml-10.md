@@ -406,7 +406,7 @@ The following diagram shows the type families and examples of these custom types
 
 ### Type Declarations
 
-Types may be declared inline, wherever the API expects data, or in an OPTIONAL **types** property at the root of the API or in an included library. The value is a map where each key represents the name of the type and its value is a type declaration.
+Types can be declared inline where the API expects data, in an OPTIONAL **types** property at the root of the API, or in an included library. To declare a type, you use a map where the key represents the name of the type and its value is a type declaration.
 
 ```yaml
 types:
@@ -414,22 +414,22 @@ types:
     # value is a type declaration
 ```
 
-Types declarations are used to extend built-in types or other custom types, as well as to add more information to types such as specific examples or annotations. Here are the properties that all type declarations may have; certain type declarations may have other properties.
+A type declaration can extend a built-in type or other custom type, or add more information to types, such as specific examples or annotations. Here are the facets that all type declarations can have; certain type declarations might have other facets:
 
-| Property  | Description |
+| Facet  | Description |
 |:----------|:----------|
-| default? | Provides a default value for a type.
-| schema? | Alias for the equivalent "type" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property, as the "schema" alias for that property name may be removed in a future RAML version. The "type" property allows for XML and JSON schemas.
+| default? | A default value for a type.
+| schema? | An alias for the equivalent "type" property for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" property because the "schema" alias for that property name might be removed in a future RAML version. The "type" property supports XML and JSON schemas.
 | type? | A base type which the current type extends or just wraps. The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.
-| example? | An example of an instance of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `example` property MUST not be available when the `examples` property is already defined.
-| examples? | An object containing named examples of instances of this type. This can be used, e.g., by documentation generators to generate sample values for an object of this type. The `examples` property MUST not be available when the `example` property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
+| example? | An example of an instance of this type that can be used, for example, by documentation generators to generate sample values for an object of this type. The "example" property MUST not be available when the "examples" property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
+| examples? |  An object containing named examples of instances of this type. This can be used, for example, by documentation generators to generate sample values for an object of this type. The "examples" property MUST not be available when the "example" property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | displayName? | An alternate, human-friendly name for the type
-| description? | A longer, human-friendly description of the type
-| (&lt;annotationName&gt;)? | Annotations to be applied to this type. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section on [Annotations](#annotations) for more information.
+| description? | A substantial, human-friendly description of the type
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this type. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | facets? | A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section [User defined Facets](#user-defined-facets) for more information.
-| xml? | The ability to configure serialization of an instance of this type into XML. See section [XML Serialization of Type Instances](#xml-serialization-of-type-instances) for more information.
+| xml? | The capability to configure [XML serialization of this type instance](#xml-serialization-of-type-instances).
 
-The `schema` and `type` properties are mutually exclusive and synonymous: processors MUST NOT allow both to be specified (explicitly or implicitly) inside the same type declaration. Therefore, the following examples are both invalid.
+The "schema" and "type" facets are mutually exclusive and synonymous: processors MUST NOT allow both to be specified, explicitly or implicitly, inside the same type declaration. Therefore, the following examples are invalid:
 
 ```yaml
 types:
@@ -449,19 +449,19 @@ types:
             type: # invalid as mutually exclusive with `schema`
 ```
 
-It is recommended to use the `type` property instead of `schema`, as the `schema` alias is deprecated and may be removed in a future RAML version. The `type` property also allows for XML and JSON schemas.
+We recommended using the "type" facet instead of "schema" because the schema alias is deprecated and might be removed in a future RAML version. Also, the "type" facet supports XML and JSON schemas.
 
 ### Object Types
 
-All types that have the built-in object type at the root of their inheritance tree can use the following properties in their type declarations:
+All types that have the built-in object type at the root of their inheritance tree can use the following facets in their type declarations:
 
-| Property  | Description |
+| Facet  | Description |
 |:----------|:----------|
 | properties? | The [properties](#property-declarations) that instances of this type can or must have.
 | minProperties? | The minimum number of properties allowed for instances of this type.
 | maxProperties? | The maximum number of properties allowed for instances of this type.
 | additionalProperties? | A Boolean that indicates if an object instance has [additional properties](#additional-properties).<br/><br/>**Default:** `true`
-| discriminator? | Determines the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types due to unions or inheritance. The value must match the name of one of the declared `properties` of a type. Unsupported practices are inline type declarations and [using `discriminator`](#using-discriminator) with non-scalar properties. 
+| discriminator? | Determines the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types due to unions or inheritance. The value must match the name of one of the declared `properties` of a type. Unsupported practices are inline type declarations and [using `discriminator`](#using-discriminator) with non-scalar properties.
 | discriminatorValue? | Identifies the declaring type. Requires including a `discriminator` property in the type declaration. A valid value is an actual value that might identify the type of an individual object and is unique in the hierarchy of the type. Inline type declarations are not supported.<br/><br/>**Default:** The name of the type
 
 An object type is created by explicit inheritance from the built-in type object:
@@ -480,11 +480,11 @@ types:
 
 #### Property Declarations
 
-Properties of object types are defined using the OPTIONAL **properties** property. The RAML Specification calls the value of the properties property a "properties declaration". The properties declaration is a map of keys and values. The keys are valid property names for declaring a type instance. The values are either a name of a type or an inline type declaration.
+Properties of object types are defined using the OPTIONAL **properties** facet. The RAML Specification calls the value of the "properties" facet a "properties declaration". The properties declaration is a map of keys and values. The keys are valid property names for declaring a type instance. The values are either a name of a type or an inline type declaration.
 
 The properties declaration can specify whether a property is required or optional.
 
-| Property  | Description |
+| Facet  | Description |
 |:----------|:----------|
 | required? | Specifies that the property is required or not.<br /><br />**Default:** `true`.
 
@@ -550,11 +550,11 @@ types:
 
 Note:
 
-When an object type does not contain the "properties" property, the object is assumed to be unconstrained and therefore capable of containing any properties of any type.
+When an object type does not contain the "properties" facet, the object is assumed to be unconstrained and therefore capable of containing any properties of any type.
 
 #### Additional Properties
 
-By default any instance of an object can have additional properties beyond those specified in its data type `properties` node. Let's assume the following is an instance of the data type `Person` that is described in the previous section.
+By default any instance of an object can have additional properties beyond those specified in its data type `properties` facet. Let's assume the following is an instance of the data type `Person` that is described in the previous section.
 
 ```yaml
 Person:
@@ -644,7 +644,7 @@ When payloads contain ambiguous types (achieved via unions or inheritance) it is
 
 A RAML processor may provide an implementation that automatically select a concrete type from a set of possible types, but one of the simplest options is to actually store some unique value associated with the type inside the object.
 
-The `discriminator` property allows you to set the name of an object property which will be used to discriminate the concrete type, and `discriminatorValue` stores the actual value that may identify the type of an individual object. By default, the value of `discriminatorValue` is the name of the type.   
+The `discriminator` facet allows you to set the name of an object property which will be used to discriminate the concrete type, and `discriminatorValue` stores the actual value that may identify the type of an individual object. By default, the value of `discriminatorValue` is the name of the type.   
 
 Here's an example that illustrates how to use `discriminator`:
 
@@ -740,9 +740,9 @@ PersonOrDog:
 
 ### Array Types
 
-Array Types are declared by either using the array qualifier `[]` at the end of a [type expression](#type-expressions) or `array` as the value of a `type` node. If you are defining a top-level array type (like the example below), you can pass the following additional properties to further restrict its behavior.
+Array Types are declared by either using the array qualifier `[]` at the end of a [type expression](#type-expressions) or `array` as the value of a `type` node. If you are defining a top-level array type (like the example below), you can pass the following additional facets to further restrict its behavior.
 
-| Property  | Description |
+| Facet  | Description |
 |:----------|:----------|
 | uniqueItems? | Boolean value that indicates if items in the array MUST be unique.
 | items? |  Indicates what type all items in the array inherit from. Can be a reference to an existing type or an inline [type declaration](#type-declaration)
@@ -784,7 +784,7 @@ Using `Email[]` is equivalent to use `type: array` and specifically define the t
 
 RAML defines a set of built-in scalar types and each of them has a predefined set of restrictions. All these types, except the file type, may have an additional `enum` facet.
 
-| Name | Description |
+| Facet | Description |
 |:--------|:------------|
 | enum? | Enumeration of possible values for this built-in scalar type. The value is an array containing representations of possible values, or a single value if there is only one possible value.
 
@@ -807,7 +807,7 @@ types:
 
 A JSON string with the following additional facets:
 
-|Property Name | Description |
+| Facet | Description |
 |:--------|:------------|
 | pattern? | Regular expression that this string should pass.
 | minLength? | Minimum length of the string. Value MUST be equal or greater than 0.<br /><br />**Default:** `0`
@@ -827,7 +827,7 @@ types:
 
 Any JSON number including [integer](#integer) with the following additional facets:
 
-|Property Name | Description |
+| Facet | Description |
 |:--------|:------------|
 |minimum? | (applicable only for parameters of type number or integer) The minimum attribute specifies the parameter's minimum value.
 |maximum? | (applicable only for parameters of type number or integer) The maximum attribute specifies the parameter's maximum value.
@@ -908,7 +908,7 @@ types:
 
 The ​**file**​ type can be used to constrain the content to send through forms. When it is used in the context of web forms it SHOULD be represented as a valid file upload, and in JSON representation, it SHOULD be represented as a base64 encoded string with a file content.
 
-|Property Name | Description |
+| Facet | Description |
 |:--------|:------------|
 | fileTypes? | List of valid content-types for the file. The file type `*/*` should be a valid value.
 | minLength? | Specifies the parameter value's minimum number of bytes. Value MUST be equal or greater than 0.<br /><br />**Default:** `0`
@@ -948,7 +948,7 @@ Because user-defined facets are by definition not built into this RAML specifica
 
 A RAML processor must be able to determine the default type of a type declaration by using the following rules:
 
-* If, and only if, a type declaration contains a `properties` node; the default type is `object`. For example (based on this rule):
+* If, and only if, a type declaration contains a `properties` facet; the default type is `object`. For example (based on this rule):
 
 ```yaml
 types:
@@ -966,7 +966,7 @@ types:
     properties:
 ```
 
-* If, and only if, a type declaration contains neither a `properties` node nor a `type` or `schema` node, then the default type is `string`. For example (based on this rule):
+* If, and only if, a type declaration contains neither a `properties` facet nor a `type` or `schema` facet, then the default type is `string`. For example (based on this rule):
 
 ```yaml
 types:
@@ -1002,8 +1002,7 @@ types:
 
 ### Type Expressions
 
-So far we have only used simple type identifiers to refer to other Types (ex: string, object, Person). Type Expressions provide a powerful way of referring to, and even defining, types. Type Expressions can be used wherever a type is expected.
-The simplest Type Expression is just the name of a type. But Type expressions also allow you to express Type Unions, Arrays, and maps amongst other things.
+So far we have only used simple type identifiers to refer to other Types (ex: string, object, Person). Type Expressions provide a powerful way of referring to, and even defining, types. Type Expressions can be used wherever a type is expected. The simplest Type Expression is just the name of a type. But Type expressions also allow you to express Type Unions, Arrays, and maps amongst other things.
 
 |Expression | Description |
 |:--------|:------------|
@@ -1293,7 +1292,7 @@ content: You have been added to group 274
 
 ##### The value is a map that contains the following additional facets
 
-|Property | Description |
+| Facet | Description |
 |:--------|:------------|
 | displayName? | An alternate, human-friendly name for the example. If the example is part of an examples node, the default value is the unique identifier that is defined for this example.
 | description? | A longer, human-friendly description of the example.
