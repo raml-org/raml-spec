@@ -1392,7 +1392,7 @@ types:
     type: [ A, B ]
 ```
 
-Note: Multiple inheritance is only allowed if all Type Expressions are simple object Types. See [Inheritance Restrictions](#inheritance-restrictions).
+Note: Multiple inheritance is only allowed if all Type Expressions are simple object Types.
 
 If multiple parent types define a property with the same name:
 
@@ -1425,18 +1425,6 @@ types:
     type: number[]
     uniqueItems: true
 ```
-
-#### Inheritance Restrictions
-
-* You cannot inherit from types of different kind at the same moment ( kinds are: union types, array types, object types, scalar types )
-* You cannot inherit from types extending union types ( ex: you cannot extend from `Pet` if `Pet = Dog | Cat` )
-* You cannot inherit from multiple primitive types ( Multiple inheritance is only allowed for object types )
-* You cannot inherit from a type that extends Array type ( this will result in simple type aliasing/wrapping )
-* Facets are always inherited
-* You can fix a previously defined facet to a value if the facet is defined on a superclass
-* Properties are only allowed on object types
-* You cannot create cyclic dependencies when inheriting
-* You cannot inherit from "external" types
 
 ### Shortcuts and Syntactic Sugar
 
