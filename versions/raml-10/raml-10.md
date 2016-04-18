@@ -2254,7 +2254,7 @@ All the collections or sequences which fall under effect of applying traits and 
 title: Example API
 version: v1
 traits:
-  parameters:
+  withQueryParameters:
     queryParameters:
       platform:
         enum:
@@ -3209,7 +3209,7 @@ usage: Hints for monitoring the library books API
 extends: librarybooks.raml
 annotationTypes:
   monitor:
-    parameters:
+    properties:
       frequency:
         properties:
           interval: integer
