@@ -661,11 +661,11 @@ types:
   Employee: # kind may equal to `Employee; default value for `discriminatorValue`
     type: Person
     properties:
-      employeeId: string
+      employeeId: integer
   User: # kind may equal to `User`; default value for `discriminatorValue`
     type: Person
     properties:
-      userId: string
+      userId: integer
 ```
 
 ```yaml
