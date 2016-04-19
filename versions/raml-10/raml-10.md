@@ -554,7 +554,7 @@ When an object type does not contain the "properties" facet, the object is assum
 
 #### Additional Properties
 
-By default any instance of an object can have additional properties beyond those specified in its data type `properties` facet. Let's assume the following is an instance of the data type `Person` that is described in the previous section.
+By default, any instance of an object can have additional properties beyond those specified in its data type `properties` facet. Assume the following code is an instance of the data type `Person` that is described in the previous section.
 
 ```yaml
 Person:
@@ -563,9 +563,9 @@ Person:
   note: "US" # valid additional property `note`
 ```
 
-The property `note` has been not explicitly declared in the `Person` data type, but is valid based on the fact that all additional properties are by default valid.
+The property `note` is not explicitly declared in the `Person` data type, but is valid because all additional properties are valid by default.
 
-To restrict that, one can either use the `additionalProperties` facet to not allow any additional properties by setting the value to `false`, or by specifying regular expression patterns that matches sets of keys and restricts their values: these are called "pattern properties". The patterns are delineated by pairs of opening and closing `/` characters, as follows:
+To restrict the addition of properties, you can set the value of the `additionalProperties` facet to `false`, or you can specify regular expression patterns that match sets of keys and restrict their values. The latter are called "pattern properties". The patterns are delineated by pairs of opening and closing `/` characters, as follows:
 
 ```yaml
 #%RAML 1.0
@@ -580,18 +580,18 @@ types:
         required: false
         type: number
       /^note\d+$/: # restrict any properties whose keys start with "note"
-                   # followed by one or more digits to be a string
+                   # followed by a string of one or more digits
         type: string
 ```
 
-This restricts any additional properties whose keys start with "note" followed by one or more digits to be a string. Where as the example of an object instance with an additional `note` property with value "US" is valid, the following is not:
+This pattern property restricts any additional properties whose keys start with "note" followed by a string of one or more digits. Consequently, the example of an object instance that declares an additional `note` property with the value "US" is valid, but the same property is invalid with a non-string value:
 
 ```yaml
 Person:
   name: "John"
   age: 35
   note: 123 # not valid as it is not a string
-  address: "US" # valid is it does not match the pattern
+  address: "US" # valid as it does not match the pattern
 ```
 
 To force all additional properties to be strings, regardless of their keys, use:
@@ -612,9 +612,9 @@ types:
         type: string
 ```
 
-If a pattern property regular expression also matches an explicitly declared property, the explicitly declared property's definition prevails. If two or more pattern property regular expressions match a property name in an instance of the data type, the first one prevails.
+If a pattern property regular expression also matches an explicitly declared property, the explicitly declared property definition prevails. If two or more pattern property regular expressions match a property name in an instance of the data type, the first one prevails.
 
-Moreover, if `additionalProperties` is `false` (explicitly or by inheritance) in a given type definition, then pattern properties are not allowed to be set explicitly in that definition. If it is `true` (or omitted) in a given type definition, then pattern properties are allowed and further restrict the allowed additional properties in that type.
+Moreover, if `additionalProperties` is `false` (explicitly or by inheritance) in a given type definition, then explicitly setting pattern properties in that definition is not allowed. If `additionalProperties` is `true` (or omitted) in a given type definition, then pattern properties are allowed and further restrict the additional properties allowed in that type.
 
 #### Object Type Specialization
 
