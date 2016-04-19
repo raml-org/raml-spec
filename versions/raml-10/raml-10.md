@@ -155,6 +155,8 @@ The following table enumerates the possible properties at the root of a RAML doc
 | uses? | Imported external [libraries](#libraries) for use within the API.
 | /&lt;relativeUri&gt;? | The resources of the API, identified as relative URIs that begin with a slash (/). A [resource property](#resources-and-nested-resources) is one that begins with the slash and is either at the root of the API definition or a child of a resource property. For example, /users and /{groupId}.
 
+The "schemas" and "types" nodes are mutually exclusive and synonymous: processors MUST NOT allow both to be specified, explicitly or implicitly, at the root-level of an API definition. We recommended using the "types" node instead of "schemas" because the schemas alias is deprecated and might be removed in a future RAML version. Also, the "types" node supports XML and JSON schemas.
+
 ### User Documentation
 
 The OPTIONAL **documentation** property includes a variety of documents that serve as user guides and reference documentation for the API. Such documents can clarify how the API works or provide technical and business context.
