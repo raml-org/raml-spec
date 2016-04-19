@@ -778,7 +778,7 @@ types:
     uniqueItems: true
 ```
 
-Using `Email[]` is equivalent to using `type: array`.  The `items` facet defines the Email type as the one each array item inherits from.
+Using `Email[]` is equivalent to using `type: array`.  The `items` facet defines the `Email` type as the one each array item inherits from.
 
 ### Scalar Types
 
