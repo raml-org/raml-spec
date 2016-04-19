@@ -618,7 +618,7 @@ Moreover, if `additionalProperties` is `false` (explicitly or by inheritance) in
 
 #### Object Type Specialization
 
-You can declare object types that inherit from other object types a sub-type inherits all the properties of its parent type. In the example below, the type `Employee` inherits all properties of its parent type `Person`.
+You can declare object types that inherit from other object types. A sub-type inherits all the properties of its parent type. In the following example, the type `Employee` inherits all properties of its parent type `Person`.
 
 ```yaml
 #%RAML 1.0
@@ -636,7 +636,7 @@ types:
         type: string
 ```
 
-Any sub-types can override properties defined in its parent types with the following two restrictions: 1) if a property is required in the parent type, it cannot be made optional in the sub-type, and 2) the type of an already defined property can only be changed to a narrower type (a type that specializes the parent type).
+A sub-type can override properties of its parent type with the following restrictions: 1) a required property in the parent type cannot become optional in the sub-type, and 2) the type declaration of a defined property in the parent type cannot widen in the sub-type. Changes that narrow the type (specialize the parent type) are allowed.
 
 #### Using Discriminator
 
