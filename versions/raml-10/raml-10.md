@@ -3026,16 +3026,15 @@ schema: !include elements.xsd#Foo
 /id: !include myContent.raml#feature
 ```
 
-Dereferencing to a fragment of JSON schemas is performed according to default JSON Schema dereferencing  rules (see chapter 7 in http://json-schema.org/latest/json-schema-core.html)
+Dereferencing a fragment of a JSON schema is supported as described in the JSON Schema dereferencing rules in Chapter 7 of [_JSON Schema: core definitions and terminology_](http://json-schema.org/latest/json-schema-core.html)
 
-Dereferencing to a fragment of XSD schema is described in *3.15.2.2 References to Schema Components*, [XML Schema Part 1: Structures Second Edition](http://www.w3.org/TR/xmlschema-1/). However there is a special shortcut: If you are referring to a named type within XSD schema you may simplify fragment definition to its name.
+Dereferencing a fragment of an XSD is supported as described in section "3.15.2.2 References to Schema Components from Elsewhere" of [_XML Schema Part 1: Structures Second Edition_](http://www.w3.org/TR/xmlschema-1/). However, you can also refer to a named type in an XSD schema.
 
-Meaning of references to inner elements: referencing to inner element of schema is equivalent to referencing to the schema with a top level element with structural restrictions same as restrictions on the referenced element of schema. At this version of RAML specification it is allowed to refer on elements of schemas in the following cases:
+Referencing an inner element of a schema is equivalent to referencing a top level element. The structural restrictions on referencing an inner element are the same as those on referencing other elements. This version of RAML specification supports references to elements of schemas in the following cases:
 
-* referencing to an element of JSON schema is valid in any context, but they do not define name of top level XML element  when serializing to XML payload
-* referencing to an element of XSD schema is valid in any context
-* references to XSD complex types are valid to determine inner structure of payload but they do not define name of top level XML element when serializing to XML payload
-* any other kinds of references does not have well defined meaning
+* Referencing an element of a JSON schema in any context. The name of top level XML element of data that is serialized to an XML payload is not defined.
+* Referencing an element of an XSD in any context.
+* Referencing XSD complex types to determine the inner structure of payload. The name of top level XML element of data that is serialized to an XML payload is not defined.
 
 ### Libraries
 
