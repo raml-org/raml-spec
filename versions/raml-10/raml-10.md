@@ -1258,7 +1258,7 @@ types:
   Number3: [ Number1, Number2] # invalid, maximum value cannot be less than minimum value
 ```
 
-If a sub-type inherits properties having the same name from at least two of its parent types, the sub-type keeps all restrictions applied to those properties with two exceptions: a parent type already declares a "pattern" facet and two user-defined facets have the same value. In these cases, an invalid type declaration occurs. 
+If a sub-type inherits properties having the same name from at least two of its parent types, the sub-type keeps all restrictions applied to those properties with two exceptions: 1) a "pattern" facet when a parent type already declares a "pattern" facet 2) a user-defined facet when another user-defined facet has the same value. In these cases, an invalid type declaration occurs. 
 
 ### Inline Type Declarations
 
