@@ -636,7 +636,7 @@ types:
         type: string
 ```
 
-A sub-type can override properties of its parent type with the following restrictions: 1) a required property in the parent type cannot become optional in the sub-type, and 2) the type declaration of a defined property in the parent type cannot widen in the sub-type. Changes that narrow the type (specialize the parent type) are allowed.
+A sub-type can override properties of its parent type with the following restrictions: 1) a required property in the parent type cannot become optional in the sub-type, and 2) the type declaration of a defined property in the parent type cannot become wider in the sub-type. Changes that narrow the type (specialize the parent type) are allowed.
 
 #### Using Discriminator
 
