@@ -876,12 +876,12 @@ The following date type representations MUST be supported:
 
 | Type | Description |
 |:-----|:------------|
-| date-only | the "full-date" notation of [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14), namely `yyyy-mm-dd` (no implications about time or timezone-offset)
-| time-only | the "partial-time" notation of [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14), namely hh:mm:ss\[.ff...\] (no implications about date or timezone-offset)
-| datetime-only | combined date-only and time-only with a separator of "T", namely yyyy-mm-ddThh:mm:ss\[.ff...\] (no implications about timezone-offset)
-| datetime | a timestamp, either in the "date-time" notation of [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14), if _format_ is omitted or is set to `rfc3339`, or in the format defined in [RFC2616](https://www.ietf.org/rfc/rfc2616.txt), if _format_ is set to `rfc2616`
+| date-only | The "full-date" notation of [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14), namely `yyyy-mm-dd`. Does not support time or time zone-offset notation.
+| time-only | The "partial-time" notation of [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14), namely hh:mm:ss\[.ff...\]. Does not support date or time zone-offset notation.
+| datetime-only | Combined date-only and time-only with a separator of "T", namely yyyy-mm-ddThh:mm:ss\[.ff...\]. Does not support a time zone offset.
+| datetime | A timestamp in one of the following formats:  if the _format_ is omitted or set to `rfc3339`, uses the "date-time" notation of [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14); if _format_ is set to `rfc2616`, uses the format defined in [RFC2616](https://www.ietf.org/rfc/rfc2616.txt).
 
-The additional property _format_ MUST only be available when the type equals to _datetime_ and the value MUST be either `rfc3339` or `rfc2616`. Any other values are invalid.
+The additional property _format_ MUST be available only when the type equals _datetime_, and the value MUST be either `rfc3339` or `rfc2616`. Any other values are invalid.
 
 ```yaml
 types:
@@ -897,11 +897,11 @@ types:
   created:
     type: datetime
     example: 2016-02-28T16:41:41.090Z
-    format: rfc3339 # the default, so needn't be specified
+    format: rfc3339 # the default, so no need to specify
   If-Modified-Since:
     type: datetime
     example: Sun, 28 Feb 2016 16:41:41 GMT
-    format: rfc2616 # this time it's required as otherwise the example is in an invalid format
+    format: rfc2616 # this time it's required, otherwise, the example format is invalid
 ```
 
 #### File
