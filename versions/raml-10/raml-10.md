@@ -740,7 +740,7 @@ PersonOrDog:
 
 ### Array Types
 
-Array types are declared by using either the array qualifier `[]` at the end of a [type expression](#type-expressions) or `array` as the value of a `type` node. If you are defining a top-level array type, such as the `Emails` in the examples below, you can declare the following facets in addition to those previously described to further restrict behavior of the array type.
+Array types are declared by using either the array qualifier `[]` at the end of a [type expression](#type-expressions) or `array` as the value of a `type` facet. If you are defining a top-level array type, such as the `Emails` in the examples below, you can declare the following facets in addition to those previously described to further restrict behavior of the array type.
 
 | Facet  | Description |
 |:----------|:----------|
