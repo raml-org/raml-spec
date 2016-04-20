@@ -640,11 +640,11 @@ Any sub-types can override properties defined in its parent types with the follo
 
 #### Using Discriminator
 
-When payloads contain ambiguous types (achieved via unions or inheritance) it is often impossible to discriminate the concrete type of an individual object at runtime (for example when deserializing the payload into a statically typed language).
+When payloads contain ambiguous types due to unions or inheritance, it is often impossible to discriminate the concrete type of an individual object at runtime. For example, when deserializing the payload into a statically typed language, this problem can occur.
 
-A RAML processor may provide an implementation that automatically select a concrete type from a set of possible types, but one of the simplest options is to actually store some unique value associated with the type inside the object.
+A RAML processor might provide an implementation that automatically selects a concrete type from a set of possible types, but a simpler alternative is to store some unique value associated with the type inside the object.
 
-The `discriminator` facet allows you to set the name of an object property which will be used to discriminate the concrete type, and `discriminatorValue` stores the actual value that may identify the type of an individual object. By default, the value of `discriminatorValue` is the name of the type.   
+You set the name of an object property using the `discriminator` facet. The name of the object property is used to discriminate the concrete type. The `discriminatorValue` stores the actual value that might identify the type of an individual object. By default, the value of `discriminatorValue` is the name of the type.   
 
 Here's an example that illustrates how to use `discriminator`:
 
@@ -658,11 +658,11 @@ types:
     properties:
       kind: string # contains name of the kind of a `Person` instance
       name: string
-  Employee: # kind may equal to `Employee; default value for `discriminatorValue`
+  Employee: # kind can equal `Employee`; default value for `discriminatorValue`
     type: Person
     properties:
       employeeId: integer
-  User: # kind may equal to `User`; default value for `discriminatorValue`
+  User: # kind can equal `User`; default value for `discriminatorValue`
     type: Person
     properties:
       userId: integer
@@ -678,7 +678,7 @@ data:
     kind: Employee
 ```
 
-You can also override the default for `discriminatorValue` for each individual concrete class. In the following example we will replace the default by their lowercase versions using `discriminatorValue`:
+You can also override the default for `discriminatorValue` for each individual concrete class. The following example replaces the default value of `discriminatorValue` in initial caps with lowercase:
 
 ```yaml
 #%RAML 1.0
@@ -712,10 +712,10 @@ data:
     kind: employee
 ```
 
-Neither `discriminator` nor `discriminatorValue` are allowed to be defined for any inline type declarations or union types.
+Neither `discriminator` nor `discriminatorValue` can be defined for any inline type declarations or union types.
 
 ```yaml
-# valid when ever there is a key name that can identify a type
+# valid whenever there is a key name that can identify a type
 types:
   Device:
     discriminator: kind
@@ -724,7 +724,7 @@ types:
 ```
 
 ```yaml
-# invalid in any inline type declarations
+# invalid in any inline type declaration
 application/json:
    discriminator: kind
    properties:
