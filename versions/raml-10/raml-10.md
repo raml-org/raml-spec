@@ -1212,6 +1212,19 @@ XML schema MUST NOT be used where the media type does not allow XML-formatted da
 
 Please note that the properties "schemas" and "types" are completely synonymous, so are "schema" and "type" for compatibility with RAML 0.8, but "schemas" and "schema" are deprecated. API definitions should use "types" and "type", as "schemas" and "schema" may be removed in a future RAML version.
 
+#### References to Inner Elements
+
+Sometimes it is necessary to refer to an element defined in a schema. RAML supports that by using URL fragments like in the example below.
+
+```yaml
+type: !include elements.xsd#Foo
+```
+
+Referencing an inner element of a schema is equivalent to referencing a top level element. The structural restrictions on referencing an inner element are the same as those on referencing other elements. This version of RAML specification supports referencing any inner elements in JSON schemas that are valid schemas, and any globally defined elements and complex types in XML schemas. There are only a few restrictions:
+
+* Validation of any XML or JSON instance against inner elements follows the same restrictions than the validation against a regular XML or JSON schema.
+* Referencing complex types inside an XSD is valid to determine the structure of an XML instance, but since they do not define a name for the top-level XML element, they can not be used for serializing an XML instance
+
 ### Multiple Inheritance
 
 RAML Types support multiple inheritance for object types. This is achieved by passing a sequence of types:
@@ -3012,29 +3025,6 @@ traits:
       start:
         type: number
 ```
-
-#### References to inner elements of external files
-
-RAML 1.0 supports referring to inner elements of included schemas by using URL fragments.
-
-
-```yaml
-schema: !include elements.xsd#Foo
-```
-
-```yaml
-/id: !include myContent.raml#feature
-```
-
-Dereferencing a fragment of a JSON schema is supported as described in the JSON Schema dereferencing rules in Chapter 7 of [_JSON Schema: core definitions and terminology_](http://json-schema.org/latest/json-schema-core.html)
-
-Dereferencing a fragment of an XSD is supported as described in section "3.15.2.2 References to Schema Components from Elsewhere" of [_XML Schema Part 1: Structures Second Edition_](http://www.w3.org/TR/xmlschema-1/). However, you can also refer to a named type in an XSD schema.
-
-Referencing an inner element of a schema is equivalent to referencing a top level element. The structural restrictions on referencing an inner element are the same as those on referencing other elements. This version of RAML specification supports references to elements of schemas in the following cases:
-
-* Referencing an element of a JSON schema in any context. The name of top level XML element of data that is serialized to an XML payload is not defined.
-* Referencing an element of an XSD in any context.
-* Referencing XSD complex types to determine the inner structure of payload. The name of top level XML element of data that is serialized to an XML payload is not defined.
 
 ### Libraries
 
