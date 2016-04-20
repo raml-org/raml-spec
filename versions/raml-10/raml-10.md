@@ -782,7 +782,7 @@ Using `Email[]` is equivalent to using `type: array`.  The `items` facet defines
 
 ### Scalar Types
 
-RAML defines a set of built-in scalar types and each of them has a predefined set of restrictions. All these types, except the file type, may have an additional `enum` facet.
+RAML defines a set of built-in scalar types, each of which has a predefined set of restrictions. All types, except the file type, can have an additional `enum` facet.
 
 | Facet | Description |
 |:--------|:------------|
