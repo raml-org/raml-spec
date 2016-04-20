@@ -809,9 +809,9 @@ A JSON string with the following additional facets:
 
 | Facet | Description |
 |:--------|:------------|
-| pattern? | Regular expression that this string should pass.
-| minLength? | Minimum length of the string. Value MUST be equal or greater than 0.<br /><br />**Default:** `0`
-| maxLength? | Maximum length of the string. Value MUST be equal or greater than 0.<br /><br />**Default:** `2147483647`
+| pattern? | Regular expression that this string should match.
+| minLength? | Minimum length of the string. Value MUST be equal to or greater than 0.<br /><br />**Default:** `0`
+| maxLength? | Maximum length of the string. Value MUST be equal to or greater than 0.<br /><br />**Default:** `2147483647`
 
 Example:
 
@@ -829,10 +829,10 @@ Any JSON number including [integer](#integer) with the following additional face
 
 | Facet | Description |
 |:--------|:------------|
-|minimum? | (applicable only for parameters of type number or integer) The minimum attribute specifies the parameter's minimum value.
-|maximum? | (applicable only for parameters of type number or integer) The maximum attribute specifies the parameter's maximum value.
-|format? | Identifies the format of the value. The value MUST be one of the following: int32, int64, int, long, float, double, int16, int8
-|multipleOf? | A numeric instance is valid against "multipleOf" if the result of the division of the instance by this keyword's value is an integer.
+|minimum? | The minimum value of the parameter. Applicable only to parameters of type number or integer.
+|maximum? | The maximum value of the parameter. Applicable only to parameters of type number or integer.
+|format? | The format of the value. The value MUST be one of the following: int32, int64, int, long, float, double, int16, int8
+|multipleOf? | A numeric instance is valid against "multipleOf" if the result of dividing the instance by this keyword's value is an integer.
 
 Example:
 
