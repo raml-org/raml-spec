@@ -603,7 +603,7 @@ baseUri: https://{apiDomain}.someapi.com
         enum: [ "static" ]
 ```
 
-In the following example, the `PUT` method overrides the definition made in `/user/{userId}/image`.
+In the following example, the `PUT` method overrides the definition made in `/users/{userId}/image`.
 
 ```
 #%RAML 0.8
