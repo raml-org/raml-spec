@@ -1115,7 +1115,7 @@ This example shows a 503 error response that includes a custom header.
             description: |
               The number of seconds to wait before you can attempt to make a request again.
             type: integer
-            required: yes
+            required: true
             minimum: 1
             maximum: 3600
             example: 34
@@ -1187,7 +1187,7 @@ traits:
           required: true
 ```
 
-The following example builds on the previous one, but the the resource types and traits are defined in external files that are included by using the RAML !include data type.
+The following example builds on the previous one, but the resource types and traits are defined in external files that are included by using the RAML !include data type.
 
 ```yaml
 #%RAML 0.8
@@ -1262,8 +1262,8 @@ title: Example API
 version: v1
 mediaType: application/json
 schemas:
-  users: !include schemas/users.json
-  user: !include schemas/user.json
+  - users: !include schemas/users.json
+  - user: !include schemas/user.json
 resourceTypes:
   - collection:
       get:
