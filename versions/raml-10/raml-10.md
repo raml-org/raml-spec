@@ -740,16 +740,16 @@ PersonOrDog:
 
 ### Array Types
 
-Array Types are declared by either using the array qualifier `[]` at the end of a [type expression](#type-expressions) or `array` as the value of a `type` node. If you are defining a top-level array type (like the example below), you can pass the following additional facets to further restrict its behavior.
+Array types are declared by using either the array qualifier `[]` at the end of a [type expression](#type-expressions) or `array` as the value of a `type` facet. If you are defining a top-level array type, such as the `Emails` in the examples below, you can declare the following facets in addition to those previously described to further restrict behavior of the array type.
 
 | Facet  | Description |
 |:----------|:----------|
 | uniqueItems? | Boolean value that indicates if items in the array MUST be unique.
-| items? |  Indicates what type all items in the array inherit from. Can be a reference to an existing type or an inline [type declaration](#type-declaration)
-| minItems? | Minimum amount of items in array. Value MUST be equal or greater than 0.<br /><br />**Default:** `0`.
-| maxItems? | Maximum amount of items in array. Value MUST be equal or greater than 0.<br /><br />**Default:** `2147483647`.
+| items? | Indicates the type all items in the array are inherited from. Can be a reference to an existing type or an inline [type declaration](#type-declaration).
+| minItems? | Minimum amount of items in array. Value MUST be equal to or greater than 0.<br /><br />**Default:** `0`.
+| maxItems? | Maximum amount of items in array. Value MUST be equal to or greater than 0.<br /><br />**Default:** `2147483647`.
 
-So following are both valid examples:
+Both of the following examples are valid:
 
 ```yaml
 types:
@@ -778,7 +778,7 @@ types:
     uniqueItems: true
 ```
 
-Using `Email[]` is equivalent to use `type: array` and specifically define the type each items in the array inherit from using the `items` facet.
+Using `Email[]` is equivalent to using `type: array`.  The `items` facet defines the `Email` type as the one each array item inherits from.
 
 ### Scalar Types
 
