@@ -1145,7 +1145,7 @@ In this case, type `HomeAnimal` has two base types, `HasHome` and an anonymous u
 
 Validating the `HomeAnimal` type involves validating the types derived from each of the base types and the types of each union type option. In this particular case, you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
 
-If you are extending from two union types you should perform validations for every possible combination. For example, to validate the following type, you need to test six possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`
+If you are extending from two union types you should perform validations for every possible combination. For example, to validate the `HomeAnimal` type shown below, you need to test six possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
 
 ```yaml
 types:
