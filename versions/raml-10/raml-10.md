@@ -1004,7 +1004,7 @@ types:
 
 ### Type Expressions
 
-So far we have only used simple type identifiers to refer to other Types (ex: string, object, Person). Type Expressions provide a powerful way of referring to, and even defining, types. Type Expressions can be used wherever a type is expected. The simplest Type Expression is just the name of a type. But Type expressions also allow you to express Type Unions, Arrays, and maps amongst other things.
+Earlier, this specification used only simple type identifiers to refer to types, such as string, object, and Person. Type expressions provide a powerful way of referring to, and even defining, types. Type expressions can be used wherever a type is expected. The simplest type expression is just the name of a type. Using type expressions, you can devise type unions, arrays, maps, and other things.
 
 |Expression | Description |
 |:--------|:------------|
@@ -1012,10 +1012,10 @@ So far we have only used simple type identifiers to refer to other Types (ex: st
 | `Person[]` | An array of Person objects
 | `string[]` | An array of string scalars
 | `string[][]` | A bi-dimensional array of string scalars
-| `string | Person` | Union type made of members of string OR Person
-| `(string | Person)[]` | An array of the above type
+| `string | Person` | A union type made of members of string OR Person
+| `(string | Person)[]` | An array of the type shown above
 
-Type Expressions can be used wherever a Type is expected:
+Type expressions can be used wherever a type is expected:
 
 ```yaml
 #%RAML 1.0
@@ -1067,7 +1067,7 @@ types:
     type:  ( Phone | Notebook )[]
 ```
 
-The example above is actually declaring a "Type Alias", which gives a more readable name ( Devices ) to a type defined via a complex type expression ( in this case an array of a union of the types Phone and Notebook ). You can use this technique to give simple names to complex types. Type Aliases can also hold extra properties. For example a description and annotations.
+This example is actually declaring a "type alias", which gives a more readable name ( Devices ) to a type defined using a complex type expression. In this case, the type expression consists of an array of a union of the types Phone and Notebook. You can use this technique to give simple names to complex types. Type aliases can also hold extra properties, for example a description and annotations.
 
 #### Grammar
 
