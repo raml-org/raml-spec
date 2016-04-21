@@ -156,11 +156,14 @@ The *type* attribute specifies the primitive type of the parameter's resolved va
 | integer | Value MUST be an integer. Floating point numbers are not allowed. The integer type is a subset of the number type.
 | date    | Value MUST be a string representation of a date as defined in RFC2616 Section 3.3 [RFC2616]. See [Date Representations](#date-representations).
 | boolean | Value MUST be either the string "true" or "false" (without the quotes).
+| uuid    | Value MUST be a Universally Unique IDentifier (UUID) as defined in RFC4122 Section 4 [RFC4122]. See [UUID Representations](#uuid-representations)
 | file    | (Applicable only to Form properties)<br><br>Value is a file. Client generators SHOULD use this type to handle file uploads correctly.
 
 ##### Date Representations
 As defined in [RFC2616], all date/time stamps are represented in Greenwich Mean Time (GMT), which for the purposes of HTTP is equal to UTC (Coordinated Universal Time). This is indicated by including "GMT" as the three-letter abbreviation for the timezone. Example: ```Sun, 06 Nov 1994 08:49:37 GMT```.
 
+##### UUID Representations
+As defined in [RFC4122], all UUIDs are represented in their canonical form. Example:  ```123e4567-e89b-12d3-a456-426655440000```.
 
 ### enum
 (Optional, applicable only for parameters of type string)
@@ -1567,6 +1570,9 @@ References
 [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
           Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
           Transfer Protocol -- HTTP/1.1", RFC 2616, June 1999.
+
+[RFC4122]  Leach, P., Mealling, M., "A Universally Unique IDentifier
+          (UUID) URN Namespace", RFC 4122, July 2005.
 
 [RFC4627]  Crockford, D., "The application/json Media Type for
           JavaScript Object Notation (JSON)", RFC 4627, July 2006.
