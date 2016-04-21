@@ -950,57 +950,57 @@ Because user-defined facets are by definition not built into this RAML specifica
 
 A RAML processor must be able to determine the default type of a type declaration by using the following rules:
 
-* If, and only if, a type declaration contains a `properties` facet; the default type is `object`. For example (based on this rule):
+* If, and only if, a type declaration contains a `properties` facet, then the default type is `object`. The following snippet exemplifies this rule:
 
-```yaml
-types:
-  Person:
-    type: object
-    properties:
-```
+  ```yaml
+  types:
+    Person:
+      type: object
+      properties:
+  ```
 
-can also be written
+  This rule can also be written as follows:
 
-```yaml
-types:
-  Person:
-    # default type is `object`, no need to explicitly define it
-    properties:
-```
+  ```yaml
+  types:
+    Person:
+      # default type is `object`, no need to explicitly define it
+      properties:
+  ```
 
-* If, and only if, a type declaration contains neither a `properties` facet nor a `type` or `schema` facet, then the default type is `string`. For example (based on this rule):
+* If, and only if, a type declaration contains neither a `properties` facet nor a `type` or `schema` facet, then the default type is `string`. The following snippet exemplifies this rule:
 
-```yaml
-types:
-  Person:
-    properties:
-      name: # no type or schema necessary since the default type is `string`
-```
+  ```yaml
+  types:
+    Person:
+      properties:
+        name: # no type or schema necessary since the default type is `string`
+  ```
 
 * The default type `any` is applied to any `body` node that does not contain `properties`, `type`, or `schema`. For example:
 
-```yaml
-body:
-  application/json:
+  ```yaml
+  body:
+    application/json:
+      # default type is `any`
+  ```
+
+  Or, if a default media type has been defined, no need to declare it here:
+
+  ```yaml
+  body:
     # default type is `any`
-```
+  ```
 
-Or in case that a default media type has been defined
+  Of course, each rule can be overridden by explicitly defining a type. For example:
 
-```yaml
-body:
-  # default type is `any`
-```
-
-Of course, each rule can be overridden by explicitly define a type. For example:
-
-```yaml
-types:
-  Person:
-    properties:
-      name:
-        type: number
-```
+  ```yaml
+  types:
+    Person:
+      properties:
+        name:
+          type: number
+  ```
 
 ### Type Expressions
 
