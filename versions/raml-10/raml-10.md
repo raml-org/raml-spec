@@ -1156,7 +1156,7 @@ In summary, you need to test 6 possible combinations: `[HasHome, Dog ]`, `[HasHo
 
 ### Using XML and JSON Schema
 
-RAML allows the use of XML and JSON schema to describe the body of an API request or response, by integrating them into its data type system.
+RAML allows the use of XML and JSON schemas to describe the body of an API request or response by integrating the schemas into its data type system.
 
 The following examples show how to include an external JSON schema into a root-level type definition and a body declaration.
 
@@ -1175,9 +1175,9 @@ types:
             type: !include person.json
 ```
 
-A RAML processor MUST not allow types that define an XML or JSON schema to participate in type inheritance or specialization, or effectively in any [type expression](#type-expressions). In other words: You cannot define sub-types of these types that declare new properties, add restrictions, and set or declare facets. You can, however, create simple type wrappers that add annotations, examples or a description.
+A RAML processor MUST not allow types that define an XML or JSON schema to participate in type inheritance or specialization, or effectively in any [type expression](#type-expressions). Therefore, you cannot define sub-types of these types to declare new properties, add restrictions, set facets, or declare facets. You can, however, create simple type wrappers that add annotations, examples, or a description.
 
-The following is a fully valid example.
+The following example shows a valid declaration.
 
 ```yaml
 types:
@@ -1186,7 +1186,7 @@ types:
     description: this is a schema describing person
 ```
 
-However, this example shows an invalid case where a type inherits the characteristics of a JSON schema and adds additional properties.
+The following example shows an invalid declaration of a type that inherits the characteristics of a JSON schema and adds additional properties.
 
 ```yaml
 types:
@@ -1196,7 +1196,7 @@ types:
       single: boolean
 ```
 
-Another invalid case is the following example where the type `Person` is being used for a property type.
+Another invalid case is shown in the following example of the type `Person` being used as a property type.
 
 ```yaml
 types:
@@ -1210,9 +1210,9 @@ types:
 
 A RAML Processor MUST be able to interpret and apply JSON Schema and XML Schema.
 
-XML schema MUST NOT be used where the media type does not allow XML-formatted data, and JSON schema MUST NOT be used where the media type does not allow JSON-formatted data. XML and JSON schemas are also forbidden in any declaration of query parameters, query string, URI parameters, and headers.
+An XML schema, or JSON schema, MUST NOT be used where the media type does not allow XML-formatted data, or JSON-formatted data, respectively. XML and JSON schemas are also forbidden in any declaration of query parameters, query string, URI parameters, and headers.
 
-Please note that the properties "schemas" and "types" are completely synonymous, so are "schema" and "type" for compatibility with RAML 0.8, but "schemas" and "schema" are deprecated. API definitions should use "types" and "type", as "schemas" and "schema" may be removed in a future RAML version.
+The properties "schemas" and "types", as well as "schema" and "type", are synonymous for compatibility with RAML 0.8, but "schemas" and "schema" are deprecated. API definitions should use "types" and "type", as "schemas" and "schema" might be removed in a future RAML version.
 
 ### Multiple Inheritance
 
