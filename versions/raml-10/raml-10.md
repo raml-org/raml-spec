@@ -1082,7 +1082,7 @@ Type expressions are composed of names of built-in or custom types and certain s
 
 ### Union Types
 
-Union Types are declared using pipes (|) in your type expressions. Union Types are useful to model common scenarios in JSON based applications, for example an array containing objects which can be instances of more than one type.
+Union types are declared using pipes (|) in type expressions. Union types are useful for modeling common scenarios in JSON-based applications, for example an array containing objects that can be instances of more than one type.
 
 ```yaml
 #%RAML 1.0
@@ -1126,7 +1126,7 @@ types:
       fangs: string
 ```
 
-A valid instance of the type `CatOrDog` for example looks like the following:
+A following example of an instance of type `CatOrDog` is valid:
 
 ```yaml
 CatOrDog: # follows restrictions applied to the type 'Cat'
@@ -1134,25 +1134,23 @@ CatOrDog: # follows restrictions applied to the type 'Cat'
   color: "brown"
 ```
 
-Imagine a more complex example where a union type is used in a multiple inheritance type expression.
+Imagine a more complex example of a union type used in a multiple inheritance type expression:
 
 ```yaml
 types:
    HomeAnimal: [ HasHome ,  Dog | Cat ]
 ```
 
-In this case type `HomeAnimal` has two base types `HasHome` and anonymous union type defined by a type expression - `Dog | Cat`  
+In this case, type `HomeAnimal` has two base types, `HasHome` and an anonymous union type, defined by the following type expression: `Dog | Cat`  
 
-So testing if the `HomeAnimal` type is a valid involves  taking each of its base types, and checking that a type which is derived type of this type and each of union type option types is a valid type. In this particular case you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
+Validating the `HomeAnimal` type involves validating the types derived from each of the base types and the types of each union type option. In this particular case, you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
 
-If you are extending from two union types you should do the same for every possible combination for example in this case:
+If you are extending from two union types you should perform validations for every possible combination. For example, to validate the following type, you need to test six possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`
 
 ```yaml
 types:
    HomeAnimal: [ HasHome | IsOnFarm ,  Dog | Cat | Parrot ]
 ```
-
-In summary, you need to test 6 possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
 
 ### Using XML and JSON Schema
 
