@@ -916,6 +916,45 @@ The ​**file**​ type can constrain the content to send through forms. When th
 | minLength? | Specifies the minimum number of bytes for a parameter value. The value MUST be equal to or greater than 0.<br /><br />**Default:** `0`
 | maxLength? | Specifies the maximum number of bytes for a parameter value. The value MUST be equal to or greater than 0.<br /><br />**Default:** `2147483647`
 
+### Null Type
+​
+RAML handles null data values in payloads, annotations, and other constructs. Nullable properties must be represented as a single `null` type, a union of the non-null and `null` types, or suffixing the type with a trailing question mark `?`.
+In the following example, the type of an object and has two required properties, `name` and `comment`, both defaulting to type `string`. In `example`, `name` is assigned a string value, but comment is null and this is _not_ allowed because RAML expects a string.
+```yaml
+type:
+  properties:
+    name:
+    comment:
+example:
+  name: Fred
+  comment: # Providing no value here is not allowed.
+```
+The following example shows the assignment of the `null` type to `comment`:
+​
+```yaml
+type:
+  properties:
+    name:
+    comment: null
+example:
+  name: Fred
+  comment: # Providing a value here is not allowed.
+```
+The following example shows how to represent nullable properties using a union:
+​
+```yaml
+type:
+  properties:
+    name:
+    comment: string | null # equivalent to ->
+                           # comment: string?
+example:
+  name: Fred
+  comment: # Providing a value or not providing a value here is allowed.
+```
+
+Declaring the type of a property to be `null` causes a RAML processor to forbid an instance to have a value.
+
 ### User-defined Facets
 
 Facets express various additional restrictions beyond those which types impose on their instances, such as the optional `minimum` and `maximum` facets for numbers, or the `enum` facet for scalars. In addition to the built-in facets, RAML provides a way to declare user-defined facets for any data type.
@@ -2635,11 +2674,12 @@ The following is an example of various annotation type declarations and the appl
 title: Illustrating annotations
 mediaType: application/json
 annotationTypes:
-  experimental:
-  feedbackRequested:
+  deprecated: null
+  experimental: string | null
+  feedbackRequested: string?
   testHarness:
     type: string # This line may be omitted as it's the default type
-  badge:         # This annotation type, too, allows string values
+  badge:          # This annotation type, too, allows string values
   clearanceLevel:
     properties:
       level:
@@ -2658,8 +2698,9 @@ annotationTypes:
     level: high
     signature: 230-ghtwvfrs1itr
   get:
+    (deprecated):
     (experimental):
-    (feedbackRequested):
+    (feedbackRequested): Feedback committed!
     responses:
       200:
 ```
