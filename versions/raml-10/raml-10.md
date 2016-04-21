@@ -1272,11 +1272,13 @@ The following is an example of the value of an **examples** property:
 
 ```yaml
 message: # {key} - unique id
+  # example declaration
   title: Attention needed
-  content: You have been added to group 274
+  body: You have been added to group 274
 record: # {key} - unique id
+  # example declaration
   name: log item
-  value: permission check
+  comment: permission check
 ```
 
 #### Single Example
@@ -1289,7 +1291,7 @@ For example:
 
 ```yaml
 title: Attention needed
-content: You have been added to group 274
+body: You have been added to group 274
 ```
 
 ##### The value is a map that contains the following additional facets
@@ -1309,7 +1311,7 @@ For example:
 strict: false
 value:
   title: Attention needed
-  content: You have been added to group 274
+  body: You have been added to group 274
 ```
 
 #### Example on how to define example/examples in RAML
