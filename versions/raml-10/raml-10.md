@@ -428,7 +428,7 @@ A type declaration can extend a built-in type or other custom type, or add more 
 | displayName? | An alternate, human-friendly name for the type
 | description? | A substantial, human-friendly description of the type
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this type. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
-| facets? | A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section [User defined Facets](#user-defined-facets) for more information.
+| facets? | A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section [User-defined Facets](#user-defined-facets) for more information.
 | xml? | The capability to configure [XML serialization of this type instance](#xml-serialization-of-type-instances).
 
 The "schema" and "type" facets are mutually exclusive and synonymous: processors MUST NOT allow both to be specified, explicitly or implicitly, inside the same type declaration. Therefore, the following examples are invalid:
@@ -918,15 +918,15 @@ The ​**file**​ type can be used to constrain the content to send through for
 
 ### User-defined Facets
 
-Facets express various additional restrictions which types impose on their instances, such as the optional `minimum` and `maximum` facets for numbers, or the `enum` facet for scalars. RAML provides a way to declare additional user-defined facets for any data type.
+Facets express various additional restrictions beyond those which types impose on their instances, such as the optional `minimum` and `maximum` facets for numbers, or the `enum` facet for scalars. In addition to the built-in facets, RAML provides a way to declare user-defined facets for any data type.
 
-User-defined facets are defined using the OPTIONAL `facets` property on a type declaration. Its value is a map whose keys name the user-defined facets and whose corresponding values define the concrete values which the corresponding facet may take, following the same syntax as [property declaration](#property-declarations). That is, a facet declaration in the declaration of a type specifies the concrete values which subtypes may use for that facet to restrict instances of those subtypes. Note that this implies that user-defined facets on a type do not restrict instances of that type but rather only instances of subtypes of that type.
+The user-defined facet is declared using the OPTIONAL `facets` property in a type declaration. The value of the `facets` property is a map. The key names the user-defined facet. The corresponding value defines the concrete value that the respective facet can take. The syntax of a [property declaration](#property-declarations) and user-defined facet declaration are the same. A facet restricts instances of a subtype, not its type, based on the concrete value defined in the facet declaration.
 
-Facet names MUST NOT begin with open parentheses, to disambiguate them from annotations. User-defined facet names on a type MUST NOT match built-in facets on that type, nor facet names of any ancestor type in the type's inheritance chain.
+Facet names MUST NOT begin with open parenthesis, to disambiguate the names from annotations. User-defined facet names on a type MUST NOT match built-in facets on that type, nor facet names of any ancestor type in the inheritance chain of the type.
 
 If a facet of a type is declared as required, then any subtype of that type MUST define a value for that facet.
 
-Here is an example which defines the capability to add restrictions on dates that indicate they may not fall on holidays:
+Here is an example that defines the capability to restrict dates to those that do not fall on holidays:
 
 ```yaml
 #%RAML 1.0
@@ -942,9 +942,9 @@ types:
     noHolidays: true
 ```
 
-In the above example, the possibility of restricting date instances based on whether they fall on holidays is introduced by declaring the `noHolidays` facet and defining its values to be boolean. Then instances of any inheriting type, such as the `PossibleMeetingDate` type, must have values that do not fall on holidays.
+In this example, declaring the `noHolidays` facet and defining its values to be boolean makes it possible to restrict date instances that fall on holidays. Instances of any inheriting type, such as the `PossibleMeetingDate` type, must have values that do not fall on holidays.
 
-Because user-defined facets are by definition not built into this RAML specification, and hence their semantic may not be understood by all RAML processors, a RAML processor may or may not choose to use user-defined facets on a type in validating instances of that type.  In the example above, a RAML processor may or may not assign a meaning to `noHolidays` and so may choose to ignore the `noHolidays: true` value in validating instances of `PossibleMeetingDate`.
+User-defined facets by definition are not built into this RAML specification, and hence their semantic might not be understood by all RAML processors. Consequently, a RAML processor may or may not choose to use user-defined facets on a type in validating instances of that type. In the example above, a RAML processor may or may not assign a meaning to `noHolidays`, and therefore, may choose to ignore the `noHolidays: true` value in validating instances of `PossibleMeetingDate`.
 
 ### Determine Default Types
 
