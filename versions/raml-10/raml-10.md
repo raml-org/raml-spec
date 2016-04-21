@@ -1239,7 +1239,7 @@ If multiple parent types define a property with the same name:
 
 ### Inline Type Declarations
 
-You can declare inline/anonymous types everywhere a type can be referenced other than in a Type Expression.
+You can declare inline/anonymous types everywhere a type can be referenced except in a Type Expression.
 
 ```yaml
 #%RAML 1.0
@@ -1266,9 +1266,9 @@ It is highly RECOMMENDED that API documentation include a rich selection of exam
 
 #### Multiple Examples
 
-The OPTIONAL **examples** property may be used to attach multiple examples to a type declaration. Its value is a map of key-value pairs, where each key represent a unique identifier for an example and the value is a [single example](#single-example) property.
+The OPTIONAL **examples** property can be used to attach multiple examples to a type declaration. Its value is a map of key-value pairs, where each key represents a unique identifier for an example and the value is a [single example](#single-example) property.
 
-The following is an example of the value of an **examples** property:
+The following example shows the value of an **examples** property:
 
 ```yaml
 message: # {key} - unique id
@@ -1283,9 +1283,9 @@ record: # {key} - unique id
 
 #### Single Example
 
-The OPTIONAL **example** property may be used to attach an example of a type's instance to the type declaration. There are two different ways to represents its value.
+The OPTIONAL **example** property can be used to attach an example of a type instance to the type declaration. There are two ways to represent the example property value: as an explicit description of a specific type instance and as a map that contains additional facets.
 
-##### The value is a explicit description of a specific type instance
+##### As an explicit description of a specific type instance
 
 For example:
 
@@ -1294,15 +1294,17 @@ title: Attention needed
 body: You have been added to group 274
 ```
 
-##### The value is a map that contains the following additional facets
+##### As a map that contains additional facets
+
+The map can contain the following additional facets:
 
 | Facet | Description |
 |:--------|:------------|
 | displayName? | An alternate, human-friendly name for the example. If the example is part of an examples node, the default value is the unique identifier that is defined for this example.
 | description? | A longer, human-friendly description of the example.
-| (&lt;annotationName&gt;)? | Annotations to be applied to this example. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this example. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | value | The actual example of a type instance.
-| strict? | By default, an example is validated against any type declaration. Set this to false avoid that.
+| strict? | Validates the example against any type declaration (the default), or not. Set this to false avoid validation.
 
 For example:
 
@@ -1314,9 +1316,9 @@ value:
   body: You have been added to group 274
 ```
 
-#### Example on how to define example/examples in RAML
+#### Example of how to define example/examples in RAML
 
-The following illustrates usage of both example and examples properties at different levels of a RAML API.
+The following snippet illustrates the usage of example and examples properties at different levels of a RAML API:
 
 ```yaml
 #%RAML 1.0
@@ -1336,23 +1338,23 @@ types:
     properties:
       name: string
       address?: string
-      value? : string
-/organisation:
+      value?: string
+/organization:
   post:
     headers:
       UserID:
-        description: the identifier for the user that posts a new organisation
+        description: the identifier for the user who posts a new organization
         type: string
         example: SWED-123 # single scalar example
     body:
       application/json:
         type: Org
         example: # single request body example
-          value: # needs to be declared since instance contains 'value' property
+          value: # needs to be declared since instance contains a 'value' property
             name: Doe Enterprise
             value: Silver
   get:
-    description: Returns an organisation entity.
+    description: Returns an organization entity.
     responses:
       201:
         body:
@@ -1365,7 +1367,7 @@ types:
                 value: # validate against the available facets for the map value of an example
                   name: Software Corp
                   address: 35 Central Street
-                  value: Gold # validate against instance of the `value` property
+                  value: Gold # validate against an instance of the `value` property
 ```
 
 ### XML Serialization of Type Instances
