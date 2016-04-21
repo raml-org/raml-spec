@@ -1008,7 +1008,7 @@ Earlier, this specification used only simple type identifiers to refer to types,
 
 |Expression | Description |
 |:--------|:------------|
-| `Person` | The simplest type expression: A single Type
+| `Person` | The simplest type expression: A single type
 | `Person[]` | An array of Person objects
 | `string[]` | An array of string scalars
 | `string[][]` | A bi-dimensional array of string scalars
