@@ -1348,8 +1348,9 @@ types:
       application/json:
         type: Org
         example: # single request body example
-          name: Doe Enterprise
-          value: Silver
+          value: # needs to be declared since instance contains 'value' property
+            name: Doe Enterprise
+            value: Silver
   get:
     description: Returns an organisation entity.
     responses:
