@@ -728,6 +728,33 @@ baseUri: https://app.zencoder.com/api/{version}
       to track them through the encoding process.
 ```
 
+##### Cookies
+
+An API's methods MAY support or require HTTP Cookies. In the API definition, specify the cookies by using the *cookies* property.
+
+The *cookies* property is a map in which the key is the name of the cookie, and the value is itself a map specifying the header attributes, according to the [Named Parameters section](#name-parameters).
+
+This example shows a GET method that handles a cookie.
+
+```yaml
+#%RAML 0.8
+title: ZEncoder API
+version: v2
+baseUri: https://app.zencoder.com/api/{version}
+/jobs:
+  get:
+    description: |
+      Displays a list of available jobs.
+    cookies:
+      Sort-Jobs-By-Preference:
+        description: |
+          If defined, then the response will be sorted based on the user preference specified in this cookie.
+        enum: [ salary, days_off ]
+        required: false
+```
+
+Documentation generators MUST include content specified as example information for cookies. This information is included in the API definition by using the *example* property.
+
 ##### Headers
 
 An API's methods MAY support or require non-standard HTTP headers. In the API definition, specify the non-standard HTTP headers by using the *headers* property.
