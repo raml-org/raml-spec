@@ -908,13 +908,13 @@ types:
 
 #### File
 
-The ​**file**​ type can be used to constrain the content to send through forms. When it is used in the context of web forms it SHOULD be represented as a valid file upload, and in JSON representation, it SHOULD be represented as a base64 encoded string with a file content.
+The ​**file**​ type can constrain the content to send through forms. When this type is used in the context of web forms it SHOULD be represented as a valid file upload in JSON format. File content SHOULD be a base64-encoded string.
 
 | Facet | Description |
 |:--------|:------------|
-| fileTypes? | List of valid content-types for the file. The file type `*/*` should be a valid value.
-| minLength? | Specifies the parameter value's minimum number of bytes. Value MUST be equal or greater than 0.<br /><br />**Default:** `0`
-| maxLength? | Specifies the parameter value's maximum number of bytes. Value MUST be equal or greater than 0.<br /><br />**Default:** `2147483647`
+| fileTypes? | A list of valid content-types in `*/*` notation for the file.
+| minLength? | Specifies the minimum number of bytes for a parameter value. The value MUST be equal to or greater than 0.<br /><br />**Default:** `0`
+| maxLength? | Specifies the maximum number of bytes for a parameter value. The value MUST be equal to or greater than 0.<br /><br />**Default:** `2147483647`
 
 ### User-defined Facets
 
