@@ -1370,17 +1370,17 @@ types:
 
 ### XML Serialization of Type Instances
 
-As the serialization to XML may be a complex process, RAML introduces an additional `xml` node for [type declarations](#type-declarations) that allows to configure how type instances should be serialized to XML. The value of the `xml` node is a map that contains the following nodes.
+To facilitate the potentially complex process of serialization to XML, RAML introduces an additional `xml` node for [type declarations](#type-declarations). This node is used to configure how type instances should be serialized to XML. The value of the `xml` node is a map that contains the following nodes:
 
 | Name | Type | Description |
 |:---------|:------:|:-----------------|
-| attribute? | `boolean` | If `attribute` is set to `true`, a type instance should be serialized as an XML attribute. It can only be `true` for scalar types.<br/><br/>**Default:** `false`
-| wrapped? | `boolean` | If `wrapped` is set to `true`, a type instance should be wrapped in its own XML element. It can not  be `true` for scalar types and it can not  be `true` at the same moment when `attribute` is `true`. <br/><br/>**Default:** `false`
-|  name? | `string` | Allows to override the name of the XML element or XML attribute in it's XML representation.<br/><br/>**Default:** the name of the type
-| namespace? | `string` | Allows to configure the name of the XML namespace.
-| prefix? | `string` |  Allows to configure the prefix which will be used during serialization to XML.
+| attribute? | `boolean` | `true` serializes a type instance as an XML attribute. Can be `true` only for scalar types.<br/><br/>**Default:** `false`
+| wrapped? | `boolean` | `true` wraps a type instance in its own XML element. Cannot be `true` for scalar types or `true` at the same moment `attribute` is `true`. <br/><br/>**Default:** `false`
+| name? | `string` | Overrides the name of the XML element or XML attribute.<br/><br/>**Default:** the name of the type
+| namespace? | `string` | Configures the name of the XML namespace.
+| prefix? | `string` |  Configures the prefix used during serialization to XML.
 
-The following is a type declaration example that uses the `xml` node:
+The following type declaration shows an example of using the `xml` node:
 
 ```yaml
 types:
@@ -1394,14 +1394,14 @@ types:
       addresses:
         type: Address[]
         xml:
-          wrapped: true # serialize it into it's own <addresses>...</addresses> XML element
+          wrapped: true # serialize it into its own <addresses>...</addresses> XML element
   Address:
     properties:
       street: string
       city: string
 ```
 
-The example above may be serialized into the following XML:
+The example above can be serialized into the following XML:
 
 ```xml
 <Person fullname="John Doe">
