@@ -2267,6 +2267,7 @@ traits:
           - mac
 /installer:
   get:
+    is: [ withQueryParameters ]
     queryParameters:
       platform: #the actual enum is [ mac, unix, win ]
         enum:
