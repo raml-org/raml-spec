@@ -1414,13 +1414,16 @@ The example above may be serialized into the following XML:
 
 ### Using Types in RAML
 
-* Types can be used in several positions:
+Types can be used in several positions:
   * Body ( JSON )
   * Body ( XML )
   * Body ( Web Form )
   * Headers
   * Query Parameters
   * URI Parameters
+
+Key points about serialization are:
+
 * Serialization rules depend on the type and the position in which the type is used.
 * A "string" is the default serialization target of a custom value type, which is an extended "value" of a built-in type.
 * An extended built-in type inherits its serialization target.
