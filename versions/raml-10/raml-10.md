@@ -1500,7 +1500,7 @@ https://api.github.com/users/{userId}/keys/{keyId}
 
 A RAML processor MUST NOT allow one of the computed absolute URIs to be identical to another one; comparison of absolute URIs is done without consideration to the possible values of any URI parameter. Any URI parameter is not expanded or evaluated, but rather left as is.
 
-The following example shows effectively duplicated URIs, as both paths combine to the same `/users/foo`. This is forbidden.
+The following example shows effectively duplicated URIs, as both paths combine to the same `/users/foo`. This would be forbidden.
 
 ```yaml
 /users:
