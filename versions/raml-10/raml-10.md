@@ -1073,16 +1073,16 @@ This example is actually declaring a "type alias", which gives a more readable n
 
 Type expressions are composed of names of built-in or custom types and certain symbols, as follows:
 
-| Expression  | Description | Examples
-|:----------|:----------|:---------|
-| | Type name (the basic building block of a type expression) | `number:` a built-in type<br><br>`Person:` a custom type
-| (type expression) | Parentheses may be used to disambiguate the expression to which an operator applies. | `Person | Animal[]`<br><br>`( Person | Animal )[]`
-| (type expression)[] | Array operator: a unary postfix operator placed after another type expression (enclosed in parentheses, as needed) and indicating that the resulting type is an array of instances of that type expression. | `string[]:` an array of strings<br><br>`Person[][]:` an array of arrays of Person instances
-| (type expression 1) &#124; (type expression 2) | Union operator: an infix operator indicating that the resulting type may be either of type expression 1 or of type expression 2. Multiple union operators may be combined between pairs of type expressions. | `string | number:` either a string or a number <br><br> `X | Y | Z`: either an X or a Y or a Z <br><br>`(Manager | Admin)[]:` an array whose members consist of Manager or Admin instances<br><br>`Manager[] | Admin[]:` an array of Manager instances or an array of Admin instances.
+| Expression Components | Description | Examples
+|:--------------------------|:------------|:---------|
+| type name | A type name, the basic building block of a type expression, used alone creates the simplest expression. | `number:` a built-in type<br><br>`Person:` a custom type
+| (type expression) | Parentheses disambiguate the expression to which an operator applies. | `Person | Animal[]`<br><br>`( Person | Animal )[]`
+| (type expression)[] | The array, a unary, postfix operator placed after another type expression, enclosed in parentheses as needed, indicates the resulting type is an array of instances of that type expression. | `string[]:` an array of strings<br><br>`Person[][]:` an array of arrays of Person instances
+| (type expression 1) &#124; (type expression 2) | An infix union operator indicates the resulting type might be either of type expression 1 or of type expression 2. Multiple union operators can be combined between pairs of type expressions. | `string | number:` either a string or a number <br><br> `X | Y | Z`: either an X or a Y or a Z <br><br>`(Manager | Admin)[]:` an array whose members consist of Manager or Admin instances<br><br>`Manager[] | Admin[]:` an array of Manager instances or an array of Admin instances.
 
 ### Union Types
 
-Union Types are declared using pipes (|) in your type expressions. Union Types are useful to model common scenarios in JSON based applications, for example an array containing objects which can be instances of more than one type.
+Union types are declared using pipes (|) in type expressions. Union types are useful for modeling common scenarios in JSON-based applications, for example an array containing objects that can be instances of more than one type.
 
 ```yaml
 #%RAML 1.0
@@ -1126,7 +1126,7 @@ types:
       fangs: string
 ```
 
-A valid instance of the type `CatOrDog` for example looks like the following:
+A following example of an instance of type `CatOrDog` is valid:
 
 ```yaml
 CatOrDog: # follows restrictions applied to the type 'Cat'
@@ -1134,25 +1134,23 @@ CatOrDog: # follows restrictions applied to the type 'Cat'
   color: "brown"
 ```
 
-Imagine a more complex example where a union type is used in a multiple inheritance type expression.
+Imagine a more complex example of a union type used in a multiple inheritance type expression:
 
 ```yaml
 types:
    HomeAnimal: [ HasHome ,  Dog | Cat ]
 ```
 
-In this case type `HomeAnimal` has two base types `HasHome` and anonymous union type defined by a type expression - `Dog | Cat`  
+In this case, type `HomeAnimal` has two base types, `HasHome` and an anonymous union type, defined by the following type expression: `Dog | Cat`  
 
-So testing if the `HomeAnimal` type is a valid involves  taking each of its base types, and checking that a type which is derived type of this type and each of union type option types is a valid type. In this particular case you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
+Validating the `HomeAnimal` type involves validating the types derived from each of the base types and the types of each union type option. In this particular case, you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
 
-If you are extending from two union types you should do the same for every possible combination for example in this case:
+If you are extending from two union types you should perform validations for every possible combination. For example, to validate the `HomeAnimal` type shown below, you need to test six possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
 
 ```yaml
 types:
    HomeAnimal: [ HasHome | IsOnFarm ,  Dog | Cat | Parrot ]
 ```
-
-In summary, you need to test 6 possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
 
 ### Using XML and JSON Schema
 
@@ -1239,7 +1237,7 @@ If multiple parent types define a property with the same name:
 
 ### Inline Type Declarations
 
-You can declare inline/anonymous types everywhere a type can be referenced other than in a Type Expression.
+You can declare inline/anonymous types everywhere a type can be referenced except in a Type Expression.
 
 ```yaml
 #%RAML 1.0
@@ -1266,9 +1264,9 @@ It is highly RECOMMENDED that API documentation include a rich selection of exam
 
 #### Multiple Examples
 
-The OPTIONAL **examples** property may be used to attach multiple examples to a type declaration. Its value is a map of key-value pairs, where each key represent a unique identifier for an example and the value is a [single example](#single-example) property.
+The OPTIONAL **examples** property can be used to attach multiple examples to a type declaration. Its value is a map of key-value pairs, where each key represents a unique identifier for an example and the value is a [single example](#single-example) property.
 
-The following is an example of the value of an **examples** property:
+The following example shows the value of an **examples** property:
 
 ```yaml
 message: # {key} - unique id
@@ -1283,9 +1281,9 @@ record: # {key} - unique id
 
 #### Single Example
 
-The OPTIONAL **example** property may be used to attach an example of a type's instance to the type declaration. There are two different ways to represents its value.
+The OPTIONAL **example** property can be used to attach an example of a type instance to the type declaration. There are two ways to represent the example property value: as an explicit description of a specific type instance and as a map that contains additional facets.
 
-##### The value is a explicit description of a specific type instance
+##### As an explicit description of a specific type instance
 
 For example:
 
@@ -1294,15 +1292,17 @@ title: Attention needed
 body: You have been added to group 274
 ```
 
-##### The value is a map that contains the following additional facets
+##### As a map that contains additional facets
+
+The map can contain the following additional facets:
 
 | Facet | Description |
 |:--------|:------------|
 | displayName? | An alternate, human-friendly name for the example. If the example is part of an examples node, the default value is the unique identifier that is defined for this example.
 | description? | A longer, human-friendly description of the example.
-| (&lt;annotationName&gt;)? | Annotations to be applied to this example. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this example. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | value | The actual example of a type instance.
-| strict? | By default, an example is validated against any type declaration. Set this to false avoid that.
+| strict? | Validates the example against any type declaration (the default), or not. Set this to false avoid validation.
 
 For example:
 
@@ -1314,9 +1314,9 @@ value:
   body: You have been added to group 274
 ```
 
-#### Example on how to define example/examples in RAML
+#### Example of how to define example/examples in RAML
 
-The following illustrates usage of both example and examples properties at different levels of a RAML API.
+The following snippet illustrates the usage of example and examples properties at different levels of a RAML API:
 
 ```yaml
 #%RAML 1.0
@@ -1336,23 +1336,23 @@ types:
     properties:
       name: string
       address?: string
-      value? : string
-/organisation:
+      value?: string
+/organization:
   post:
     headers:
       UserID:
-        description: the identifier for the user that posts a new organisation
+        description: the identifier for the user who posts a new organization
         type: string
         example: SWED-123 # single scalar example
     body:
       application/json:
         type: Org
         example: # single request body example
-          value: # needs to be declared since instance contains 'value' property
+          value: # needs to be declared since instance contains a 'value' property
             name: Doe Enterprise
             value: Silver
   get:
-    description: Returns an organisation entity.
+    description: Returns an organization entity.
     responses:
       201:
         body:
@@ -1365,22 +1365,22 @@ types:
                 value: # validate against the available facets for the map value of an example
                   name: Software Corp
                   address: 35 Central Street
-                  value: Gold # validate against instance of the `value` property
+                  value: Gold # validate against an instance of the `value` property
 ```
 
 ### XML Serialization of Type Instances
 
-As the serialization to XML may be a complex process, RAML introduces an additional `xml` node for [type declarations](#type-declarations) that allows to configure how type instances should be serialized to XML. The value of the `xml` node is a map that contains the following nodes.
+To facilitate the potentially complex process of serialization to XML, RAML introduces an additional `xml` node for [type declarations](#type-declarations). This node is used to configure how type instances should be serialized to XML. The value of the `xml` node is a map that contains the following nodes:
 
 | Name | Type | Description |
 |:---------|:------:|:-----------------|
-| attribute? | `boolean` | If `attribute` is set to `true`, a type instance should be serialized as an XML attribute. It can only be `true` for scalar types.<br/><br/>**Default:** `false`
-| wrapped? | `boolean` | If `wrapped` is set to `true`, a type instance should be wrapped in its own XML element. It can not  be `true` for scalar types and it can not  be `true` at the same moment when `attribute` is `true`. <br/><br/>**Default:** `false`
-|  name? | `string` | Allows to override the name of the XML element or XML attribute in it's XML representation.<br/><br/>**Default:** the name of the type
-| namespace? | `string` | Allows to configure the name of the XML namespace.
-| prefix? | `string` |  Allows to configure the prefix which will be used during serialization to XML.
+| attribute? | `boolean` | `true` serializes a type instance as an XML attribute. Can be `true` only for scalar types.<br/><br/>**Default:** `false`
+| wrapped? | `boolean` | `true` wraps a type instance in its own XML element. Cannot be `true` for scalar types or `true` at the same moment `attribute` is `true`. <br/><br/>**Default:** `false`
+| name? | `string` | Overrides the name of the XML element or XML attribute.<br/><br/>**Default:** the name of the type
+| namespace? | `string` | Configures the name of the XML namespace.
+| prefix? | `string` |  Configures the prefix used during serialization to XML.
 
-The following is a type declaration example that uses the `xml` node:
+The following type declaration shows an example of using the `xml` node:
 
 ```yaml
 types:
@@ -1394,14 +1394,14 @@ types:
       addresses:
         type: Address[]
         xml:
-          wrapped: true # serialize it into it's own <addresses>...</addresses> XML element
+          wrapped: true # serialize it into its own <addresses>...</addresses> XML element
   Address:
     properties:
       street: string
       city: string
 ```
 
-The example above may be serialized into the following XML:
+The example above can be serialized into the following XML:
 
 ```xml
 <Person fullname="John Doe">
@@ -1414,16 +1414,19 @@ The example above may be serialized into the following XML:
 
 ### Using Types in RAML
 
-* Types may be used in several positions:
+Types can be used in several positions:
   * Body ( JSON )
   * Body ( XML )
   * Body ( Web Form )
   * Headers
   * Query Parameters
   * URI Parameters
-* Serialization rules depend on both the type and the position in which it is used
-* When declaring a custom value type ( extending the "value" built-in type ) it will have "string" as its default serialization target.
-* When extending one of the built-in types, your type will inherit the serialization target
+
+Key points about serialization are:
+
+* Serialization rules depend on the type and the position in which the type is used.
+* A "string" is the default serialization target of a custom value type, which is an extended "value" of a built-in type.
+* An extended built-in type inherits its serialization target.
 
 ## Resources and Nested Resources
 
