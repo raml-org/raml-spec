@@ -1427,9 +1427,9 @@ The example above may be serialized into the following XML:
 
 ## Resources and Nested Resources
 
-Resources are identified by their relative URI, which MUST begin with a slash ("/"). Every property whose key begins with a slash, and is either at the root of the API definition or is the child property of a resource property, is such a resource property.
+A resource is identified by its relative URI, which MUST begin with a slash ("/"). Every property whose key begins with a slash, and is either at the root of the API definition or is the child property of a resource property, is such a resource property.
 
-A resource defined as a root-level property is called a top-level resource. Its property's key is the resource's URI relative to the baseUri (if any). A resource defined as a child property of another resource is called a nested resource, and its property's key is its URI relative to its parent resource's URI.
+A resource defined as a root-level property is called a top-level resource. The key of the root-level property is the URI of the resource relative to the baseUri if there is one. A resource defined as a child property of another resource is called a nested resource. The key of the child property is the URI of the nested resource relative to the parent resource URI.
 
 This example shows an API definition with one top-level resource, /gists, and one nested resource, /public.
 
@@ -1444,11 +1444,11 @@ baseUri: https://api.github.com
     displayName: Public Gists
 ```
 
-The key of a resource property, i.e. its relative URI, MAY consist of multiple URI path fragments separated by slashes; e.g. /bom/items may indicate the collection of items in a bill of materials as a single resource. However, if the individual URI path fragments are themselves resources, the API definition SHOULD use nested resources to describe this structure; e.g. if /bom is itself a resource then /items should be a nested resource of /bom, vs using /bom/items as a non-nested resource.
+The key of a resource property, its relative URI, MAY consist of multiple URI path fragments separated by slashes. For example, /bom/items might indicate the collection of items in a bill of materials as a single resource. However, if the individual URI path fragments are themselves resources, the API definition SHOULD use nested resources to describe this structure. For example, if /bom is itself a resource, then /items should be a nested resource of /bom, versus using /bom/items as a non-nested resource.
 
 Absolute URIs are not explicitly specified. They are computed by appending the relative URI of the top-level resource, and then successively appending the relative URI values for each nested resource until the target resource is reached. In this formation of the absolute URI, if a baseUri is defined, it is prepended before the relative URI of the top-level resource; any trailing slashes in the baseUri are removed before prepending.
 
-Taking the previous example, the absolute URI of the public gists resource is formed as follows.
+Continuing with the previous example, the absolute URI of the public gists resource is formed as follows.
 
 ```
    "https://api.github.com"               <--- baseUri
@@ -1495,9 +1495,9 @@ https://api.github.com/users/{userId}/keys
 https://api.github.com/users/{userId}/keys/{keyId}
 ```
 
-A RAML processor MUST NOT allow one of the computed absolute URIs to be identical to another one; comparison of absolute URIs is done without consideration to the possible values of any URI parameter, i.e. any URI parameters are not expanded or evaluated but rather left as is.
+A RAML processor MUST NOT allow one of the computed absolute URIs to be identical to another one; comparison of absolute URIs is done without consideration to the possible values of any URI parameter. Any URI parameter is not expanded or evaluated, but rather left as is.
 
-The following example would be forbidden.
+The following example shows effectively duplicated URIs, as both paths combine to the same `/users/foo`. This is forbidden.
 
 ```yaml
 /users:
@@ -1505,7 +1505,7 @@ The following example would be forbidden.
 /users/foo:
 ```
 
-(both paths combine to the same `/users/foo`), and on the other hand this would ALWAYS be ALLOWED.
+The URIs in the following example would ALWAYS be ALLOWED.
 
 ```yaml
 /users/{userId}:
