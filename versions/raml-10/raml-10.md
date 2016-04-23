@@ -1652,8 +1652,8 @@ RESTful API methods are operations that are performed on a resource. The OPTIONA
 | headers? | Detailed information about any request headers needed by this method.
 | queryString? | The query string needed by this method. Mutually exclusive with queryParameters.
 | responses? | Information about the expected responses to a request.
-| body? | Request bodies that methods admit.
-| protocols? | A method that overrides the [protocols](#method-level-protocols) specified in the resource or at the API root. 
+| body? | A request body that the method admits.
+| protocols? | The [protocols](#method-level-protocols) that override those specified in the resource or at the API root. 
 | is? | A list of the [traits](#applying-resource-types-and-traits) to apply to this method.
 | securedBy? | The [security schemes](#applying-security-schemes) that apply to this method.
 
