@@ -1580,7 +1580,7 @@ baseUri: https://api.github.com
        type: integer
 ```
 
-If a URI parameter declaration specifies an array, object, or union of non-scalar types, then processors MUST default to applying the JSON type to values of URI parameter instances. The following example exaggerates the expected behavior:
+If a URI parameter declaration specifies an array, object, or union of non-scalar types, then processors MUST default to applying the JSON type to values of the URI parameter instances. The following example exaggerates the expected behavior:
 
 ```yaml
 #%RAML 1.0
@@ -1604,7 +1604,7 @@ In this example, the URI parameter `userIds` is an array of ids. Assume the arra
 
 If a URI parameter declaration specifies a non-string scalar type for the value of the header, the standard serialization rules for types MUST be invoked in applying the type to instances of that URI parameter.
 
-The values matched by URI parameters MUST NOT contain slash (/) characters in order to avoid ambiguous matching. In the first example in this section, /jobs/123 is a URI (relative to the baseUri) that matches the /{jobId} resource nested within the /jobs resource, but the URI /jobs/123/x does not match any resource.
+To avoid ambiguous matching, the values matched by URI parameters MUST NOT contain slash (/) characters. In the first example in this section, /jobs/123 is a URI (relative to the baseUri) that matches the /{jobId} resource nested within the /jobs resource, but the URI /jobs/123/x does not match any resource.
 
 In the next example, the top-level resource has URI parameters folderId and fileId.
 
