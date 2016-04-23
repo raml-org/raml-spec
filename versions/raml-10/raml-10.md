@@ -1555,7 +1555,7 @@ baseUri: https://app.zencoder.com/api/{version}
     description: A specific job, a member of the jobs collection
 ```
 
-The OPTIONAL **uriParameters** property, shown in the next example, is used to explicitly specify URI parameters in a [Template URI](#template-uri). The value of the uriParameters property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in the declaration object is a **URI parameter declaration**. Each property name corresponds to a parameter name in the [Template URI](#template-uri). Each value specifies the URI parameter type as a type name or an inline type declaration.
+The OPTIONAL **uriParameters** property, shown in the next example, is used to explicitly specify URI parameters in a [Template URI](#template-uri). The value of the uriParameters property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in the declaration object is a **URI parameter declaration**. Each property name corresponds to a parameter name in the [Template URI](#template-uri). Each property value specifies the URI parameter type as a type name or an inline type declaration.
 
 Every property in a uriParameters declaration MUST correspond exactly to the name of a URI parameter in the relative URI of the resource. All URI parameters in the relative URI do not need to be explicitly specified in the uriParameters property, but those that are not specified MUST be treated as a URI parameter of type string and required.
 
@@ -1604,9 +1604,9 @@ In this example, the URI parameter `userIds` is an array of ids. Assume the arra
 
 If a URI parameter declaration specifies a non-string scalar type for the value of the header, the standard serialization rules for types MUST be invoked in applying the type to instances of that URI parameter.
 
-The values matched by URI parameters MUST NOT contain slash (/) characters in order to avoid ambiguous matching. In the first example in this section, a URI (relative to the baseUri) of /jobs/123 matches the /{jobId} resource nested within the /jobs resource, but a URI of /jobs/123/x does not match any of those resources.
+The values matched by URI parameters MUST NOT contain slash (/) characters in order to avoid ambiguous matching. In the first example in this section, /jobs/123 is a URI (relative to the baseUri) that matches the /{jobId} resource nested within the /jobs resource, but the URI /jobs/123/x does not match any resource.
 
-In the next example, the top-level resource has two URI parameters, folderId and fileId.
+In the next example, the top-level resource has URI parameters folderId and fileId.
 
 ```yaml
 #%RAML 1.0
@@ -1618,9 +1618,9 @@ version: v1
     description: An item in the collection of all files
 ```
 
-Although a URI parameter can be explicitly specified as optional, it SHOULD be required when surrounded directly by slashes ("/"). In this case, the URI parameter constitutes a complete URI path fragment, for example .../{objectId}/.... It usually makes little sense to allow a URI to contain adjacent slashes, enclosing no characters, for example ...//.... Hence, a URI parameter should be specified as optional only when it appears adjacent to other text. For example, /people/~{fieldSelectors} indicates that the {fieldSelectors} URI parameter can be blank, and therefore optional, implying that /people/~ is a valid relative URI.
+Although a URI parameter can be explicitly specified as optional, it SHOULD be required when surrounded directly by slashes ("/"). In this case, the URI parameter constitutes a complete URI path fragment, for example .../{objectId}/.... It usually makes no sense to allow a URI to contain adjacent slashes, enclosing no characters, for example ...//.... Hence, a URI parameter should be specified as optional only when it appears adjacent to other text. For example, /people/~{fieldSelectors} indicates that URI parameter {fieldSelectors} can be blank, and therefore optional, implying that /people/~ is a valid relative URI.
 
-A special URI parameter, **ext**, is a reserved parameter. This parameter might or might not be specified explicitly in a uriParameters property, but its meaning is reserved: it is used by a client to specify that the body of the request or response be of the associated media type.
+A special URI reserved parameter, **ext**, might or might not be specified explicitly in a uriParameters property. Its meaning is reserved for use by a client to specify that the body of the request or response be of the associated media type.
 
 |URI Parameter | Value |
 |:--------|:------------|
