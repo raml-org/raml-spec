@@ -1524,17 +1524,17 @@ The value of a resource property is an object whose properties are described in 
 |:--------|:------------|
 | displayName? | An alternate, human-friendly name for the resource.
 | description? | A longer, human-friendly description of the resource.
-| (&lt;annotationName&gt;)? | Annotations to be applied to this resource. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations).
-| get?<br>patch?<br>put?<br>post?<br>delete?<br>options?<br>head? | Object describing the method. See section [Methods](#methods) for more information.
-| is? | A list of the traits to apply to all methods declared (implicitly or explicitly) for this resource. See section [Applying Resource Types and Traits](#applying-resource-types-and-traits) for more information. Individual methods may override this declaration
-| type? | The resource type which this resource inherits. See section [Applying Resource Types and Traits](#applying-resource-types-and-traits) for more information.
-| securedBy? | The security schemes that apply to all methods declared (implicitly or explicitly) for this resource. See section [Applying Security Schemes](#applying-security-schemes) for more information.
-| uriParameters? | Detailed information about any URI parameters of this resource
-| /&lt;relativeUri&gt;? | A nested resource is identified as any property whose name begins with a slash ("/") and is therefore treated as a relative URI.
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this resource. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
+| get?<br>patch?<br>put?<br>post?<br>delete?<br>options?<br>head? | The object describing the [method](#methods).
+| is? | A list of [traits to apply](#applying-resource-types-and-traits) to all methods declared (implicitly or explicitly) for this resource. Individual methods can override this declaration.
+| type? | The [resource type](#applying-resource-types-and-traits) that this resource inherits.
+| securedBy? | The [security schemes](#applying-security-schemes) that apply to all methods declared (implicitly or explicitly) for this resource.
+| uriParameters? | Detailed information about any URI parameters of this resource.
+| /&lt;relativeUri&gt;? | A nested resource, which is identified as any property whose name begins with a slash ("/"), and is therefore treated as a relative URI.
 
 ### Resource Display Name
 
-The OPTIONAL **displayName** property provides a friendly name to the resource and can be used by documentation generation tools. If the displayName property is not defined for a resource, documentation tools SHOULD refer to the resource by its property key (i.e. its relative URI, e.g., /jobs), which acts as the resource's name.
+The OPTIONAL **displayName** property assigns a friendly name to the resource and can be used by documentation generation tools. If the displayName property is not defined for a resource, documentation tools SHOULD refer to the resource by its property key, which acts as the resource name. For example, tools should refer to the relative URI /jobs.
 
 ### Resource Description
 
@@ -1542,7 +1542,7 @@ The OPTIONAL **description** property can be used to provide a longer descriptio
 
 ### Template URIs and URI Parameters
 
-[Template URIs](#template-uri) containing URI parameters can be used to define a resource's relative URI when it contains variable elements. The following example shows a top-level resource with a key /jobs and a nested resource with a key /{jobId}.
+[Template URIs](#template-uri) containing URI parameters can be used to define a relative URI of a resource that contains variable elements. The following example shows a top-level resource with a key /jobs and a nested resource with a key /{jobId}, a template URI. 
 
 ```yaml
 #%RAML 1.0
@@ -1555,13 +1555,13 @@ baseUri: https://app.zencoder.com/api/{version}
     description: A specific job, a member of the jobs collection
 ```
 
-The OPTIONAL **uriParameters** property is used to explicitly specify URI parameters in a [Template URI](#template-uri). The value of the uriParameters property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **URI parameter declaration**. The name of each such property corresponds to the name of a parameter in the [Template URI](#template-uri), while its value specifies the URI parameter's type, as the name of a type or an inline type declaration.
+The OPTIONAL **uriParameters** property, shown in the next example, is used to explicitly specify URI parameters in a [Template URI](#template-uri). The value of the uriParameters property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in the declaration object is a **URI parameter declaration**. Each property name corresponds to a parameter name in the [Template URI](#template-uri). Each value specifies the URI parameter type as a type name or an inline type declaration.
 
-Every property in a uriParameters declaration MUST correspond exactly to the name of a URI parameter in the resource's relative URI. But not every URI parameter in the resource's relative URI must be explicitly specified in the uriParameters property. Every parameter in the relative URI not specified in the uriParameters property MUST still be treated as a URI parameter, of type string, and required.
+Every property in a uriParameters declaration MUST correspond exactly to the name of a URI parameter in the relative URI of the resource. All URI parameters in the relative URI do not need to be explicitly specified in the uriParameters property, but those that are not specified MUST be treated as a URI parameter of type string and required.
 
-Just as is the case for [the baseUriParameters root property](#base-uri-and-base-uri-parameters), the version parameter is a reserved parameter name in the uriParameters properties declaration, with a value corresponding to the value of the version root-level property.
+Like the [baseUriParameters root property](#base-uri-and-base-uri-parameters), the version parameter is a reserved parameter name in the uriParameters properties declaration. The version parameter value corresponds to the value of the version root-level property.
 
-The example below shows two top-level resources (/user and /users) and a nested resource specified by its [Template URI](#template-uri), /{userId}. The URI parameter userId is explicitly declared, and given a description and an integer type.
+The following example shows two top-level resources, /user and /users, and a nested resource specified by its [Template URI](#template-uri), /{userId}. The URI parameter, userId, is explicitly declared and given a description and an integer type.
 
 ```yaml
 #%RAML 1.0
@@ -1580,7 +1580,7 @@ baseUri: https://api.github.com
        type: integer
 ```
 
-If a URI parameter declaration specifies an array, object, or union of non-scalar types, then processors MUST default to treating the format of the URI parameter value as JSON in applying the type to instances of that URI parameter. The following demonstrates an extreme example of the expected behavior.
+If a URI parameter declaration specifies an array, object, or union of non-scalar types, then processors MUST default to applying the JSON type to values of URI parameter instances. The following example exaggerates the expected behavior:
 
 ```yaml
 #%RAML 1.0
@@ -1600,13 +1600,13 @@ title: Serialization API
          uniqueItems: true
 ```
 
-In the example above, the URI parameter `userIds` is an array of ids. Let us assume the array should contain `[blue,green]` which then, on the wire may look as: `/users/%5B%22blue%22,%22green%22%5D/`.
+In this example, the URI parameter `userIds` is an array of ids. Assume the array should contain `[blue,green]`, which on the wire might appear as `/users/%5B%22blue%22,%22green%22%5D/`.
 
 If a URI parameter declaration specifies a non-string scalar type for the value of the header, the standard serialization rules for types MUST be invoked in applying the type to instances of that URI parameter.
 
-The values matched by URI parameters MUST NOT contain slash (/) characters, in order to avoid ambiguous matching. In the example above, a URI (relative to the baseUri) of /jobs/123 matches the /{jobId} resource nested within the /jobs resource, but a URI of /jobs/123/x does not match any of those resources.
+The values matched by URI parameters MUST NOT contain slash (/) characters in order to avoid ambiguous matching. In the first example in this section, a URI (relative to the baseUri) of /jobs/123 matches the /{jobId} resource nested within the /jobs resource, but a URI of /jobs/123/x does not match any of those resources.
 
-In the example below, the top-level resource has two URI parameters, folderId and fileId.
+In the next example, the top-level resource has two URI parameters, folderId and fileId.
 
 ```yaml
 #%RAML 1.0
@@ -1618,15 +1618,15 @@ version: v1
     description: An item in the collection of all files
 ```
 
-Although URI parameters can be explicitly specified to be optional, they SHOULD be required when they are surrounded directly by slashes ("/"), that is, when they constitute complete URI path fragments, e.g. .../{objectId}/.... It usually makes little sense to allow a URI to contain adjacent slashes with no characters between them, e.g. ...//.... Hence, a URI parameter should only be specified as optional when it appears adjacent to other text; e.g., /people/~{fieldSelectors} indicates that the {fieldSelectors} URI parameter can be blank, and therefore optional, indicating that /people/~ is a valid relative URI.
+Although a URI parameter can be explicitly specified as optional, it SHOULD be required when surrounded directly by slashes ("/"). In this case, the URI parameter constitutes a complete URI path fragment, for example .../{objectId}/.... It usually makes little sense to allow a URI to contain adjacent slashes, enclosing no characters, for example ...//.... Hence, a URI parameter should be specified as optional only when it appears adjacent to other text. For example, /people/~{fieldSelectors} indicates that the {fieldSelectors} URI parameter can be blank, and therefore optional, implying that /people/~ is a valid relative URI.
 
-A special URI parameter, **ext**, is a reserved parameter. It may or may not be specified explicitly in a uriParameters property, but its meaning is reserved: it is used by a client to specify that the body of the request or response be of the associated media type.
+A special URI parameter, **ext**, is a reserved parameter. This parameter might or might not be specified explicitly in a uriParameters property, but its meaning is reserved: it is used by a client to specify that the body of the request or response be of the associated media type.
 
 |URI Parameter | Value |
 |:--------|:------------|
 | ext | The desired media type of the request or response body
 
-By convention, a value for the ext parameter of .json is equivalent to an Accept header of application/json, and a value of .xml is equivalent to an Accept header of text/xml. By employing the ext parameter, clients may specify the media type of a request or response via the URI rather than via the Accept HTTP header. For example, in the following example, the /users resource may be requested as application/json or text/xml:
+By convention, a value for the ext parameter of .json is equivalent to an Accept header of application/json. A value of .xml is equivalent to an Accept header of text/xml. By employing the ext parameter, clients can specify the media type of a request or response through the URI rather than the Accept HTTP header. In the following example, the /users resource can be requested as application/json or text/xml:
 
 ```yaml
 #%RAML 1.0
