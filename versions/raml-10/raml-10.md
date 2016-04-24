@@ -1681,7 +1681,7 @@ baseUri: https://app.zencoder.com/api/{version}
 
 ### Headers
 
-An API's methods may support or require various HTTP headers. The OPTIONAL **headers** property is used to explicitly specify those headers. The value of the headers property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a header **declaration**. The name of each such property specifies an allowed header name, while its value specifies the header value's type, as the name of a type or an inline type declaration.
+An API's methods can support or require various HTTP headers. The OPTIONAL **headers** property is used to explicitly specify those headers. The value of the headers property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is a header **declaration**. Each property name specifies an allowed header name. Each property value specifies the header value type as a type name or an inline type declaration.
 
 The following simple example shows a post method with a single HTTP header named Zencoder-Api-Key of (implied) string type.
 
@@ -1698,15 +1698,15 @@ baseUri: https://app.zencoder.com/api/{version}
         description: The API key needed to create a new job
 ```
 
-If a header declaration specifies an array type for the value of the header, processors MUST interpret this as allowing multiple instances of that header in the request or response, as appropriate. In such a case, the underlying type of the array -- namely, the type of the elements of the array -- MUST be applied as the type of the value of instances of this header.
+If a header declaration specifies an array type for the value of the header, processors MUST allow multiple instances of that header in the request or response. In this case, the type of the array elements MUST be applied as the type of the value of header instances.
 
-If a header declaration specifies a non-array type for the value of the header (or doesn't specify a type, which is equivalent to specifying a string type), processors MUST interpret this as disallowing multiple instances of that header in the request or response, as appropriate.
+If a header declaration specifies a non-array type for the value of the header, or doesn't specify a type (equivalent to specifying a string type), processors MUST disallow multiple instances of that header in the request or response.
 
-If a header declaration specifies an object type or a union of non-scalar types for the value of the header, or if it specifies an array type for the value of the header and the underlying type of the array is an object or array type or a union of non-scalar types, then validation is not defined by RAML; processors MAY default to treating the format of the header value as JSON in applying the type to instances of that header, or they MAY allow other treatments based on annotations.
+RAML does not define validation when a header declaration specifies the following types for the value of the header: an object type, a union of non-scalar types, and an array type if the underlying type of the array is an object type, array type, or a union of non-scalar types. Processors MAY default to treating the format of the header value as JSON in applying the type to instances of that header, or they MAY allow other treatments based on annotations.
 
-Note that some headers may also be added by the intermediate client- and server-side systems such as a browser or a proxy.
+Some headers can also be added by the intermediate client- and server-side systems, such as a browser or a proxy.
 
-The following example illustrates inheriting headers from a trait, allowing multiple instances of a header, specifying examples, and overriding them when they're applied to a method and a resource.
+The following example illustrates inheriting headers from a trait, allowing multiple instances of a header, specifying examples, and overriding the headers when applied to a method and a resource.
 
 ```yaml
 #%RAML 1.0
@@ -1718,7 +1718,7 @@ traits:
         type: array
         description: |
           A department code to be charged.
-          Multiple such headers are allowed.
+          Multiple of such headers are allowed.
         items:
           pattern: ^\d+\-\w+$
           example: 230-OCTO
