@@ -1702,7 +1702,7 @@ If a header declaration specifies an array type for the value of the header, pro
 
 If a header declaration specifies a non-array type for the value of the header, or doesn't specify a type (equivalent to specifying a string type), processors MUST disallow multiple instances of that header in the request or response.
 
-RAML does not define validation when a header declaration specifies the following types for the value of the header: an object type, a union of non-scalar types, and an array type if the underlying type of the array is an object type, array type, or a union of non-scalar types. Processors MAY default to treating the format of the header value as JSON in applying the type to instances of that header, or they MAY allow other treatments based on annotations.
+RAML does not define validation when a header declaration specifies any of the following types for the value of the header: an object type, a union of non-scalar types, or an array type if the underlying type of the array is an object type, array type, or a union of non-scalar types. Processors MAY default to treating the format of the header value as JSON in applying the type to instances of that header, or they MAY allow other treatments based on annotations.
 
 Some headers can also be added by the intermediate client- and server-side systems, such as a browser or a proxy.
 
