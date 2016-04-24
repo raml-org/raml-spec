@@ -1889,24 +1889,24 @@ types:
 
 ## Responses
 
-The resources and methods sections of this document have so far described HTTP requests. This section describes the HTTP responses to method invocations on resources.
+The resources and methods sections of this document describe HTTP requests. This section describes the HTTP responses to method invocations on resources.
 
-The OPTIONAL **responses** property of a method on a resource describes the possible responses to invoking that method on that resource. Its value is an object whose property names are the possible HTTP status codes for that method on that resource, and whose property values describe the corresponding responses. Each such value is termed a **response declaration**.
+The OPTIONAL **responses** property of a method on a resource describes the possible responses to invoking that method on that resource. The value of **responses** is an object that has properties named after possible HTTP status codes for that method on that resource. The property values describe the corresponding responses. Each value is a **response declaration**.
 
-Note that the properties of the responses object are often numeric, e.g. 200 or 204. Processors MUST treat these numeric keys as string keys for all purposes. For example, '200' and 200 MUST be treated as equivalent property keys and therefore not both would be allowed simultaneously since they would constitute duplicate properties.
+Properties of the responses object are often numeric, for example 200 or 204. Processors MUST treat these numeric keys as string keys in all situations. For example, '200' and 200 MUST be treated as duplicate property keys, and therefore, are not allowed simultaneously.
 
-The value of a response declaration is an object that may contain any of the following properties.
+The value of a response declaration is an object that can contain any of the following properties:
 
 |Property | Description |
 |:--------|:------------|
-| description? | A longer, human-friendly description of the response
-| (&lt;annotationName&gt;) | Annotations to be applied to this response. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
+| description? | A human-friendly description of the response
+| (&lt;annotationName&gt;) | [Annotations](#annotations) to be applied to this response. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | headers? | Detailed information about any response headers returned by this method
-| body? |  The body of the response
+| body? | The body of the response
 
-The OPTIONAL properties **description**, **headers**, **body**, and **annotations** have the same syntax and semantics as they do for [method declarations](methods), but applied to HTTP responses rather than HTTP requests.
+The syntax and semantics of the OPTIONAL properties **description**, **headers**, **body**, and **annotations** for responses and [method declarations](methods) are the same, but applied to HTTP responses rather than HTTP requests, respectively.
 
-The following example illustrates some possible responses.
+The following example illustrates some possible responses:
 
 ```yaml
 #%RAML 1.0
