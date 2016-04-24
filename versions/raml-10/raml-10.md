@@ -1950,13 +1950,13 @@ types:
 
 ## Resource Types and Traits
 
-There are many advantages to reusing patterns across multiple resources and methods.  For example, after defining a collection-type resource's characteristics, that definition can be applied to multiple resources. This use of patterns encourages consistency and reduces complexity for both servers and clients.
+There are many advantages of reusing patterns across multiple resources and methods. For example, the characteristics of a collection-type resource can be defined and then applied to multiple resources. This use of patterns encourages consistency and reduces complexity for servers and clients.
 
-Moreover, resource and method declarations are frequently repetitive. For example, an API that requires OAuth authentication might require an X-Access-Token header for all methods across all resources. For many reasons it may be preferable to define such a pattern in a single place and apply it consistently everywhere.
+Moreover, resource and method declarations are frequently repetitive. For example, an API that requires OAuth authentication might require an X-Access-Token header for all methods across all resources. For many reasons, it might be preferable to define such a pattern in a single place and apply it consistently everywhere.
 
-A resource type, like a resource, can specify security schemes and methods and other properties. Resources that use a resource type inherit its properties. A resource type can also use, and thus inherit from, another resource type. Resource types and resources are related through an inheritance chain pattern. Resource type definitions MUST NOT incorporate nested resources; they cannot be used to generate nested resources when they are applied to a resource, and they do not apply to its existing nested resources.
+A resource type, like a resource, can specify security schemes, methods, and other properties. A resource that uses a resource type inherits its properties. A resource type can also use, and thus inherit from, another resource type. Resource types and resources are related through an inheritance chain pattern. A resource type definition MUST NOT incorporate nested resources. A resource type definition cannot be used to generate nested resources when the definition is applied to a resource. A resource type definition does not apply to its own existing nested resources.
 
-A trait, like a method, can provide method-level properties such as description, headers, query string parameters, and responses. Methods that use one or more traits inherit those traits' properties. Resources and resource types can also use, and thus inherit from, one or more traits, which then apply to all of their methods. Traits are related to methods through a mixing pattern.
+A trait, like a method, can provide method-level properties such as description, headers, query string parameters, and responses. Methods that use one or more traits inherit properties of those traits. A resource and resource type can also use, and thus inherit from, one or more traits, which then apply to all methods of the resource and resource type. Traits are related to methods through a mixing pattern.
 
 ### Declaration Resource Types and Traits
 
