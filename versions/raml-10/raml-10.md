@@ -2163,8 +2163,8 @@ When defining resource types, it can be useful to capture patterns that manifest
 
 To accommodate this need, a resource type definition MAY append a question mark ("?") suffix to the name of any method to declare the method as optional, resulting in the following behavior:
 
-* Apply the method to the resource if it doesn't already exist at the corresponding level.
-* Apply the value of the method property to the resource type if the method name without the question mark is already defined, explicitly or implicitly, at the corresponding level in that resource.
+* Do not apply the method to the resource if it doesn't already exist at the corresponding level in the resource.
+* Apply the value of the method property to the resource type if the method name without the question mark is already defined, explicitly or implicitly, at the corresponding level in the resource.
 
 The following example shows a resource type called corpResource with an optional post? property that defines a required header called X-Chargeback and a custom parameter called TextAboutPost. The inheriting resource /servers defines a post method, so it needs to include the X-Chargeback header requirement. TextAboutPost MUST be defined as well. The inheriting resource /queues does not define a post method, so it does not have to define the X-Chargeback header or the TextAboutPost parameter.
 
