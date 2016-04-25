@@ -2078,22 +2078,22 @@ traits:
 
 ### Resource Type and Trait Parameters
 
-The declarations of resource types and traits MAY contain parameters, whose values MUST be specified when applying the resource type or trait, UNLESS the parameter corresponds to a reserved parameter name, in which case its value MUST be provided by the processing application.
-
-Parameters are indicated in resource type and trait definitions by double angle brackets (double chevrons) enclosing the parameter name; for example, <<parameterName>>.
+The declarations of resource types and traits MAY contain parameters having values that MUST be specified when applying the resource type or trait, UNLESS the parameter name is reserved, in which case its value MUST be provided by the processing application.
 
 In resource type and trait declarations, there are two reserved parameter names: **resourcePath** and **resourcePathName**.
 
 | Parameter | Value |
 |:---------|:-----------|
-| resourcePath | The resource's full URI relative to the baseUri (if any)
-| resourcePathName | The rightmost path fragment of the resource's relative URI, omitting any parametrizing brackets ("{" and "}")
+| resourcePath | The full resource URI relative to the baseUri if there is one
+| resourcePathName | The rightmost path fragment of the relative resource URI, omitting any parametrizing brackets ("{" and "}")
 
-A processing application MUST set the value of <<resourcePath>> to the concatenation of the inheriting resource's relative URI with all its parent resources' relative URIs, that is, to its URI relative to the baseUri (if any). For example, a resource /users nested in a resource /{groupId} nested in a root-level resource /groups, and applying a resource type or trait that uses the resourcePath parameter, would have the value of that parameter set to /groups/{groupId}/users.
+Double angle brackets (double chevrons) enclose a parameter name in resource type and trait definitions; for example, `<<parameterName>>`.
 
-A processing application MUST set the value of <<resourcePathName>> to the part of the inheriting resource's relative URI following the rightmost slash ("/"), after omitting any parametrizing brackets ("{" and "}"). For example, a resource /jobs/{jobId} applying a resource type or trait that uses the resourcePathName parameter would have the value of that parameter set to jobId.
+A processing application MUST set the value of `<<resourcePath>>` to the concatenation of the relative (to the baseUri if there is one) resource URI of the inheriting resource and all its parent relative resource URIs. A processing application MUST set the value of `<<resourcePathName>>` at the position in the URI following the rightmost slash ("/"), omitting any parametrizing brackets ("{" and "}"). 
 
-Processing applications MUST also omit any ext parameter and its parametrizing brackets ("{" and "}") found in the resource's URI when setting resourcePath and resourcePathName. For example, a root-level resource /bom/{itemId}{ext} applying a resource type or trait that uses the resourcePathName and resourcePath parameters would have the value of those parameters set to /bom/{itemId} and itemId, respectively.
+For example, applying a resource type or trait to a resource /users nested in a resource /{groupId} nested in a root-level resource /groups sets the value of the resourcePath parameter to /groups/{groupId}/users. Applying a resource type or trait to a resource /jobs/{jobId} sets the value of the resourcePathName parameter to jobId.
+
+When setting resourcePath and resourcePathName, processing applications MUST also omit any ext parameter and its parametrizing brackets ("{" and "}") found in the resource URI. For example, applying a resource type or trait to a root-level resource /bom/{itemId}{ext} sets the value of resourcePathName and resourcePath parameters to /bom/{itemId} and itemId, respectively.
 
 In trait declarations, there is an additional reserved parameter named **methodName**.
 
@@ -2101,9 +2101,9 @@ In trait declarations, there is an additional reserved parameter named **methodN
 |:---------|:-----------|
 | methodName | The name of the method
 
-The processing application MUST set the value of the methodName parameter to the inheriting method's name.
+The processing application MUST set the value of the methodName parameter to the inheriting method name.
 
-Parameter values MAY further be transformed by applying one of the following functions. The only locale supported by this version of RAML is United States English.
+Parameter values MAY be transformed further by applying one of the following functions. The only locale supported by this version of RAML is United States English.
 
 | Function | Definition |
 |:---------|:-----------|
@@ -2118,7 +2118,7 @@ Parameter values MAY further be transformed by applying one of the following fun
 | !lowerhyphencase | The <b>!lowerhyphencase</b> function MUST convert the value of the parameter to lowercase letters; if the value is a compound word, the function MUST also add an additional hyphen between consecutive words which are not already separated by one or more hyphen.<br><br>for example: `userId --> user-id`
 | !upperhyphencase | The <b>!upperhyphencase</b> function MUST convert the value of the parameter to uppercase letters; if the value is a compound word, the function MUST also add an additional hyphen between consecutive words which are not already separated by one or more hyphen.<br><br>for example: `userId --> USER-ID`
 
-To apply these functions, append them to the parameter name within the double angle brackets, separated from the parameter name with a pipe ("|") character and optional whitespace padding. Here is an example that uses both functions as well as reserved parameters:
+Append these functions to the parameter name within the double angle brackets, separated from the parameter name with a pipe ("|") character and optional whitespace padding. Here is an example that uses functions and reserved parameters:
 
 ```yaml
 #%RAML 1.0
@@ -2155,7 +2155,7 @@ traits:
         example: <<methodName>>=h8duh3uhhu38   # e.g. get=h8duh3uhhu38
 ```
 
-Parameters may not be used within !include tags, that is, within the location of the file to be included.
+Parameters cannot be used within an !include tag specification of the include file location.
 
 ### Declaring HTTP Methods as Optional
 
