@@ -2022,9 +2022,9 @@ resourceTypes:
 
 ### Applying Resource Types and Traits
 
-Resources may specify the resource type from which they inherit using the OPTIONAL **type** property. The resource type MUST be the name of a resource type defined within the root-level resourceTypes property or in a library. Resource type definitions do not apply to existing nested resources.
+A resource can specify the resource type from which it is derived using the OPTIONAL **type** property. The resource type MUST be the name of a resource type defined within the root-level resourceTypes property or in a library. Resource type definitions do not apply to existing nested resources.
 
-Similarly, methods may specify one or more traits from which they inherit using the OPTIONAL **is** property. Its value is an array of any number of elements where each MUST be the name of a trait defined within the root-level traits property or in a library. A trait may also be applied to a resource by using the **is** property, which is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type. The order of a trait getting applied to a method is from left to right; according to the traits defined in the **is** property. Trait definitions do not apply to nested resources.
+Similarly, a method can specify one or more traits it inherits using the OPTIONAL **is** property. The value of a trait is an array of any number of elements where each MUST be the name of a trait defined within the root-level traits property or in a library. A trait can also be applied to a resource by using the **is** property. Using this property is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type. A trait is applied to a method in left-to-right order, according to the traits defined in the **is** property. Trait definitions do not apply to nested resources.
 
 The following example illustrates the application of resource types and traits.
 
@@ -2047,7 +2047,7 @@ traits:
   post:                        # this method is also secured
 ```
 
-To pass parameter values to resource types and traits, use a map when declaring the resource type or trait to be used, as illustrated in the following example.
+To pass parameter values to resource types and traits, use a map when declaring the resource type or trait, as illustrated in the following example.
 
 ```yaml
 #%RAML 1.0
