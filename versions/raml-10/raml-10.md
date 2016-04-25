@@ -2188,33 +2188,32 @@ resourceTypes:
   # not required; same for the X-Chargeback header
 ```
 
-### Algorithm of Merging Traits With Methods
+### Algorithm of Merging Traits and Methods
 
-Each RAML element has its branch of the RAML document. Informally, applying a trait to method may be described as putting traits branch under the methods branch.
-Formally, it is a recursive procedure:
-1. Those properties of method node which are undefined in trait node remain unchanged.
-2. The method node receives all properties of trait node (excluding optional) which are undefined in method node.
-3. As for properties defined in both method node and trait node (including optional):
-  * Scalar properties remain unchanged
-  * Collection properties are merged by value (see below)
-  * Values of object properties are subjected to the same procedure starting at step 1.
+Each RAML element has its branch of the RAML document. The high-level description of applying a trait to method is putting a traits branch under the methods branch. Actually, applying a trait to a method is a recursive procedure:
+1. Method node properties are inspected and those that are undefined in trait node remain unchanged.
+2. The method node receives all properties of trait node (excluding optional ones), which are undefined in the method node.
+3. Properties defined in both method node and trait node (including optional ones) are treated as follows:
+  * Scalar properties remain unchanged.
+  * Collection properties are merged by value, as described later.
+  * Values of object properties are subjected to steps 1-3 of this procedure.
 
-In general case a method can have more than one trait each having a sufficient hierarchy. Applying all of them is equivalent to building a stack of branches:
+Generally, a method can have more than one trait, each having a sufficient hierarchy. Applying all traits is equivalent to building a stack of branches as follows:
 
-1. Top branch is the methods branch.
-2. Other branches are traits branches.
-  * Branches of those traits which are farther from the method in hierarchical sense, lay deeper (a trait may occur on different hierarchy distances, and we consider the closest one).
-  * Those traits which lay on the same hierarchy distance from the method, can be ordered in a queue:
-    * For distance one it's just the methods trait list.
-    * Queue(d+1) is obtained from Queue(d) by concatenating trait lists of its elements and canceling all but the first occurence of each trait.
-    * Branches order is determined as follows: those traits, which have higher positions in the queue, also have their branches deeper in our stack.
+* The top branch is the methods branch.
+* Other branches are traits branches.
+  * Branches of traits that are farther away hierarchically from the method than others, are bypassed in favor the closest one.
+  * Those traits that are within the same hierarchy distance from the method, can be ordered in a queue:
+    * For distance one, it's just the methods trait list.
+    * Queue(d+1) is obtained from Queue(d) by concatenating trait lists of its elements and canceling all but the first occurrence of each trait.
+    * Branch order is determined as follows: traits that have higher positions in the queue, have branches deeper in the stack.
 
-Finally, the resource can have its own traits, and it can be applied a chain of resource types (call them resourceType1, resourceType2, etc), each possibly having its own traits and defining the same method. The  stack is constructed as follows:
+Finally, the resource can have its own traits, and a chain of resource types, for example resourceType1, resourceType2, ..., can be applied. Each resource type can potentially have its own traits and define the same method. The stack is constructed as follows:
 1. Traits of method itself
 2. Traits of resource owning the method
 3. Traits of method owned by resourceType1
 4. Traits of resourceType1
-5. etc.
+5. ...
 
 Merging resource types with resources obeys similar rules.
 
@@ -2237,9 +2236,9 @@ resourceTypes:
           application/json:
 ```
 
-The only overlap between the `collection` resource type and the resource declaration is `description` which is defined in both. In this example, the final version will have the description that has been explicitly defined in the resource.
+The only overlap between the `collection` resource type and the resource declaration is `description` which is defined in both. In this example, the final version has the description that has been explicitly defined in the resource.
 
-Every explicit node will win over the ones that are declared in a resource type or trait. The rest is simply merged. The final merged result must be:
+Every explicit node wins over the ones that are declared in a resource type or trait. The rest are simply merged. The final, merged result must be:
 
 ```yaml
 /resource:
