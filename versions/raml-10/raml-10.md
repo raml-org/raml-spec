@@ -2080,7 +2080,7 @@ traits:
 
 The declarations of resource types and traits MAY contain parameters having values that MUST be specified when applying the resource type or trait, UNLESS the parameter name is reserved, in which case its value MUST be provided by the processing application.
 
-In resource type and trait declarations, there are two reserved parameter names: **resourcePath** and **resourcePathName**.
+In resource type and trait declarations, **resourcePath** and **resourcePathName** are reserved parameter names.
 
 | Parameter | Value |
 |:---------|:-----------|
@@ -2095,7 +2095,7 @@ For example, applying a resource type or trait to a resource /users nested in a 
 
 When setting resourcePath and resourcePathName, processing applications MUST also omit any ext parameter and its parametrizing brackets ("{" and "}") found in the resource URI. For example, applying a resource type or trait to a root-level resource /bom/{itemId}{ext} sets the value of resourcePathName and resourcePath parameters to /bom/{itemId} and itemId, respectively.
 
-In trait declarations, there is an additional reserved parameter named **methodName**.
+In trait declarations, **methodName** is a reserved parameter.
 
 | Parameter | Value |
 |:---------|:-----------|
@@ -2118,7 +2118,7 @@ Parameter values MAY be transformed further by applying one of the following fun
 | !lowerhyphencase | The <b>!lowerhyphencase</b> function MUST convert the value of the parameter to lowercase letters; if the value is a compound word, the function MUST also add an additional hyphen between consecutive words which are not already separated by one or more hyphen.<br><br>for example: `userId --> user-id`
 | !upperhyphencase | The <b>!upperhyphencase</b> function MUST convert the value of the parameter to uppercase letters; if the value is a compound word, the function MUST also add an additional hyphen between consecutive words which are not already separated by one or more hyphen.<br><br>for example: `userId --> USER-ID`
 
-Append these functions to the parameter name within the double angle brackets, separated from the parameter name with a pipe ("|") character and optional whitespace padding. Here is an example that uses functions and reserved parameters:
+Append these functions to the parameter name within the double angle brackets, separated by a pipe ("|") character and optional whitespace padding. Here is an example that uses functions and reserved parameters:
 
 ```yaml
 #%RAML 1.0
