@@ -1645,39 +1645,17 @@ RESTful API methods are operations that are performed on a resource. The OPTIONA
 
 |Property | Description |
 |:--------|:------------|
-| displayName? | An alternate, human-friendly method name in the context of the resource.
-| description? | A longer, human-friendly description of the method in the context of the resource.
+| displayName? | An alternate, human-friendly method name in the context of the resource. If the displayName property is not defined for a method, documentation tools SHOULD refer to the resource by its property key, which acts as the method name.
+| description? | A longer, human-friendly description of the method in the context of the resource. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this method. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | queryParameters? | Detailed information about any query parameters needed by this method. Mutually exclusive with queryString.
 | headers? | Detailed information about any request headers needed by this method.
 | queryString? | The query string needed by this method. Mutually exclusive with queryParameters.
 | responses? | Information about the expected responses to a request.
 | body? | A request body that the method admits.
-| protocols? | The [protocols](#method-level-protocols) that override those specified in the resource or at the API root. 
+| protocols? | The [protocols](#method-level-protocols) that override those specified in the resource or at the API root.
 | is? | A list of the [traits](#applying-resource-types-and-traits) to apply to this method.
 | securedBy? | The [security schemes](#applying-security-schemes) that apply to this method.
-
-### Method-level Display Name
-
-The OPTIONAL **displayName** property provides a friendly name for the method and can be used by documentation generation tools. If the displayName property is not defined for a method, documentation tools SHOULD refer to the resource by its property key, which acts as the method name.
-
-### Method-level Description
-
-The OPTIONAL **description** property describes the operation of the method on the resource. Its value is a string and MAY be formatted using [markdown](#markdown). It is RECOMMENDED that all methods provide such a description.
-
-The following example shows a resource, /jobs, with post and get methods declared.
-
-```yaml
-#%RAML 1.0
-title: ZEncoder API
-version: v2
-baseUri: https://app.zencoder.com/api/{version}
-/jobs:
-  post:
-    description: Create a *new* job
-  get:
-    description: List some or all jobs
-```
 
 ### Headers
 
