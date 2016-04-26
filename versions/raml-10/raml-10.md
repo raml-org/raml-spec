@@ -2298,13 +2298,13 @@ The security scheme is declared using the following properties:
 
 |Property   |Description|
 |:----------|:----------|
-| type | A security schemes property that MUST be used to specify the API security mechanisms, including the required settings and the authentication methods that the API supports. One supported authentication method is allowed. The value MUST be one of the following methods: OAuth 1.0, OAuth 2.0, Basic Authentication, Digest Authentication, Pass Through, x-&lt;other&gt;
+| type | The security schemes property that MUST be used to specify the API security mechanisms, including the required settings and the authentication methods that the API supports. One API-supported authentication method is allowed. The value MUST be one of the following methods: OAuth 1.0, OAuth 2.0, Basic Authentication, Digest Authentication, Pass Through, x-&lt;other&gt;
 | displayName? | An alternate, human-friendly name for the security scheme.
-| description? | Information that MAY be used to explain a security scheme.
+| description? | Information that MAY be used to describe a security scheme.
 | [describedBy?](#describedby) | A description of the following security-related request components determined by the scheme: the headers, query parameters, or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes the API documentation.
 | settings? | The [settings](#settings) attribute MAY be used to provide security scheme-specific information. 
 
-An optional **securitySchemes** property is defined for the RAML document root. The value of securitySchemes is an object. Object properties map security scheme names to security scheme declarations.
+An optional **securitySchemes** property is defined for the RAML document root. The value of securitySchemes is an object having properties that map security scheme names to security scheme declarations.
 Each authentication pattern supported by the API must be expressed as a component of the **securitySchemes** property value.
 
 In this example, the Dropbox API supports authentication using OAuth 2.0 and OAuth 1.0:
