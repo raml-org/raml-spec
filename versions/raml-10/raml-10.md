@@ -918,7 +918,7 @@ The ​**file**​ type can constrain the content to send through forms. When th
 
 ### Null Type
 ​
-RAML handles null data values in payloads, annotations, and other constructs. Nullable properties must be represented as a single `null` type, a union of the non-null and `null` types, or suffixing the type with a trailing question mark `?`, for example `x?` which is equivalent to `null | x`.
+RAML handles null data values in payloads, annotations, and other constructs. Nullable properties must be represented as a single `null` type, a union of the non-null and `null` types, or by suffixing the type with a trailing question mark `?` which is the equivalent to a union between `null` and a type, for example: `null | number`.
 
 For headers, URI parameters, and query parameters, only the string value "null" (case-sensitive) validates against the null type, and in turn the string value "null" (case-sensitive) deserializes to the null type.
 
