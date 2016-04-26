@@ -2109,11 +2109,14 @@ Parameters cannot be used within an !include tag specification of the include fi
 
 ### Declaring HTTP Methods as Optional
 
-When defining resource types, it can be useful to capture patterns that manifest several levels below the inheriting resource, without mandating the creation of the intermediate levels. For example, a resource type declaration may describe a body parameter that would be used if the API defines a post method for that resource, but applying the resource type to a resource without a post method should not create the post method.
+When defining resource types, it can be useful to capture patterns that manifest several levels below the inheriting resource without mandating the creation of the intermediate levels. For example, a resource type declaration describes a body parameter that is used if the API defines a post method for that resource. Applying the resource type to a resource without a post method does not create the post method.
 
-To accommodate this need, a resource type definition MAY append a question mark ("?") suffix to the name of any method that should not be applied if it doesn't already exist in the resource at the corresponding level. The question mark suffix indicates that the value of the method property in the resource type should be applied if the method name itself (without the question mark) is already defined (whether explicitly or implicitly) at the corresponding level in that resource.
+To accommodate this need, a resource type definition MAY append a question mark ("?") suffix to the name of any method to declare the method as optional, resulting in the following behavior:
 
-The following example shows a resource type called corpResource with an optional post? property that defines a required header called X-Chargeback and also a custom parameter called TextAboutPost. If the inheriting resource defines a post method, it will include the X-Chargeback header requirement and TextAboutPost MUST be defined as well. If the inheriting resource does not define a post method, one will not have to define the X-Chargeback header or be forced to define the TextAboutPost parameter by dint of inheriting from the corpResource resource type.
+* Do not apply the method to the resource if it doesn't already exist at the corresponding level in the resource.
+* Apply the value of the method property to the resource type if the method name without the question mark is already defined, explicitly or implicitly, at the corresponding level in the resource.
+
+The following example shows a resource type called corpResource with an optional post? property that defines a required header called X-Chargeback and a custom parameter called TextAboutPost. The inheriting resource /servers defines a post method, so it needs to include the X-Chargeback header requirement. TextAboutPost MUST be defined as well. The inheriting resource /queues does not define a post method, so it does not have to define the X-Chargeback header or the TextAboutPost parameter.
 
 ```yaml
 #%RAML 1.0
