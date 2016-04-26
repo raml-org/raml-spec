@@ -1910,17 +1910,17 @@ A trait, like a method, can provide method-level properties such as description,
 
 ### Declaration Resource Types and Traits
 
-Resource types may be declared via the OPTIONAL **resourceTypes** property at the root of the API definition. The value of this property is an object whose property names become names of resource types that can be referenced throughout the API, and whose property values are resource type declarations.
+Resource types can be declared using the OPTIONAL **resourceTypes** property at the root of the API definition. The value of this property is an object. Its property names become names of resource types that can be referenced throughout the API. Its property values are resource type declarations.
 
-Similarly, traits may be declared via the OPTIONAL **traits** property at the root of the API definition. The value of this property is an object whose property names become names of traits that can be referenced throughout the API, and whose property values are trait declarations.
+Similarly, traits can be declared using the OPTIONAL **traits** property at the root of the API definition. The value of this property is an object. Its property names become names of traits that can be referenced throughout the API. Its property values are trait declarations.
 
-Resource type and trait declarations can have the following properties, in addition to all the properties that resources and methods may have, respectively (except that resource type declarations MUST NOT have nested resource properties).
+Resource type and trait declarations can have the following properties, in addition to all the properties that resources and methods can have, respectively (except that resource type declarations MUST NOT have nested resource properties).
 
 | Property | Definition |
 |:---------|:-----------|
-| usage? | The OPTIONAL **usage** property of a resource type or trait provides instructions on how and when the resource type or trait should be used. Documentation generators MUST convey this property as characteristics of the resource and method, respectively. However, the resources and methods MUST NOT inherit the usage property: neither resources nor methods allow a property named usage.
+| usage? | The OPTIONAL **usage** property of a resource type or trait provides instructions about how and when the resource type or trait should be used. Documentation generators MUST describe this property in terms of the characteristics of the resource and method, respectively. However, the resources and methods MUST NOT inherit the usage property. Neither resources nor methods allow a property named usage.
 
-The following example illustrates the declaration of several resource types and traits.
+The following example illustrates the declaration of several resource types and traits:
 
 ```yaml
 #%RAML 1.0
@@ -1945,7 +1945,7 @@ traits:
         required: true
 ```
 
-The following example builds on the previous one, but the the resource types and traits are defined in external files that are included by using an !include tag.
+The following example builds on the previous one, but the resource types and traits are defined in external files that are included by using an !include tag.
 
 ```yaml
 #%RAML 1.0
