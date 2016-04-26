@@ -2191,12 +2191,13 @@ resourceTypes:
 ### Algorithm of Merging Traits and Methods
 
 Each RAML element has its branch of the RAML document. The high-level description of applying a trait to method is putting a traits branch under the methods branch. Actually, applying a trait to a method is a recursive procedure:
-1. Method node properties are inspected and those that are undefined in trait node remain unchanged.
-2. The method node receives all properties of trait node (excluding optional ones), which are undefined in the method node.
-3. Properties defined in both method node and trait node (including optional ones) are treated as follows:
-  * Scalar properties remain unchanged.
-  * Collection properties are merged by value, as described later.
-  * Values of object properties are subjected to steps 1-3 of this procedure.
+
+1. Method node properties are inspected and those that are undefined in trait node remain unchanged.  
+2. The method node receives all properties of trait node (excluding optional ones), which are undefined in the method node.  
+3. Properties defined in both method node and trait node (including optional ones) are treated as follows:  
+  * Scalar properties remain unchanged.  
+  * Collection properties are merged by value, as described later.  
+  * Values of object properties are subjected to steps 1-3 of this procedure.  
 
 Generally, a method can have more than one trait, each having a sufficient hierarchy. Applying all traits is equivalent to building a stack of branches as follows:
 
@@ -2209,11 +2210,12 @@ Generally, a method can have more than one trait, each having a sufficient hiera
     * Branch order is determined as follows: traits that have higher positions in the queue, have branches deeper in the stack.
 
 Finally, the resource can have its own traits, and a chain of resource types, for example resourceType1, resourceType2, ..., can be applied. Each resource type can potentially have its own traits and define the same method. The stack is constructed as follows:
-1. Traits of method itself
-2. Traits of resource owning the method
-3. Traits of method owned by resourceType1
-4. Traits of resourceType1
-5. ...
+
+1. Traits of method itself  
+2. Traits of resource owning the method  
+3. Traits of method owned by resourceType1  
+4. Traits of resourceType1  
+5. ...  
 
 Merging resource types with resources obeys similar rules.
 
