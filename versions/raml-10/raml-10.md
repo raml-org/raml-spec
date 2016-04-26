@@ -933,7 +933,7 @@ Here is an example that defines the capability to restrict dates to those that d
 title: API with Types
 types:
   CustomDate:
-    type: date
+    type: date-only
     facets:
       onlyFutureDates?: boolean # optional  in `PossibleMeetingDate`
       noHolidays: boolean # required in `PossibleMeetingDate`
