@@ -1633,43 +1633,21 @@ version: v1
 
 ## Methods
 
-In a RESTful API, methods are operations that are performed on a resource. The OPTIONAL properties **get**, **patch**, **put**, **post**, **delete**, **head**, and **options** of a resource define its methods; these correspond to the HTTP methods defined in the HTTP version 1.1 specification [RFC2616](https://www.ietf.org/rfc/rfc2616.txt) and its extension, [RFC5789](https://tools.ietf.org/html/rfc5789). The value of any of these method properties is an object whose properties are described in the following table.
+RESTful API methods are operations that are performed on a resource. The OPTIONAL properties **get**, **patch**, **put**, **post**, **delete**, **head**, and **options** of a resource define its methods; these correspond to the HTTP methods defined in the HTTP version 1.1 specification [RFC2616](https://www.ietf.org/rfc/rfc2616.txt) and its extension, [RFC5789](https://tools.ietf.org/html/rfc5789). The value of these method properties is an object that has the following properties:
 
 |Property | Description |
 |:--------|:------------|
-| displayName? | An alternate, human-friendly name for the method (in the resource's context).
-| description? | A longer, human-friendly description of the method (in the resource's context).
-| (&lt;annotationName&gt;)? | Annotations to be applied to this method. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
+| displayName? | An alternate, human-friendly method name in the context of the resource. If the displayName property is not defined for a method, documentation tools SHOULD refer to the resource by its property key, which acts as the method name.
+| description? | A longer, human-friendly description of the method in the context of the resource. Its value is a string and MAY be formatted using [markdown](#markdown).
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this method. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | queryParameters? | Detailed information about any query parameters needed by this method. Mutually exclusive with queryString.
 | headers? | Detailed information about any request headers needed by this method.
-| queryString? | Specifies the query string needed by this method. Mutually exclusive with queryParameters.
+| queryString? | The query string needed by this method. Mutually exclusive with queryParameters.
 | responses? | Information about the expected responses to a request.
-| body? | Some methods admit request bodies, which are described by this property.
-| protocols? | A method can override the protocols specified in the resource or at the API root, by employing this property. See section [Method-level Protocols](#method-level-protocols) for more information.
-| is? | A list of the traits to apply to this method. See [Applying Resource Types and Traits](#applying-resource-types-and-traits) section.
-| securedBy? | The security schemes that apply to this method. See section [Applying Security Schemes](#applying-security-schemes) for more information.
-
-### Method-level Display Name
-
-The OPTIONAL **displayName** property provides a friendly name for the method and can be used by documentation generation tools. If the displayName property is not defined for a method, documentation tools SHOULD refer to the resource by its property key, which acts as the method's name.
-
-### Method-level Description
-
-The OPTIONAL **description** property describes the operation of the method on the resource. Its value is a string and MAY be formatted using [markdown](#markdown). It is RECOMMENDED that all methods provide such a description.
-
-The following example shows a resource, /jobs, with post and get methods declared.
-
-```yaml
-#%RAML 1.0
-title: ZEncoder API
-version: v2
-baseUri: https://app.zencoder.com/api/{version}
-/jobs:
-  post:
-    description: Create a *new* job
-  get:
-    description: List some or all jobs
-```
+| body? | A request body that the method admits.
+| protocols? | The [protocols](#method-level-protocols) that override those specified in the resource or at the API root.
+| is? | A list of the [traits](#applying-resource-types-and-traits) to apply to this method.
+| securedBy? | The [security schemes](#applying-security-schemes) that apply to this method.
 
 ### Headers
 
