@@ -1645,7 +1645,7 @@ RESTful API methods are operations that are performed on a resource. The OPTIONA
 | queryString? | The query string needed by this method. Mutually exclusive with queryParameters.
 | responses? | Information about the expected responses to a request.
 | body? | A request body that the method admits.
-| protocols? | The [protocols](#method-level-protocols) that override those specified in the resource or at the API root.
+| protocols? | Explicitly specify the protocol(s) used to invoke a method, thereby overriding the protocols set elsewhere, for example in the baseUri or the [root-level protocols](#protocols) property.
 | is? | A list of the [traits](#applying-resource-types-and-traits) to apply to this method.
 | securedBy? | The [security schemes](#applying-security-schemes) that apply to this method.
 
@@ -1802,24 +1802,6 @@ baseUri: https://api.github.com/{version}
         maximum:     200
         default:     30
         example:     50
-```
-
-### Method-level Protocols
-
-A method can explicitly set the OPTIONAL **protocols** property to specify the protocol(s) used to invoke it, thereby overriding the protocols set elsewhere, for example in the baseUri or the root-level **properties** property.
-
-In the following example, the get method is accessible through both HTTP and HTTPS, while the rest of the API requires HTTPS.
-
-```yaml
-#%RAML 1.0
-title: Twitter API
-version: 1.1
-baseUri: https://api.twitter.com/{version}
-/search/tweets.json:
-  description: Search all tweets
-  get:
-    description: Returns a collection of relevant Tweets matching a specified query
-    protocols: [ HTTP, HTTPS ]
 ```
 
 ### Bodies
