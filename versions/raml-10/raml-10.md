@@ -1108,7 +1108,7 @@ types:
     type: Phone | Notebook
 ```
 
-To deserialize an instance, first fully expand all unions at every level, then match the instance against each element in that expansion starting from the left-most and proceeding to the right; use the first successful matching element to deserialize the instance; and if no elements match, the instance is invalid. A valid instance of a union type must pass all restrictions associated with at least one of the elements. For example:
+To deserialize an instance of data, first fully expand all unions at every level, then match the instance against each element in that expansion starting from the left-most and proceeding to the right; use the first successful matching element to deserialize the instance; and if no elements match, the instance is invalid. A valid instance of a union type must pass all restrictions associated with at least one of the elements. For example:
 
 ```yaml
 types:
