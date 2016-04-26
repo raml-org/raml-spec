@@ -918,8 +918,12 @@ The ​**file**​ type can constrain the content to send through forms. When th
 
 ### Null Type
 ​
-RAML handles null data values in payloads, annotations, and other constructs. Nullable properties must be represented as a single `null` type, a union of the non-null and `null` types, or suffixing the type with a trailing question mark `?`.
+RAML handles null data values in payloads, annotations, and other constructs. Nullable properties must be represented as a single `null` type, a union of the non-null and `null` types, or suffixing the type with a trailing question mark `?`, for example `x?` which is equivalent to `null | x`.
+
+For headers, URI parameters, and query parameters, only the string value "null" (case-sensitive) validates against the null type, and in turn the string value "null" (case-sensitive) deserializes to the null type.
+
 In the following example, the type of an object and has two required properties, `name` and `comment`, both defaulting to type `string`. In `example`, `name` is assigned a string value, but comment is null and this is _not_ allowed because RAML expects a string.
+
 ```yaml
 type:
   properties:
@@ -929,7 +933,9 @@ example:
   name: Fred
   comment: # Providing no value here is not allowed.
 ```
+
 The following example shows the assignment of the `null` type to `comment`:
+
 ​
 ```yaml
 type:
@@ -940,20 +946,21 @@ example:
   name: Fred
   comment: # Providing a value here is not allowed.
 ```
+
 The following example shows how to represent nullable properties using a union:
 ​
 ```yaml
 type:
   properties:
     name:
-    comment: string | null # equivalent to ->
+    comment: null | string # equivalent to ->
                            # comment: string?
 example:
   name: Fred
   comment: # Providing a value or not providing a value here is allowed.
 ```
 
-Declaring the type of a property to be `null` causes a RAML processor to forbid an instance to have a value.
+Declaring the type of a property to be `null` causes a RAML processor to forbid an instance to have a value. In a RAML context that requires *values* of type `null` (vs just type declarations), the usual YAML `null` is used, e.g. when the type is `number | null` you may use `enum: [ 1, 2, ~ ]` or more explicitly/verbosely `enum: [ 1, 2, !!null "" ]`; in non-inline notation you can just omit the value completely, of course.
 
 ### User-defined Facets
 
