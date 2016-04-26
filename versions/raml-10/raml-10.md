@@ -1220,7 +1220,7 @@ Sometimes it is necessary to refer to an element defined in a schema. RAML suppo
 type: !include elements.xsd#Foo
 ```
 
-When referencing an inner element of a schema, a RAML processor MUST validate an instance against that particular element. The structural restrictions on referencing an inner element are the same as those on referencing other elements. This version of RAML specification supports referencing any inner elements in JSON schemas that are valid schemas, any globally defined elements, and complex types in XML schemas. There are only a few restrictions:
+When referencing an inner element of a schema, a RAML processor MUST validate an instance against that particular element. This version of RAML specification supports referencing any inner elements in JSON schemas that are valid schemas, any globally defined elements, and complex types in XML schemas. There are only a few restrictions:
 
 * Validation of any XML or JSON instance against inner elements follows the same restrictions as the validation against a regular XML or JSON schema.
 * Referencing complex types inside an XSD is valid to determine the structure of an XML instance, but since complex types do not define a name for the top-level XML element, these types cannot be used for serializing an XML instance.
