@@ -2281,35 +2281,33 @@ RAML supports the following built-in security scheme types:
 
 |Type       |Description|
 |:----------|:----------|
-|OAuth 1.0  | The API's authentication requires using OAuth 1.0 as described in [RFC5849](https://tools.ietf.org/html/rfc5849)
-|OAuth 2.0  | The API's authentication requires using OAuth 2.0 as described in [RFC6749](https://tools.ietf.org/html/rfc6749)
-|Basic Authentication| The API's authentication relies on using Basic Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
-|Digest Authentication| The API's authentication relies on using Digest Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
-|Pass Through| Headers or Query Parameters are passed through to the API based on a defined mapping.
-|x-{other}| The API's authentication relies on another authentication method.
+|OAuth 1.0  | The API authentication requires using OAuth 1.0 as described in [RFC5849](https://tools.ietf.org/html/rfc5849)
+|OAuth 2.0  | The API authentication requires using OAuth 2.0 as described in [RFC6749](https://tools.ietf.org/html/rfc6749)
+|Basic Authentication| The API authentication relies on using Basic Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
+|Digest Authentication| The API authentication relies on using Digest Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
+|Pass Through| Headers or query parameters are passed through to the API based on a defined mapping.
+|x-{other}| The API authentication relies on another authentication method.
 
-A processing application's developers MAY provide support for these mechanisms. If a mechanism is supported, it MUST conform to the specified standard.
+A processing application developer MAY provide support for these mechanisms. If a mechanism is supported, it MUST conform to the specified standard.
 
-Additionally, any security scheme definition may be augmented with a describedBy property, which allows the designer to document the API's security scheme.
+Additionally, any security scheme definition may be augmented with a describedBy property, which allows the designer to document the API security scheme.
 
 ### Security Scheme Declaration
 
-Security scheme is declared as follows:
+The security scheme is declared using the following properties:
 
 |Property   |Description|
 |:----------|:----------|
-| type | The security schemes property MUST be used to specify an API's security mechanisms, including the required settings and the authentication methods that the API supports. one authentication method is allowed if the API supports them. The value MUST be one of the following: OAuth 1.0, OAuth 2.0, Basic Authentication, Digest Authentication, Pass Through, x-&lt;other&gt;
+| type | A security schemes property that MUST be used to specify the API security mechanisms, including the required settings and the authentication methods that the API supports. One supported authentication method is allowed. The value MUST be one of the following methods: OAuth 1.0, OAuth 2.0, Basic Authentication, Digest Authentication, Pass Through, x-&lt;other&gt;
 | displayName? | An alternate, human-friendly name for the security scheme.
-| description? | The description MAY be used to describe a security scheme.
-| describedBy? | A description of the request components related to Security that are determined by the scheme: the headers, query parameters or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes an API documentation. See explanation about [describedBy](#describedby) for more information.
-| settings? | The settings attribute MAY be used to provide security scheme-specific information. The required attributes vary depending on the type of security scheme is being declared. It describes the minimum set of properties which any processing application MUST provide and validate if it chooses to implement the security scheme. Processing applications MAY choose to recognize other properties for things such as token lifetime, preferred cryptographic algorithms, and more. See explanation about [settings](#settings) for more information.
+| description? | Information that MAY be used to explain a security scheme.
+| [describedBy?](#describedby) | A description of the following security-related request components determined by the scheme: the headers, query parameters, or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes the API documentation.
+| settings? | The [settings](#settings) attribute MAY be used to provide security scheme-specific information. 
 
-An optional **securitySchemes** property is defined for RAML document root.
+An optional **securitySchemes** property is defined for the RAML document root. The value of securitySchemes is an object. Object properties map security scheme names to security scheme declarations.
+Each authentication pattern supported by the API must be expressed as a component of the **securitySchemes** property value.
 
-As value it has an object whose properties map security scheme names to security scheme declarations.
-Each authentication pattern supported by the API must be expressed as component of **securitySchemes** property value.
-
-In this example, the Dropbox API supports authentication via OAuth 2.0 and OAuth 1.0:
+In this example, the Dropbox API supports authentication using OAuth 2.0 and OAuth 1.0:
 ```yaml
 #%RAML 1.0
 title: Dropbox API
@@ -2330,15 +2328,15 @@ securitySchemes:
       queryParameters:
         access_token:
           description: |
-             Used to send a valid OAuth 2 access token. Do not use together with
-             the "Authorization" header
+             Used to send a valid OAuth 2 access token. Do not use with
+             the "Authorization" header.
           type: string
       responses:
         401:
           description: |
               Bad or expired token. This can happen if the user or Dropbox
-              revoked or expired an access token. To fix, you should re-
-              authenticate the user.
+              revoked or expired an access token. To fix, re-authenticate
+              the user.
         403:
           description: |
               Bad OAuth request (wrong consumer key, bad nonce, expired
@@ -2363,21 +2361,21 @@ The value of the **describedBy** property is defined as follows:
 
 |Property   |Description|
 |:----------|:----------|
-| headers? | Optional array of headers, documenting the possible headers that could be accepted. See section [Headers](#headers) for more information.
-| queryParameters? | Query parameters, used by the schema in order to authorize the request. Mutually exclusive with queryString. See section [Query Strings and Query Parameters](#query-strings-and-query-parameters) for more information.
-| queryString? | Specifies the query string, used by the schema in order to authorize the request. Mutually exclusive with queryParameters. See section [Query Strings and Query Parameters](#query-strings-and-query-parameters) for more information.
-| responses? | Optional array of responses, describing the possible responses that could be sent. See section [Responses](#responses) for more information.
-| (&lt;annotationName&gt;)? | Annotations to be applied to this security scheme part. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
+| headers? | Optional array of [Headers](#headers), documenting the possible headers that could be accepted. 
+| queryParameters? | Query parameters, used by the schema to authorize the request. Mutually exclusive with [queryString](#query-strings-and-query-parameters).
+| queryString? | The query string used by the schema to authorize the request. Mutually exclusive with [queryParameters](#query-strings-and-query-parameters).
+| responses? | An optional array of [responses](#responses), representing the possible responses that could be sent.
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this part of the security scheme. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 
 #### Settings
 
-The settings attribute MAY be used to provide security scheme specific information. The required attributes vary depending on the type of security scheme is being declared.
+The settings attribute MAY be used to provide security scheme-specific information. The required attributes vary depending on which type of security scheme is declared.
 
-It describes the minimum set of properties which any processing application MUST provide and validate if it chooses to implement the security scheme. Processing applications MAY choose to recognize other properties for things such as token lifetime, preferred cryptographic algorithms, and more.
+The settings attribute describes the minimum set of properties that any processing application MUST provide and validate if it chooses to implement the security scheme. Processing applications MAY choose to recognize other properties for token lifetime, preferred cryptographic algorithms, and other things.
 
 ##### OAuth 1.0
 
-Security schemes of this type have specific settings object:
+Security schemes of this type have the following properties:
 
 |Property |Description |
 |:--------|:------------|
@@ -2385,7 +2383,7 @@ Security schemes of this type have specific settings object:
 |authorizationUri| The URI of the *Resource Owner Authorization endpoint* as defined in [RFC5849 Section 2.2](https://tools.ietf.org/html/rfc5849#section-2.2)
 |tokenCredentialsUri| The URI of the *Token Request endpoint* as defined in [RFC5849 Section 2.3](https://tools.ietf.org/html/rfc5849#section-2.3)
 
-OAuth 1.0 authentication follows the standard described in [RFC5849](https://tools.ietf.org/html/rfc5849). The following is an example:
+OAuth 1.0 authentication follows the standard described in [RFC5849](https://tools.ietf.org/html/rfc5849). The following example shows how to set OAuth 1.0 properties:
 
 ```yaml
 #%RAML 1.0
@@ -2405,16 +2403,16 @@ securitySchemes:
 
 ##### OAuth 2.0
 
-Security schemes of this type has specific settings object:
+Security schemes of this type have the following properties:
 
 |Property |Description |
 |:--------|:------------|
 |authorizationUri| The URI of the *Authorization Endpoint* as defined in [RFC6749 Section 3.1](https://tools.ietf.org/html/rfc6749#section-3.1)
 |accessTokenUri| The URI of the *Token Endpoint* as defined in [RFC6749 Section 3.2](https://tools.ietf.org/html/rfc6749#section-3.2)
-|authorizationGrants| A list of the Authorization grants supported by the API As defined in RFC6749 Sections [4.1](https://tools.ietf.org/html/rfc6749#section-4.1), [4.2](https://tools.ietf.org/html/rfc6749#section-4.2), [4.3](https://tools.ietf.org/html/rfc6749#section-4.3) and [4.4](https://tools.ietf.org/html/rfc6749#section-4.4), can be any of: code, token, owner or credentials.
+|authorizationGrants| A list of the authorization grants supported by the API as defined in RFC6749 Sections [4.1](https://tools.ietf.org/html/rfc6749#section-4.1), [4.2](https://tools.ietf.org/html/rfc6749#section-4.2), [4.3](https://tools.ietf.org/html/rfc6749#section-4.3) and [4.4](https://tools.ietf.org/html/rfc6749#section-4.4), which can be any of the following grants: code, token, owner, or credentials.
 |scopes| A list of scopes supported by the API as defined in [RFC6749 Section 3.3](https://tools.ietf.org/html/rfc6749#section-3.3)
 
-OAuth 2.0 authentication follows the standard described in [RFC6749](https://tools.ietf.org/html/rfc6749). The following is an example:
+OAuth 2.0 authentication follows the standard described in [RFC6749](https://tools.ietf.org/html/rfc6749). The following example shows how to set OAuth 2.0 properties:
 
 ```yaml
 #%RAML 1.0
@@ -2436,15 +2434,15 @@ securitySchemes:
       queryParameters:
         access_token:
           description: |
-             Used to send a valid OAuth 2 access token. Do not use together with
-             the "Authorization" header
+             Used to send a valid OAuth 2 access token. Do not use with
+             the "Authorization" header.
           type: string
       responses:
         401:
           description: |
               Bad or expired token. This can happen if the user or Dropbox
-              revoked or expired an access token. To fix, you should re-
-              authenticate the user.
+              revoked or expired an access token. To fix, re-authenticate
+              the user.
         403:
           description: |
               Bad OAuth request (wrong consumer key, bad nonce, expired
@@ -2489,7 +2487,7 @@ securitySchemes:
 
 ##### Pass Through
 
-Pass Through authentication does not have any specific settings defined and the implementation is known to RAML. One MUST provide a value for every header or queryParameter defined in describedBy, and passed along with the request without modification. The following is an example:
+Pass through authentication does not have any specific settings defined and the implementation is known to RAML. You MUST provide a value for every header or queryParameter defined in describedBy and passed along with the request without modification. The following example shows how to provide these values:
 
 ```yaml
 #%RAML 1.0
@@ -2512,7 +2510,7 @@ securitySchemes:
 
 ##### x-&lt;other&gt;
 
-x-&lt;other&gt; authentication methods do not have any specific settings defined, as their implementation is unknown as a standard for RAML. These security schemes may only include a description and a describedBy section, to allow documentation of the intended use of the security scheme. The following is an example:
+x-&lt;other&gt; authentication methods do not have any specific settings defined, as the implementation of these methods is unknown as a standard to RAML. These security schemes might include only the description and describedBy sections to allow documentation of the intended use of the security scheme. The following example shows such a security scheme:
 
 ```yaml
 #%RAML 1.0
@@ -2539,10 +2537,9 @@ securitySchemes:
 
 #### Applying Security Schemes
 
-The **securedBy** attribute of RAML document root may be used to apply security schemes to every method of API. This specifies that all methods in the API (unless they have their own securedBy attribute) can be authenticated by any mentioned security scheme.
+The **securedBy** attribute in the RAML document root can apply security schemes to every method of the API. All API methods, except those having their own securedBy attribute, can be authenticated by any of the specified security schemes.
 
-Applying a security scheme to a method overrides whichever security scheme has been applied to the API as whole.
-To indicate that the method is protected using a specific security scheme, the method MUST be defined by using the **securedBy** attribute.
+Applying a security scheme to a method overrides any security scheme applied to the API as a whole. To indicate that a method is protected using a specific security scheme, the method MUST be defined by using the **securedBy** attribute.
 
 The value assigned to the securedBy attribute MUST be a list of any of the security schemes previously defined in the **securitySchemes** property of RAML document root.
 
@@ -2560,7 +2557,7 @@ securitySchemes:
     securedBy: [oauth_2_0, oauth_1_0]
 ```
 
-To indicate that the method may be called without applying any security scheme, the method may be provided with securedBy attribute containing null as array component.
+A securedBy attribute containing null as the array component indicates the method can be called without applying any security scheme.
 
 ```yaml
 #%RAML 1.0
@@ -2574,13 +2571,13 @@ securitySchemes:
     securedBy: [null, oauth_2_0]
 ```
 
-A resource can also be applied a list of security schemes using the **securedBy** attribute. This specifies that all methods of this particular resource (unless they have their own securedBy attribute) can be authenticated by any mentioned security scheme. Value of resources attribute overrides that of the root attribute. Security Schemes applied to a resource MUST NOT incorporate nested resources; they do not apply to its existing nested resources.
+The **securedBy** attribute can also apply a list of security schemes to a resource. All resource methods, except those having their own securedBy attribute, can be authenticated by any of the specified security schemes. The value of the resources attribute overrides that of the root attribute. Security schemes applied to a resource MUST NOT incorporate nested resources; security schemes do not apply to existing nested resources.
 
-Applying a security scheme to a method overrides security schemes applied to the API and resources having the method as sibling.
+Applying a security scheme to a method overrides security schemes applied to the API and to resources having the method as a sibling.
 
 If the processing application supports custom properties, custom parameters can be provided to the security scheme at the moment of inclusion in a method.
 
-In the following example, the parameter **scopes** is being assigned:
+The following example assigns a value to the parameter **scopes**:
 
 ```yaml
 #%RAML 1.0
@@ -2594,7 +2591,7 @@ securitySchemes:
     securedBy: [null, oauth_2_0: { scopes: [ ADMINISTRATOR ] } ]
 ```
 
-The list of parameters that must and may be provided to the security scheme is specified by the security scheme type.
+The list of required and optional parameters to be provided to the security scheme is specified by the security scheme type.
 
 ## Annotations
 
