@@ -1522,7 +1522,7 @@ The value of a resource property is an object whose properties are described in 
 
 |Property | Description |
 |:--------|:------------|
-| displayName? | An alternate, human-friendly name for the resource.
+| displayName? | An alternate, human-friendly name for the resource. If the displayName property is not defined for a resource, documentation tools SHOULD refer to the resource by its property key, which acts as the resource name. For example, tools should refer to the relative URI /jobs.
 | description? | A longer, human-friendly description of the resource.
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this resource. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | get?<br>patch?<br>put?<br>post?<br>delete?<br>options?<br>head? | The object describing the [method](#methods).
@@ -1532,17 +1532,9 @@ The value of a resource property is an object whose properties are described in 
 | uriParameters? | Detailed information about any URI parameters of this resource.
 | /&lt;relativeUri&gt;? | A nested resource, which is identified as any property whose name begins with a slash ("/"), and is therefore treated as a relative URI.
 
-### Resource Display Name
-
-The OPTIONAL **displayName** property assigns a friendly name to the resource and can be used by documentation generation tools. If the displayName property is not defined for a resource, documentation tools SHOULD refer to the resource by its property key, which acts as the resource name. For example, tools should refer to the relative URI /jobs.
-
-### Resource Description
-
-The OPTIONAL **description** property can be used to provide a longer description of the resource. It is RECOMMENDED that all resources provide such a description.
-
 ### Template URIs and URI Parameters
 
-[Template URIs](#template-uri) containing URI parameters can be used to define a relative URI of a resource that contains variable elements. The following example shows a top-level resource with a key /jobs and a nested resource with a key /{jobId}, a template URI. 
+[Template URIs](#template-uri) containing URI parameters can be used to define a relative URI of a resource that contains variable elements. The following example shows a top-level resource with a key /jobs and a nested resource with a key /{jobId}, a template URI.
 
 ```yaml
 #%RAML 1.0
