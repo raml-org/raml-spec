@@ -2255,7 +2255,7 @@ Every explicit node will win over the ones that are declared in a resource type 
 
 ### Resource Types and Traits Effect on Collections
 
-All the collections or sequences which fall under effect of applying traits and resource types are merged. Consider an example of query parameter which has its enum values defined in both resource and trait:
+All collections or sequences that are affected by applied traits and resource types are merged. This example defines the enum values of a query parameter in both the trait and resource:
 
 ```yaml
 #%RAML 1.0
@@ -2278,9 +2278,9 @@ traits:
           - unix
 ```
 
-In this example the resulting enum value is `[ mac, unix, win ]`.
+The enum value resulting from the merge that occurs is `[ mac, unix, win ]`.
 
-Important case of collections is a trait, which can appear as "is" attribute value for method, resource, trait or resource type. Such lists may contain same traits which differ in parameter sets and, thus, can not be considered equal:
+In collections, a trait can appear as an "is" attribute value for a method, resource, trait, or resource type. Such lists can contain the same traits but different parameter sets and, thus, cannot be considered equal:
 
 ```yaml
 #%RAML 1.0
@@ -2300,7 +2300,7 @@ traits:
     is: [ { secured : { tokenName: token } } ]
 ```
 
-In resolving such a collision priority is given to that trait occurrence which is closer to the target method (or resource). In the example above the `tokenName` parameter value for the `GET:/servers` method is `token`, and the trait list consists of single trait occurrence: `[ {secured:{ tokenName:token}} ]`.
+To resolve a collision arising from this inequality, priority is given to the trait in closest proximity to the target method or resource. In the previous example, the `tokenName` parameter value for the `GET:/servers` method is `token`, and the trait list consists of single trait occurrence: `[ {secured:{ tokenName:token}} ]`.
 
 ## Security Schemes
 
