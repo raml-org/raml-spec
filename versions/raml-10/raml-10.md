@@ -1112,16 +1112,16 @@ This example is actually declaring a "type alias", which gives a more readable n
 
 Type expressions are composed of names of built-in or custom types and certain symbols, as follows:
 
-| Expression  | Description | Examples
-|:----------|:----------|:---------|
-| | Type name (the basic building block of a type expression) | `number:` a built-in type<br><br>`Person:` a custom type
-| (type expression) | Parentheses may be used to disambiguate the expression to which an operator applies. | `Person | Animal[]`<br><br>`( Person | Animal )[]`
-| (type expression)[] | Array operator: a unary postfix operator placed after another type expression (enclosed in parentheses, as needed) and indicating that the resulting type is an array of instances of that type expression. | `string[]:` an array of strings<br><br>`Person[][]:` an array of arrays of Person instances
-| (type expression 1) &#124; (type expression 2) | Union operator: an infix operator indicating that the resulting type may be either of type expression 1 or of type expression 2. Multiple union operators may be combined between pairs of type expressions. | `string | number:` either a string or a number <br><br> `X | Y | Z`: either an X or a Y or a Z <br><br>`(Manager | Admin)[]:` an array whose members consist of Manager or Admin instances<br><br>`Manager[] | Admin[]:` an array of Manager instances or an array of Admin instances.
+| Expression Components | Description | Examples
+|:--------------------------|:------------|:---------|
+| type name | A type name, the basic building block of a type expression, used alone creates the simplest expression. | `number:` a built-in type<br><br>`Person:` a custom type
+| (type expression) | Parentheses disambiguate the expression to which an operator applies. | `Person | Animal[]`<br><br>`( Person | Animal )[]`
+| (type expression)[] | The array, a unary, postfix operator placed after another type expression, enclosed in parentheses as needed, indicates the resulting type is an array of instances of that type expression. | `string[]:` an array of strings<br><br>`Person[][]:` an array of arrays of Person instances
+| (type expression 1) &#124; (type expression 2) | An infix union operator indicates the resulting type might be either of type expression 1 or of type expression 2. Multiple union operators can be combined between pairs of type expressions. | `string | number:` either a string or a number <br><br> `X | Y | Z`: either an X or a Y or a Z <br><br>`(Manager | Admin)[]:` an array whose members consist of Manager or Admin instances<br><br>`Manager[] | Admin[]:` an array of Manager instances or an array of Admin instances.
 
 ### Union Types
 
-Union Types are declared using pipes (|) in your type expressions. Union Types are useful to model common scenarios in JSON based applications, for example an array containing objects which can be instances of more than one type.
+Union types are declared using pipes (|) in type expressions. Union types are useful for modeling common scenarios in JSON-based applications, for example an array containing objects that can be instances of more than one type.
 
 ```yaml
 #%RAML 1.0
@@ -1147,12 +1147,12 @@ types:
     type: Phone | Notebook
 ```
 
-A valid instance of a union type must pass all restrictions associated with at least one of the union type options. For example:
+To deserialize an instance of data, first fully expand all unions at every level, then match the instance against each element in that expansion starting from the left-most and proceeding to the right; use the first successful matching element to deserialize the instance; and if no elements match, the instance is invalid. A valid instance of a union type must pass all restrictions associated with at least one of the elements. For example:
 
 ```yaml
 types:
   CatOrDog:
-    type: Cat | Dog # options: Cat or Dog
+    type: Cat | Dog # elements: Cat or Dog
   Cat:
     type: object
     properties:
@@ -1165,7 +1165,7 @@ types:
       fangs: string
 ```
 
-A valid instance of the type `CatOrDog` for example looks like the following:
+A following example of an instance of type `CatOrDog` is valid:
 
 ```yaml
 CatOrDog: # follows restrictions applied to the type 'Cat'
@@ -1173,29 +1173,27 @@ CatOrDog: # follows restrictions applied to the type 'Cat'
   color: "brown"
 ```
 
-Imagine a more complex example where a union type is used in a multiple inheritance type expression.
+Imagine a more complex example of a union type used in a multiple inheritance type expression:
 
 ```yaml
 types:
    HomeAnimal: [ HasHome ,  Dog | Cat ]
 ```
 
-In this case type `HomeAnimal` has two base types `HasHome` and anonymous union type defined by a type expression - `Dog | Cat`  
+In this case, type `HomeAnimal` has two base types, `HasHome` and an anonymous union type, defined by the following type expression: `Dog | Cat`  
 
-So testing if the `HomeAnimal` type is a valid involves  taking each of its base types, and checking that a type which is derived type of this type and each of union type option types is a valid type. In this particular case you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
+Validating the `HomeAnimal` type involves validating the types derived from each of the base types and the types of each element in the union type. In this particular case, you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
 
-If you are extending from two union types you should do the same for every possible combination for example in this case:
+If you are extending from two union types you should perform validations for every possible combination. For example, to validate the `HomeAnimal` type shown below, you need to test six possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
 
 ```yaml
 types:
    HomeAnimal: [ HasHome | IsOnFarm ,  Dog | Cat | Parrot ]
 ```
 
-In summary, you need to test 6 possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
-
 ### Using XML and JSON Schema
 
-RAML allows the use of XML and JSON schema to describe the body of an API request or response, by integrating them into its data type system.
+RAML allows the use of XML and JSON schemas to describe the body of an API request or response by integrating the schemas into its data type system.
 
 The following examples show how to include an external JSON schema into a root-level type definition and a body declaration.
 
@@ -1214,9 +1212,9 @@ types:
             type: !include person.json
 ```
 
-A RAML processor MUST not allow types that define an XML or JSON schema to participate in type inheritance or specialization, or effectively in any [type expression](#type-expressions). In other words: You cannot define sub-types of these types that declare new properties, add restrictions, and set or declare facets. You can, however, create simple type wrappers that add annotations, examples or a description.
+A RAML processor MUST not allow types that define an XML or JSON schema to participate in type inheritance or specialization, or effectively in any [type expression](#type-expressions). Therefore, you cannot define sub-types of these types to declare new properties, add restrictions, set facets, or declare facets. You can, however, create simple type wrappers that add annotations, examples, or a description.
 
-The following is a fully valid example.
+The following example shows a valid declaration.
 
 ```yaml
 types:
@@ -1225,7 +1223,7 @@ types:
     description: this is a schema describing person
 ```
 
-However, this example shows an invalid case where a type inherits the characteristics of a JSON schema and adds additional properties.
+The following example shows an invalid declaration of a type that inherits the characteristics of a JSON schema and adds additional properties.
 
 ```yaml
 types:
@@ -1235,7 +1233,7 @@ types:
       single: boolean
 ```
 
-Another invalid case is the following example where the type `Person` is being used for a property type.
+Another invalid case is shown in the following example of the type `Person` being used as a property type.
 
 ```yaml
 types:
@@ -1249,9 +1247,9 @@ types:
 
 A RAML Processor MUST be able to interpret and apply JSON Schema and XML Schema.
 
-XML schema MUST NOT be used where the media type does not allow XML-formatted data, and JSON schema MUST NOT be used where the media type does not allow JSON-formatted data. XML and JSON schemas are also forbidden in any declaration of query parameters, query string, URI parameters, and headers.
+An XML schema, or JSON schema, MUST NOT be used where the media type does not allow XML-formatted data, or JSON-formatted data, respectively. XML and JSON schemas are also forbidden in any declaration of query parameters, query string, URI parameters, and headers.
 
-Please note that the properties "schemas" and "types" are completely synonymous, so are "schema" and "type" for compatibility with RAML 0.8, but "schemas" and "schema" are deprecated. API definitions should use "types" and "type", as "schemas" and "schema" may be removed in a future RAML version.
+The properties "schemas" and "types", as well as "schema" and "type", are mutually exclusive and synonymous for compatibility with RAML 0.8. API definitions should use "types" and "type", as "schemas" and "schema" are deprecated and might be removed in a future RAML version.
 
 ### Multiple Inheritance
 
@@ -1278,7 +1276,7 @@ If multiple parent types define a property with the same name:
 
 ### Inline Type Declarations
 
-You can declare inline/anonymous types everywhere a type can be referenced other than in a Type Expression.
+You can declare inline/anonymous types everywhere a type can be referenced except in a Type Expression.
 
 ```yaml
 #%RAML 1.0
@@ -1305,41 +1303,45 @@ It is highly RECOMMENDED that API documentation include a rich selection of exam
 
 #### Multiple Examples
 
-The OPTIONAL **examples** property may be used to attach multiple examples to a type declaration. Its value is a map of key-value pairs, where each key represent a unique identifier for an example and the value is a [single example](#single-example) property.
+The OPTIONAL **examples** property can be used to attach multiple examples to a type declaration. Its value is a map of key-value pairs, where each key represents a unique identifier for an example and the value is a [single example](#single-example) property.
 
-The following is an example of the value of an **examples** property:
+The following example shows the value of an **examples** property:
 
 ```yaml
 message: # {key} - unique id
+  # example declaration
   title: Attention needed
-  content: You have been added to group 274
+  body: You have been added to group 274
 record: # {key} - unique id
+  # example declaration
   name: log item
-  value: permission check
+  comment: permission check
 ```
 
 #### Single Example
 
-The OPTIONAL **example** property may be used to attach an example of a type's instance to the type declaration. There are two different ways to represents its value.
+The OPTIONAL **example** property can be used to attach an example of a type instance to the type declaration. There are two ways to represent the example property value: as an explicit description of a specific type instance and as a map that contains additional facets.
 
-##### The value is a explicit description of a specific type instance
+##### As an explicit description of a specific type instance
 
 For example:
 
 ```yaml
 title: Attention needed
-content: You have been added to group 274
+body: You have been added to group 274
 ```
 
-##### The value is a map that contains the following additional facets
+##### As a map that contains additional facets
+
+The map can contain the following additional facets:
 
 | Facet | Description |
 |:--------|:------------|
 | displayName? | An alternate, human-friendly name for the example. If the example is part of an examples node, the default value is the unique identifier that is defined for this example.
 | description? | A longer, human-friendly description of the example.
-| (&lt;annotationName&gt;)? | Annotations to be applied to this example. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this example. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | value | The actual example of a type instance.
-| strict? | By default, an example is validated against any type declaration. Set this to false avoid that.
+| strict? | Validates the example against any type declaration (the default), or not. Set this to false avoid validation.
 
 For example:
 
@@ -1348,12 +1350,12 @@ For example:
 strict: false
 value:
   title: Attention needed
-  content: You have been added to group 274
+  body: You have been added to group 274
 ```
 
-#### Example on how to define example/examples in RAML
+#### Example of how to define example/examples in RAML
 
-The following illustrates usage of both example and examples properties at different levels of a RAML API.
+The following snippet illustrates the usage of example and examples properties at different levels of a RAML API:
 
 ```yaml
 #%RAML 1.0
@@ -1373,22 +1375,23 @@ types:
     properties:
       name: string
       address?: string
-      value? : string
-/organisation:
+      value?: string
+/organization:
   post:
     headers:
       UserID:
-        description: the identifier for the user that posts a new organisation
+        description: the identifier for the user who posts a new organization
         type: string
         example: SWED-123 # single scalar example
     body:
       application/json:
         type: Org
         example: # single request body example
-          name: Doe Enterprise
-          value: Silver
+          value: # needs to be declared since instance contains a 'value' property
+            name: Doe Enterprise
+            value: Silver
   get:
-    description: Returns an organisation entity.
+    description: Returns an organization entity.
     responses:
       201:
         body:
@@ -1401,22 +1404,22 @@ types:
                 value: # validate against the available facets for the map value of an example
                   name: Software Corp
                   address: 35 Central Street
-                  value: Gold # validate against instance of the `value` property
+                  value: Gold # validate against an instance of the `value` property
 ```
 
 ### XML Serialization of Type Instances
 
-As the serialization to XML may be a complex process, RAML introduces an additional `xml` node for [type declarations](#type-declarations) that allows to configure how type instances should be serialized to XML. The value of the `xml` node is a map that contains the following nodes.
+To facilitate the potentially complex process of serialization to XML, RAML introduces an additional `xml` node for [type declarations](#type-declarations). This node is used to configure how type instances should be serialized to XML. The value of the `xml` node is a map that contains the following nodes:
 
 | Name | Type | Description |
 |:---------|:------:|:-----------------|
-| attribute? | `boolean` | If `attribute` is set to `true`, a type instance should be serialized as an XML attribute. It can only be `true` for scalar types.<br/><br/>**Default:** `false`
-| wrapped? | `boolean` | If `wrapped` is set to `true`, a type instance should be wrapped in its own XML element. It can not  be `true` for scalar types and it can not  be `true` at the same moment when `attribute` is `true`. <br/><br/>**Default:** `false`
-|  name? | `string` | Allows to override the name of the XML element or XML attribute in it's XML representation.<br/><br/>**Default:** the name of the type
-| namespace? | `string` | Allows to configure the name of the XML namespace.
-| prefix? | `string` |  Allows to configure the prefix which will be used during serialization to XML.
+| attribute? | `boolean` | `true` serializes a type instance as an XML attribute. Can be `true` only for scalar types.<br/><br/>**Default:** `false`
+| wrapped? | `boolean` | `true` wraps a type instance in its own XML element. Cannot be `true` for scalar types or `true` at the same moment `attribute` is `true`. <br/><br/>**Default:** `false`
+| name? | `string` | Overrides the name of the XML element or XML attribute.<br/><br/>**Default:** the name of the type
+| namespace? | `string` | Configures the name of the XML namespace.
+| prefix? | `string` |  Configures the prefix used during serialization to XML.
 
-The following is a type declaration example that uses the `xml` node:
+The following type declaration shows an example of using the `xml` node:
 
 ```yaml
 types:
@@ -1430,14 +1433,14 @@ types:
       addresses:
         type: Address[]
         xml:
-          wrapped: true # serialize it into it's own <addresses>...</addresses> XML element
+          wrapped: true # serialize it into its own <addresses>...</addresses> XML element
   Address:
     properties:
       street: string
       city: string
 ```
 
-The example above may be serialized into the following XML:
+The example above can be serialized into the following XML:
 
 ```xml
 <Person fullname="John Doe">
@@ -1450,22 +1453,25 @@ The example above may be serialized into the following XML:
 
 ### Using Types in RAML
 
-* Types may be used in several positions:
+Types can be used in several positions:
   * Body ( JSON )
   * Body ( XML )
   * Body ( Web Form )
   * Headers
   * Query Parameters
   * URI Parameters
-* Serialization rules depend on both the type and the position in which it is used
-* When declaring a custom value type ( extending the "value" built-in type ) it will have "string" as its default serialization target.
-* When extending one of the built-in types, your type will inherit the serialization target
+
+Key points about serialization are:
+
+* Serialization rules depend on the type and the position in which the type is used.
+* A "string" is the default serialization target of a custom value type, which is an extended "value" of a built-in type.
+* An extended built-in type inherits its serialization target.
 
 ## Resources and Nested Resources
 
-Resources are identified by their relative URI, which MUST begin with a slash ("/"). Every property whose key begins with a slash, and is either at the root of the API definition or is the child property of a resource property, is such a resource property.
+A resource is identified by its relative URI, which MUST begin with a slash ("/"). Every property whose key begins with a slash, and is either at the root of the API definition or is the child property of a resource property, is such a resource property.
 
-A resource defined as a root-level property is called a top-level resource. Its property's key is the resource's URI relative to the baseUri (if any). A resource defined as a child property of another resource is called a nested resource, and its property's key is its URI relative to its parent resource's URI.
+A resource defined as a root-level property is called a top-level resource. The key of the root-level property is the URI of the resource relative to the baseUri if there is one. A resource defined as a child property of another resource is called a nested resource. The key of the child property is the URI of the nested resource relative to the parent resource URI.
 
 This example shows an API definition with one top-level resource, /gists, and one nested resource, /public.
 
@@ -1480,11 +1486,11 @@ baseUri: https://api.github.com
     displayName: Public Gists
 ```
 
-The key of a resource property, i.e. its relative URI, MAY consist of multiple URI path fragments separated by slashes; e.g. /bom/items may indicate the collection of items in a bill of materials as a single resource. However, if the individual URI path fragments are themselves resources, the API definition SHOULD use nested resources to describe this structure; e.g. if /bom is itself a resource then /items should be a nested resource of /bom, vs using /bom/items as a non-nested resource.
+The key of a resource property, its relative URI, MAY consist of multiple URI path fragments separated by slashes. For example, /bom/items might indicate the collection of items in a bill of materials as a single resource. However, if the individual URI path fragments are themselves resources, the API definition SHOULD use nested resources to describe this structure. For example, if /bom is itself a resource, then /items should be a nested resource of /bom, versus using /bom/items as a non-nested resource.
 
 Absolute URIs are not explicitly specified. They are computed by appending the relative URI of the top-level resource, and then successively appending the relative URI values for each nested resource until the target resource is reached. In this formation of the absolute URI, if a baseUri is defined, it is prepended before the relative URI of the top-level resource; any trailing slashes in the baseUri are removed before prepending.
 
-Taking the previous example, the absolute URI of the public gists resource is formed as follows.
+Continuing with the previous example, the absolute URI of the public gists resource is formed as follows.
 
 ```
    "https://api.github.com"               <--- baseUri
@@ -1531,9 +1537,9 @@ https://api.github.com/users/{userId}/keys
 https://api.github.com/users/{userId}/keys/{keyId}
 ```
 
-A RAML processor MUST NOT allow one of the computed absolute URIs to be identical to another one; comparison of absolute URIs is done without consideration to the possible values of any URI parameter, i.e. any URI parameters are not expanded or evaluated but rather left as is.
+A RAML processor MUST NOT allow one of the computed absolute URIs to be identical to another one; comparison of absolute URIs is done without consideration to the possible values of any URI parameter. Any URI parameter is not expanded or evaluated, but rather left as is.
 
-The following example would be forbidden.
+The following example shows effectively duplicated URIs, as both paths combine to the same `/users/foo`. This would be forbidden.
 
 ```yaml
 /users:
@@ -1541,7 +1547,7 @@ The following example would be forbidden.
 /users/foo:
 ```
 
-(both paths combine to the same `/users/foo`), and on the other hand this would ALWAYS be ALLOWED.
+The URIs in the following example would ALWAYS be ALLOWED.
 
 ```yaml
 /users/{userId}:
@@ -1555,27 +1561,19 @@ The value of a resource property is an object whose properties are described in 
 
 |Property | Description |
 |:--------|:------------|
-| displayName? | An alternate, human-friendly name for the resource.
+| displayName? | An alternate, human-friendly name for the resource. If the displayName property is not defined for a resource, documentation tools SHOULD refer to the resource by its property key, which acts as the resource name. For example, tools should refer to the relative URI /jobs.
 | description? | A longer, human-friendly description of the resource.
-| (&lt;annotationName&gt;)? | Annotations to be applied to this resource. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations).
-| get?<br>patch?<br>put?<br>post?<br>delete?<br>options?<br>head? | Object describing the method. See section [Methods](#methods) for more information.
-| is? | A list of the traits to apply to all methods declared (implicitly or explicitly) for this resource. See section [Applying Resource Types and Traits](#applying-resource-types-and-traits) for more information. Individual methods may override this declaration
-| type? | The resource type which this resource inherits. See section [Applying Resource Types and Traits](#applying-resource-types-and-traits) for more information.
-| securedBy? | The security schemes that apply to all methods declared (implicitly or explicitly) for this resource. See section [Applying Security Schemes](#applying-security-schemes) for more information.
-| uriParameters? | Detailed information about any URI parameters of this resource
-| /&lt;relativeUri&gt;? | A nested resource is identified as any property whose name begins with a slash ("/") and is therefore treated as a relative URI.
-
-### Resource Display Name
-
-The OPTIONAL **displayName** property provides a friendly name to the resource and can be used by documentation generation tools. If the displayName property is not defined for a resource, documentation tools SHOULD refer to the resource by its property key (i.e. its relative URI, e.g., /jobs), which acts as the resource's name.
-
-### Resource Description
-
-The OPTIONAL **description** property can be used to provide a longer description of the resource. It is RECOMMENDED that all resources provide such a description.
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this resource. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
+| get?<br>patch?<br>put?<br>post?<br>delete?<br>options?<br>head? | The object describing the [method](#methods).
+| is? | A list of [traits to apply](#applying-resource-types-and-traits) to all methods declared (implicitly or explicitly) for this resource. Individual methods can override this declaration.
+| type? | The [resource type](#applying-resource-types-and-traits) that this resource inherits.
+| securedBy? | The [security schemes](#applying-security-schemes) that apply to all methods declared (implicitly or explicitly) for this resource.
+| uriParameters? | Detailed information about any URI parameters of this resource.
+| /&lt;relativeUri&gt;? | A nested resource, which is identified as any property whose name begins with a slash ("/"), and is therefore treated as a relative URI.
 
 ### Template URIs and URI Parameters
 
-[Template URIs](#template-uri) containing URI parameters can be used to define a resource's relative URI when it contains variable elements. The following example shows a top-level resource with a key /jobs and a nested resource with a key /{jobId}.
+[Template URIs](#template-uri) containing URI parameters can be used to define a relative URI of a resource that contains variable elements. The following example shows a top-level resource with a key /jobs and a nested resource with a key /{jobId}, a template URI.
 
 ```yaml
 #%RAML 1.0
@@ -1588,13 +1586,13 @@ baseUri: https://app.zencoder.com/api/{version}
     description: A specific job, a member of the jobs collection
 ```
 
-The OPTIONAL **uriParameters** property is used to explicitly specify URI parameters in a [Template URI](#template-uri). The value of the uriParameters property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **URI parameter declaration**. The name of each such property corresponds to the name of a parameter in the [Template URI](#template-uri), while its value specifies the URI parameter's type, as the name of a type or an inline type declaration.
+The OPTIONAL **uriParameters** property, shown in the next example, is used to explicitly specify URI parameters in a [Template URI](#template-uri). The value of the uriParameters property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in the declaration object is a **URI parameter declaration**. Each property name corresponds to a parameter name in the [Template URI](#template-uri). Each property value specifies the URI parameter type as a type name or an inline type declaration.
 
-Every property in a uriParameters declaration MUST correspond exactly to the name of a URI parameter in the resource's relative URI. But not every URI parameter in the resource's relative URI must be explicitly specified in the uriParameters property. Every parameter in the relative URI not specified in the uriParameters property MUST still be treated as a URI parameter, of type string, and required.
+Every property in a uriParameters declaration MUST correspond exactly to the name of a URI parameter in the relative URI of the resource. All URI parameters in the relative URI do not need to be explicitly specified in the uriParameters property, but those that are not specified MUST be treated as a URI parameter of type string and required.
 
-Just as is the case for [the baseUriParameters root property](#base-uri-and-base-uri-parameters), the version parameter is a reserved parameter name in the uriParameters properties declaration, with a value corresponding to the value of the version root-level property.
+Like the [baseUriParameters root property](#base-uri-and-base-uri-parameters), the version parameter is a reserved parameter name in the uriParameters properties declaration. The version parameter value corresponds to the value of the version root-level property.
 
-The example below shows two top-level resources (/user and /users) and a nested resource specified by its [Template URI](#template-uri), /{userId}. The URI parameter userId is explicitly declared, and given a description and an integer type.
+The following example shows two top-level resources, /user and /users, and a nested resource specified by its [Template URI](#template-uri), /{userId}. The URI parameter, userId, is explicitly declared and given a description and an integer type.
 
 ```yaml
 #%RAML 1.0
@@ -1613,7 +1611,7 @@ baseUri: https://api.github.com
        type: integer
 ```
 
-If a URI parameter declaration specifies an array, object, or union of non-scalar types, then processors MUST default to treating the format of the URI parameter value as JSON in applying the type to instances of that URI parameter. The following demonstrates an extreme example of the expected behavior.
+If a URI parameter declaration specifies an array, object, or union of non-scalar types, then processors MUST default to applying the JSON type to values of the URI parameter instances. The following example exaggerates the expected behavior:
 
 ```yaml
 #%RAML 1.0
@@ -1633,13 +1631,13 @@ title: Serialization API
          uniqueItems: true
 ```
 
-In the example above, the URI parameter `userIds` is an array of ids. Let us assume the array should contain `[blue,green]` which then, on the wire may look as: `/users/%5B%22blue%22,%22green%22%5D/`.
+In this example, the URI parameter `userIds` is an array of ids. Assume the array should contain `[blue,green]`, which on the wire might appear as `/users/%5B%22blue%22,%22green%22%5D/`.
 
 If a URI parameter declaration specifies a non-string scalar type for the value of the header, the standard serialization rules for types MUST be invoked in applying the type to instances of that URI parameter.
 
-The values matched by URI parameters MUST NOT contain slash (/) characters, in order to avoid ambiguous matching. In the example above, a URI (relative to the baseUri) of /jobs/123 matches the /{jobId} resource nested within the /jobs resource, but a URI of /jobs/123/x does not match any of those resources.
+To avoid ambiguous matching, the values matched by URI parameters MUST NOT contain slash (/) characters. In the first example in this section, /jobs/123 is a URI (relative to the baseUri) that matches the /{jobId} resource nested within the /jobs resource, but the URI /jobs/123/x does not match any resource.
 
-In the example below, the top-level resource has two URI parameters, folderId and fileId.
+In the next example, the top-level resource has URI parameters folderId and fileId.
 
 ```yaml
 #%RAML 1.0
@@ -1651,15 +1649,15 @@ version: v1
     description: An item in the collection of all files
 ```
 
-Although URI parameters can be explicitly specified to be optional, they SHOULD be required when they are surrounded directly by slashes ("/"), that is, when they constitute complete URI path fragments, e.g. .../{objectId}/.... It usually makes little sense to allow a URI to contain adjacent slashes with no characters between them, e.g. ...//.... Hence, a URI parameter should only be specified as optional when it appears adjacent to other text; e.g., /people/~{fieldSelectors} indicates that the {fieldSelectors} URI parameter can be blank, and therefore optional, indicating that /people/~ is a valid relative URI.
+Although a URI parameter can be explicitly specified as optional, it SHOULD be required when surrounded directly by slashes ("/"). In this case, the URI parameter constitutes a complete URI path fragment, for example .../{objectId}/.... It usually makes no sense to allow a URI to contain adjacent slashes, enclosing no characters, for example ...//.... Hence, a URI parameter should be specified as optional only when it appears adjacent to other text. For example, /people/~{fieldSelectors} indicates that URI parameter {fieldSelectors} can be blank, and therefore optional, implying that /people/~ is a valid relative URI.
 
-A special URI parameter, **ext**, is a reserved parameter. It may or may not be specified explicitly in a uriParameters property, but its meaning is reserved: it is used by a client to specify that the body of the request or response be of the associated media type.
+A special URI reserved parameter, **ext**, might or might not be specified explicitly in a uriParameters property. Its meaning is reserved for use by a client to specify that the body of the request or response be of the associated media type.
 
 |URI Parameter | Value |
 |:--------|:------------|
 | ext | The desired media type of the request or response body
 
-By convention, a value for the ext parameter of .json is equivalent to an Accept header of application/json, and a value of .xml is equivalent to an Accept header of text/xml. By employing the ext parameter, clients may specify the media type of a request or response via the URI rather than via the Accept HTTP header. For example, in the following example, the /users resource may be requested as application/json or text/xml:
+By convention, a value for the ext parameter of .json is equivalent to an Accept header of application/json. A value of .xml is equivalent to an Accept header of text/xml. By employing the ext parameter, clients can specify the media type of a request or response through the URI rather than the Accept HTTP header. In the following example, the /users resource can be requested as application/json or text/xml:
 
 ```yaml
 #%RAML 1.0
@@ -1674,43 +1672,21 @@ version: v1
 
 ## Methods
 
-In a RESTful API, methods are operations that are performed on a resource. The OPTIONAL properties **get**, **patch**, **put**, **post**, **delete**, **head**, and **options** of a resource define its methods; these correspond to the HTTP methods defined in the HTTP version 1.1 specification [RFC2616](https://www.ietf.org/rfc/rfc2616.txt) and its extension, [RFC5789](https://tools.ietf.org/html/rfc5789). The value of any of these method properties is an object whose properties are described in the following table.
+RESTful API methods are operations that are performed on a resource. The OPTIONAL properties **get**, **patch**, **put**, **post**, **delete**, **head**, and **options** of a resource define its methods; these correspond to the HTTP methods defined in the HTTP version 1.1 specification [RFC2616](https://www.ietf.org/rfc/rfc2616.txt) and its extension, [RFC5789](https://tools.ietf.org/html/rfc5789). The value of these method properties is an object that has the following properties:
 
 |Property | Description |
 |:--------|:------------|
-| displayName? | An alternate, human-friendly name for the method (in the resource's context).
-| description? | A longer, human-friendly description of the method (in the resource's context).
-| (&lt;annotationName&gt;)? | Annotations to be applied to this method. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
+| displayName? | An alternate, human-friendly method name in the context of the resource. If the displayName property is not defined for a method, documentation tools SHOULD refer to the resource by its property key, which acts as the method name.
+| description? | A longer, human-friendly description of the method in the context of the resource. Its value is a string and MAY be formatted using [markdown](#markdown).
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this method. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | queryParameters? | Detailed information about any query parameters needed by this method. Mutually exclusive with queryString.
 | headers? | Detailed information about any request headers needed by this method.
-| queryString? | Specifies the query string needed by this method. Mutually exclusive with queryParameters.
+| queryString? | The query string needed by this method. Mutually exclusive with queryParameters.
 | responses? | Information about the expected responses to a request.
-| body? | Some methods admit request bodies, which are described by this property.
-| protocols? | A method can override the protocols specified in the resource or at the API root, by employing this property. See section [Method-level Protocols](#method-level-protocols) for more information.
-| is? | A list of the traits to apply to this method. See [Applying Resource Types and Traits](#applying-resource-types-and-traits) section.
-| securedBy? | The security schemes that apply to this method. See section [Applying Security Schemes](#applying-security-schemes) for more information.
-
-### Method-level Display Name
-
-The OPTIONAL **displayName** property provides a friendly name for the method and can be used by documentation generation tools. If the displayName property is not defined for a method, documentation tools SHOULD refer to the resource by its property key, which acts as the method's name.
-
-### Method-level Description
-
-The OPTIONAL **description** property describes the operation of the method on the resource. Its value is a string and MAY be formatted using [markdown](#markdown). It is RECOMMENDED that all methods provide such a description.
-
-The following example shows a resource, /jobs, with post and get methods declared.
-
-```yaml
-#%RAML 1.0
-title: ZEncoder API
-version: v2
-baseUri: https://app.zencoder.com/api/{version}
-/jobs:
-  post:
-    description: Create a *new* job
-  get:
-    description: List some or all jobs
-```
+| body? | A request body that the method admits.
+| protocols? | Explicitly specify the protocol(s) used to invoke a method, thereby overriding the protocols set elsewhere, for example in the baseUri or the [root-level protocols](#protocols) property.
+| is? | A list of the [traits](#applying-resource-types-and-traits) to apply to this method.
+| securedBy? | The [security schemes](#applying-security-schemes) that apply to this method.
 
 ### Headers
 
@@ -1867,31 +1843,11 @@ baseUri: https://api.github.com/{version}
         example:     50
 ```
 
-### Method-level Protocols
-
-A method can explicitly set the OPTIONAL **protocols** property to specify the protocol(s) used to invoke it, thereby overriding the protocols set elsewhere, e.g. in the baseUri or the root-level **properties** property.
-
-In the following example, the get method is accessible through both HTTP and HTTPS, while the rest of the API requires HTTPS.
-
-```yaml
-#%RAML 1.0
-title: Twitter API
-version: 1.1
-baseUri: https://api.twitter.com/{version}
-/search/tweets.json:
-  description: Search all tweets
-  get:
-    description: Returns a collection of relevant Tweets matching a specified query
-    protocols: [ HTTP, HTTPS ]
-```
-
 ### Bodies
 
 The HTTP request **body** for a method is specified using the OPTIONAL body property. For example, to create a resource using a POST or PUT, the body of the request would usually include the details of the resource to be created.
 
-The value of the body property is termed a **body declaration**. The body declaration is an object whose property names are the valid media types of the request body and whose property values are the corresponding data type declaration or data type name describing the request body. If [default media types](#default-media-type) has been declared at the root of the API, then the body declaration may alternatively be directly the data type declaration or data type name describing the request body for that media type.
-
-In the first case above, when the property names represent media types, each property name MUST be a media type string conforming to the media type specification in [RFC6838](#https://tools.ietf.org/html/rfc6838).
+The value of the body property is a **body declaration**. Generally, the body declaration is an object whose property names are the valid media types of the request body. Each property name MUST be a media type string conforming to the media type specification in [RFC6838](#https://tools.ietf.org/html/rfc6838). The property values are the corresponding data type declaration or data type name describing the request body. Alternatively, if [default media types](#default-media-type) have been declared at the root of the API, then the body declaration can consist of just the data type declaration or data type name describing the request body for that media type.
 
 The following example illustrates various combinations of both default and non-default media types, and both data type declarations and references.
 
@@ -1922,24 +1878,24 @@ types:
 
 ## Responses
 
-The resources and methods sections of this document have so far described HTTP requests. This section describes the HTTP responses to method invocations on resources.
+The resources and methods sections of this document describe HTTP requests. This section describes the HTTP responses to method invocations on resources.
 
-The OPTIONAL **responses** property of a method on a resource describes the possible responses to invoking that method on that resource. Its value is an object whose property names are the possible HTTP status codes for that method on that resource, and whose property values describe the corresponding responses. Each such value is termed a **response declaration**.
+The OPTIONAL **responses** property of a method on a resource describes the possible responses to invoking that method on that resource. The value of **responses** is an object that has properties named after possible HTTP status codes for that method on that resource. The property values describe the corresponding responses. Each value is a **response declaration**.
 
-Note that the properties of the responses object are often numeric, e.g. 200 or 204. Processors MUST treat these numeric keys as string keys for all purposes. For example, '200' and 200 MUST be treated as equivalent property keys and therefore not both would be allowed simultaneously since they would constitute duplicate properties.
+Properties of the responses object are often numeric, for example 200 or 204. Processors MUST treat these numeric keys as string keys in all situations. For example, '200' and 200 MUST be treated as duplicate property keys, and therefore, are not allowed simultaneously.
 
-The value of a response declaration is an object that may contain any of the following properties.
+The value of a response declaration is an object that can contain any of the following properties:
 
 |Property | Description |
 |:--------|:------------|
-| description? | A longer, human-friendly description of the response
-| (&lt;annotationName&gt;) | Annotations to be applied to this response. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
+| description? | A human-friendly description of the response
+| (&lt;annotationName&gt;) | [Annotations](#annotations) to be applied to this response. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | headers? | Detailed information about any response headers returned by this method
-| body? |  The body of the response
+| body? | The body of the response
 
-The OPTIONAL properties **description**, **headers**, **body**, and **annotations** have the same syntax and semantics as they do for [method declarations](methods), but applied to HTTP responses rather than HTTP requests.
+The syntax and semantics of the OPTIONAL properties **description**, **headers**, **body**, and **annotations** for responses and [method declarations](methods) are the same, but applied to HTTP responses rather than HTTP requests, respectively.
 
-The following example illustrates some possible responses.
+The following example illustrates some possible responses:
 
 ```yaml
 #%RAML 1.0
@@ -1983,27 +1939,27 @@ types:
 
 ## Resource Types and Traits
 
-There are many advantages to reusing patterns across multiple resources and methods.  For example, after defining a collection-type resource's characteristics, that definition can be applied to multiple resources. This use of patterns encourages consistency and reduces complexity for both servers and clients.
+There are many advantages of reusing patterns across multiple resources and methods. For example, the characteristics of a collection-type resource can be defined and then applied to multiple resources. This use of patterns encourages consistency and reduces complexity for servers and clients.
 
-Moreover, resource and method declarations are frequently repetitive. For example, an API that requires OAuth authentication might require an X-Access-Token header for all methods across all resources. For many reasons it may be preferable to define such a pattern in a single place and apply it consistently everywhere.
+Moreover, resource and method declarations are frequently repetitive. For example, an API that requires OAuth authentication might require an X-Access-Token header for all methods across all resources. For many reasons, it might be preferable to define such a pattern in a single place and apply it consistently everywhere.
 
-A resource type, like a resource, can specify security schemes and methods and other properties. Resources that use a resource type inherit its properties. A resource type can also use, and thus inherit from, another resource type. Resource types and resources are related through an inheritance chain pattern. Resource type definitions MUST NOT incorporate nested resources; they cannot be used to generate nested resources when they are applied to a resource, and they do not apply to its existing nested resources.
+A resource type, like a resource, can specify security schemes, methods, and other properties. A resource that uses a resource type inherits its properties. A resource type can also use, and thus inherit from, another resource type. Resource types and resources are related through an inheritance chain pattern. A resource type definition MUST NOT incorporate nested resources. A resource type definition cannot be used to generate nested resources when the definition is applied to a resource. A resource type definition does not apply to its own existing nested resources.
 
-A trait, like a method, can provide method-level properties such as description, headers, query string parameters, and responses. Methods that use one or more traits inherit those traits' properties. Resources and resource types can also use, and thus inherit from, one or more traits, which then apply to all of their methods. Traits are related to methods through a mixing pattern.
+A trait, like a method, can provide method-level properties such as description, headers, query string parameters, and responses. Methods that use one or more traits inherit properties of those traits. A resource and resource type can also use, and thus inherit from, one or more traits, which then apply to all methods of the resource and resource type. Traits are related to methods through a mixing pattern.
 
 ### Declaration Resource Types and Traits
 
-Resource types may be declared via the OPTIONAL **resourceTypes** property at the root of the API definition. The value of this property is an object whose property names become names of resource types that can be referenced throughout the API, and whose property values are resource type declarations.
+Resource types can be declared using the OPTIONAL **resourceTypes** property at the root of the API definition. The value of this property is an object. Its property names become names of resource types that can be referenced throughout the API. Its property values are resource type declarations.
 
-Similarly, traits may be declared via the OPTIONAL **traits** property at the root of the API definition. The value of this property is an object whose property names become names of traits that can be referenced throughout the API, and whose property values are trait declarations.
+Similarly, traits can be declared using the OPTIONAL **traits** property at the root of the API definition. The value of this property is an object. Its property names become names of traits that can be referenced throughout the API. Its property values are trait declarations.
 
-Resource type and trait declarations can have the following properties, in addition to all the properties that resources and methods may have, respectively (except that resource type declarations MUST NOT have nested resource properties).
+Resource type and trait declarations can have the following properties, in addition to all the properties that resources and methods can have, respectively (except that resource type declarations MUST NOT have nested resource properties).
 
 | Property | Definition |
 |:---------|:-----------|
-| usage? | The OPTIONAL **usage** property of a resource type or trait provides instructions on how and when the resource type or trait should be used. Documentation generators MUST convey this property as characteristics of the resource and method, respectively. However, the resources and methods MUST NOT inherit the usage property: neither resources nor methods allow a property named usage.
+| usage? | The OPTIONAL **usage** property of a resource type or trait provides instructions about how and when the resource type or trait should be used. Documentation generators MUST describe this property in terms of the characteristics of the resource and method, respectively. However, the resources and methods MUST NOT inherit the usage property. Neither resources nor methods allow a property named usage.
 
-The following example illustrates the declaration of several resource types and traits.
+The following example illustrates the declaration of several resource types and traits:
 
 ```yaml
 #%RAML 1.0
@@ -2028,7 +1984,7 @@ traits:
         required: true
 ```
 
-The following example builds on the previous one, but the the resource types and traits are defined in external files that are included by using an !include tag.
+The following example builds on the previous one, but the resource types and traits are defined in external files that are included by using an !include tag.
 
 ```yaml
 #%RAML 1.0
@@ -2055,9 +2011,9 @@ resourceTypes:
 
 ### Applying Resource Types and Traits
 
-Resources may specify the resource type from which they inherit using the OPTIONAL **type** property. The resource type MUST be the name of a resource type defined within the root-level resourceTypes property or in a library. Resource type definitions do not apply to existing nested resources.
+A resource can specify the resource type from which it is derived using the OPTIONAL **type** property. The resource type MUST be the name of a resource type defined within the root-level resourceTypes property or in a library. Resource type definitions do not apply to existing nested resources.
 
-Similarly, methods may specify one or more traits from which they inherit using the OPTIONAL **is** property. Its value is an array of any number of elements where each MUST be the name of a trait defined within the root-level traits property or in a library. A trait may also be applied to a resource by using the **is** property, which is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type. The order of a trait getting applied to a method is from left to right; according to the traits defined in the **is** property. Trait definitions do not apply to nested resources.
+Similarly, a method can specify one or more traits it inherits using the OPTIONAL **is** property. The value of a trait is an array of any number of elements where each MUST be the name of a trait defined within the root-level traits property or in a library. A trait can also be applied to a resource by using the **is** property. Using this property is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type. A trait is applied to a method in left-to-right order, according to the traits defined in the **is** property. Trait definitions do not apply to nested resources.
 
 The following example illustrates the application of resource types and traits.
 
@@ -2080,7 +2036,7 @@ traits:
   post:                        # this method is also secured
 ```
 
-To pass parameter values to resource types and traits, use a map when declaring the resource type or trait to be used, as illustrated in the following example.
+To pass parameter values to resource types and traits, use a map when declaring the resource type or trait, as illustrated in the following example.
 
 ```yaml
 #%RAML 1.0
@@ -2111,32 +2067,32 @@ traits:
 
 ### Resource Type and Trait Parameters
 
-The declarations of resource types and traits MAY contain parameters, whose values MUST be specified when applying the resource type or trait, UNLESS the parameter corresponds to a reserved parameter name, in which case its value MUST be provided by the processing application.
+The declarations of resource types and traits MAY contain parameters having values that MUST be specified when applying the resource type or trait, UNLESS the parameter name is reserved, in which case its value MUST be provided by the processing application.
 
-Parameters are indicated in resource type and trait definitions by double angle brackets (double chevrons) enclosing the parameter name; for example, <<parameterName>>.
-
-In resource type and trait declarations, there are two reserved parameter names: **resourcePath** and **resourcePathName**.
+In resource type and trait declarations, **resourcePath** and **resourcePathName** are reserved parameter names.
 
 | Parameter | Value |
 |:---------|:-----------|
-| resourcePath | The resource's full URI relative to the baseUri (if any)
-| resourcePathName | The rightmost path fragment of the resource's relative URI, omitting any parametrizing brackets ("{" and "}")
+| resourcePath | The full resource URI relative to the baseUri if there is one
+| resourcePathName | The rightmost path fragment of the relative resource URI, omitting any parametrizing brackets ("{" and "}")
 
-A processing application MUST set the value of <<resourcePath>> to the concatenation of the inheriting resource's relative URI with all its parent resources' relative URIs, that is, to its URI relative to the baseUri (if any). For example, a resource /users nested in a resource /{groupId} nested in a root-level resource /groups, and applying a resource type or trait that uses the resourcePath parameter, would have the value of that parameter set to /groups/{groupId}/users.
+Double angle brackets (double chevrons) enclose a parameter name in resource type and trait definitions; for example, `<<parameterName>>`.
 
-A processing application MUST set the value of <<resourcePathName>> to the part of the inheriting resource's relative URI following the rightmost slash ("/"), after omitting any parametrizing brackets ("{" and "}"). For example, a resource /jobs/{jobId} applying a resource type or trait that uses the resourcePathName parameter would have the value of that parameter set to jobId.
+A processing application MUST set the value of `<<resourcePath>>` to the concatenation of the relative (to the baseUri if there is one) resource URI of the inheriting resource and all its parent relative resource URIs. A processing application MUST set the value of `<<resourcePathName>>` at the position in the URI following the rightmost slash ("/"), omitting any parametrizing brackets ("{" and "}").
 
-Processing applications MUST also omit any ext parameter and its parametrizing brackets ("{" and "}") found in the resource's URI when setting resourcePath and resourcePathName. For example, a root-level resource /bom/{itemId}{ext} applying a resource type or trait that uses the resourcePathName and resourcePath parameters would have the value of those parameters set to /bom/{itemId} and itemId, respectively.
+For example, applying a resource type or trait to a resource /users nested in a resource /{groupId} nested in a root-level resource /groups sets the value of the resourcePath parameter to /groups/{groupId}/users. Applying a resource type or trait to a resource /jobs/{jobId} sets the value of the resourcePathName parameter to jobId.
 
-In trait declarations, there is an additional reserved parameter named **methodName**.
+When setting resourcePath and resourcePathName, processing applications MUST also omit any ext parameter and its parametrizing brackets ("{" and "}") found in the resource URI. For example, applying a resource type or trait to a root-level resource /bom/{itemId}{ext} sets the value of resourcePathName and resourcePath parameters to /bom/{itemId} and itemId, respectively.
+
+In trait declarations, **methodName** is a reserved parameter.
 
 | Parameter | Value |
 |:---------|:-----------|
 | methodName | The name of the method
 
-The processing application MUST set the value of the methodName parameter to the inheriting method's name.
+The processing application MUST set the value of the methodName parameter to the inheriting method name.
 
-Parameter values MAY further be transformed by applying one of the following functions. The only locale supported by this version of RAML is United States English.
+Parameter values MAY be transformed further by applying one of the following functions. The only locale supported by this version of RAML is United States English.
 
 | Function | Definition |
 |:---------|:-----------|
@@ -2151,7 +2107,7 @@ Parameter values MAY further be transformed by applying one of the following fun
 | !lowerhyphencase | The <b>!lowerhyphencase</b> function MUST convert the value of the parameter to lowercase letters; if the value is a compound word, the function MUST also add an additional hyphen between consecutive words which are not already separated by one or more hyphen.<br><br>for example: `userId --> user-id`
 | !upperhyphencase | The <b>!upperhyphencase</b> function MUST convert the value of the parameter to uppercase letters; if the value is a compound word, the function MUST also add an additional hyphen between consecutive words which are not already separated by one or more hyphen.<br><br>for example: `userId --> USER-ID`
 
-To apply these functions, append them to the parameter name within the double angle brackets, separated from the parameter name with a pipe ("|") character and optional whitespace padding. Here is an example that uses both functions as well as reserved parameters:
+Append these functions to the parameter name within the double angle brackets, separated by a pipe ("|") character and optional whitespace padding. Here is an example that uses functions and reserved parameters:
 
 ```yaml
 #%RAML 1.0
@@ -2188,15 +2144,18 @@ traits:
         example: <<methodName>>=h8duh3uhhu38   # e.g. get=h8duh3uhhu38
 ```
 
-Parameters may not be used within !include tags, that is, within the location of the file to be included.
+Parameters cannot be used within an !include tag specification of the include file location.
 
 ### Declaring HTTP Methods as Optional
 
-When defining resource types, it can be useful to capture patterns that manifest several levels below the inheriting resource, without mandating the creation of the intermediate levels. For example, a resource type declaration may describe a body parameter that would be used if the API defines a post method for that resource, but applying the resource type to a resource without a post method should not create the post method.
+When defining resource types, it can be useful to capture patterns that manifest several levels below the inheriting resource without mandating the creation of the intermediate levels. For example, a resource type declaration describes a body parameter that is used if the API defines a post method for that resource. Applying the resource type to a resource without a post method does not create the post method.
 
-To accommodate this need, a resource type definition MAY append a question mark ("?") suffix to the name of any method that should not be applied if it doesn't already exist in the resource at the corresponding level. The question mark suffix indicates that the value of the method property in the resource type should be applied if the method name itself (without the question mark) is already defined (whether explicitly or implicitly) at the corresponding level in that resource.
+To accommodate this need, a resource type definition MAY append a question mark ("?") suffix to the name of any method to declare the method as optional, resulting in the following behavior:
 
-The following example shows a resource type called corpResource with an optional post? property that defines a required header called X-Chargeback and also a custom parameter called TextAboutPost. If the inheriting resource defines a post method, it will include the X-Chargeback header requirement and TextAboutPost MUST be defined as well. If the inheriting resource does not define a post method, one will not have to define the X-Chargeback header or be forced to define the TextAboutPost parameter by dint of inheriting from the corpResource resource type.
+* Do not apply the method to the resource if it doesn't already exist at the corresponding level in the resource.
+* Apply the value of the method property to the resource type if the method name without the question mark is already defined, explicitly or implicitly, at the corresponding level in the resource.
+
+The following example shows a resource type called corpResource with an optional post? property that defines a required header called X-Chargeback and a custom parameter called TextAboutPost. The inheriting resource /servers defines a post method, so it needs to include the X-Chargeback header requirement. TextAboutPost MUST be defined as well. The inheriting resource /queues does not define a post method, so it does not have to define the X-Chargeback header or the TextAboutPost parameter.
 
 ```yaml
 #%RAML 1.0
@@ -2221,33 +2180,34 @@ resourceTypes:
   # not required; same for the X-Chargeback header
 ```
 
-### Algorithm of Merging Traits With Methods
+### Algorithm of Merging Traits and Methods
 
-Each RAML element has its branch of the RAML document. Informally, applying a trait to method may be described as putting traits branch under the methods branch.
-Formally, it is a recursive procedure:
-1. Those properties of method node which are undefined in trait node remain unchanged.
-2. The method node receives all properties of trait node (excluding optional) which are undefined in method node.
-3. As for properties defined in both method node and trait node (including optional):
-  * Scalar properties remain unchanged
-  * Collection properties are merged by value (see below)
-  * Values of object properties are subjected to the same procedure starting at step 1.
+Each RAML element has its branch of the RAML document. The high-level description of applying a trait to method is putting a traits branch under the methods branch. Actually, applying a trait to a method is a recursive procedure:
 
-In general case a method can have more than one trait each having a sufficient hierarchy. Applying all of them is equivalent to building a stack of branches:
+1. Method node properties are inspected and those that are undefined in trait node remain unchanged.  
+2. The method node receives all properties of trait node (excluding optional ones), which are undefined in the method node.  
+3. Properties defined in both method node and trait node (including optional ones) are treated as follows:  
+  * Scalar properties remain unchanged.  
+  * Collection properties are merged by value, as described later.  
+  * Values of object properties are subjected to steps 1-3 of this procedure.  
 
-1. Top branch is the methods branch.
-2. Other branches are traits branches.
-  * Branches of those traits which are farther from the method in hierarchical sense, lay deeper (a trait may occur on different hierarchy distances, and we consider the closest one).
-  * Those traits which lay on the same hierarchy distance from the method, can be ordered in a queue:
-    * For distance one it's just the methods trait list.
-    * Queue(d+1) is obtained from Queue(d) by concatenating trait lists of its elements and canceling all but the first occurence of each trait.
-    * Branches order is determined as follows: those traits, which have higher positions in the queue, also have their branches deeper in our stack.
+Generally, a method can have more than one trait, each having a sufficient hierarchy. Applying all traits is equivalent to building a stack of branches as follows:
 
-Finally, the resource can have its own traits, and it can be applied a chain of resource types (call them resourceType1, resourceType2, etc), each possibly having its own traits and defining the same method. The  stack is constructed as follows:
-1. Traits of method itself
-2. Traits of resource owning the method
-3. Traits of method owned by resourceType1
-4. Traits of resourceType1
-5. etc.
+* The top branch is the methods branch.
+* Other branches are traits branches.
+  * Branches of traits that are farther away hierarchically from the method than others, are bypassed in favor the closest one.
+  * Those traits that are within the same hierarchy distance from the method, can be ordered in a queue:
+    * For distance one, it's just the methods trait list.
+    * Queue(d+1) is obtained from Queue(d) by concatenating trait lists of its elements and canceling all but the first occurrence of each trait.
+    * Branch order is determined as follows: traits that have higher positions in the queue, have branches deeper in the stack.
+
+Finally, the resource can have its own traits, and a chain of resource types, for example resourceType1, resourceType2, ..., can be applied. Each resource type can potentially have its own traits and define the same method. The stack is constructed as follows:
+
+1. Traits of method itself  
+2. Traits of resource owning the method  
+3. Traits of method owned by resourceType1  
+4. Traits of resourceType1  
+5. ...  
 
 Merging resource types with resources obeys similar rules.
 
@@ -2270,9 +2230,9 @@ resourceTypes:
           application/json:
 ```
 
-The only overlap between the `collection` resource type and the resource declaration is `description` which is defined in both. In this example, the final version will have the description that has been explicitly defined in the resource.
+The only overlap between the `collection` resource type and the resource declaration is `description` which is defined in both. In this example, the final version has the description that has been explicitly defined in the resource.
 
-Every explicit node will win over the ones that are declared in a resource type or trait. The rest is simply merged. The final merged result must be:
+Every explicit node wins over the ones that are declared in a resource type or trait. The rest are simply merged. The final, merged result must be:
 
 ```yaml
 /resource:
@@ -2288,7 +2248,7 @@ Every explicit node will win over the ones that are declared in a resource type 
 
 ### Resource Types and Traits Effect on Collections
 
-All the collections or sequences which fall under effect of applying traits and resource types are merged. Consider an example of query parameter which has its enum values defined in both resource and trait:
+All collections or sequences that are affected by applied traits and resource types are merged. This example defines the enum values of a query parameter in both the trait and resource:
 
 ```yaml
 #%RAML 1.0
@@ -2303,6 +2263,7 @@ traits:
           - mac
 /installer:
   get:
+    is: [ withQueryParameters ]
     queryParameters:
       platform: #the actual enum is [ mac, unix, win ]
         enum:
@@ -2310,9 +2271,9 @@ traits:
           - unix
 ```
 
-In this example the resulting enum value is `[ mac, unix, win ]`.
+The enum value resulting from the merge that occurs is `[ mac, unix, win ]`.
 
-Important case of collections is a trait, which can appear as "is" attribute value for method, resource, trait or resource type. Such lists may contain same traits which differ in parameter sets and, thus, can not be considered equal:
+In collections, a trait can appear as an "is" attribute value for a method, resource, trait, or resource type. Such lists can contain the same traits but different parameter sets and, thus, cannot be considered equal:
 
 ```yaml
 #%RAML 1.0
@@ -2332,7 +2293,7 @@ traits:
     is: [ { secured : { tokenName: token } } ]
 ```
 
-In resolving such a collision priority is given to that trait occurrence which is closer to the target method (or resource). In the example above the `tokenName` parameter value for the `GET:/servers` method is `token`, and the trait list consists of single trait occurrence: `[ {secured:{ tokenName:token}} ]`.
+To resolve a collision arising from this inequality, priority is given to the trait in closest proximity to the target method or resource. In the previous example, the `tokenName` parameter value for the `GET:/servers` method is `token`, and the trait list consists of single trait occurrence: `[ {secured:{ tokenName:token}} ]`.
 
 ## Security Schemes
 
