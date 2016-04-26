@@ -1108,12 +1108,12 @@ types:
     type: Phone | Notebook
 ```
 
-A valid instance of a union type must pass all restrictions associated with at least one of the union type options. For example:
+To deserialize an instance of data, first fully expand all unions at every level, then match the instance against each element in that expansion starting from the left-most and proceeding to the right; use the first successful matching element to deserialize the instance; and if no elements match, the instance is invalid. A valid instance of a union type must pass all restrictions associated with at least one of the elements. For example:
 
 ```yaml
 types:
   CatOrDog:
-    type: Cat | Dog # options: Cat or Dog
+    type: Cat | Dog # elements: Cat or Dog
   Cat:
     type: object
     properties:
@@ -1143,7 +1143,7 @@ types:
 
 In this case, type `HomeAnimal` has two base types, `HasHome` and an anonymous union type, defined by the following type expression: `Dog | Cat`  
 
-Validating the `HomeAnimal` type involves validating the types derived from each of the base types and the types of each union type option. In this particular case, you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
+Validating the `HomeAnimal` type involves validating the types derived from each of the base types and the types of each element in the union type. In this particular case, you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
 
 If you are extending from two union types you should perform validations for every possible combination. For example, to validate the `HomeAnimal` type shown below, you need to test six possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
 
@@ -2039,7 +2039,7 @@ In resource type and trait declarations, **resourcePath** and **resourcePathName
 
 Double angle brackets (double chevrons) enclose a parameter name in resource type and trait definitions; for example, `<<parameterName>>`.
 
-A processing application MUST set the value of `<<resourcePath>>` to the concatenation of the relative (to the baseUri if there is one) resource URI of the inheriting resource and all its parent relative resource URIs. A processing application MUST set the value of `<<resourcePathName>>` at the position in the URI following the rightmost slash ("/"), omitting any parametrizing brackets ("{" and "}"). 
+A processing application MUST set the value of `<<resourcePath>>` to the concatenation of the relative (to the baseUri if there is one) resource URI of the inheriting resource and all its parent relative resource URIs. A processing application MUST set the value of `<<resourcePathName>>` at the position in the URI following the rightmost slash ("/"), omitting any parametrizing brackets ("{" and "}").
 
 For example, applying a resource type or trait to a resource /users nested in a resource /{groupId} nested in a root-level resource /groups sets the value of the resourcePath parameter to /groups/{groupId}/users. Applying a resource type or trait to a resource /jobs/{jobId} sets the value of the resourcePathName parameter to jobId.
 
