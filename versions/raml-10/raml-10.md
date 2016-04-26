@@ -1645,7 +1645,7 @@ RESTful API methods are operations that are performed on a resource. The OPTIONA
 | queryString? | The query string needed by this method. Mutually exclusive with queryParameters.
 | responses? | Information about the expected responses to a request.
 | body? | A request body that the method admits.
-| protocols? | The [protocols](#method-level-protocols) that override those specified in the resource or at the API root.
+| protocols? | Explicitly specify the protocol(s) used to invoke a method, thereby overriding the protocols set elsewhere, for example in the baseUri or the [root-level protocols](#protocols) property.
 | is? | A list of the [traits](#applying-resource-types-and-traits) to apply to this method.
 | securedBy? | The [security schemes](#applying-security-schemes) that apply to this method.
 
@@ -1804,31 +1804,11 @@ baseUri: https://api.github.com/{version}
         example:     50
 ```
 
-### Method-level Protocols
-
-A method can explicitly set the OPTIONAL **protocols** property to specify the protocol(s) used to invoke it, thereby overriding the protocols set elsewhere, e.g. in the baseUri or the root-level **properties** property.
-
-In the following example, the get method is accessible through both HTTP and HTTPS, while the rest of the API requires HTTPS.
-
-```yaml
-#%RAML 1.0
-title: Twitter API
-version: 1.1
-baseUri: https://api.twitter.com/{version}
-/search/tweets.json:
-  description: Search all tweets
-  get:
-    description: Returns a collection of relevant Tweets matching a specified query
-    protocols: [ HTTP, HTTPS ]
-```
-
 ### Bodies
 
 The HTTP request **body** for a method is specified using the OPTIONAL body property. For example, to create a resource using a POST or PUT, the body of the request would usually include the details of the resource to be created.
 
-The value of the body property is termed a **body declaration**. The body declaration is an object whose property names are the valid media types of the request body and whose property values are the corresponding data type declaration or data type name describing the request body. If [default media types](#default-media-type) has been declared at the root of the API, then the body declaration may alternatively be directly the data type declaration or data type name describing the request body for that media type.
-
-In the first case above, when the property names represent media types, each property name MUST be a media type string conforming to the media type specification in [RFC6838](#https://tools.ietf.org/html/rfc6838).
+The value of the body property is a **body declaration**. Generally, the body declaration is an object whose property names are the valid media types of the request body. Each property name MUST be a media type string conforming to the media type specification in [RFC6838](#https://tools.ietf.org/html/rfc6838). The property values are the corresponding data type declaration or data type name describing the request body. Alternatively, if [default media types](#default-media-type) have been declared at the root of the API, then the body declaration can consist of just the data type declaration or data type name describing the request body for that media type.
 
 The following example illustrates various combinations of both default and non-default media types, and both data type declarations and references.
 
