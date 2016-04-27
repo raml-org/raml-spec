@@ -2649,7 +2649,7 @@ Annotation types are declared using the OPTIONAL root-level **annotationTypes** 
 | displayName? | The display name of $self. A friendly name used only for display or documentation purposes. The default is the element key, the name of the property itself.
 | description? | The intended use or meaning of an annotation. A string that MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this annotation type. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
-| allowedTargets? | The locations to which annotations are restricted. If this property is specified, annotations of this type may only be applied on a property corresponding to one of the locations. The value MUST be one or more of the options described in the [Target Locations](#annotation-target-location).
+| allowedTargets? | The locations to which annotations are restricted. If this property is specified, annotations of this type may be applied only on a property corresponding to one of the locations. The value MUST be one or more of the options described in the [Target Locations](#annotation-target-location).
 
 If an annotation type declaration specifies neither a type facet nor a properties facet, the default annotationName type is string.
 
