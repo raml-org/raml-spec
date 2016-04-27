@@ -2595,11 +2595,11 @@ The list of required and optional parameters to be provided to the security sche
 
 ## Annotations
 
-Annotations provide a mechanism to extend the API specification with metadata beyond the metadata already defined in this RAML 1.0 specification. Annotations can also be regarded as a mechanism to add properties to the built-in RAML properties in certain locations within the RAML specification. Processors MAY support certain annotations to add additional specificity to the API description, enable tooling such as testing, support API repositories and API discovery, and so on. Processors MAY ignore any and all annotations.
+Annotations provide a mechanism to extend the API specification with metadata beyond the metadata already defined in this RAML 1.0 specification. Annotations can also be used to add properties to the built-in RAML properties in certain locations within the RAML specification. Processors MAY support certain annotations to add additional specificity to the API description, enable tooling such as testing, support API repositories and API discovery, and so on. Processors MAY ignore any and all annotations.
 
-Annotations used in an API specification MUST be declared in a root-level annotationTypes property. Annotations can have values, which are defined and constrained in annotation type declarations. Processors can then rely on the declarations to ensure annotation values are as expected.
+Annotations used in an API specification MUST be declared in a root-level annotationTypes property. Annotations can have values, which are defined and constrained in annotation type declarations. Processors can then rely on the declarations to ensure annotation values meet expectations.
 
-The following is an example of various annotation type declarations and the application of the annotations to an API definition.
+The following example shows various annotation type declarations and the application of the annotations to an API definition.
 
 ```yaml
 #%RAML 1.0
@@ -2609,8 +2609,8 @@ annotationTypes:
   experimental:
   feedbackRequested:
   testHarness:
-    type: string # This line may be omitted as it's the default type
-  badge:         # This annotation type, too, allows string values
+    type: string # This line can be omitted as it's the default type
+  badge:         # This annotation type allows string values, too
   clearanceLevel:
     properties:
       level:
@@ -2635,33 +2635,33 @@ annotationTypes:
       200:
 ```
 
-Annotations applied to a data type are not inherited when that data type is inherited. However, processors SHOULD make the information about the annotations in the data type hierarchy available. Annotations applied to, or applied within, a resource type or trait are also applied to the resource type or resource or method that inherits it. In particular, if a trait is applied to a resource type or resource, all annotations on or within that trait are applied implicitly to all methods of that resource. If the inheriting resource type or resource or method directly (explicitly) apply an annotation of a given type, then this annotation overrides all applications of that annotation type which would otherwise have been inherited and implicitly applied. In particular, if a trait is applied to a resource type or resource, and the resource type or resource apply an annotation of some type, then any and all applications of annotations of that type to that trait are overridden.
+Annotations applied to a data type are not inherited when that data type is inherited. However, processors SHOULD make the information about the annotations in the data type hierarchy available. Annotations applied to, or within, a resource type or trait are also applied to the resource type, resource, or method that inherits the resource type or trait. In particular, if a trait is applied to a resource type or resource, all annotations on or within that trait are applied implicitly to all methods of that resource. If the inheriting resource type, resource, or method explicitly applies an annotation of a given type, then this annotation overrides all applications of that annotation type which would otherwise have been inherited and implicitly applied. In particular, if a trait is applied to a resource type or resource, and the resource type or resource applies an annotation of some type, then any and all applications of annotations of that type to that trait are overridden.
 
 ### Declaring Annotation Types
 
-Annotation types are declared using the OPTIONAL root-level **annotationTypes** property. The value of the annotationsType property is an object whose keys define annotation type names, also referred to as annotations, and whose values are objects called annotation type declarations. An annotation type declaration has the same syntax as a data type declaration, and its facets have the same syntax as the corresponding ones for data types, but with the addition of the allowedTargets facet. Just as a data type declaration constrains the value of a URI parameter, query parameter, header, or body of that type, so an annotation type declaration constrains the value of an annotation of that type. The allowedTargets facet restricts at which kinds of locations the annotation may be applied. Annotation types, like data types, may extend other data types, but annotation types may not themselves be extended nor used anywhere data types may be used.
+Annotation types are declared using the OPTIONAL root-level **annotationTypes** property. The value of the annotationsType property is an object whose keys define annotation type names, also referred to as annotations, and whose values are objects called annotation type declarations. An annotation type declaration has the same syntax as a data type declaration, and its facets have the same syntax as the corresponding ones for data types, but with the addition of the allowedTargets facet. An annotation type declaration constrains the value of an annotation of that type just as a data type declaration constrains the value of a URI parameter, query parameter, header, or body of that type. The allowedTargets facet restricts the kinds of locations where the annotation can be applied. Annotation types, like data types, can extend other data types, but annotation types themselves can neither be extended nor used anywhere data types can be used.
 
 |Property |Description |
 |:--------|:------------|
-| displayName? | The displayName attribute specifies the $self's display name. It is a friendly name used only for display or documentation purposes. If displayName is not specified, it defaults to the element's key (the name of the property itself).
-| description? | The description attribute describes the intended use or meaning of an annotation. Its value is a string and MAY be formatted using [markdown](#markdown).
-| (&lt;annotationName&gt;)? | Annotations to be applied to this annotation type. Annotations are any property whose key begins with “(“ and ends with “)” and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
-| allowedTargets? | Restrictions on where annotations of this type can be applied. If this property is specified, annotations of this type may only be applied on a property corresponding to one of the target names specified as the value of this property. Value MUST be one or more of the options described in table [Annotation Target Location](#annotation-target-location).
+| displayName? | A friendly name used only for display or documentation purposes. The default is the element key, the name of the property itself.
+| description? | The intended use or meaning of an annotation. A string that MAY be formatted using [markdown](#markdown).
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this annotation type. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
+| allowedTargets? | The locations to which annotations are restricted. If this property is specified, annotations of this type may be applied only on a property corresponding to one of the locations. The value MUST be one or more of the options described in the [Target Locations](#annotation-target-location).
 
-If an annotation type declaration specifies neither a type facet nor a properties facet, then it defaults to a type of string.
+If an annotation type declaration specifies neither a type facet nor a properties facet, the default annotationName type is string.
 
 All annotations used in an API specification MUST be declared in its annotationTypes property. Any value of an annotation MUST be valid according to its annotation type.
 
-If the allowedTargets property is not present, then the annotation may be applied in any of the target locations listed in the Target Locations table below. If the allowedTargets property is present, it restricts where the annotation may be applied, as described in the section below.
+If the allowedTargets property is not present, the annotation can be applied in any of the target locations listed in the Target Locations table. If the allowedTargets property is present, it restricts where the annotation can be applied, as described in [Annotation Targets](#annotation-targets).
 
 
 ### Applying Annotations
 
-For an annotation to be applied in an API specification, the annotation MUST be declared in an annotation type.
+To be applied in an API specification, the annotation MUST be declared in an annotation type.
 
-A declared annotation may be applied to an object in the specification by adding a property on that object whose key is the name of the annotation type enclosed in parentheses, and whose value is called an annotation value and MUST be valid according to the corresponding annotation type.
+A declared annotation can be applied to an object in the specification by adding a property on that object whose key is the name of the annotation type enclosed in parentheses. The annotation value MUST be valid according to the corresponding annotation type.
 
-The example below, a small subset of the previous example, shows an explicit declaration and use of a testHarness annotation whose value should be a string.
+The example below, a small subset of the previous example, shows an explicit declaration and use of a testHarness annotation that should be a string value.
 
 ```yaml
 #%RAML 1.0
@@ -2674,7 +2674,7 @@ annotationTypes:
   (testHarness): usersTest
 ```
 
-The following is semantically equivalent but relies on the implicit default declaration of the value type when there is no explicit type declaration.
+The following example is semantically equivalent to the previous one, but relies on the implicit, default declaration of the value type when there is no explicit type declaration.
 
 ```yaml
 #%RAML 1.0
@@ -2688,22 +2688,22 @@ annotationTypes:
 
 #### Annotating Scalar-valued Nodes
 
-It is often useful to annotate scalar-valued nodes, e.g. `baseUri`. Since annotations are applied as extra key-value pairs to nodes that accept key-value pairs already (i.e. map-valued nodes), they cannot be easily applied to scalar-valued nodes. To apply annotations to any scalar-valued node, a RAML processor MUST also support scalar-valued nodes to be expressed as a map, with the single allowed key `value`, as an alternative to the normal syntax.
+It is often useful to annotate scalar-valued nodes, for example `baseUri`. Annotations are typically applied as extra key-value pairs to map-valued nodes that inherently accept key-value pairs. Annotations cannot be easily applied to scalar-valued nodes. To apply annotations to any scalar-valued node, a RAML processor MUST also support scalar-valued nodes expressed as a map that allow a single key `value` as an alternative to the normal syntax.
 
-The example below shows a scalar-valued node which is normally expressed as:
+The following example shows a scalar-valued node which is normally expressed as:
 
 ```yaml
 baseUri: http://www.example.com/api
 ```
 
-and the alternative map syntax, with `value` as key:
+The alternative map syntax with `value` as the key is added to the example:
 
 ```yaml
 baseUri:
   value: http://www.example.com/api
 ```
 
-and then annotations may be applied as usual, e.g.:
+Now, annotations can be applied normally, as shown in this example:
 
 ```yaml
 baseUri:
@@ -2711,7 +2711,7 @@ baseUri:
   (redirectable): true
 ```
 
-The following is a list of all available scalar-valued nodes supported in RAML:
+The following list shows all available scalar-valued nodes supported in RAML:
 <a name="scalar-valued-nodes"></a>
 ```
 displayName
@@ -2752,9 +2752,11 @@ extends
 
 #### Annotation Targets
 
-The location within an API specification where annotations may be applied MUST be one of the target locations in the following Target Locations table. The targets are the locations themselves, not sub-properties within the locations; for example, the Method target refers to the method property and not to the method's display name, description, etc.
+The location within an API specification where annotations can be applied MUST be one of the target locations in the following Target Locations table. The targets are the locations themselves, not sub-properties within the locations; for example, the Method target refers to the method property, not to the method display name, description, and so on.
 
 <a name='annotation-target-location'></a>
+
+**Target Locations**
 
 |Target | Description |
 |:--------|:------------|
@@ -2765,13 +2767,13 @@ The location within an API specification where annotations may be applied MUST b
 | Response | A property of the responses property, whose key is an HTTP status code
 | RequestBody | The body property of a method
 | ResponseBody | The body property of a response
-| TypeDeclaration | A data type declaration (inline or in a global types collection), header declaration, query parameter declaration, or URI parameter declaration, or property within any of these declarations, where the type property may be used.
+| TypeDeclaration | A data type declaration (inline or in a global types collection), header declaration, query parameter declaration, URI parameter declaration, or a property within any of these declarations, where the type property can be used
 | Example | Either an example or examples property
 | ResourceType | A resource type property
 | Trait | A trait property
 | SecurityScheme | A security scheme declaration
 | SecuritySchemeSettings | The settings property of a security scheme declaration
-| AnnotationType | A property of the annotationTypes property, whose key is a name of an annotation type and whose value describes the annotation.
+| AnnotationType | A property of the annotationTypes property, whose key is a name of an annotation type and whose value describes the annotation
 | Library | The root of a library
 | Overlay | The root of an overlay
 | Extension | The root of an extension
