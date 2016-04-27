@@ -1730,17 +1730,17 @@ traits:
 
 ### Query Strings and Query Parameters
 
-An API's methods may support or require a query string in the URL on which they are invoked. The query string in a URL is defined in [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) as the part of the URL following the question mark separator ("?") and preceding any fragment ("#") separator. The query string may be specified either by the OPTIONAL **queryString** property or by the OPTIONAL **queryParameters** property. The queryString and queryParameters properties are mutually exclusive: processors MUST NOT allow both to be specified (explicitly or implicitly) on the same method of the same resource.
+An API method can support or require a query string in the URL on which the method is invoked. The query string in a URL is defined in [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) as the part of the URL following the question mark separator ("?") and preceding any fragment ("#") separator. The query string can be specified either by the OPTIONAL **queryString** property or by the OPTIONAL **queryParameters** property. The queryString and queryParameters properties are mutually exclusive: processors MUST NOT allow both to be specified, explicitly or implicitly, on the same method of the same resource.
 
 #### The Query String as a Whole
 
-The queryString property is used to specify the query string as a whole, rather than as name-value pairs. Its value is either the name of a data type or an inline data type declaration (including a data type expression). In either case the types at the root of the type hierarchy of the data type MUST all be either a scalar type or the object type, after fully expanding any union type expressions at every level of the type hierarchy.
+The queryString property is used to specify the query string as a whole, rather than as name-value pairs. The queryString value is either the name of a data type or an inline data type declaration, including a data type expression. In either case, all types at the root of the type hierarchy of the data type MUST be either a scalar type or the object type, after fully expanding any union type expressions at every level of the type hierarchy.
 
 If the type is derived from a scalar type, the query string as a whole MUST be described by the type.
 
-If the type is derived from an object type, processors MUST regard the query string as a URL-encoded serialization of an instance of this object type; that is, the query string must be of the form "parameter1=value1&parameter2=value2&..." where "parameter1", "parameter2", etc. correspond to the properties in the object type, and the values to the corresponding value specifications in the object type. If a value of a property in the object type is an array type, processors MUST interpret this as allowing multiple instances of that query parameter in the query string. In such a case, the underlying type of the array -- namely, the type of the elements of the array -- MUST be applied as the type of the value of instances of this query parameter.
+If the type is derived from an object type, processors MUST regard the query string as a URL-encoded serialization of an instance of this object type. The query string must be of the form "parameter1=value1&parameter2=value2&...", where "parameter1", "parameter2", and so on correspond to properties in the object type. Likewise, "value1", "value2", and so on correspond to value specifications in the object type. If a value of a property in the object type is an array type, processors MUST allow multiple instances of that query parameter in the query string. In such a case, the type of the elements of the array MUST be applied as the type of the value of instances of this query parameter.
 
-In the following example, union types and extending from multiple types are used to constrain the query parameters to specific alternatives:
+In the following example, union types and extended multiple types are used to constrain the query parameters to specific alternatives:
 
 ```yaml
 #%RAML 1.0
