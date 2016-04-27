@@ -1245,7 +1245,9 @@ types:
 
 In the example above, the type `Teacher` inherits all restrictions from `Person` and `Employee`.
 
-Multiple inheritance is allowed only if the sub-type is still a valid type declaration after inheriting all restrictions from its parent types. For example, the type `Number3` is valid:
+Multiple inheritance is allowed only if the sub-type is still a valid type declaration after inheriting all restrictions from its parent types. Also, it is not allowed to inherit from different kind of primitive types, for example `[ number, string ]`.
+
+In the following example, the sub-type `Number3` is fully valid:
 
 ```yaml
 types:
@@ -1271,7 +1273,7 @@ types:
   Number3: [ Number1, Number2] # invalid, maximum value cannot be less than minimum value
 ```
 
-If a sub-type inherits properties having the same name from at least two of its parent types, the sub-type keeps all restrictions applied to those properties with two exceptions: 1) a "pattern" facet when a parent type already declares a "pattern" facet 2) a user-defined facet when another user-defined facet has the same value. In these cases, an invalid type declaration occurs. 
+If a sub-type inherits properties having the same name from at least two of its parent types, the sub-type keeps all restrictions applied to those properties with two exceptions: 1) a "pattern" facet when a parent type already declares a "pattern" facet 2) a user-defined facet when another user-defined facet has the same value. In these cases, an invalid type declaration occurs.
 
 ### Inline Type Declarations
 
@@ -2327,7 +2329,7 @@ The security scheme is declared using the following properties:
 | displayName? | An alternate, human-friendly name for the security scheme.
 | description? | Information that MAY be used to describe a security scheme.
 | [describedBy?](#describedby) | A description of the following security-related request components determined by the scheme: the headers, query parameters, or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes the API documentation.
-| settings? | The [settings](#settings) attribute MAY be used to provide security scheme-specific information. 
+| settings? | The [settings](#settings) attribute MAY be used to provide security scheme-specific information.
 
 An optional **securitySchemes** property is defined for the RAML document root. The value of securitySchemes is an object having properties that map security scheme names to security scheme declarations.
 Each authentication pattern supported by the API must be expressed as a component of the **securitySchemes** property value.
@@ -2386,7 +2388,7 @@ The value of the **describedBy** property is defined as follows:
 
 |Property   |Description|
 |:----------|:----------|
-| headers? | Optional array of [Headers](#headers), documenting the possible headers that could be accepted. 
+| headers? | Optional array of [Headers](#headers), documenting the possible headers that could be accepted.
 | queryParameters? | Query parameters, used by the schema to authorize the request. Mutually exclusive with [queryString](#query-strings-and-query-parameters).
 | queryString? | The query string used by the schema to authorize the request. Mutually exclusive with [queryParameters](#query-strings-and-query-parameters).
 | responses? | An optional array of [responses](#responses), representing the possible responses that could be sent.
