@@ -2810,7 +2810,7 @@ types:
 
 ## Modularization
 
-RAML provides several mechanisms to help modularize your API specification and specifications ecosystem:
+RAML provides several mechanisms to help modularize the ecosystem of an API specification:
 * Includes
 * Libraries
 * Overlays
@@ -2818,9 +2818,9 @@ RAML provides several mechanisms to help modularize your API specification and s
 
 ### Includes
 
-RAML processors MUST support the OPTIONAL **!include** tag, which specifies the inclusion of external files into the API specification. As it is a YAML tag, it starts with an exclamation point ("!"). The location in an API specification where an !include tag may be used MUST be the value of a property, so the result of including the file specified by the !include tag is the value of that property.
+RAML processors MUST support the OPTIONAL **!include** tag, which specifies the inclusion of external files into the API specification. Being a YAML tag, the exclamation point ("!") prefix is required. In an API specification, the !include tag is located only in a property value position. The !include tag MUST be the value of a property, which assigns the contents of the file named by the !include tag to the value of the property.
 
-In the following example, the set of types to be used elsewhere in the RAML specification is retrieved from a file called myTypes.raml and used as the value of the types property in the RAML specification.
+In the following example, the set of types to be used in the API specification is retrieved from a file called myTypes.raml and used as the value of the types property.
 
 ```yaml
 #%RAML 1.0
@@ -2828,39 +2828,38 @@ title: My API with Types
 types: !include myTypes.raml
 ```
 
-The !include tag accepts a single argument, the location of the content to be included, that MUST be specified explicitly. Its value MUST be one of the following:
+The !include tag accepts a single argument, the location of the content to be included, that MUST be specified explicitly. The value of the argument MUST be a path or URL as described in the following table:
 
 |Argument | Description | Examples |
 |:--------|:------------|:---------|
-| absolute path | A path that begins with a single slash ("/") and is to be interpreted relative to the root RAML file's location. | /traits/pageable.raml
-| relative path | A path that does not begin with a single slash ("/") nor is a URL, and is to be interpreted relative to the including file's location. | description.md<br>../traits/pageable.raml
+| absolute path | A path that begins with a single slash ("/") and is interpreted relative to the root RAML file location. | /traits/pageable.raml
+| relative path | A path that neither begins with a single slash ("/") nor constitutes a URL, and is interpreted relative to the location of the included file. | description.md<br>../traits/pageable.raml
 | URL | An absolute URL | http://dev.domain.com/api/patterns/traits.raml
 
-To simplify API definition, and because the included file's parsing context is not shared between the included file and its parent, an included file SHALL NOT use a YAML reference to an anchor in a separate file. Likewise, a reference made from a parent file SHALL NOT reference an anchor defined in an included file.
+To simplify the API definition, and because the parsing context of the included file is not shared between the file and its parent, an included file SHALL NOT use a YAML reference to an anchor in a separate file. Likewise, a reference made from a parent file SHALL NOT reference an anchor defined in an included file.
 
-The argument of the !include tag must be static: namely, it MUST NOT contain any resource type parameters or trait parameters.
+The !include tag argument must be static: namely, it MUST NOT contain any resource type parameters or trait parameters.
 
 #### Typed Fragments
 
-A file to be included MAY begin with a RAML fragment identifier line, which consists of the text _#%RAML_ followed by a single space followed by the text 1.0, followed by a single space followed by one of the following fragment identifiers:
+A file to be included MAY begin with a RAML fragment identifier line, which consists of the text _#%RAML_ followed left-to-right by a single space, the text 1.0, a single space, and one of the following fragment identifiers:
 
-|Fragment | Description |
-|:--------|:------------|
-| DocumentationItem | An item in the collection of items that is the value of the root-level documentation property; see the section on [User Documentation](#user-documentation).
-| DataType | A data type declaration, where the type property may be used; see the section on [Types](#types)
-| NamedExample | A property of the examples property, whose key is a name of an example and whose value describes the example; see the section on [Examples](#defining-examples-in-raml)
-| ResourceType | A single resource type declaration; see the section on [Resource Types and Traits](#resource-types-and-traits)
-| Trait | A single trait declaration; see the section on [Resource Types and Traits](#resource-types-and-traits)
-| AnnotationTypeDeclaration | A single annotation type declaration; see the section on [Annotations](#annotations)
-| Library | A RAML library; see the section on [Libraries](#libraries).
-| Overlay | An overlay file; see the section on [Overlays](#overlays).
-| Extension | An extension file; see the section on [Extensions](#extensions).
-| SecurityScheme | A definition of a security scheme; see section on [Security Schemes](#security-schemes)
+|Fragment Identifier | Description | Relevant RAML Specification Section |
+|:-------------------|:------------| :-----------------------------------|
+| DocumentationItem | An item in the collection of items that is the value of the root-level documentation property | [User Documentation](#user-documentation)
+| DataType | A data type declaration where the type property may be used | [Types](#types)
+| NamedExample | A property of the examples property, whose key is a name of an example and whose value describes the example | [Examples](#defining-examples-in-raml)
+| ResourceType | A single resource type declaration | [Resource Types and Traits](#resource-types-and-traits)
+| Trait | A single trait declaration | [Resource Types and Traits](#resource-types-and-traits)
+| AnnotationTypeDeclaration | A single annotation type declaration | [Annotations](#annotations)
+| Library | A RAML library | [Libraries](#libraries)
+| Overlay | An overlay file | [Overlays](#overlays)
+| Extension | An extension file | [Extensions](#extensions)
+| SecurityScheme | A definition of a security scheme | [Security Schemes](#security-schemes)
 
-If a file begins with a RAML fragment identifier line, and the fragment identifier is neither Library nor Overlay nor Extension, the contents of the file after removal of the RAML fragment identifier line MUST be valid structurally according to the corresponding section of this RAML specification. For example, a RAML file beginning with `#%RAML 1.0 Trait` must have the structure of a RAML trait declaration as defined in the [specification for traits](#resource-types-and-traits), such that including the file in a location where a trait declaration is called for results in a valid RAML file.
+If a file begins with a RAML fragment identifier line, and the fragment identifier is not Library, Overlay, or Extension, the contents of the file after removal of the RAML fragment identifier line MUST be valid structurally according to the relevant RAML specification. For example, a RAML file beginning with `#%RAML 1.0 Trait` must have the structure of a RAML trait declaration as defined in the [Resource Types and Traits](#resource-types-and-traits) section. Including the file in a correct location for a trait declaration results in a valid RAML file.
 
-The following example shows a RAML fragment file that defines a resource type, and a file that includes this fragment file.
-
+The following example shows a RAML fragment file that defines a resource type and a file that includes this fragment file.
 
 ```yaml
 #%RAML 1.0 ResourceType
@@ -2868,7 +2867,7 @@ The following example shows a RAML fragment file that defines a resource type, a
 #This file is located at resourceTypes/collection.raml
 
 description: A collection resource
-usage: Use this to describe resource that list items
+usage: Use this to describe a resource that lists items
 get:
   description: Retrieve all items
 post:
@@ -2890,7 +2889,7 @@ resourceTypes:
 
 ```
 
-The resulting API definition is equivalent to the following single document.
+The resulting API definition is equivalent to the following single document:
 
 ```yaml
 #%RAML 1.0
@@ -2898,7 +2897,7 @@ title: Products API
 resourceTypes:
   collection:
     description: A collection resource
-    usage: Use this to describe resource that list items
+    usage: Use this to describe a resource that lists items
     get:
       description: Retrieve all items
     post:
@@ -2914,7 +2913,7 @@ resourceTypes:
 
 #### Resolving Includes
 
-When RAML or YAML files are included, RAML parsers MUST not only read the content, but parse it and add the content to the declaring structure as if the content were declared inline. Specifically, if the included file has one of the following media types:
+When RAML or YAML files are included, RAML parsers MUST not only read the content, but must also parse it and add the content to the declaring structure as if the content were declared inline. RAML parsers MUST parse the content of the file as RAML content and append the parsed structures to the RAML document node if the included file has a .raml, .yml, or .yaml extension or one of the following media types:
 
 * application/raml+yaml
 * text/yaml
@@ -2922,9 +2921,9 @@ When RAML or YAML files are included, RAML parsers MUST not only read the conten
 * application/yaml
 * application/x-yaml
 
-or a .raml or .yml or .yaml extension, RAML parsers MUST parse the content the file as RAML content and append the parsed structures to the RAML document's node. Otherwise, the contents of the file will be included as a scalar.
+Otherwise, if RAML parsers fail to parse the content and append structures, the contents of the file are included as a scalar. 
 
-To simplify RAML definitions, and because the included files parsing context is not shared between the included file and its parent, an included file SHALL NOT use a YAML reference to an anchor in a separate file. Likewise, a reference made from a parent file SHALL NOT reference a structure anchor defined in an included file.
+Because the parsing context of the included files is not shared between the included file and its parent, an included file SHALL NOT use a YAML reference to an anchor in a separate file. Likewise, a reference made from a parent file SHALL NOT reference a structure anchor defined in an included file. These rules simplify RAML definitions.
 
 In the example below, the API root document includes two files from the patterns folder, one containing resource type declarations and the other containing trait declarations.
 
