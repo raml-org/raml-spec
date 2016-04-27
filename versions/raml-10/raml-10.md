@@ -1814,7 +1814,7 @@ If a query parameter declaration specifies an array type for the value of the qu
 
 If a query parameter declaration specifies a non-array type for the value of the query parameter (or doesn't specify a type, which is equivalent to specifying a string type), processors MUST interpret this as disallowing multiple instances of that query parameter in the request.
 
-If a query parameter declaration specifies an object type or a union of non-scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is an object type or union of non-scalar types, then processors MUST default to treating the format of the query parameter value as JSON in applying the type to instances of that query parameter.
+If a query parameter declaration specifies an object type or a union of non-scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is an object type or union of non-scalar types, then validation is not defined by RAML; processors MAY default to treating the format of the query parameter value as JSON in applying the type to instances of that query parameter, or they MAY allow other treatments based on annotations.
 
 If a query parameter declaration specifies a non-string scalar type or union of non-string scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is a non-string scalar type or union of non-string scalar types, the standard serialization rules for types MUST be invoked in applying the type to instances of that query parameter.
 
