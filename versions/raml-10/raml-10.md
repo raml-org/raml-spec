@@ -933,7 +933,7 @@ Here is an example that defines the capability to restrict dates to those that d
 title: API with Types
 types:
   CustomDate:
-    type: date
+    type: date-only
     facets:
       onlyFutureDates?: boolean # optional  in `PossibleMeetingDate`
       noHolidays: boolean # required in `PossibleMeetingDate`
@@ -1664,7 +1664,7 @@ RESTful API methods are operations that are performed on a resource. The OPTIONA
 
 ### Headers
 
-An API's methods may support or require various HTTP headers. The OPTIONAL **headers** property is used to explicitly specify those headers. The value of the headers property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a header **declaration**. The name of each such property specifies an allowed header name, while its value specifies the header value's type, as the name of a type or an inline type declaration.
+An API's methods can support or require various HTTP headers. The OPTIONAL **headers** property is used to explicitly specify those headers. The value of the headers property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is a header **declaration**. Each property name specifies an allowed header name. Each property value specifies the header value type as a type name or an inline type declaration.
 
 The following simple example shows a post method with a single HTTP header named Zencoder-Api-Key of (implied) string type.
 
@@ -1681,15 +1681,15 @@ baseUri: https://app.zencoder.com/api/{version}
         description: The API key needed to create a new job
 ```
 
-If a header declaration specifies an array type for the value of the header, processors MUST interpret this as allowing multiple instances of that header in the request or response, as appropriate. In such a case, the underlying type of the array -- namely, the type of the elements of the array -- MUST be applied as the type of the value of instances of this header.
+If a header declaration specifies an array type for the value of the header, processors MUST allow multiple instances of that header in the request or response. In this case, the type of the array elements MUST be applied as the type of the value of header instances.
 
-If a header declaration specifies a non-array type for the value of the header (or doesn't specify a type, which is equivalent to specifying a string type), processors MUST interpret this as disallowing multiple instances of that header in the request or response, as appropriate.
+If a header declaration specifies a non-array type for the value of the header, or doesn't specify a type (equivalent to specifying a string type), processors MUST disallow multiple instances of that header in the request or response.
 
-If a header declaration specifies an object type or a union of non-scalar types for the value of the header, or if it specifies an array type for the value of the header and the underlying type of the array is an object or array type or a union of non-scalar types, then validation is not defined by RAML; processors MAY default to treating the format of the header value as JSON in applying the type to instances of that header, or they MAY allow other treatments based on annotations.
+RAML does not define validation when a header declaration specifies any of the following types for the value of the header: an object type, a union of non-scalar types, or an array type if the underlying type of the array is an object type, array type, or a union of non-scalar types. Processors MAY default to treating the format of the header value as JSON in applying the type to instances of that header, or they MAY allow other treatments based on annotations.
 
-Note that some headers may also be added by the intermediate client- and server-side systems such as a browser or a proxy.
+Some headers can also be added by the intermediate client- and server-side systems, such as a browser or a proxy.
 
-The following example illustrates inheriting headers from a trait, allowing multiple instances of a header, specifying examples, and overriding them when they're applied to a method and a resource.
+The following example illustrates inheriting headers from a trait, allowing multiple instances of a header, specifying examples, and overriding the headers when applied to a method and a resource.
 
 ```yaml
 #%RAML 1.0
@@ -1701,7 +1701,7 @@ traits:
         type: array
         description: |
           A department code to be charged.
-          Multiple such headers are allowed.
+          Multiple of such headers are allowed.
         items:
           pattern: ^\d+\-\w+$
           example: 230-OCTO
@@ -1730,17 +1730,17 @@ traits:
 
 ### Query Strings and Query Parameters
 
-An API's methods may support or require a query string in the URL on which they are invoked. The query string in a URL is defined in [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) as the part of the URL following the question mark separator ("?") and preceding any fragment ("#") separator. The query string may be specified either by the OPTIONAL **queryString** property or by the OPTIONAL **queryParameters** property. The queryString and queryParameters properties are mutually exclusive: processors MUST NOT allow both to be specified (explicitly or implicitly) on the same method of the same resource.
+An API method can support or require a query string in the URL on which the method is invoked. The query string in a URL is defined in [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) as the part of the URL following the question mark separator ("?") and preceding any fragment ("#") separator. The query string can be specified either by the OPTIONAL **queryString** property or by the OPTIONAL **queryParameters** property. The queryString and queryParameters properties are mutually exclusive: processors MUST NOT allow both to be specified, explicitly or implicitly, on the same method of the same resource.
 
 #### The Query String as a Whole
 
-The queryString property is used to specify the query string as a whole, rather than as name-value pairs. Its value is either the name of a data type or an inline data type declaration (including a data type expression). In either case the types at the root of the type hierarchy of the data type MUST all be either a scalar type or the object type, after fully expanding any union type expressions at every level of the type hierarchy.
+The queryString property is used to specify the query string as a whole, rather than as name-value pairs. The queryString value is either the name of a data type or an inline data type declaration, including a data type expression. In either case, all types at the root of the type hierarchy of the data type MUST be either a scalar type or the object type, after fully expanding any union type expressions at every level of the type hierarchy.
 
 If the type is derived from a scalar type, the query string as a whole MUST be described by the type.
 
-If the type is derived from an object type, processors MUST regard the query string as a URL-encoded serialization of an instance of this object type; that is, the query string must be of the form "parameter1=value1&parameter2=value2&..." where "parameter1", "parameter2", etc. correspond to the properties in the object type, and the values to the corresponding value specifications in the object type. If a value of a property in the object type is an array type, processors MUST interpret this as allowing multiple instances of that query parameter in the query string. In such a case, the underlying type of the array -- namely, the type of the elements of the array -- MUST be applied as the type of the value of instances of this query parameter.
+If the type is derived from an object type, processors MUST regard the query string as a URL-encoded serialization of an instance of this object type. The query string must be of the form "parameter1=value1&parameter2=value2&...", where "parameter1", "parameter2", and so on correspond to properties in the object type. Likewise, "value1", "value2", and so on correspond to value specifications in the object type. If a value of a property in the object type is an array type, processors MUST allow multiple instances of that query parameter in the query string. In such a case, the type of the elements of the array MUST be applied as the type of the value of instances of this query parameter.
 
-In the following example, union types and extending from multiple types are used to constrain the query parameters to specific alternatives:
+In the following example, union types and extended multiple types are used to constrain the query parameters to specific alternatives:
 
 ```yaml
 #%RAML 1.0
@@ -1781,17 +1781,17 @@ types:
 
 #### Query Parameters in a Query String
 
-The queryParameters property is used to specify the set of query parameters from which the query string is composed. Processors MUST regard the query string as a set of query parameters according to the URL encoding format when applying the restrictions in the API definition. The value of the queryParameters property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **query parameter declaration**. The name of each such property specifies an allowed query parameter name, while its value specifies the query parameter value's type, as the name of a type or an inline type declaration.
+The queryParameters property specifies the set of query parameters from which the query string is composed. When applying the restrictions defined by the API, processors MUST regard the query string as a set of query parameters according to the URL encoding format. The value of the queryParameters property is a [properties declaration](#property-declarations) object, as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **query parameter declaration**. Each property name specifies an allowed query parameter name. Each property value specifies the query parameter value type as the name of a type or an inline type declaration.
 
-If a query parameter declaration specifies an array type for the value of the query parameter, processors MUST interpret this as allowing multiple instances of that query parameter in the request or response, as appropriate. In such a case, the underlying type of the array -- namely, the type of the elements of the array -- MUST be applied as the type of the value of instances of this query parameter.
+If a query parameter declaration specifies an array type for the value of the query parameter, processors MUST allow multiple instances of that query parameter in the request or response. In this case, the type of the elements of the array MUST be applied as the type of the value of query parameter instances.
 
-If a query parameter declaration specifies a non-array type for the value of the query parameter (or doesn't specify a type, which is equivalent to specifying a string type), processors MUST interpret this as disallowing multiple instances of that query parameter in the request.
+If a query parameter declaration specifies a non-array type for the value of the query parameter, or doesn't specify a type (equivalent to specifying a string type), processors MUST disallow multiple instances of that query parameter in the request.
 
-If a query parameter declaration specifies an object type or a union of non-scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is an object type or union of non-scalar types, then processors MUST default to treating the format of the query parameter value as JSON in applying the type to instances of that query parameter.
+Processors MUST default to treating the format of the query parameter value as JSON in applying the type to instances of a query parameter if a query parameter definition specifies the value of a query parameter as any of the following types: an object type, a union of non-scalar types, or an array type if the underlying type of the array is an object type or union of non-scalar types.
 
-If a query parameter declaration specifies a non-string scalar type or union of non-string scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is a non-string scalar type or union of non-string scalar types, the standard serialization rules for types MUST be invoked in applying the type to instances of that query parameter.
+The standard serialization rules for types MUST be invoked in applying the type to instances of a query parameter if the query parameter definition specifies the value of the query parameter as any of the following types: a non-string scalar type, a union of non-string scalar types, or an array type if the underlying type of the array is a non-string scalar type or union of non-string scalar types.
 
-The following example shows a get method that uses HTTP query parameters; it will be sent to https://api.github.com/v3/users?page=1&per_page=50 (assuming the example values are used).
+The following example shows a get method that uses HTTP query parameters. Using example values sends a request to https://api.github.com/v3/users?page=1&per_page=50.
 
 
 ```yaml
@@ -2281,35 +2281,33 @@ RAML supports the following built-in security scheme types:
 
 |Type       |Description|
 |:----------|:----------|
-|OAuth 1.0  | The API's authentication requires using OAuth 1.0 as described in [RFC5849](https://tools.ietf.org/html/rfc5849)
-|OAuth 2.0  | The API's authentication requires using OAuth 2.0 as described in [RFC6749](https://tools.ietf.org/html/rfc6749)
-|Basic Authentication| The API's authentication relies on using Basic Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
-|Digest Authentication| The API's authentication relies on using Digest Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
-|Pass Through| Headers or Query Parameters are passed through to the API based on a defined mapping.
-|x-{other}| The API's authentication relies on another authentication method.
+|OAuth 1.0  | The API authentication requires using OAuth 1.0 as described in [RFC5849](https://tools.ietf.org/html/rfc5849)
+|OAuth 2.0  | The API authentication requires using OAuth 2.0 as described in [RFC6749](https://tools.ietf.org/html/rfc6749)
+|Basic Authentication| The API authentication relies on using Basic Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
+|Digest Authentication| The API authentication relies on using Digest Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
+|Pass Through| Headers or query parameters are passed through to the API based on a defined mapping.
+|x-{other}| The API authentication relies on another authentication method.
 
-A processing application's developers MAY provide support for these mechanisms. If a mechanism is supported, it MUST conform to the specified standard.
+A processing application developer MAY provide support for these mechanisms. If a mechanism is supported, it MUST conform to the specified standard.
 
-Additionally, any security scheme definition may be augmented with a describedBy property, which allows the designer to document the API's security scheme.
+Additionally, any security scheme definition may be augmented with a describedBy property, which allows the designer to document the API security scheme.
 
 ### Security Scheme Declaration
 
-Security scheme is declared as follows:
+The security scheme is declared using the following properties:
 
 |Property   |Description|
 |:----------|:----------|
-| type | The security schemes property MUST be used to specify an API's security mechanisms, including the required settings and the authentication methods that the API supports. one authentication method is allowed if the API supports them. The value MUST be one of the following: OAuth 1.0, OAuth 2.0, Basic Authentication, Digest Authentication, Pass Through, x-&lt;other&gt;
+| type | The security schemes property that MUST be used to specify the API security mechanisms, including the required settings and the authentication methods that the API supports. One API-supported authentication method is allowed. The value MUST be one of the following methods: OAuth 1.0, OAuth 2.0, Basic Authentication, Digest Authentication, Pass Through, x-&lt;other&gt;
 | displayName? | An alternate, human-friendly name for the security scheme.
-| description? | The description MAY be used to describe a security scheme.
-| describedBy? | A description of the request components related to Security that are determined by the scheme: the headers, query parameters or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes an API documentation. See explanation about [describedBy](#describedby) for more information.
-| settings? | The settings attribute MAY be used to provide security scheme-specific information. The required attributes vary depending on the type of security scheme is being declared. It describes the minimum set of properties which any processing application MUST provide and validate if it chooses to implement the security scheme. Processing applications MAY choose to recognize other properties for things such as token lifetime, preferred cryptographic algorithms, and more. See explanation about [settings](#settings) for more information.
+| description? | Information that MAY be used to describe a security scheme.
+| [describedBy?](#describedby) | A description of the following security-related request components determined by the scheme: the headers, query parameters, or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes the API documentation.
+| settings? | The [settings](#settings) attribute MAY be used to provide security scheme-specific information. 
 
-An optional **securitySchemes** property is defined for RAML document root.
+An optional **securitySchemes** property is defined for the RAML document root. The value of securitySchemes is an object having properties that map security scheme names to security scheme declarations.
+Each authentication pattern supported by the API must be expressed as a component of the **securitySchemes** property value.
 
-As value it has an object whose properties map security scheme names to security scheme declarations.
-Each authentication pattern supported by the API must be expressed as component of **securitySchemes** property value.
-
-In this example, the Dropbox API supports authentication via OAuth 2.0 and OAuth 1.0:
+In this example, the Dropbox API supports authentication using OAuth 2.0 and OAuth 1.0:
 ```yaml
 #%RAML 1.0
 title: Dropbox API
@@ -2330,15 +2328,15 @@ securitySchemes:
       queryParameters:
         access_token:
           description: |
-             Used to send a valid OAuth 2 access token. Do not use together with
-             the "Authorization" header
+             Used to send a valid OAuth 2 access token. Do not use with
+             the "Authorization" header.
           type: string
       responses:
         401:
           description: |
               Bad or expired token. This can happen if the user or Dropbox
-              revoked or expired an access token. To fix, you should re-
-              authenticate the user.
+              revoked or expired an access token. To fix, re-authenticate
+              the user.
         403:
           description: |
               Bad OAuth request (wrong consumer key, bad nonce, expired
@@ -2363,21 +2361,21 @@ The value of the **describedBy** property is defined as follows:
 
 |Property   |Description|
 |:----------|:----------|
-| headers? | Optional array of headers, documenting the possible headers that could be accepted. See section [Headers](#headers) for more information.
-| queryParameters? | Query parameters, used by the schema in order to authorize the request. Mutually exclusive with queryString. See section [Query Strings and Query Parameters](#query-strings-and-query-parameters) for more information.
-| queryString? | Specifies the query string, used by the schema in order to authorize the request. Mutually exclusive with queryParameters. See section [Query Strings and Query Parameters](#query-strings-and-query-parameters) for more information.
-| responses? | Optional array of responses, describing the possible responses that could be sent. See section [Responses](#responses) for more information.
-| (&lt;annotationName&gt;)? | Annotations to be applied to this security scheme part. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
+| headers? | Optional array of [Headers](#headers), documenting the possible headers that could be accepted. 
+| queryParameters? | Query parameters, used by the schema to authorize the request. Mutually exclusive with [queryString](#query-strings-and-query-parameters).
+| queryString? | The query string used by the schema to authorize the request. Mutually exclusive with [queryParameters](#query-strings-and-query-parameters).
+| responses? | An optional array of [responses](#responses), representing the possible responses that could be sent.
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this part of the security scheme. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 
 #### Settings
 
-The settings attribute MAY be used to provide security scheme specific information. The required attributes vary depending on the type of security scheme is being declared.
+The settings attribute MAY be used to provide security scheme-specific information. The required attributes vary depending on which type of security scheme is declared.
 
-It describes the minimum set of properties which any processing application MUST provide and validate if it chooses to implement the security scheme. Processing applications MAY choose to recognize other properties for things such as token lifetime, preferred cryptographic algorithms, and more.
+The settings attribute describes the minimum set of properties that any processing application MUST provide and validate if it chooses to implement the security scheme. Processing applications MAY choose to recognize other properties for token lifetime, preferred cryptographic algorithms, and other things.
 
 ##### OAuth 1.0
 
-Security schemes of this type have specific settings object:
+Security schemes of this type have the following properties:
 
 |Property |Description |
 |:--------|:------------|
@@ -2385,7 +2383,7 @@ Security schemes of this type have specific settings object:
 |authorizationUri| The URI of the *Resource Owner Authorization endpoint* as defined in [RFC5849 Section 2.2](https://tools.ietf.org/html/rfc5849#section-2.2)
 |tokenCredentialsUri| The URI of the *Token Request endpoint* as defined in [RFC5849 Section 2.3](https://tools.ietf.org/html/rfc5849#section-2.3)
 
-OAuth 1.0 authentication follows the standard described in [RFC5849](https://tools.ietf.org/html/rfc5849). The following is an example:
+OAuth 1.0 authentication follows the standard described in [RFC5849](https://tools.ietf.org/html/rfc5849). The following example shows how to set OAuth 1.0 properties:
 
 ```yaml
 #%RAML 1.0
@@ -2405,16 +2403,16 @@ securitySchemes:
 
 ##### OAuth 2.0
 
-Security schemes of this type has specific settings object:
+Security schemes of this type have the following properties:
 
 |Property |Description |
 |:--------|:------------|
 |authorizationUri| The URI of the *Authorization Endpoint* as defined in [RFC6749 Section 3.1](https://tools.ietf.org/html/rfc6749#section-3.1)
 |accessTokenUri| The URI of the *Token Endpoint* as defined in [RFC6749 Section 3.2](https://tools.ietf.org/html/rfc6749#section-3.2)
-|authorizationGrants| A list of the Authorization grants supported by the API As defined in RFC6749 Sections [4.1](https://tools.ietf.org/html/rfc6749#section-4.1), [4.2](https://tools.ietf.org/html/rfc6749#section-4.2), [4.3](https://tools.ietf.org/html/rfc6749#section-4.3) and [4.4](https://tools.ietf.org/html/rfc6749#section-4.4), can be any of: code, token, owner or credentials.
+|authorizationGrants| A list of the authorization grants supported by the API as defined in RFC6749 Sections [4.1](https://tools.ietf.org/html/rfc6749#section-4.1), [4.2](https://tools.ietf.org/html/rfc6749#section-4.2), [4.3](https://tools.ietf.org/html/rfc6749#section-4.3) and [4.4](https://tools.ietf.org/html/rfc6749#section-4.4), which can be any of the following grants: code, token, owner, or credentials.
 |scopes| A list of scopes supported by the API as defined in [RFC6749 Section 3.3](https://tools.ietf.org/html/rfc6749#section-3.3)
 
-OAuth 2.0 authentication follows the standard described in [RFC6749](https://tools.ietf.org/html/rfc6749). The following is an example:
+OAuth 2.0 authentication follows the standard described in [RFC6749](https://tools.ietf.org/html/rfc6749). The following example shows how to set OAuth 2.0 properties:
 
 ```yaml
 #%RAML 1.0
@@ -2436,15 +2434,15 @@ securitySchemes:
       queryParameters:
         access_token:
           description: |
-             Used to send a valid OAuth 2 access token. Do not use together with
-             the "Authorization" header
+             Used to send a valid OAuth 2 access token. Do not use with
+             the "Authorization" header.
           type: string
       responses:
         401:
           description: |
               Bad or expired token. This can happen if the user or Dropbox
-              revoked or expired an access token. To fix, you should re-
-              authenticate the user.
+              revoked or expired an access token. To fix, re-authenticate
+              the user.
         403:
           description: |
               Bad OAuth request (wrong consumer key, bad nonce, expired
@@ -2489,7 +2487,7 @@ securitySchemes:
 
 ##### Pass Through
 
-Pass Through authentication does not have any specific settings defined and the implementation is known to RAML. One MUST provide a value for every header or queryParameter defined in describedBy, and passed along with the request without modification. The following is an example:
+Pass through authentication does not have any specific settings defined and the implementation is known to RAML. You MUST provide a value for every header or queryParameter defined in describedBy and passed along with the request without modification. The following example shows how to provide these values:
 
 ```yaml
 #%RAML 1.0
@@ -2512,7 +2510,7 @@ securitySchemes:
 
 ##### x-&lt;other&gt;
 
-x-&lt;other&gt; authentication methods do not have any specific settings defined, as their implementation is unknown as a standard for RAML. These security schemes may only include a description and a describedBy section, to allow documentation of the intended use of the security scheme. The following is an example:
+x-&lt;other&gt; authentication methods do not have any specific settings defined, as the implementation of these methods is unknown as a standard to RAML. These security schemes might include only the description and describedBy sections to allow documentation of the intended use of the security scheme. The following example shows such a security scheme:
 
 ```yaml
 #%RAML 1.0
@@ -2539,10 +2537,9 @@ securitySchemes:
 
 #### Applying Security Schemes
 
-The **securedBy** attribute of RAML document root may be used to apply security schemes to every method of API. This specifies that all methods in the API (unless they have their own securedBy attribute) can be authenticated by any mentioned security scheme.
+The **securedBy** attribute in the RAML document root can apply security schemes to every method of the API. All API methods, except those having their own securedBy attribute, can be authenticated by any of the specified security schemes.
 
-Applying a security scheme to a method overrides whichever security scheme has been applied to the API as whole.
-To indicate that the method is protected using a specific security scheme, the method MUST be defined by using the **securedBy** attribute.
+Applying a security scheme to a method overrides any security scheme applied to the API as a whole. To indicate that a method is protected using a specific security scheme, the method MUST be defined by using the **securedBy** attribute.
 
 The value assigned to the securedBy attribute MUST be a list of any of the security schemes previously defined in the **securitySchemes** property of RAML document root.
 
@@ -2560,7 +2557,7 @@ securitySchemes:
     securedBy: [oauth_2_0, oauth_1_0]
 ```
 
-To indicate that the method may be called without applying any security scheme, the method may be provided with securedBy attribute containing null as array component.
+A securedBy attribute containing null as the array component indicates the method can be called without applying any security scheme.
 
 ```yaml
 #%RAML 1.0
@@ -2574,13 +2571,13 @@ securitySchemes:
     securedBy: [null, oauth_2_0]
 ```
 
-A resource can also be applied a list of security schemes using the **securedBy** attribute. This specifies that all methods of this particular resource (unless they have their own securedBy attribute) can be authenticated by any mentioned security scheme. Value of resources attribute overrides that of the root attribute. Security Schemes applied to a resource MUST NOT incorporate nested resources; they do not apply to its existing nested resources.
+The **securedBy** attribute can also apply a list of security schemes to a resource. All resource methods, except those having their own securedBy attribute, can be authenticated by any of the specified security schemes. The value of the resources attribute overrides that of the root attribute. Security schemes applied to a resource MUST NOT incorporate nested resources; security schemes do not apply to existing nested resources.
 
-Applying a security scheme to a method overrides security schemes applied to the API and resources having the method as sibling.
+Applying a security scheme to a method overrides security schemes applied to the API and to resources having the method as a sibling.
 
 If the processing application supports custom properties, custom parameters can be provided to the security scheme at the moment of inclusion in a method.
 
-In the following example, the parameter **scopes** is being assigned:
+The following example assigns a value to the parameter **scopes**:
 
 ```yaml
 #%RAML 1.0
@@ -2594,15 +2591,15 @@ securitySchemes:
     securedBy: [null, oauth_2_0: { scopes: [ ADMINISTRATOR ] } ]
 ```
 
-The list of parameters that must and may be provided to the security scheme is specified by the security scheme type.
+The list of required and optional parameters to be provided to the security scheme is specified by the security scheme type.
 
 ## Annotations
 
-Annotations provide a mechanism to extend the API specification with metadata beyond the metadata already defined in this RAML 1.0 specification. Annotations can also be regarded as a mechanism to add properties to the built-in RAML properties in certain locations within the RAML specification. Processors MAY support certain annotations to add additional specificity to the API description, enable tooling such as testing, support API repositories and API discovery, and so on. Processors MAY ignore any and all annotations.
+Annotations provide a mechanism to extend the API specification with metadata beyond the metadata already defined in this RAML 1.0 specification. Annotations can also be used to add properties to the built-in RAML properties in certain locations within the RAML specification. Processors MAY support certain annotations to add additional specificity to the API description, enable tooling such as testing, support API repositories and API discovery, and so on. Processors MAY ignore any and all annotations.
 
-Annotations used in an API specification MUST be declared in a root-level annotationTypes property. Annotations can have values, which are defined and constrained in annotation type declarations. Processors can then rely on the declarations to ensure annotation values are as expected.
+Annotations used in an API specification MUST be declared in a root-level annotationTypes property. Annotations can have values, which are defined and constrained in annotation type declarations. Processors can then rely on the declarations to ensure annotation values meet expectations.
 
-The following is an example of various annotation type declarations and the application of the annotations to an API definition.
+The following example shows various annotation type declarations and the application of the annotations to an API definition.
 
 ```yaml
 #%RAML 1.0
@@ -2612,8 +2609,8 @@ annotationTypes:
   experimental:
   feedbackRequested:
   testHarness:
-    type: string # This line may be omitted as it's the default type
-  badge:         # This annotation type, too, allows string values
+    type: string # This line can be omitted as it's the default type
+  badge:         # This annotation type allows string values, too
   clearanceLevel:
     properties:
       level:
@@ -2638,33 +2635,33 @@ annotationTypes:
       200:
 ```
 
-Annotations applied to a data type are not inherited when that data type is inherited. However, processors SHOULD make the information about the annotations in the data type hierarchy available. Annotations applied to, or applied within, a resource type or trait are also applied to the resource type or resource or method that inherits it. In particular, if a trait is applied to a resource type or resource, all annotations on or within that trait are applied implicitly to all methods of that resource. If the inheriting resource type or resource or method directly (explicitly) apply an annotation of a given type, then this annotation overrides all applications of that annotation type which would otherwise have been inherited and implicitly applied. In particular, if a trait is applied to a resource type or resource, and the resource type or resource apply an annotation of some type, then any and all applications of annotations of that type to that trait are overridden.
+Annotations applied to a data type are not inherited when that data type is inherited. However, processors SHOULD make the information about the annotations in the data type hierarchy available. Annotations applied to, or within, a resource type or trait are also applied to the resource type, resource, or method that inherits the resource type or trait. In particular, if a trait is applied to a resource type or resource, all annotations on or within that trait are applied implicitly to all methods of that resource. If the inheriting resource type, resource, or method explicitly applies an annotation of a given type, then this annotation overrides all applications of that annotation type which would otherwise have been inherited and implicitly applied. In particular, if a trait is applied to a resource type or resource, and the resource type or resource applies an annotation of some type, then any and all applications of annotations of that type to that trait are overridden.
 
 ### Declaring Annotation Types
 
-Annotation types are declared using the OPTIONAL root-level **annotationTypes** property. The value of the annotationsType property is an object whose keys define annotation type names, also referred to as annotations, and whose values are objects called annotation type declarations. An annotation type declaration has the same syntax as a data type declaration, and its facets have the same syntax as the corresponding ones for data types, but with the addition of the allowedTargets facet. Just as a data type declaration constrains the value of a URI parameter, query parameter, header, or body of that type, so an annotation type declaration constrains the value of an annotation of that type. The allowedTargets facet restricts at which kinds of locations the annotation may be applied. Annotation types, like data types, may extend other data types, but annotation types may not themselves be extended nor used anywhere data types may be used.
+Annotation types are declared using the OPTIONAL root-level **annotationTypes** property. The value of the annotationsType property is an object whose keys define annotation type names, also referred to as annotations, and whose values are objects called annotation type declarations. An annotation type declaration has the same syntax as a data type declaration, and its facets have the same syntax as the corresponding ones for data types, but with the addition of the allowedTargets facet. An annotation type declaration constrains the value of an annotation of that type just as a data type declaration constrains the value of a URI parameter, query parameter, header, or body of that type. The allowedTargets facet restricts the kinds of locations where the annotation can be applied. Annotation types, like data types, can extend other data types, but annotation types themselves can neither be extended nor used anywhere data types can be used.
 
 |Property |Description |
 |:--------|:------------|
-| displayName? | The displayName attribute specifies the $self's display name. It is a friendly name used only for display or documentation purposes. If displayName is not specified, it defaults to the element's key (the name of the property itself).
-| description? | The description attribute describes the intended use or meaning of an annotation. Its value is a string and MAY be formatted using [markdown](#markdown).
-| (&lt;annotationName&gt;)? | Annotations to be applied to this annotation type. Annotations are any property whose key begins with “(“ and ends with “)” and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
-| allowedTargets? | Restrictions on where annotations of this type can be applied. If this property is specified, annotations of this type may only be applied on a property corresponding to one of the target names specified as the value of this property. Value MUST be one or more of the options described in table [Annotation Target Location](#annotation-target-location).
+| displayName? | A friendly name used only for display or documentation purposes. The default is the element key, the name of the property itself.
+| description? | The intended use or meaning of an annotation. A string that MAY be formatted using [markdown](#markdown).
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this annotation type. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
+| allowedTargets? | The locations to which annotations are restricted. If this property is specified, annotations of this type may be applied only on a property corresponding to one of the locations. The value MUST be one or more of the options described in the [Target Locations](#annotation-target-location).
 
-If an annotation type declaration specifies neither a type facet nor a properties facet, then it defaults to a type of string.
+If an annotation type declaration specifies neither a type facet nor a properties facet, the default annotationName type is string.
 
 All annotations used in an API specification MUST be declared in its annotationTypes property. Any value of an annotation MUST be valid according to its annotation type.
 
-If the allowedTargets property is not present, then the annotation may be applied in any of the target locations listed in the Target Locations table below. If the allowedTargets property is present, it restricts where the annotation may be applied, as described in the section below.
+If the allowedTargets property is not present, the annotation can be applied in any of the target locations listed in the Target Locations table. If the allowedTargets property is present, it restricts where the annotation can be applied, as described in [Annotation Targets](#annotation-targets).
 
 
 ### Applying Annotations
 
-For an annotation to be applied in an API specification, the annotation MUST be declared in an annotation type.
+To be applied in an API specification, the annotation MUST be declared in an annotation type.
 
-A declared annotation may be applied to an object in the specification by adding a property on that object whose key is the name of the annotation type enclosed in parentheses, and whose value is called an annotation value and MUST be valid according to the corresponding annotation type.
+A declared annotation can be applied to an object in the specification by adding a property on that object whose key is the name of the annotation type enclosed in parentheses. The annotation value MUST be valid according to the corresponding annotation type.
 
-The example below, a small subset of the previous example, shows an explicit declaration and use of a testHarness annotation whose value should be a string.
+The example below, a small subset of the previous example, shows an explicit declaration and use of a testHarness annotation that should be a string value.
 
 ```yaml
 #%RAML 1.0
@@ -2677,7 +2674,7 @@ annotationTypes:
   (testHarness): usersTest
 ```
 
-The following is semantically equivalent but relies on the implicit default declaration of the value type when there is no explicit type declaration.
+The following example is semantically equivalent to the previous one, but relies on the implicit, default declaration of the value type when there is no explicit type declaration.
 
 ```yaml
 #%RAML 1.0
@@ -2691,22 +2688,22 @@ annotationTypes:
 
 #### Annotating Scalar-valued Nodes
 
-It is often useful to annotate scalar-valued nodes, e.g. `baseUri`. Since annotations are applied as extra key-value pairs to nodes that accept key-value pairs already (i.e. map-valued nodes), they cannot be easily applied to scalar-valued nodes. To apply annotations to any scalar-valued node, a RAML processor MUST also support scalar-valued nodes to be expressed as a map, with the single allowed key `value`, as an alternative to the normal syntax.
+It is often useful to annotate scalar-valued nodes, for example `baseUri`. Annotations are typically applied as extra key-value pairs to map-valued nodes that inherently accept key-value pairs. Annotations cannot be easily applied to scalar-valued nodes. To apply annotations to any scalar-valued node, a RAML processor MUST also support scalar-valued nodes expressed as a map that allow a single key `value` as an alternative to the normal syntax.
 
-The example below shows a scalar-valued node which is normally expressed as:
+The following example shows a scalar-valued node which is normally expressed as:
 
 ```yaml
 baseUri: http://www.example.com/api
 ```
 
-and the alternative map syntax, with `value` as key:
+The alternative map syntax with `value` as the key is added to the example:
 
 ```yaml
 baseUri:
   value: http://www.example.com/api
 ```
 
-and then annotations may be applied as usual, e.g.:
+Now, annotations can be applied normally, as shown in this example:
 
 ```yaml
 baseUri:
@@ -2714,7 +2711,7 @@ baseUri:
   (redirectable): true
 ```
 
-The following is a list of all available scalar-valued nodes supported in RAML:
+The following list shows all available scalar-valued nodes supported in RAML:
 <a name="scalar-valued-nodes"></a>
 ```
 displayName
@@ -2755,9 +2752,11 @@ extends
 
 #### Annotation Targets
 
-The location within an API specification where annotations may be applied MUST be one of the target locations in the following Target Locations table. The targets are the locations themselves, not sub-properties within the locations; for example, the Method target refers to the method property and not to the method's display name, description, etc.
+The location within an API specification where annotations can be applied MUST be one of the target locations in the following Target Locations table. The targets are the locations themselves, not sub-properties within the locations; for example, the Method target refers to the method property, not to the method display name, description, and so on.
 
 <a name='annotation-target-location'></a>
+
+**Target Locations**
 
 |Target | Description |
 |:--------|:------------|
@@ -2768,13 +2767,13 @@ The location within an API specification where annotations may be applied MUST b
 | Response | A property of the responses property, whose key is an HTTP status code
 | RequestBody | The body property of a method
 | ResponseBody | The body property of a response
-| TypeDeclaration | A data type declaration (inline or in a global types collection), header declaration, query parameter declaration, or URI parameter declaration, or property within any of these declarations, where the type property may be used.
+| TypeDeclaration | A data type declaration (inline or in a global types collection), header declaration, query parameter declaration, URI parameter declaration, or a property within any of these declarations, where the type property can be used
 | Example | Either an example or examples property
 | ResourceType | A resource type property
 | Trait | A trait property
 | SecurityScheme | A security scheme declaration
 | SecuritySchemeSettings | The settings property of a security scheme declaration
-| AnnotationType | A property of the annotationTypes property, whose key is a name of an annotation type and whose value describes the annotation.
+| AnnotationType | A property of the annotationTypes property, whose key is a name of an annotation type and whose value describes the annotation
 | Library | The root of a library
 | Overlay | The root of an overlay
 | Extension | The root of an extension
