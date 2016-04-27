@@ -1227,26 +1227,53 @@ When referencing an inner element of a schema, a RAML processor MUST validate an
 
 ### Multiple Inheritance
 
-RAML Types support multiple inheritance for object types. This is achieved by passing a sequence of types:
+RAML Types support multiple inheritance. This is achieved by passing a sequence of types:
 
 ```yaml
-#%RAML 1.0
-title: My API With Types
 types:
-  A:
+  Person:
     type: object
-  B:
+    properties:
+      name: string
+  Employee:
     type: object
-  C:
-    type: [ A, B ]
+    properties:
+      employeeNr: integer
+  Teacher:
+    type: [ Person, Employee ]
 ```
 
-Note: Multiple inheritance is only allowed if all Type Expressions are simple object Types.
+In the example above, the type `Teacher` inherits all restrictions from `Person` and `Employee`.
 
-If multiple parent types define a property with the same name:
+Multiple inheritance is allowed only if the sub-type is still a valid type declaration after inheriting all restrictions from its parent types. Also, it is not allowed to inherit from different kind of primitive types, for example `[ number, string ]`.
 
-* The property will be required if at least one of the declarations are required
-* The type of the property will be the narrowest type
+In the following example, the sub-type `Number3` is fully valid:
+
+```yaml
+types:
+  Number1:
+    type: number
+    minimum: 4
+  Number2:
+    type: number
+    maximum: 10
+  Number3: [ Number1, Number2]
+```
+
+Whereas using the same example and only changing the maximum value of type `Number2` from 10 to 2 would result in an invalid type `Number3`.
+
+```yaml
+types:
+  Number1:
+    type: number
+    minimum: 4
+  Number2:
+    type: number
+    maximum: 2
+  Number3: [ Number1, Number2] # invalid, maximum value cannot be less than minimum value
+```
+
+If a sub-type inherits properties having the same name from at least two of its parent types, the sub-type keeps all restrictions applied to those properties with two exceptions: 1) a "pattern" facet when a parent type already declares a "pattern" facet 2) a user-defined facet when another user-defined facet has the same value. In these cases, an invalid type declaration occurs.
 
 ### Inline Type Declarations
 
@@ -1787,7 +1814,7 @@ If a query parameter declaration specifies an array type for the value of the qu
 
 If a query parameter declaration specifies a non-array type for the value of the query parameter (or doesn't specify a type, which is equivalent to specifying a string type), processors MUST interpret this as disallowing multiple instances of that query parameter in the request.
 
-If a query parameter declaration specifies an object type or a union of non-scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is an object type or union of non-scalar types, then processors MUST default to treating the format of the query parameter value as JSON in applying the type to instances of that query parameter.
+If a query parameter declaration specifies an object type or a union of non-scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is an object type or union of non-scalar types, then validation is not defined by RAML; processors MAY default to treating the format of the query parameter value as JSON in applying the type to instances of that query parameter, or they MAY allow other treatments based on annotations.
 
 If a query parameter declaration specifies a non-string scalar type or union of non-string scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is a non-string scalar type or union of non-string scalar types, the standard serialization rules for types MUST be invoked in applying the type to instances of that query parameter.
 
@@ -2302,7 +2329,7 @@ The security scheme is declared using the following properties:
 | displayName? | An alternate, human-friendly name for the security scheme.
 | description? | Information that MAY be used to describe a security scheme.
 | [describedBy?](#describedby) | A description of the following security-related request components determined by the scheme: the headers, query parameters, or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes the API documentation.
-| settings? | The [settings](#settings) attribute MAY be used to provide security scheme-specific information. 
+| settings? | The [settings](#settings) attribute MAY be used to provide security scheme-specific information.
 
 An optional **securitySchemes** property is defined for the RAML document root. The value of securitySchemes is an object having properties that map security scheme names to security scheme declarations.
 Each authentication pattern supported by the API must be expressed as a component of the **securitySchemes** property value.
@@ -2361,7 +2388,7 @@ The value of the **describedBy** property is defined as follows:
 
 |Property   |Description|
 |:----------|:----------|
-| headers? | Optional array of [Headers](#headers), documenting the possible headers that could be accepted. 
+| headers? | Optional array of [Headers](#headers), documenting the possible headers that could be accepted.
 | queryParameters? | Query parameters, used by the schema to authorize the request. Mutually exclusive with [queryString](#query-strings-and-query-parameters).
 | queryString? | The query string used by the schema to authorize the request. Mutually exclusive with [queryParameters](#query-strings-and-query-parameters).
 | responses? | An optional array of [responses](#responses), representing the possible responses that could be sent.
