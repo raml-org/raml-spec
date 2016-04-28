@@ -3178,9 +3178,9 @@ annotationTypes:
 
 #### Extensions
 
-An extension broadens a RAML API definition by adding to, or modifying, aspects of its behavior and other functionality. An extension can be useful in separating a core, broadly-available API from layers of functionality available to more restricted audiences, for creating variants of an API for somewhat different purposes, or for specifying instance-specific properties of an API, such as its service endpoint (URL) without altering its pure interface definition document.
+An extension broadens a RAML API definition by adding to, or modifying aspects of its behavior and other functionality. An extension can be useful in separating a core, broadly-available API from layers of functionality available to more restricted audiences, for creating variants of an API for somewhat different purposes, or for specifying instance-specific properties of an API, such as its service endpoint (URL) without altering its pure interface definition document.
 
-The following examples build on the examples in the previous Overlays section by adding an extension available to admins for adding items (books) to a collection, adding an overlay to provide a translation of the added functionality, and adding an extension that locates a particular service endpoint of the API.
+The following examples build on examples in the Overlays section by adding an extension for admins to add book items to a collection, adding an overlay to provide a translation of the added functionality, and adding an extension that locates a particular service endpoint of the API.
 
 ```yaml
 #%RAML 1.0 Extension
@@ -3278,7 +3278,7 @@ In the following example, the yellow "enum" _Property_ key has a blue _Array_ va
 <font color="#4444ff"> - Colored</font>
 </pre>
 
-In this example of an _Array_ definition, a "documentation" _Property_ key has an _Array_ value, which contains two green _Objects_:
+In this example of an _Array_ definition, a "documentation" _Property_ key has an _Array_ value that contains two green _Objects_:
 
 <pre style="background-color:#111;">
 <font color="yellow">documentation:</font>
