@@ -1787,7 +1787,7 @@ If a query parameter declaration specifies an array type for the value of the qu
 
 If a query parameter declaration specifies a non-array type for the value of the query parameter, or doesn't specify a type (equivalent to specifying a string type), processors MUST disallow multiple instances of that query parameter in the request.
 
-Processors MUST default to treating the format of the query parameter value as JSON in applying the type to instances of a query parameter if a query parameter definition specifies the value of a query parameter as any of the following types: an object type, a union of non-scalar types, or an array type if the underlying type of the array is an object type or union of non-scalar types.
+RAML does not define validation when a query parameter declaration specifies any of the following types for the value of the query parameter: an object type, a union of non-scalar types, or an array type if the underlying type of the array is an object type or union of non-scalar types. Processors MAY default to treating the format of the query parameter value as JSON in applying the type to instances of that query parameter, or they MAY allow other treatments based on annotations.
 
 The standard serialization rules for types MUST be invoked in applying the type to instances of a query parameter if the query parameter definition specifies the value of the query parameter as any of the following types: a non-string scalar type, a union of non-string scalar types, or an array type if the underlying type of the array is a non-string scalar type or union of non-string scalar types.
 
@@ -2302,7 +2302,7 @@ The security scheme is declared using the following properties:
 | displayName? | An alternate, human-friendly name for the security scheme.
 | description? | Information that MAY be used to describe a security scheme.
 | [describedBy?](#describedby) | A description of the following security-related request components determined by the scheme: the headers, query parameters, or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes the API documentation.
-| settings? | The [settings](#settings) attribute MAY be used to provide security scheme-specific information. 
+| settings? | The [settings](#settings) attribute MAY be used to provide security scheme-specific information.
 
 An optional **securitySchemes** property is defined for the RAML document root. The value of securitySchemes is an object having properties that map security scheme names to security scheme declarations.
 Each authentication pattern supported by the API must be expressed as a component of the **securitySchemes** property value.
@@ -2361,7 +2361,7 @@ The value of the **describedBy** property is defined as follows:
 
 |Property   |Description|
 |:----------|:----------|
-| headers? | Optional array of [Headers](#headers), documenting the possible headers that could be accepted. 
+| headers? | Optional array of [Headers](#headers), documenting the possible headers that could be accepted.
 | queryParameters? | Query parameters, used by the schema to authorize the request. Mutually exclusive with [queryString](#query-strings-and-query-parameters).
 | queryString? | The query string used by the schema to authorize the request. Mutually exclusive with [queryParameters](#query-strings-and-query-parameters).
 | responses? | An optional array of [responses](#responses), representing the possible responses that could be sent.
