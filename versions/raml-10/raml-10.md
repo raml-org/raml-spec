@@ -3021,7 +3021,7 @@ resourceTypes:
       is: [ drm ]
     put:
       is: [ drm ]
-```user documentation
+```
 
 #### Applying Libraries
 
