@@ -2989,14 +2989,14 @@ traits:
 
 ### Libraries
 
-RAML libraries are used to combine any collection of data type declarations, resource type declarations, trait declarations, and security scheme declarations into modular, externalized, reusable groups. While libraries are meant to allow definition of common declarations in external documents which are then included where needed, they may also be defined inline.
+RAML libraries are used to combine any collection of data type declarations, resource type declarations, trait declarations, and security scheme declarations into modular, externalized, reusable groups. While libraries are intended to define common declarations in external documents, which are then included where needed, libraries can also be defined inline.
 
-A library is an object whose allowed properties are enumerated in the following table. Each is optional.
+The following table describes the properties, which are optional, of a library object.
 
 |Property | Description |
 |:--------|:------------|
-| types?<br>schemas?<br>resourceTypes?<br>traits?<br>securitySchemes?<br>annotationTypes?<br>(&lt;annotationName&gt;)?<br>uses? | The definition of each property is the same as that of the corresponding property in the root of a RAML document. Annotation properties are allowed as in any other RAML document.
-| usage | Describes the content or purpose of a specific library. Its value is a string and MAY be formatted using [markdown](#markdown).
+| types?<br>schemas?<br>resourceTypes?<br>traits?<br>securitySchemes?<br>annotationTypes?<br>(&lt;annotationName&gt;)?<br>uses? | The definition of each property is the same as that of the corresponding property at the root of a RAML document. A library supports annotation properties like any other RAML document.
+| usage | Describes the content or purpose of a specific library. The value is a string and MAY be formatted using [markdown](#markdown).
 
 The following example shows a simple library as a standalone, reusable RAML fragment document.
 
@@ -3017,20 +3017,20 @@ traits:
 resourceTypes:
   file:
     get:
-      is: drm
+      is: [ drm ]
     put:
-      is: drm
+      is: [ drm ]
 ```
 
 #### Applying Libraries
 
-Any number of libraries may be applied by using the OPTIONAL **uses** property which may ONLY be used at the root of a RAML file (either a root ["master"] RAML file or a RAML fragment file). The value of the uses property is a map of key-value pairs where its keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
+Any number of libraries can be applied by using the OPTIONAL **uses** property ONLY at the root of a ["master"] RAML or RAML fragment file. The value of the uses property is a map of key-value pairs. The keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
 
-When a library is applied, the data types, resource types, traits, security schemes, and annotation types which it declared are made available in the document in which it was applied, but are referenced via names formed by concatenating the library name followed by a period (".") followed by the name of the data type, resource type, trait, security scheme, or annotation type. In this way the library name defines a namespace for the library's objects within the context in which the library was applied. That means, namespaces defined in a **uses** statement in a specific file are only consumable within that file, i.e. they are only used to disambiguate the included libraries from each other within that file. Therefore, any processor MUST not be permitted to allow any composition of namespaces using "." across multiple libraries.
+In the document that applies a library, the data types, resource types, traits, security schemes, and annotation types in the library become available from the document. The assets in the library are referenced from the document using dot notation as follows: concatenate the library name followed by a period ("."), and then the name of the data type, resource type, trait, security scheme, or annotation type. The library name defines a namespace for the library objects within the context that the library is applied. Namespaces defined in a **uses** statement in a specific file are only consumable within that file and serve only to disambiguate the included libraries from each other. Therefore, any processor MUST not allow any composition of namespaces using "." across multiple libraries.
 
-Using **uses** does NOT automatically import the remote library's assets into the local file, but it allows the local file to import those assets by referring to them in its contents: e.g., a RAML type fragment file that uses a library of remote types can then import one of those types by referring to it, and that remote type will be included as if it were defined locally within the RAML type fragment file.
+Using **uses** does NOT automatically import the remote library assets into the local file, but the local file can import those assets by referring to the assets from its contents. For example, a RAML type fragment file that uses a library of remote types can import one of those types by referring to it. The remote type is included as if it were defined locally within the RAML type fragment file.
 
-The following examples demonstrate the use of a library in a second library, and the use of that second library in a resource type fragment as well as in RAML API definition.
+The following examples demonstrate the use of a library in a second library, a second library in a resource type fragment, and a second library in a RAML API definition.
 
 ```yaml
 #%RAML 1.0 Library
@@ -3057,14 +3057,14 @@ traits:
 resourceTypes:
   file:
     get:
-      is: drm
+      is: [ drm ]
       responses:
         201:
           body:
             application/json:
               type: file-type.File
     put:
-      is: drm
+      is: [ drm ]
 
 ```
 
@@ -3074,10 +3074,10 @@ resourceTypes:
 uses:
   files: libraries/files.raml
 get:
-  is: files.drm
+  is: [ files.drm ]
 ```
 
-The following example is not valid according to the restriction that chaining namespaces is not allowed.
+The following example is not valid because chaining namespaces is not allowed.
 
 ```yaml
 #%RAML 1.0 ResourceType
@@ -3085,7 +3085,7 @@ The following example is not valid according to the restriction that chaining na
 uses:
   files: libraries/files.raml
 get:
-  is: files.drm
+  is: [ files.drm ]
   responses:
     200:
       body:
