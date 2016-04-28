@@ -3178,9 +3178,9 @@ annotationTypes:
 
 #### Extensions
 
-An extension allows extending a RAML API definition by adding to, or modifying, its behavioral (functional) aspects as well as its non-behavioral aspects. This can be useful in separating a core, broadly-available API from layers of functionality available to more restricted audiences, for creating variants of an API for somewhat different purposes, or for specifying instance-specific properties of an API such as its service endpoint (URL) without altering its pure interface definition document.
+An extension broadens a RAML API definition by adding to, or modifying, aspects of its behavior and other functionality. An extension can be useful in separating a core, broadly-available API from layers of functionality available to more restricted audiences, for creating variants of an API for somewhat different purposes, or for specifying instance-specific properties of an API, such as its service endpoint (URL) without altering its pure interface definition document.
 
-The following examples build on the examples in the overlays section above, by adding an extension available to admins for adding items (books) to a collection, adding an overlay to provide a translation of the added functionality, and adding an extension that locates a particular service endpoint of the API.
+The following examples build on the examples in the previous Overlays section by adding an extension available to admins for adding items (books) to a collection, adding an overlay to provide a translation of the added functionality, and adding an extension that locates a particular service endpoint of the API.
 
 ```yaml
 #%RAML 1.0 Extension
@@ -3209,7 +3209,7 @@ baseUri: http://api.piedmont-library.com
 
 #### Merging Rules
 
-The algorithm of how exactly an overlay/extension structure is applied to the master is described in this section.  
+This section describes how an overlay/extension structure is applied to the master.  
 
 ##### Terminology
 
@@ -3217,9 +3217,9 @@ The algorithm of how exactly an overlay/extension structure is applied to the ma
 
 _Object_ is a MAP or a SEQUENCE containing MAPPINGS in terms of YAML.
 
-_Property_ is a MAPPING in terms of YAML, the pair of key and its value.
+_Property_ is a MAPPING in terms of YAML, a key and its value pair.
 
-In the following example, "properties" highlighted in yellow is a _Property_ key, and the corresponding _Object_ value is highlighted in green.
+In the following example, the yellow "properties" is a _Property_ key, and the corresponding green _Object_ is the value.
 
 <pre style="background-color:#111;">
 <font color="yellow">properties:</font>
@@ -3229,7 +3229,7 @@ In the following example, "properties" highlighted in yellow is a _Property_ key
 <font color="#44ff44">      description: "some description"</font>
 </pre>
 
-In the same example, there is also a "responseParameters" _Property_ key and its _Object_ value colored in green:
+In the same example, there is also a green "responseParameters" _Property_ key and its _Object_ value:
 
 <pre style="background-color:#111;">
 <font color="white">properties:</font>
@@ -3239,7 +3239,7 @@ In the same example, there is also a "responseParameters" _Property_ key and its
 <font color="#44ff44">      description: "some description"</font>
 </pre>
 
-And while "statusCode", "type" and "description" colored yellow are also properties, their values are not _Objects_:
+And while the yellow "statusCode", "type" and "description" are also properties, their values are not _Objects_:
 
 <pre style="background-color:#111;">
 <font color="white">properties:</font>
@@ -3249,7 +3249,7 @@ And while "statusCode", "type" and "description" colored yellow are also propert
 <font color="yellow">       description:</font> <font color="white">"some description"</font>
 </pre>
 
-In the following sample "FilteredByPrice" and "Paged" are yellow-colored _Properties_ with _Object_ values colored in green.
+In the following sample, yellow "FilteredByPrice" and "Paged" are _Properties_ with green _Object_ values.
 
 <pre style="background-color:#111;">
 <font color="white">traits:</font>
@@ -3269,7 +3269,7 @@ In the following sample "FilteredByPrice" and "Paged" are yellow-colored _Proper
 
 _Array_ is a SEQUENCE containing SCALARs or SEQUENCE containing MAPs in terms of YAML.
 
-In the following example, the "enum" _Property_ key is highlighted in yellow that has an _Array_ value highlighted blue.
+In the following example, the yellow "enum" _Property_ key has a blue _Array_ value.
 
 <pre style="background-color:#111;">
 <font color="yellow">enum:</font>
@@ -3278,7 +3278,7 @@ In the following example, the "enum" _Property_ key is highlighted in yellow tha
 <font color="#4444ff"> - Colored</font>
 </pre>
 
-Another example for an _Array_ definition, a "documentation" _Property_ key has an _Array_ value, which contains two _Objects_ highlighted in green:
+In this example of an _Array_ definition, a "documentation" _Property_ key has an _Array_ value, which contains two green _Objects_:
 
 <pre style="background-color:#111;">
 <font color="yellow">documentation:</font>
@@ -3291,7 +3291,7 @@ Another example for an _Array_ definition, a "documentation" _Property_ key has 
 
 ###### Property Types
 
-In the merging algorithm the _Property_ types are referred to as _Property Kind_ which can be one of the following (highlighted in **bold**):
+In the merging algorithm, the _Property_ types are referred to as _Property Kind_, which can be one of the following properties highlighted in **bold**:
 
 **_Object Property_** - a _Property_ having _Object_ as a value.
 
@@ -3344,7 +3344,7 @@ In the following sample "statusCode" and "enum" are simple properties.
 </pre>
 
 Exceptions:
-* Examples are always _Simple Properties_ despite its ability to have complex YAML samples as values.
+* Examples are always _Simple Properties_ despite the capability to have complex YAML samples as values.
 * Annotations are always _Simple Properties_ despite potentially having a complex node structure.
 * Resource type applications are always _Simple Properties_.
 * Trait applications are always _Simple Properties_.
@@ -3352,9 +3352,9 @@ Exceptions:
 
 ###### Conflicting Properties
 
-Conflicting properties are the properties, which can not coexist in the same Object at the same time.
+Conflicting properties are the properties that cannot coexist in the same Object.
 
-In the following example both "type" and "properties" _Properties_ can coexist with each other, but the "enum" _Property_ cannot coexist with both "type" and "properties".
+In the following example, both "type" and "properties" _Properties_ can coexist, but the "enum" _Property_ cannot coexist with both "type" and "properties".
 
 <pre style="background-color:#111;">
 <font color="white">color:</font>
@@ -3397,28 +3397,28 @@ For each **Current Extension Tree Object property** the following is done:
 
 * If the **property** is an _Ignored Property_, continue to process the next property.
 * If the **property** with the same name exists in **Current Target Tree Object**:
-  * If the **property** and the equally named property in **Current Target Tree Object** have different _Property Kind_:
-    * The **property** value in the equally named **Current Target Tree Object** property is replaced with its value from **Current Extension Tree Object** property.
+  * If the **property** and the identically named property in **Current Target Tree Object** have different _Property Kind_:
+    * The **property** value in the identically named **Current Target Tree Object** property is replaced with its value from **Current Extension Tree Object** property.
   * If the **property** is a _Simple Property_
     * If the **property** is a _Single-value Simple Property_,
-      * The **property** value in the equally named **Current Target Tree Object** property is replaced with its value from **Current Extension Tree Object** property.
+      * The **property** value in the identically named **Current Target Tree Object** property is replaced with its value from **Current Extension Tree Object** property.
     * If the **property** is a _Multi-value Simple Property_
-      * The **property** value from **Current Extension Tree Object** property is added to the equally named **Current Target Tree Object** property values if no such value already exists.
+      * The **property** value from **Current Extension Tree Object** property is added to the identically named **Current Target Tree Object** property values if no such value already exists.
   * If the **property** is an _Object Property_:
-    * The same _Merging Algorithm_ is recursively performed for **Current Extension Tree Object** being set to the **property** value, and **Current Target Tree Object** being set to the value of the equally named property in **Current Target Tree Object**.
+    * The same _Merging Algorithm_ is recursively performed for **Current Extension Tree Object** being set to the **property** value, and **Current Target Tree Object** being set to the value of the identically named property in **Current Target Tree Object**.
   * If the **property** is an _Array Property_:
-    * _Objects_ from the property value are added to the equally named **Current Target Tree Object** property value.
+    * _Objects_ from the property value are added to the identically named **Current Target Tree Object** property value.
 * If the **property** with the same name does not exist in **Current Target Tree Object**:
   * All _Conflicting Properties_ are removed from the **Current Target Tree Object**
   * The **property** is added to the **Current Target Tree Object**.
 
 _Target Tree_ is validated.
 
-If the _Extension Tree_ is an Overlay, _Target Tree_ is compared to the _Master Tree_. There MUST NOT be any differences, besides listed in the "Allowed differences" table in section [Overlays](#overlays). Otherwise the process is cancelled.
+If the _Extension Tree_ is an Overlay, _Target Tree_ is compared to the _Master Tree_. There MUST NOT be any differences, other than those listed in the "Allowed differences" table in the [Overlays](#overlays) section. Otherwise the process is cancelled.
 
 _Target Tree_ has its resource types and Traits applied.
 
-_Target Tree_ is being serialized to a document, or returned as the algorithm output.
+_Target Tree_ is being serialized to a document or returned as the algorithm output.
 
 ## References
 
