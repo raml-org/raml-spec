@@ -3018,9 +3018,9 @@ traits:
 resourceTypes:
   file:
     get:
-      is: drm
+      is: [ drm ]
     put:
-      is: drm
+      is: [ drm ]
 ```user documentation
 
 #### Applying Libraries
@@ -3058,14 +3058,14 @@ traits:
 resourceTypes:
   file:
     get:
-      is: drm
+      is: [ drm ]
       responses:
         201:
           body:
             application/json:
               type: file-type.File
     put:
-      is: drm
+      is: [ drm ]
 
 ```
 
@@ -3075,7 +3075,7 @@ resourceTypes:
 uses:
   files: libraries/files.raml
 get:
-  is: files.drm
+  is: [ files.drm ]
 ```
 
 The following example is not valid because chaining namespaces is not allowed.
@@ -3086,7 +3086,7 @@ The following example is not valid because chaining namespaces is not allowed.
 uses:
   files: libraries/files.raml
 get:
-  is: files.drm
+  is: [ files.drm ]
   responses:
     200:
       body:
