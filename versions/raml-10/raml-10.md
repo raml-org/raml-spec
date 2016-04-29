@@ -426,7 +426,7 @@ A type declaration can extend a built-in type or other custom type, or add more 
 | example? | An example of an instance of this type that can be used, for example, by documentation generators to generate sample values for an object of this type. The "example" property MUST not be available when the "examples" property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | examples? |  An object containing named examples of instances of this type. This can be used, for example, by documentation generators to generate sample values for an object of this type. The "examples" property MUST not be available when the "example" property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | displayName? | An alternate, human-friendly name for the type
-| description? | A substantial, human-friendly description of the type
+| description? | A substantial, human-friendly description of the type. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this type. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | facets? | A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section [User-defined Facets](#user-defined-facets) for more information.
 | xml? | The capability to configure [XML serialization of this type instance](#xml-serialization-of-type-instances).
@@ -1354,7 +1354,7 @@ The map can contain the following additional facets:
 | Facet | Description |
 |:--------|:------------|
 | displayName? | An alternate, human-friendly name for the example. If the example is part of an examples node, the default value is the unique identifier that is defined for this example.
-| description? | A longer, human-friendly description of the example.
+| description? | A substantial, human-friendly description for an example. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this example. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | value | The actual example of a type instance.
 | strict? | Validates the example against any type declaration (the default), or not. Set this to false avoid validation.
@@ -1578,7 +1578,7 @@ The value of a resource property is an object whose properties are described in 
 |Property | Description |
 |:--------|:------------|
 | displayName? | An alternate, human-friendly name for the resource. If the displayName property is not defined for a resource, documentation tools SHOULD refer to the resource by its property key, which acts as the resource name. For example, tools should refer to the relative URI /jobs.
-| description? | A longer, human-friendly description of the resource.
+| description? | A substantial, human-friendly description of a resource. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this resource. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | get?<br>patch?<br>put?<br>post?<br>delete?<br>options?<br>head? | The object describing the [method](#methods).
 | is? | A list of [traits to apply](#applying-resource-types-and-traits) to all methods declared (implicitly or explicitly) for this resource. Individual methods can override this declaration.
@@ -1904,7 +1904,7 @@ The value of a response declaration is an object that can contain any of the fol
 
 |Property | Description |
 |:--------|:------------|
-| description? | A human-friendly description of the response
+| description? | A substantial, human-friendly description of a response. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;) | [Annotations](#annotations) to be applied to this response. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | headers? | Detailed information about any response headers returned by this method
 | body? | The body of the response
@@ -2342,7 +2342,7 @@ The security scheme is declared using the following properties:
 |:----------|:----------|
 | type | The security schemes property that MUST be used to specify the API security mechanisms, including the required settings and the authentication methods that the API supports. One API-supported authentication method is allowed. The value MUST be one of the following methods: OAuth 1.0, OAuth 2.0, Basic Authentication, Digest Authentication, Pass Through, x-&lt;other&gt;
 | displayName? | An alternate, human-friendly name for the security scheme.
-| description? | Information that MAY be used to describe a security scheme.
+| description? | Information that MAY be used to describe a security scheme. Its value is a string and MAY be formatted using [markdown](#markdown).
 | [describedBy?](#describedby) | A description of the following security-related request components determined by the scheme: the headers, query parameters, or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes the API documentation.
 | settings? | The [settings](#settings) attribute MAY be used to provide security scheme-specific information.
 
