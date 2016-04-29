@@ -2412,7 +2412,7 @@ Security schemes of this type have the following properties:
 | requestTokenUri | The URI of the *Temporary Credential Request endpoint* as defined in [RFC5849 Section 2.1](https://tools.ietf.org/html/rfc5849#section-2.1)
 | authorizationUri | The URI of the *Resource Owner Authorization endpoint* as defined in [RFC5849 Section 2.2](https://tools.ietf.org/html/rfc5849#section-2.2)
 | tokenCredentialsUri | The URI of the *Token Request endpoint* as defined in [RFC5849 Section 2.3](https://tools.ietf.org/html/rfc5849#section-2.3)
-| signature | A list of signature methods used by the Authorization server, which can be any of the following: `HMAC-SHA1`, `RSA-SHA1`, or `PLAINTEXT`. If this property is missing, it is assumed that the Authentication server allows any signature method defined in [RFC5849 Section 3.4](https://tools.ietf.org/html/rfc5849#section-3.4).
+| signatures | A list of signature methods used by the Authorization server, which can be any of the following: `HMAC-SHA1`, `RSA-SHA1`, or `PLAINTEXT`. If this property is missing, it is assumed that the Authentication server allows any signature method defined in [RFC5849 Section 3.4](https://tools.ietf.org/html/rfc5849#section-3.4).
 
 OAuth 1.0 authentication follows the standard described in [RFC5849](https://tools.ietf.org/html/rfc5849). The following example shows how to set OAuth 1.0 properties:
 
