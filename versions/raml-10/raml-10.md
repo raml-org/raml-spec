@@ -1134,6 +1134,7 @@ CatOrDog: # follows restrictions applied to the type 'Cat'
   color: "brown"
 ```
 
+<a name="union-multiple-inheritance"/>
 Imagine a more complex example of a union type used in a multiple inheritance type expression:
 
 ```yaml
@@ -1227,26 +1228,55 @@ When referencing an inner element of a schema, a RAML processor MUST validate an
 
 ### Multiple Inheritance
 
-RAML Types support multiple inheritance for object types. This is achieved by passing a sequence of types:
+RAML Types support multiple inheritance. This is achieved by passing a sequence of types:
 
 ```yaml
-#%RAML 1.0
-title: My API With Types
 types:
-  A:
+  Person:
     type: object
-  B:
+    properties:
+      name: string
+  Employee:
     type: object
-  C:
-    type: [ A, B ]
+    properties:
+      employeeNr: integer
+  Teacher:
+    type: [ Person, Employee ]
 ```
 
-Note: Multiple inheritance is only allowed if all Type Expressions are simple object Types.
+In the example above, the type `Teacher` inherits all restrictions from `Person` and `Employee`.
 
-If multiple parent types define a property with the same name:
+Multiple inheritance is allowed only if the sub-type is still a valid type declaration after inheriting all restrictions from its parent types. Also, it is not allowed to inherit from different kind of primitive types, for example `[ number, string ]`.
 
-* The property will be required if at least one of the declarations are required
-* The type of the property will be the narrowest type
+In the following example, the sub-type `Number3` is fully valid:
+
+```yaml
+types:
+  Number1:
+    type: number
+    minimum: 4
+  Number2:
+    type: number
+    maximum: 10
+  Number3: [ Number1, Number2]
+```
+
+Whereas using the same example and only changing the maximum value of type `Number2` from 10 to 2 would result in an invalid type `Number3`.
+
+```yaml
+types:
+  Number1:
+    type: number
+    minimum: 4
+  Number2:
+    type: number
+    maximum: 2
+  Number3: [ Number1, Number2] # invalid, maximum value cannot be less than minimum value
+```
+
+Section [union types](#union-multiple-inheritance) illustrates another example of how to validate types that use multiple inheritance and union types.
+
+If a sub-type inherits properties having the same name from at least two of its parent types, the sub-type keeps all restrictions applied to those properties with two exceptions: 1) a "pattern" facet when a parent type already declares a "pattern" facet 2) a user-defined facet when another user-defined facet has the same value. In these cases, an invalid type declaration occurs.
 
 ### Inline Type Declarations
 
