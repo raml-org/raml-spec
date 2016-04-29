@@ -1134,7 +1134,7 @@ CatOrDog: # follows restrictions applied to the type 'Cat'
   color: "brown"
 ```
 
-<a name="union-multiple-inheritance"/>
+<a name="union-multiple-inheritance"></a>
 Imagine a more complex example of a union type used in a multiple inheritance type expression:
 
 ```yaml
@@ -1205,7 +1205,7 @@ types:
   Board:
     properties:
       members: Person[] # invalid use of type expression '[]' and as a property type
- ```
+```
 
 A RAML Processor MUST be able to interpret and apply JSON Schema and XML Schema.
 
@@ -2439,7 +2439,7 @@ Security schemes of this type have the following properties:
 |:--------|:------------|
 |authorizationUri| The URI of the *Authorization Endpoint* as defined in [RFC6749 Section 3.1](https://tools.ietf.org/html/rfc6749#section-3.1)
 |accessTokenUri| The URI of the *Token Endpoint* as defined in [RFC6749 Section 3.2](https://tools.ietf.org/html/rfc6749#section-3.2)
-|authorizationGrants| A list of the authorization grants supported by the API as defined in RFC6749 Sections [4.1](https://tools.ietf.org/html/rfc6749#section-4.1), [4.2](https://tools.ietf.org/html/rfc6749#section-4.2), [4.3](https://tools.ietf.org/html/rfc6749#section-4.3) and [4.4](https://tools.ietf.org/html/rfc6749#section-4.4), which can be any of the following grants: code, token, owner, or credentials.
+|authorizationGrants| A list of the authorization grants supported by the API as defined in RFC6749 Sections [4.1](https://tools.ietf.org/html/rfc6749#section-4.1), [4.2](https://tools.ietf.org/html/rfc6749#section-4.2), [4.3](https://tools.ietf.org/html/rfc6749#section-4.3) and [4.4](https://tools.ietf.org/html/rfc6749#section-4.4), which can be any of the following grants: `authorization_code`, `password`, `client_credentials`, `implicit`, or `refresh_token`.
 |scopes| A list of scopes supported by the API as defined in [RFC6749 Section 3.3](https://tools.ietf.org/html/rfc6749#section-3.3)
 
 OAuth 2.0 authentication follows the standard described in [RFC6749](https://tools.ietf.org/html/rfc6749). The following example shows how to set OAuth 2.0 properties:
@@ -2951,7 +2951,7 @@ When RAML or YAML files are included, RAML parsers MUST not only read the conten
 * application/yaml
 * application/x-yaml
 
-Otherwise, if RAML parsers fail to parse the content and append structures, the contents of the file are included as a scalar. 
+Otherwise, if RAML parsers fail to parse the content and append structures, the contents of the file are included as a scalar.
 
 Because the parsing context of the included files is not shared between the included file and its parent, an included file SHALL NOT use a YAML reference to an anchor in a separate file. Likewise, a reference made from a parent file SHALL NOT reference a structure anchor defined in an included file. These rules simplify RAML definitions.
 
@@ -3137,7 +3137,7 @@ To apply any combination of overlays and/or extensions, all must share the same 
 
 1. Apply the first overlay or extension to the master RAML document, producing a modified API definition and validating the result in the case of an overlay.
 2. Apply the second overlay or extension to the modified API definition as if the latter were the master RAML document, and again validate the result in the case of an overlay.
-3. Repeat the previous step until the last overlay or extension is applied. 
+3. Repeat the previous step until the last overlay or extension is applied.
 4. Resolve all !include tags before any application of the merging algorithm, validate restrictions on overlays after each overlay is applied, and apply all inheritances of types, resource types, traits, and annotation types.
 
 #### Overlays
