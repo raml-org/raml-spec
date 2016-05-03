@@ -758,12 +758,19 @@ types:
   Email:
     type: object
     properties:
-      name:
-        type: string
+      subject: string
+      body: string
   Emails:
     type: Email[]
     minItems: 1
     uniqueItems: true
+    example: # example that contains array
+      - # start item 1
+        subject: My Email 1
+        body: This is the text for email 1.
+      - # start item 2
+        subject: My Email 2
+        body: This is the text for email 2.  
 ```
 
 ```yaml
@@ -777,7 +784,7 @@ types:
     type: array
     items: Email
     minItems: 1
-    uniqueItems: true
+    uniqueItems: true 
 ```
 
 Using `Email[]` is equivalent to using `type: array`.  The `items` facet defines the `Email` type as the one each array item inherits from.
