@@ -784,7 +784,7 @@ types:
     type: array
     items: Email
     minItems: 1
-    uniqueItems: true 
+    uniqueItems: true
 ```
 
 Using `Email[]` is equivalent to using `type: array`.  The `items` facet defines the `Email` type as the one each array item inherits from.
@@ -934,6 +934,50 @@ types:
     fileTypes: ['*/*'] # any file type allowed
     maxLength: 1048576
 ```
+
+#### Null Type
+​
+In RAML, the type `null` is a scalar type that allows only null data values. Specifically, in YAML it allows only YAML's `null` (or its equivalent representations, such as `~`), in JSON it allows only JSON's `null`, and in XML it allows only XML's `xsi:nil`. In headers, URI parameters, and query parameters, the `null` type only allows the string value "null" (case-sensitive); and in turn an instance having the string value "null" (case-sensitive), when described with the `null` type, deserializes to a null value.
+
+In the following example, the type of an object and has two required properties, `name` and `comment`, both defaulting to type `string`. In `example`, `name` is assigned a string value, but comment is null and this is _not_ allowed because RAML expects a string.
+
+```yaml
+type:
+  properties:
+    name:
+    comment:
+example:
+  name: Fred
+  comment: # Providing no value here is not allowed.
+```
+
+The following example shows the assignment of the `null` type to `comment`:
+
+​
+```yaml
+type:
+  properties:
+    name:
+    comment: null
+example:
+  name: Fred
+  comment: # Providing a value here is not allowed.
+```
+
+The following example shows how to represent nullable properties using a union:
+​
+```yaml
+type:
+  properties:
+    name:
+    comment: null | string # equivalent to ->
+                           # comment: string?
+example:
+  name: Fred
+  comment: # Providing a value or not providing a value here is allowed.
+```
+
+Declaring the type of a property to be `null` represents the lack of a value in a type instance. In a RAML context that requires *values* of type `null` (vs just type declarations), the usual YAML `null` is used, e.g. when the type is `null | number` you may use `enum: [ 1, 2, ~ ]` or more explicitly/verbosely `enum: [ 1, 2, !!null "" ]`; in non-inline notation you can just omit the value completely, of course.
 
 ### User-defined Facets
 
@@ -2655,8 +2699,9 @@ The following example shows various annotation type declarations and the applica
 title: Illustrating annotations
 mediaType: application/json
 annotationTypes:
-  experimental:
-  feedbackRequested:
+  deprecated: null
+  experimental: null | string
+  feedbackRequested: string?
   testHarness:
     type: string # This line can be omitted as it's the default type
   badge:         # This annotation type allows string values, too
@@ -2678,8 +2723,9 @@ annotationTypes:
     level: high
     signature: 230-ghtwvfrs1itr
   get:
+    (deprecated):
     (experimental):
-    (feedbackRequested):
+    (feedbackRequested): Feedback committed!
     responses:
       200:
 ```
