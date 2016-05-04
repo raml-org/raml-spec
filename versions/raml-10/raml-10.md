@@ -426,7 +426,7 @@ A type declaration can extend a built-in type or other custom type, or add more 
 | example? | An example of an instance of this type that can be used, for example, by documentation generators to generate sample values for an object of this type. The "example" property MUST not be available when the "examples" property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | examples? |  An object containing named examples of instances of this type. This can be used, for example, by documentation generators to generate sample values for an object of this type. The "examples" property MUST not be available when the "example" property is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | displayName? | An alternate, human-friendly name for the type
-| description? | A substantial, human-friendly description of the type
+| description? | A substantial, human-friendly description of the type. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this type. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | facets? | A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section [User-defined Facets](#user-defined-facets) for more information.
 | xml? | The capability to configure [XML serialization of this type instance](#xml-serialization-of-type-instances).
@@ -758,12 +758,19 @@ types:
   Email:
     type: object
     properties:
-      name:
-        type: string
+      subject: string
+      body: string
   Emails:
     type: Email[]
     minItems: 1
     uniqueItems: true
+    example: # example that contains array
+      - # start item 1
+        subject: My Email 1
+        body: This is the text for email 1.
+      - # start item 2
+        subject: My Email 2
+        body: This is the text for email 2.  
 ```
 
 ```yaml
@@ -912,9 +919,21 @@ The ​**file**​ type can constrain the content to send through forms. When th
 
 | Facet | Description |
 |:--------|:------------|
-| fileTypes? | A list of valid content-types in `*/*` notation for the file.
+| fileTypes? | A list of valid content-type strings for the file. The file type `*/*` MUST be a valid value.
 | minLength? | Specifies the minimum number of bytes for a parameter value. The value MUST be equal to or greater than 0.<br /><br />**Default:** `0`
 | maxLength? | Specifies the maximum number of bytes for a parameter value. The value MUST be equal to or greater than 0.<br /><br />**Default:** `2147483647`
+
+```yaml
+types:
+  userPicture:
+    type: file
+    fileTypes: ['image/jpeg', 'image/png']
+    maxLength: 307200
+  customFile:
+    type: file
+    fileTypes: ['*/*'] # any file type allowed
+    maxLength: 1048576
+```
 
 #### Null Type
 ​
@@ -977,7 +996,7 @@ Here is an example that defines the capability to restrict dates to those that d
 title: API with Types
 types:
   CustomDate:
-    type: date
+    type: date-only
     facets:
       onlyFutureDates?: boolean # optional  in `PossibleMeetingDate`
       noHolidays: boolean # required in `PossibleMeetingDate`
@@ -1178,6 +1197,7 @@ CatOrDog: # follows restrictions applied to the type 'Cat'
   color: "brown"
 ```
 
+<a name="union-multiple-inheritance"></a>
 Imagine a more complex example of a union type used in a multiple inheritance type expression:
 
 ```yaml
@@ -1248,7 +1268,7 @@ types:
   Board:
     properties:
       members: Person[] # invalid use of type expression '[]' and as a property type
- ```
+```
 
 A RAML Processor MUST be able to interpret and apply JSON Schema and XML Schema.
 
@@ -1256,28 +1276,70 @@ An XML schema, or JSON schema, MUST NOT be used where the media type does not al
 
 The properties "schemas" and "types", as well as "schema" and "type", are mutually exclusive and synonymous for compatibility with RAML 0.8. API definitions should use "types" and "type", as "schemas" and "schema" are deprecated and might be removed in a future RAML version.
 
-### Multiple Inheritance
+#### References to Inner Elements
 
-RAML Types support multiple inheritance for object types. This is achieved by passing a sequence of types:
+Sometimes it is necessary to refer to an element defined in a schema. RAML supports that by using URL fragments as shown in the example below.
 
 ```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  A:
-    type: object
-  B:
-    type: object
-  C:
-    type: [ A, B ]
+type: !include elements.xsd#Foo
 ```
 
-Note: Multiple inheritance is only allowed if all Type Expressions are simple object Types.
+When referencing an inner element of a schema, a RAML processor MUST validate an instance against that particular element. This version of RAML specification supports referencing any inner elements in JSON schemas that are valid schemas, any globally defined elements, and complex types in XML schemas. There are only a few restrictions:
 
-If multiple parent types define a property with the same name:
+* Validation of any XML or JSON instance against inner elements follows the same restrictions as the validation against a regular XML or JSON schema.
+* Referencing complex types inside an XSD is valid to determine the structure of an XML instance, but since complex types do not define a name for the top-level XML element, these types cannot be used for serializing an XML instance.
 
-* The property will be required if at least one of the declarations are required
-* The type of the property will be the narrowest type
+### Multiple Inheritance
+
+RAML Types support multiple inheritance. This is achieved by passing a sequence of types:
+
+```yaml
+types:
+  Person:
+    type: object
+    properties:
+      name: string
+  Employee:
+    type: object
+    properties:
+      employeeNr: integer
+  Teacher:
+    type: [ Person, Employee ]
+```
+
+In the example above, the type `Teacher` inherits all restrictions from `Person` and `Employee`.
+
+Multiple inheritance is allowed only if the sub-type is still a valid type declaration after inheriting all restrictions from its parent types. Also, it is not allowed to inherit from different kind of primitive types, for example `[ number, string ]`.
+
+In the following example, the sub-type `Number3` is fully valid:
+
+```yaml
+types:
+  Number1:
+    type: number
+    minimum: 4
+  Number2:
+    type: number
+    maximum: 10
+  Number3: [ Number1, Number2]
+```
+
+Whereas using the same example and only changing the maximum value of type `Number2` from 10 to 2 would result in an invalid type `Number3`.
+
+```yaml
+types:
+  Number1:
+    type: number
+    minimum: 4
+  Number2:
+    type: number
+    maximum: 2
+  Number3: [ Number1, Number2] # invalid, maximum value cannot be less than minimum value
+```
+
+Section [union types](#union-multiple-inheritance) illustrates another example of how to validate types that use multiple inheritance and union types.
+
+If a sub-type inherits properties having the same name from at least two of its parent types, the sub-type keeps all restrictions applied to those properties with two exceptions: 1) a "pattern" facet when a parent type already declares a "pattern" facet 2) a user-defined facet when another user-defined facet has the same value. In these cases, an invalid type declaration occurs.
 
 ### Inline Type Declarations
 
@@ -1343,7 +1405,7 @@ The map can contain the following additional facets:
 | Facet | Description |
 |:--------|:------------|
 | displayName? | An alternate, human-friendly name for the example. If the example is part of an examples node, the default value is the unique identifier that is defined for this example.
-| description? | A longer, human-friendly description of the example.
+| description? | A substantial, human-friendly description for an example. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this example. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | value | The actual example of a type instance.
 | strict? | Validates the example against any type declaration (the default), or not. Set this to false avoid validation.
@@ -1567,7 +1629,7 @@ The value of a resource property is an object whose properties are described in 
 |Property | Description |
 |:--------|:------------|
 | displayName? | An alternate, human-friendly name for the resource. If the displayName property is not defined for a resource, documentation tools SHOULD refer to the resource by its property key, which acts as the resource name. For example, tools should refer to the relative URI /jobs.
-| description? | A longer, human-friendly description of the resource.
+| description? | A substantial, human-friendly description of a resource. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this resource. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | get?<br>patch?<br>put?<br>post?<br>delete?<br>options?<br>head? | The object describing the [method](#methods).
 | is? | A list of [traits to apply](#applying-resource-types-and-traits) to all methods declared (implicitly or explicitly) for this resource. Individual methods can override this declaration.
@@ -1695,7 +1757,7 @@ RESTful API methods are operations that are performed on a resource. The OPTIONA
 
 ### Headers
 
-An API's methods may support or require various HTTP headers. The OPTIONAL **headers** property is used to explicitly specify those headers. The value of the headers property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a header **declaration**. The name of each such property specifies an allowed header name, while its value specifies the header value's type, as the name of a type or an inline type declaration.
+An API's methods can support or require various HTTP headers. The OPTIONAL **headers** property is used to explicitly specify those headers. The value of the headers property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is a header **declaration**. Each property name specifies an allowed header name. Each property value specifies the header value type as a type name or an inline type declaration.
 
 The following simple example shows a post method with a single HTTP header named Zencoder-Api-Key of (implied) string type.
 
@@ -1712,15 +1774,15 @@ baseUri: https://app.zencoder.com/api/{version}
         description: The API key needed to create a new job
 ```
 
-If a header declaration specifies an array type for the value of the header, processors MUST interpret this as allowing multiple instances of that header in the request or response, as appropriate. In such a case, the underlying type of the array -- namely, the type of the elements of the array -- MUST be applied as the type of the value of instances of this header.
+If a header declaration specifies an array type for the value of the header, processors MUST allow multiple instances of that header in the request or response. In this case, the type of the array elements MUST be applied as the type of the value of header instances.
 
-If a header declaration specifies a non-array type for the value of the header (or doesn't specify a type, which is equivalent to specifying a string type), processors MUST interpret this as disallowing multiple instances of that header in the request or response, as appropriate.
+If a header declaration specifies a non-array type for the value of the header, or doesn't specify a type (equivalent to specifying a string type), processors MUST disallow multiple instances of that header in the request or response.
 
-If a header declaration specifies an object type or a union of non-scalar types for the value of the header, or if it specifies an array type for the value of the header and the underlying type of the array is an object or array type or a union of non-scalar types, then validation is not defined by RAML; processors MAY default to treating the format of the header value as JSON in applying the type to instances of that header, or they MAY allow other treatments based on annotations.
+RAML does not define validation when a header declaration specifies any of the following types for the value of the header: an object type, a union of non-scalar types, or an array type if the underlying type of the array is an object type, array type, or a union of non-scalar types. Processors MAY default to treating the format of the header value as JSON in applying the type to instances of that header, or they MAY allow other treatments based on annotations.
 
-Note that some headers may also be added by the intermediate client- and server-side systems such as a browser or a proxy.
+Some headers can also be added by the intermediate client- and server-side systems, such as a browser or a proxy.
 
-The following example illustrates inheriting headers from a trait, allowing multiple instances of a header, specifying examples, and overriding them when they're applied to a method and a resource.
+The following example illustrates inheriting headers from a trait, allowing multiple instances of a header, specifying examples, and overriding the headers when applied to a method and a resource.
 
 ```yaml
 #%RAML 1.0
@@ -1732,7 +1794,7 @@ traits:
         type: array
         description: |
           A department code to be charged.
-          Multiple such headers are allowed.
+          Multiple of such headers are allowed.
         items:
           pattern: ^\d+\-\w+$
           example: 230-OCTO
@@ -1761,17 +1823,17 @@ traits:
 
 ### Query Strings and Query Parameters
 
-An API's methods may support or require a query string in the URL on which they are invoked. The query string in a URL is defined in [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) as the part of the URL following the question mark separator ("?") and preceding any fragment ("#") separator. The query string may be specified either by the OPTIONAL **queryString** property or by the OPTIONAL **queryParameters** property. The queryString and queryParameters properties are mutually exclusive: processors MUST NOT allow both to be specified (explicitly or implicitly) on the same method of the same resource.
+An API method can support or require a query string in the URL on which the method is invoked. The query string in a URL is defined in [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) as the part of the URL following the question mark separator ("?") and preceding any fragment ("#") separator. The query string can be specified either by the OPTIONAL **queryString** property or by the OPTIONAL **queryParameters** property. The queryString and queryParameters properties are mutually exclusive: processors MUST NOT allow both to be specified, explicitly or implicitly, on the same method of the same resource.
 
 #### The Query String as a Whole
 
-The queryString property is used to specify the query string as a whole, rather than as name-value pairs. Its value is either the name of a data type or an inline data type declaration (including a data type expression). In either case the types at the root of the type hierarchy of the data type MUST all be either a scalar type or the object type, after fully expanding any union type expressions at every level of the type hierarchy.
+The queryString property is used to specify the query string as a whole, rather than as name-value pairs. The queryString value is either the name of a data type or an inline data type declaration, including a data type expression. In either case, all types at the root of the type hierarchy of the data type MUST be either a scalar type or the object type, after fully expanding any union type expressions at every level of the type hierarchy.
 
 If the type is derived from a scalar type, the query string as a whole MUST be described by the type.
 
-If the type is derived from an object type, processors MUST regard the query string as a URL-encoded serialization of an instance of this object type; that is, the query string must be of the form "parameter1=value1&parameter2=value2&..." where "parameter1", "parameter2", etc. correspond to the properties in the object type, and the values to the corresponding value specifications in the object type. If a value of a property in the object type is an array type, processors MUST interpret this as allowing multiple instances of that query parameter in the query string. In such a case, the underlying type of the array -- namely, the type of the elements of the array -- MUST be applied as the type of the value of instances of this query parameter.
+If the type is derived from an object type, processors MUST regard the query string as a URL-encoded serialization of an instance of this object type. The query string must be of the form "parameter1=value1&parameter2=value2&...", where "parameter1", "parameter2", and so on correspond to properties in the object type. Likewise, "value1", "value2", and so on correspond to value specifications in the object type. If a value of a property in the object type is an array type, processors MUST allow multiple instances of that query parameter in the query string. In such a case, the type of the elements of the array MUST be applied as the type of the value of instances of this query parameter.
 
-In the following example, union types and extending from multiple types are used to constrain the query parameters to specific alternatives:
+In the following example, union types and extended multiple types are used to constrain the query parameters to specific alternatives:
 
 ```yaml
 #%RAML 1.0
@@ -1812,17 +1874,17 @@ types:
 
 #### Query Parameters in a Query String
 
-The queryParameters property is used to specify the set of query parameters from which the query string is composed. Processors MUST regard the query string as a set of query parameters according to the URL encoding format when applying the restrictions in the API definition. The value of the queryParameters property is an object, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **query parameter declaration**. The name of each such property specifies an allowed query parameter name, while its value specifies the query parameter value's type, as the name of a type or an inline type declaration.
+The queryParameters property specifies the set of query parameters from which the query string is composed. When applying the restrictions defined by the API, processors MUST regard the query string as a set of query parameters according to the URL encoding format. The value of the queryParameters property is a [properties declaration](#property-declarations) object, as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **query parameter declaration**. Each property name specifies an allowed query parameter name. Each property value specifies the query parameter value type as the name of a type or an inline type declaration.
 
-If a query parameter declaration specifies an array type for the value of the query parameter, processors MUST interpret this as allowing multiple instances of that query parameter in the request or response, as appropriate. In such a case, the underlying type of the array -- namely, the type of the elements of the array -- MUST be applied as the type of the value of instances of this query parameter.
+If a query parameter declaration specifies an array type for the value of the query parameter, processors MUST allow multiple instances of that query parameter in the request or response. In this case, the type of the elements of the array MUST be applied as the type of the value of query parameter instances.
 
-If a query parameter declaration specifies a non-array type for the value of the query parameter (or doesn't specify a type, which is equivalent to specifying a string type), processors MUST interpret this as disallowing multiple instances of that query parameter in the request.
+If a query parameter declaration specifies a non-array type for the value of the query parameter, or doesn't specify a type (equivalent to specifying a string type), processors MUST disallow multiple instances of that query parameter in the request.
 
-If a query parameter declaration specifies an object type or a union of non-scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is an object type or union of non-scalar types, then processors MUST default to treating the format of the query parameter value as JSON in applying the type to instances of that query parameter.
+RAML does not define validation when a query parameter declaration specifies any of the following types for the value of the query parameter: an object type, a union of non-scalar types, or an array type if the underlying type of the array is an object type or union of non-scalar types. Processors MAY default to treating the format of the query parameter value as JSON in applying the type to instances of that query parameter, or they MAY allow other treatments based on annotations.
 
-If a query parameter declaration specifies a non-string scalar type or union of non-string scalar types for the value of the query parameter, or if it specifies an array type for the value of the query parameter and the underlying type of the array is a non-string scalar type or union of non-string scalar types, the standard serialization rules for types MUST be invoked in applying the type to instances of that query parameter.
+The standard serialization rules for types MUST be invoked in applying the type to instances of a query parameter if the query parameter definition specifies the value of the query parameter as any of the following types: a non-string scalar type, a union of non-string scalar types, or an array type if the underlying type of the array is a non-string scalar type or union of non-string scalar types.
 
-The following example shows a get method that uses HTTP query parameters; it will be sent to https://api.github.com/v3/users?page=1&per_page=50 (assuming the example values are used).
+The following example shows a get method that uses HTTP query parameters. Using example values sends a request to https://api.github.com/v3/users?page=1&per_page=50.
 
 
 ```yaml
@@ -1893,7 +1955,7 @@ The value of a response declaration is an object that can contain any of the fol
 
 |Property | Description |
 |:--------|:------------|
-| description? | A human-friendly description of the response
+| description? | A substantial, human-friendly description of a response. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;) | [Annotations](#annotations) to be applied to this response. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 | headers? | Detailed information about any response headers returned by this method
 | body? | The body of the response
@@ -2312,35 +2374,33 @@ RAML supports the following built-in security scheme types:
 
 |Type       |Description|
 |:----------|:----------|
-|OAuth 1.0  | The API's authentication requires using OAuth 1.0 as described in [RFC5849](https://tools.ietf.org/html/rfc5849)
-|OAuth 2.0  | The API's authentication requires using OAuth 2.0 as described in [RFC6749](https://tools.ietf.org/html/rfc6749)
-|Basic Authentication| The API's authentication relies on using Basic Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
-|Digest Authentication| The API's authentication relies on using Digest Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
-|Pass Through| Headers or Query Parameters are passed through to the API based on a defined mapping.
-|x-{other}| The API's authentication relies on another authentication method.
+|OAuth 1.0  | The API authentication requires using OAuth 1.0 as described in [RFC5849](https://tools.ietf.org/html/rfc5849)
+|OAuth 2.0  | The API authentication requires using OAuth 2.0 as described in [RFC6749](https://tools.ietf.org/html/rfc6749)
+|Basic Authentication| The API authentication relies on using Basic Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
+|Digest Authentication| The API authentication relies on using Digest Access Authentication as described in [RFC2617](https://tools.ietf.org/html/rfc2617)
+|Pass Through| Headers or query parameters are passed through to the API based on a defined mapping.
+|x-{other}| The API authentication relies on another authentication method.
 
-A processing application's developers MAY provide support for these mechanisms. If a mechanism is supported, it MUST conform to the specified standard.
+A processing application developer MAY provide support for these mechanisms. If a mechanism is supported, it MUST conform to the specified standard.
 
-Additionally, any security scheme definition may be augmented with a describedBy property, which allows the designer to document the API's security scheme.
+Additionally, any security scheme definition may be augmented with a describedBy property, which allows the designer to document the API security scheme.
 
 ### Security Scheme Declaration
 
-Security scheme is declared as follows:
+The security scheme is declared using the following properties:
 
 |Property   |Description|
 |:----------|:----------|
-| type | The security schemes property MUST be used to specify an API's security mechanisms, including the required settings and the authentication methods that the API supports. one authentication method is allowed if the API supports them. The value MUST be one of the following: OAuth 1.0, OAuth 2.0, Basic Authentication, Digest Authentication, Pass Through, x-&lt;other&gt;
+| type | The security schemes property that MUST be used to specify the API security mechanisms, including the required settings and the authentication methods that the API supports. One API-supported authentication method is allowed. The value MUST be one of the following methods: OAuth 1.0, OAuth 2.0, Basic Authentication, Digest Authentication, Pass Through, x-&lt;other&gt;
 | displayName? | An alternate, human-friendly name for the security scheme.
-| description? | The description MAY be used to describe a security scheme.
-| describedBy? | A description of the request components related to Security that are determined by the scheme: the headers, query parameters or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes an API documentation. See explanation about [describedBy](#describedby) for more information.
-| settings? | The settings attribute MAY be used to provide security scheme-specific information. The required attributes vary depending on the type of security scheme is being declared. It describes the minimum set of properties which any processing application MUST provide and validate if it chooses to implement the security scheme. Processing applications MAY choose to recognize other properties for things such as token lifetime, preferred cryptographic algorithms, and more. See explanation about [settings](#settings) for more information.
+| description? | Information that MAY be used to describe a security scheme. Its value is a string and MAY be formatted using [markdown](#markdown).
+| [describedBy?](#describedby) | A description of the following security-related request components determined by the scheme: the headers, query parameters, or responses. As a best practice, even for standard security schemes, API designers SHOULD describe these properties of security schemes. Including the security scheme description completes the API documentation.
+| settings? | The [settings](#settings) attribute MAY be used to provide security scheme-specific information.
 
-An optional **securitySchemes** property is defined for RAML document root.
+An optional **securitySchemes** property is defined for the RAML document root. The value of securitySchemes is an object having properties that map security scheme names to security scheme declarations.
+Each authentication pattern supported by the API must be expressed as a component of the **securitySchemes** property value.
 
-As value it has an object whose properties map security scheme names to security scheme declarations.
-Each authentication pattern supported by the API must be expressed as component of **securitySchemes** property value.
-
-In this example, the Dropbox API supports authentication via OAuth 2.0 and OAuth 1.0:
+In this example, the Dropbox API supports authentication using OAuth 2.0 and OAuth 1.0:
 ```yaml
 #%RAML 1.0
 title: Dropbox API
@@ -2361,15 +2421,15 @@ securitySchemes:
       queryParameters:
         access_token:
           description: |
-             Used to send a valid OAuth 2 access token. Do not use together with
-             the "Authorization" header
+             Used to send a valid OAuth 2 access token. Do not use with
+             the "Authorization" header.
           type: string
       responses:
         401:
           description: |
               Bad or expired token. This can happen if the user or Dropbox
-              revoked or expired an access token. To fix, you should re-
-              authenticate the user.
+              revoked or expired an access token. To fix, re-authenticate
+              the user.
         403:
           description: |
               Bad OAuth request (wrong consumer key, bad nonce, expired
@@ -2394,58 +2454,58 @@ The value of the **describedBy** property is defined as follows:
 
 |Property   |Description|
 |:----------|:----------|
-| headers? | Optional array of headers, documenting the possible headers that could be accepted. See section [Headers](#headers) for more information.
-| queryParameters? | Query parameters, used by the schema in order to authorize the request. Mutually exclusive with queryString. See section [Query Strings and Query Parameters](#query-strings-and-query-parameters) for more information.
-| queryString? | Specifies the query string, used by the schema in order to authorize the request. Mutually exclusive with queryParameters. See section [Query Strings and Query Parameters](#query-strings-and-query-parameters) for more information.
-| responses? | Optional array of responses, describing the possible responses that could be sent. See section [Responses](#responses) for more information.
-| (&lt;annotationName&gt;)? | Annotations to be applied to this security scheme part. Annotations are any property whose key begins with "(" and ends with ")" and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
+| headers? | Optional array of [Headers](#headers), documenting the possible headers that could be accepted.
+| queryParameters? | Query parameters, used by the schema to authorize the request. Mutually exclusive with [queryString](#query-strings-and-query-parameters).
+| queryString? | The query string used by the schema to authorize the request. Mutually exclusive with [queryParameters](#query-strings-and-query-parameters).
+| responses? | An optional array of [responses](#responses), representing the possible responses that could be sent.
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this part of the security scheme. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
 
 #### Settings
 
-The settings attribute MAY be used to provide security scheme specific information. The required attributes vary depending on the type of security scheme is being declared.
+The settings attribute MAY be used to provide security scheme-specific information. The required attributes vary depending on which type of security scheme is declared.
 
-It describes the minimum set of properties which any processing application MUST provide and validate if it chooses to implement the security scheme. Processing applications MAY choose to recognize other properties for things such as token lifetime, preferred cryptographic algorithms, and more.
+The settings attribute describes the minimum set of properties that any processing application MUST provide and validate if it chooses to implement the security scheme. Processing applications MAY choose to recognize other properties for token lifetime, preferred cryptographic algorithms, and other things.
 
 ##### OAuth 1.0
 
-Security schemes of this type have specific settings object:
+Security schemes of this type have the following properties:
 
 |Property |Description |
 |:--------|:------------|
-|requestTokenUri| The URI of the *Temporary Credential Request endpoint* as defined in [RFC5849 Section 2.1](https://tools.ietf.org/html/rfc5849#section-2.1)
-|authorizationUri| The URI of the *Resource Owner Authorization endpoint* as defined in [RFC5849 Section 2.2](https://tools.ietf.org/html/rfc5849#section-2.2)
-|tokenCredentialsUri| The URI of the *Token Request endpoint* as defined in [RFC5849 Section 2.3](https://tools.ietf.org/html/rfc5849#section-2.3)
+| requestTokenUri | The URI of the *Temporary Credential Request endpoint* as defined in [RFC5849 Section 2.1](https://tools.ietf.org/html/rfc5849#section-2.1)
+| authorizationUri | The URI of the *Resource Owner Authorization endpoint* as defined in [RFC5849 Section 2.2](https://tools.ietf.org/html/rfc5849#section-2.2)
+| tokenCredentialsUri | The URI of the *Token Request endpoint* as defined in [RFC5849 Section 2.3](https://tools.ietf.org/html/rfc5849#section-2.3)
+| signatures | A list of signature methods used by the Authorization server, which can be any of the following: `HMAC-SHA1`, `RSA-SHA1`, or `PLAINTEXT`. If this property is missing, it is assumed that the Authentication server allows any signature method defined in [RFC5849 Section 3.4](https://tools.ietf.org/html/rfc5849#section-3.4).
 
-OAuth 1.0 authentication follows the standard described in [RFC5849](https://tools.ietf.org/html/rfc5849). The following is an example:
+OAuth 1.0 authentication follows the standard described in [RFC5849](https://tools.ietf.org/html/rfc5849). The following example shows how to set OAuth 1.0 properties:
 
 ```yaml
 #%RAML 1.0
-title: Dropbox API
-version: 1
-baseUri: https://api.dropbox.com/{version}
+title: My Sample API
 securitySchemes:
   oauth_1_0:
-    description: |
+    description:|
       OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
     type: OAuth 1.0
     settings:
-      requestTokenUri: https://api.dropbox.com/1/oauth/request_token
-      authorizationUri: https://www.dropbox.com/1/oauth/authorize
-      tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+      requestTokenUri: https://api.mysampleapi.com/1/oauth/request_token
+      authorizationUri: https://api.mysampleapi.com/1/oauth/authorize
+      tokenCredentialsUri: https://api.mysampleapi.com/1/oauth/access_token
+      signatures: [ 'HMAC-SHA1', 'PLAINTEXT' ]
 ```
 
 ##### OAuth 2.0
 
-Security schemes of this type has specific settings object:
+Security schemes of this type have the following properties:
 
 |Property |Description |
 |:--------|:------------|
-|authorizationUri| The URI of the *Authorization Endpoint* as defined in [RFC6749 Section 3.1](https://tools.ietf.org/html/rfc6749#section-3.1)
-|accessTokenUri| The URI of the *Token Endpoint* as defined in [RFC6749 Section 3.2](https://tools.ietf.org/html/rfc6749#section-3.2)
-|authorizationGrants| A list of the Authorization grants supported by the API As defined in RFC6749 Sections [4.1](https://tools.ietf.org/html/rfc6749#section-4.1), [4.2](https://tools.ietf.org/html/rfc6749#section-4.2), [4.3](https://tools.ietf.org/html/rfc6749#section-4.3) and [4.4](https://tools.ietf.org/html/rfc6749#section-4.4), can be any of: code, token, owner or credentials.
+|authorizationUri| The URI of the *Authorization Endpoint* as defined in [RFC6749 Section 3.1](https://tools.ietf.org/html/rfc6749#section-3.1). Providing an Authorization Endpoint is only mandatory using either the `authorization_code` or `implicit` grant type. It is not mandatory for any other.
+|accessTokenUri| The URI of the *Token Endpoint* as defined in [RFC6749 Section 3.2](https://tools.ietf.org/html/rfc6749#section-3.2).
+|authorizationGrants| A list of the authorization grants supported by the API as defined in RFC6749 Sections [4.1](https://tools.ietf.org/html/rfc6749#section-4.1), [4.2](https://tools.ietf.org/html/rfc6749#section-4.2), [4.3](https://tools.ietf.org/html/rfc6749#section-4.3) and [4.4](https://tools.ietf.org/html/rfc6749#section-4.4), which can be either any of the following grants: `authorization_code`, `password`, `client_credentials`, or `implicit`; or any absolute URI as defined in section [4.5](defined in https://tools.ietf.org/html/rfc6749#section-4.5).
 |scopes| A list of scopes supported by the API as defined in [RFC6749 Section 3.3](https://tools.ietf.org/html/rfc6749#section-3.3)
 
-OAuth 2.0 authentication follows the standard described in [RFC6749](https://tools.ietf.org/html/rfc6749). The following is an example:
+OAuth 2.0 authentication follows the standard described in [RFC6749](https://tools.ietf.org/html/rfc6749). The following example shows how to set OAuth 2.0 properties:
 
 ```yaml
 #%RAML 1.0
@@ -2467,15 +2527,15 @@ securitySchemes:
       queryParameters:
         access_token:
           description: |
-             Used to send a valid OAuth 2 access token. Do not use together with
-             the "Authorization" header
+             Used to send a valid OAuth 2 access token. Do not use with
+             the "Authorization" header.
           type: string
       responses:
         401:
           description: |
               Bad or expired token. This can happen if the user or Dropbox
-              revoked or expired an access token. To fix, you should re-
-              authenticate the user.
+              revoked or expired an access token. To fix, re-authenticate
+              the user.
         403:
           description: |
               Bad OAuth request (wrong consumer key, bad nonce, expired
@@ -2483,7 +2543,7 @@ securitySchemes:
     settings:
       authorizationUri: https://www.dropbox.com/1/oauth2/authorize
       accessTokenUri: https://api.dropbox.com/1/oauth2/token
-      authorizationGrants: [ authorization_code, refresh_token ]
+      authorizationGrants: [ authorization_code, refresh_token, 'urn:ietf:params:oauth:grant-type:saml2-bearer' ]
 ```
 
 ##### Basic Authentication
@@ -2520,7 +2580,7 @@ securitySchemes:
 
 ##### Pass Through
 
-Pass Through authentication does not have any specific settings defined and the implementation is known to RAML. One MUST provide a value for every header or queryParameter defined in describedBy, and passed along with the request without modification. The following is an example:
+Pass through authentication does not have any specific settings defined and the implementation is known to RAML. You MUST provide a value for every header or queryParameter defined in describedBy and passed along with the request without modification. The following example shows how to provide these values:
 
 ```yaml
 #%RAML 1.0
@@ -2543,7 +2603,7 @@ securitySchemes:
 
 ##### x-&lt;other&gt;
 
-x-&lt;other&gt; authentication methods do not have any specific settings defined, as their implementation is unknown as a standard for RAML. These security schemes may only include a description and a describedBy section, to allow documentation of the intended use of the security scheme. The following is an example:
+x-&lt;other&gt; authentication methods do not have any specific settings defined, as the implementation of these methods is unknown as a standard to RAML. These security schemes might include only the description and describedBy sections to allow documentation of the intended use of the security scheme. The following example shows such a security scheme:
 
 ```yaml
 #%RAML 1.0
@@ -2570,10 +2630,9 @@ securitySchemes:
 
 #### Applying Security Schemes
 
-The **securedBy** attribute of RAML document root may be used to apply security schemes to every method of API. This specifies that all methods in the API (unless they have their own securedBy attribute) can be authenticated by any mentioned security scheme.
+The **securedBy** attribute in the RAML document root can apply security schemes to every method of the API. All API methods, except those having their own securedBy attribute, can be authenticated by any of the specified security schemes.
 
-Applying a security scheme to a method overrides whichever security scheme has been applied to the API as whole.
-To indicate that the method is protected using a specific security scheme, the method MUST be defined by using the **securedBy** attribute.
+Applying a security scheme to a method overrides any security scheme applied to the API as a whole. To indicate that a method is protected using a specific security scheme, the method MUST be defined by using the **securedBy** attribute.
 
 The value assigned to the securedBy attribute MUST be a list of any of the security schemes previously defined in the **securitySchemes** property of RAML document root.
 
@@ -2591,7 +2650,7 @@ securitySchemes:
     securedBy: [oauth_2_0, oauth_1_0]
 ```
 
-To indicate that the method may be called without applying any security scheme, the method may be provided with securedBy attribute containing null as array component.
+A securedBy attribute containing null as the array component indicates the method can be called without applying any security scheme.
 
 ```yaml
 #%RAML 1.0
@@ -2605,13 +2664,13 @@ securitySchemes:
     securedBy: [null, oauth_2_0]
 ```
 
-A resource can also be applied a list of security schemes using the **securedBy** attribute. This specifies that all methods of this particular resource (unless they have their own securedBy attribute) can be authenticated by any mentioned security scheme. Value of resources attribute overrides that of the root attribute. Security Schemes applied to a resource MUST NOT incorporate nested resources; they do not apply to its existing nested resources.
+The **securedBy** attribute can also apply a list of security schemes to a resource. All resource methods, except those having their own securedBy attribute, can be authenticated by any of the specified security schemes. The value of the resources attribute overrides that of the root attribute. Security schemes applied to a resource MUST NOT incorporate nested resources; security schemes do not apply to existing nested resources.
 
-Applying a security scheme to a method overrides security schemes applied to the API and resources having the method as sibling.
+Applying a security scheme to a method overrides security schemes applied to the API and to resources having the method as a sibling.
 
 If the processing application supports custom properties, custom parameters can be provided to the security scheme at the moment of inclusion in a method.
 
-In the following example, the parameter **scopes** is being assigned:
+The following example assigns a value to the parameter **scopes**:
 
 ```yaml
 #%RAML 1.0
@@ -2625,15 +2684,15 @@ securitySchemes:
     securedBy: [null, oauth_2_0: { scopes: [ ADMINISTRATOR ] } ]
 ```
 
-The list of parameters that must and may be provided to the security scheme is specified by the security scheme type.
+The list of required and optional parameters to be provided to the security scheme is specified by the security scheme type.
 
 ## Annotations
 
-Annotations provide a mechanism to extend the API specification with metadata beyond the metadata already defined in this RAML 1.0 specification. Annotations can also be regarded as a mechanism to add properties to the built-in RAML properties in certain locations within the RAML specification. Processors MAY support certain annotations to add additional specificity to the API description, enable tooling such as testing, support API repositories and API discovery, and so on. Processors MAY ignore any and all annotations.
+Annotations provide a mechanism to extend the API specification with metadata beyond the metadata already defined in this RAML 1.0 specification. Annotations can also be used to add properties to the built-in RAML properties in certain locations within the RAML specification. Processors MAY support certain annotations to add additional specificity to the API description, enable tooling such as testing, support API repositories and API discovery, and so on. Processors MAY ignore any and all annotations.
 
-Annotations used in an API specification MUST be declared in a root-level annotationTypes property. Annotations can have values, which are defined and constrained in annotation type declarations. Processors can then rely on the declarations to ensure annotation values are as expected.
+Annotations used in an API specification MUST be declared in a root-level annotationTypes property. Annotations can have values, which are defined and constrained in annotation type declarations. Processors can then rely on the declarations to ensure annotation values meet expectations.
 
-The following is an example of various annotation type declarations and the application of the annotations to an API definition.
+The following example shows various annotation type declarations and the application of the annotations to an API definition.
 
 ```yaml
 #%RAML 1.0
@@ -2644,8 +2703,8 @@ annotationTypes:
   experimental: null | string
   feedbackRequested: string?
   testHarness:
-    type: string # This line may be omitted as it's the default type
-  badge:          # This annotation type, too, allows string values
+    type: string # This line can be omitted as it's the default type
+  badge:         # This annotation type allows string values, too
   clearanceLevel:
     properties:
       level:
@@ -2671,33 +2730,33 @@ annotationTypes:
       200:
 ```
 
-Annotations applied to a data type are not inherited when that data type is inherited. However, processors SHOULD make the information about the annotations in the data type hierarchy available. Annotations applied to, or applied within, a resource type or trait are also applied to the resource type or resource or method that inherits it. In particular, if a trait is applied to a resource type or resource, all annotations on or within that trait are applied implicitly to all methods of that resource. If the inheriting resource type or resource or method directly (explicitly) apply an annotation of a given type, then this annotation overrides all applications of that annotation type which would otherwise have been inherited and implicitly applied. In particular, if a trait is applied to a resource type or resource, and the resource type or resource apply an annotation of some type, then any and all applications of annotations of that type to that trait are overridden.
+Annotations applied to a data type are not inherited when that data type is inherited. However, processors SHOULD make the information about the annotations in the data type hierarchy available. Annotations applied to, or within, a resource type or trait are also applied to the resource type, resource, or method that inherits the resource type or trait. In particular, if a trait is applied to a resource type or resource, all annotations on or within that trait are applied implicitly to all methods of that resource. If the inheriting resource type, resource, or method explicitly applies an annotation of a given type, then this annotation overrides all applications of that annotation type which would otherwise have been inherited and implicitly applied. In particular, if a trait is applied to a resource type or resource, and the resource type or resource applies an annotation of some type, then any and all applications of annotations of that type to that trait are overridden.
 
 ### Declaring Annotation Types
 
-Annotation types are declared using the OPTIONAL root-level **annotationTypes** property. The value of the annotationsType property is an object whose keys define annotation type names, also referred to as annotations, and whose values are objects called annotation type declarations. An annotation type declaration has the same syntax as a data type declaration, and its facets have the same syntax as the corresponding ones for data types, but with the addition of the allowedTargets facet. Just as a data type declaration constrains the value of a URI parameter, query parameter, header, or body of that type, so an annotation type declaration constrains the value of an annotation of that type. The allowedTargets facet restricts at which kinds of locations the annotation may be applied. Annotation types, like data types, may extend other data types, but annotation types may not themselves be extended nor used anywhere data types may be used.
+Annotation types are declared using the OPTIONAL root-level **annotationTypes** property. The value of the annotationsType property is an object whose keys define annotation type names, also referred to as annotations, and whose values are objects called annotation type declarations. An annotation type declaration has the same syntax as a data type declaration, and its facets have the same syntax as the corresponding ones for data types, but with the addition of the allowedTargets facet. An annotation type declaration constrains the value of an annotation of that type just as a data type declaration constrains the value of a URI parameter, query parameter, header, or body of that type. The allowedTargets facet restricts the kinds of locations where the annotation can be applied. Annotation types, like data types, can extend other data types, but annotation types themselves can neither be extended nor used anywhere data types can be used.
 
 |Property |Description |
 |:--------|:------------|
-| displayName? | The displayName attribute specifies the $self's display name. It is a friendly name used only for display or documentation purposes. If displayName is not specified, it defaults to the element's key (the name of the property itself).
-| description? | The description attribute describes the intended use or meaning of an annotation. Its value is a string and MAY be formatted using [markdown](#markdown).
-| (&lt;annotationName&gt;)? | Annotations to be applied to this annotation type. Annotations are any property whose key begins with “(“ and ends with “)” and whose name (the part between the beginning and ending parentheses) is a declared annotation name. See section [Annotations](#annotations) for more information.
-| allowedTargets? | Restrictions on where annotations of this type can be applied. If this property is specified, annotations of this type may only be applied on a property corresponding to one of the target names specified as the value of this property. Value MUST be one or more of the options described in table [Annotation Target Location](#annotation-target-location).
+| displayName? | A friendly name used only for display or documentation purposes. The default is the element key, the name of the property itself.
+| description? | The intended use or meaning of an annotation. A string that MAY be formatted using [markdown](#markdown).
+| (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this annotation type. An annotation is a property having a key that begins with "(" and ends with ")". The text enclosed in parentheses is the annotation name.
+| allowedTargets? | The locations to which annotations are restricted. If this property is specified, annotations of this type may be applied only on a property corresponding to one of the locations. The value MUST be one or more of the options described in the [Target Locations](#annotation-target-location).
 
-If an annotation type declaration specifies neither a type facet nor a properties facet, then it defaults to a type of string.
+If an annotation type declaration specifies neither a type facet nor a properties facet, the default annotationName type is string.
 
 All annotations used in an API specification MUST be declared in its annotationTypes property. Any value of an annotation MUST be valid according to its annotation type.
 
-If the allowedTargets property is not present, then the annotation may be applied in any of the target locations listed in the Target Locations table below. If the allowedTargets property is present, it restricts where the annotation may be applied, as described in the section below.
+If the allowedTargets property is not present, the annotation can be applied in any of the target locations listed in the Target Locations table. If the allowedTargets property is present, it restricts where the annotation can be applied, as described in [Annotation Targets](#annotation-targets).
 
 
 ### Applying Annotations
 
-For an annotation to be applied in an API specification, the annotation MUST be declared in an annotation type.
+To be applied in an API specification, the annotation MUST be declared in an annotation type.
 
-A declared annotation may be applied to an object in the specification by adding a property on that object whose key is the name of the annotation type enclosed in parentheses, and whose value is called an annotation value and MUST be valid according to the corresponding annotation type.
+A declared annotation can be applied to an object in the specification by adding a property on that object whose key is the name of the annotation type enclosed in parentheses. The annotation value MUST be valid according to the corresponding annotation type.
 
-The example below, a small subset of the previous example, shows an explicit declaration and use of a testHarness annotation whose value should be a string.
+The example below, a small subset of the previous example, shows an explicit declaration and use of a testHarness annotation that should be a string value.
 
 ```yaml
 #%RAML 1.0
@@ -2710,7 +2769,7 @@ annotationTypes:
   (testHarness): usersTest
 ```
 
-The following is semantically equivalent but relies on the implicit default declaration of the value type when there is no explicit type declaration.
+The following example is semantically equivalent to the previous one, but relies on the implicit, default declaration of the value type when there is no explicit type declaration.
 
 ```yaml
 #%RAML 1.0
@@ -2724,22 +2783,22 @@ annotationTypes:
 
 #### Annotating Scalar-valued Nodes
 
-It is often useful to annotate scalar-valued nodes, e.g. `baseUri`. Since annotations are applied as extra key-value pairs to nodes that accept key-value pairs already (i.e. map-valued nodes), they cannot be easily applied to scalar-valued nodes. To apply annotations to any scalar-valued node, a RAML processor MUST also support scalar-valued nodes to be expressed as a map, with the single allowed key `value`, as an alternative to the normal syntax.
+It is often useful to annotate scalar-valued nodes, for example `baseUri`. Annotations are typically applied as extra key-value pairs to map-valued nodes that inherently accept key-value pairs. Annotations cannot be easily applied to scalar-valued nodes. To apply annotations to any scalar-valued node, a RAML processor MUST also support scalar-valued nodes expressed as a map that allow a single key `value` as an alternative to the normal syntax.
 
-The example below shows a scalar-valued node which is normally expressed as:
+The following example shows a scalar-valued node which is normally expressed as:
 
 ```yaml
 baseUri: http://www.example.com/api
 ```
 
-and the alternative map syntax, with `value` as key:
+The alternative map syntax with `value` as the key is added to the example:
 
 ```yaml
 baseUri:
   value: http://www.example.com/api
 ```
 
-and then annotations may be applied as usual, e.g.:
+Now, annotations can be applied normally, as shown in this example:
 
 ```yaml
 baseUri:
@@ -2747,7 +2806,7 @@ baseUri:
   (redirectable): true
 ```
 
-The following is a list of all available scalar-valued nodes supported in RAML:
+The following list shows all available scalar-valued nodes supported in RAML:
 <a name="scalar-valued-nodes"></a>
 ```
 displayName
@@ -2788,9 +2847,11 @@ extends
 
 #### Annotation Targets
 
-The location within an API specification where annotations may be applied MUST be one of the target locations in the following Target Locations table. The targets are the locations themselves, not sub-properties within the locations; for example, the Method target refers to the method property and not to the method's display name, description, etc.
+The location within an API specification where annotations can be applied MUST be one of the target locations in the following Target Locations table. The targets are the locations themselves, not sub-properties within the locations; for example, the Method target refers to the method property, not to the method display name, description, and so on.
 
 <a name='annotation-target-location'></a>
+
+**Target Locations**
 
 |Target | Description |
 |:--------|:------------|
@@ -2801,13 +2862,13 @@ The location within an API specification where annotations may be applied MUST b
 | Response | A property of the responses property, whose key is an HTTP status code
 | RequestBody | The body property of a method
 | ResponseBody | The body property of a response
-| TypeDeclaration | A data type declaration (inline or in a global types collection), header declaration, query parameter declaration, or URI parameter declaration, or property within any of these declarations, where the type property may be used.
+| TypeDeclaration | A data type declaration (inline or in a global types collection), header declaration, query parameter declaration, URI parameter declaration, or a property within any of these declarations, where the type property can be used
 | Example | Either an example or examples property
 | ResourceType | A resource type property
 | Trait | A trait property
 | SecurityScheme | A security scheme declaration
 | SecuritySchemeSettings | The settings property of a security scheme declaration
-| AnnotationType | A property of the annotationTypes property, whose key is a name of an annotation type and whose value describes the annotation.
+| AnnotationType | A property of the annotationTypes property, whose key is a name of an annotation type and whose value describes the annotation
 | Library | The root of a library
 | Overlay | The root of an overlay
 | Extension | The root of an extension
@@ -2844,7 +2905,7 @@ types:
 
 ## Modularization
 
-RAML provides several mechanisms to help modularize your API specification and specifications ecosystem:
+RAML provides several mechanisms to help modularize the ecosystem of an API specification:
 * Includes
 * Libraries
 * Overlays
@@ -2852,9 +2913,9 @@ RAML provides several mechanisms to help modularize your API specification and s
 
 ### Includes
 
-RAML processors MUST support the OPTIONAL **!include** tag, which specifies the inclusion of external files into the API specification. As it is a YAML tag, it starts with an exclamation point ("!"). The location in an API specification where an !include tag may be used MUST be the value of a property, so the result of including the file specified by the !include tag is the value of that property.
+RAML processors MUST support the OPTIONAL **!include** tag, which specifies the inclusion of external files into the API specification. Being a YAML tag, the exclamation point ("!") prefix is required. In an API specification, the !include tag is located only in a property value position. The !include tag MUST be the value of a property, which assigns the contents of the file named by the !include tag to the value of the property.
 
-In the following example, the set of types to be used elsewhere in the RAML specification is retrieved from a file called myTypes.raml and used as the value of the types property in the RAML specification.
+In the following example, the set of types to be used in the API specification is retrieved from a file called myTypes.raml and used as the value of the types property.
 
 ```yaml
 #%RAML 1.0
@@ -2862,39 +2923,38 @@ title: My API with Types
 types: !include myTypes.raml
 ```
 
-The !include tag accepts a single argument, the location of the content to be included, that MUST be specified explicitly. Its value MUST be one of the following:
+The !include tag accepts a single argument, the location of the content to be included, that MUST be specified explicitly. The value of the argument MUST be a path or URL as described in the following table:
 
 |Argument | Description | Examples |
 |:--------|:------------|:---------|
-| absolute path | A path that begins with a single slash ("/") and is to be interpreted relative to the root RAML file's location. | /traits/pageable.raml
-| relative path | A path that does not begin with a single slash ("/") nor is a URL, and is to be interpreted relative to the including file's location. | description.md<br>../traits/pageable.raml
+| absolute path | A path that begins with a single slash ("/") and is interpreted relative to the root RAML file location. | /traits/pageable.raml
+| relative path | A path that neither begins with a single slash ("/") nor constitutes a URL, and is interpreted relative to the location of the included file. | description.md<br>../traits/pageable.raml
 | URL | An absolute URL | http://dev.domain.com/api/patterns/traits.raml
 
-To simplify API definition, and because the included file's parsing context is not shared between the included file and its parent, an included file SHALL NOT use a YAML reference to an anchor in a separate file. Likewise, a reference made from a parent file SHALL NOT reference an anchor defined in an included file.
+To simplify the API definition, and because the parsing context of the included file is not shared between the file and its parent, an included file SHALL NOT use a YAML reference to an anchor in a separate file. Likewise, a reference made from a parent file SHALL NOT reference an anchor defined in an included file.
 
-The argument of the !include tag must be static: namely, it MUST NOT contain any resource type parameters or trait parameters.
+The !include tag argument must be static: namely, it MUST NOT contain any resource type parameters or trait parameters.
 
 #### Typed Fragments
 
-A file to be included MAY begin with a RAML fragment identifier line, which consists of the text _#%RAML_ followed by a single space followed by the text 1.0, followed by a single space followed by one of the following fragment identifiers:
+A file to be included MAY begin with a RAML fragment identifier line, which consists of the text _#%RAML_ followed left-to-right by a single space, the text 1.0, a single space, and one of the following fragment identifiers:
 
-|Fragment | Description |
-|:--------|:------------|
-| DocumentationItem | An item in the collection of items that is the value of the root-level documentation property; see the section on [User Documentation](#user-documentation).
-| DataType | A data type declaration, where the type property may be used; see the section on [Types](#types)
-| NamedExample | A property of the examples property, whose key is a name of an example and whose value describes the example; see the section on [Examples](#defining-examples-in-raml)
-| ResourceType | A single resource type declaration; see the section on [Resource Types and Traits](#resource-types-and-traits)
-| Trait | A single trait declaration; see the section on [Resource Types and Traits](#resource-types-and-traits)
-| AnnotationTypeDeclaration | A single annotation type declaration; see the section on [Annotations](#annotations)
-| Library | A RAML library; see the section on [Libraries](#libraries).
-| Overlay | An overlay file; see the section on [Overlays](#overlays).
-| Extension | An extension file; see the section on [Extensions](#extensions).
-| SecurityScheme | A definition of a security scheme; see section on [Security Schemes](#security-schemes)
+|Fragment Identifier | Description | Relevant RAML Specification Section |
+|:-------------------|:------------| :-----------------------------------|
+| DocumentationItem | An item in the collection of items that is the value of the root-level documentation property | [User Documentation](#user-documentation)
+| DataType | A data type declaration where the type property may be used | [Types](#types)
+| NamedExample | A property of the examples property, whose key is a name of an example and whose value describes the example | [Examples](#defining-examples-in-raml)
+| ResourceType | A single resource type declaration | [Resource Types and Traits](#resource-types-and-traits)
+| Trait | A single trait declaration | [Resource Types and Traits](#resource-types-and-traits)
+| AnnotationTypeDeclaration | A single annotation type declaration | [Annotations](#annotations)
+| Library | A RAML library | [Libraries](#libraries)
+| Overlay | An overlay file | [Overlays](#overlays)
+| Extension | An extension file | [Extensions](#extensions)
+| SecurityScheme | A definition of a security scheme | [Security Schemes](#security-schemes)
 
-If a file begins with a RAML fragment identifier line, and the fragment identifier is neither Library nor Overlay nor Extension, the contents of the file after removal of the RAML fragment identifier line MUST be valid structurally according to the corresponding section of this RAML specification. For example, a RAML file beginning with `#%RAML 1.0 Trait` must have the structure of a RAML trait declaration as defined in the [specification for traits](#resource-types-and-traits), such that including the file in a location where a trait declaration is called for results in a valid RAML file.
+If a file begins with a RAML fragment identifier line, and the fragment identifier is not Library, Overlay, or Extension, the contents of the file after removal of the RAML fragment identifier line MUST be valid structurally according to the relevant RAML specification. For example, a RAML file beginning with `#%RAML 1.0 Trait` must have the structure of a RAML trait declaration as defined in the [Resource Types and Traits](#resource-types-and-traits) section. Including the file in a correct location for a trait declaration results in a valid RAML file.
 
-The following example shows a RAML fragment file that defines a resource type, and a file that includes this fragment file.
-
+The following example shows a RAML fragment file that defines a resource type and a file that includes this fragment file.
 
 ```yaml
 #%RAML 1.0 ResourceType
@@ -2902,7 +2962,7 @@ The following example shows a RAML fragment file that defines a resource type, a
 #This file is located at resourceTypes/collection.raml
 
 description: A collection resource
-usage: Use this to describe resource that list items
+usage: Use this to describe a resource that lists items
 get:
   description: Retrieve all items
 post:
@@ -2924,7 +2984,7 @@ resourceTypes:
 
 ```
 
-The resulting API definition is equivalent to the following single document.
+The resulting API definition is equivalent to the following single document:
 
 ```yaml
 #%RAML 1.0
@@ -2932,7 +2992,7 @@ title: Products API
 resourceTypes:
   collection:
     description: A collection resource
-    usage: Use this to describe resource that list items
+    usage: Use this to describe a resource that lists items
     get:
       description: Retrieve all items
     post:
@@ -2948,7 +3008,7 @@ resourceTypes:
 
 #### Resolving Includes
 
-When RAML or YAML files are included, RAML parsers MUST not only read the content, but parse it and add the content to the declaring structure as if the content were declared inline. Specifically, if the included file has one of the following media types:
+When RAML or YAML files are included, RAML parsers MUST not only read the content, but must also parse it and add the content to the declaring structure as if the content were declared inline. RAML parsers MUST parse the content of the file as RAML content and append the parsed structures to the RAML document node if the included file has a .raml, .yml, or .yaml extension or one of the following media types:
 
 * application/raml+yaml
 * text/yaml
@@ -2956,9 +3016,9 @@ When RAML or YAML files are included, RAML parsers MUST not only read the conten
 * application/yaml
 * application/x-yaml
 
-or a .raml or .yml or .yaml extension, RAML parsers MUST parse the content the file as RAML content and append the parsed structures to the RAML document's node. Otherwise, the contents of the file will be included as a scalar.
+Otherwise, if RAML parsers fail to parse the content and append structures, the contents of the file are included as a scalar.
 
-To simplify RAML definitions, and because the included files parsing context is not shared between the included file and its parent, an included file SHALL NOT use a YAML reference to an anchor in a separate file. Likewise, a reference made from a parent file SHALL NOT reference a structure anchor defined in an included file.
+Because the parsing context of the included files is not shared between the included file and its parent, an included file SHALL NOT use a YAML reference to an anchor in a separate file. Likewise, a reference made from a parent file SHALL NOT reference a structure anchor defined in an included file. These rules simplify RAML definitions.
 
 In the example below, the API root document includes two files from the patterns folder, one containing resource type declarations and the other containing trait declarations.
 
@@ -3022,40 +3082,16 @@ traits:
         type: number
 ```
 
-#### References to inner elements of external files
-
-RAML 1.0 supports referring to inner elements of included schemas by using URL fragments.
-
-
-```yaml
-schema: !include elements.xsd#Foo
-```
-
-```yaml
-/id: !include myContent.raml#feature
-```
-
-Dereferencing to a fragment of JSON schemas is performed according to default JSON Schema dereferencing  rules (see chapter 7 in http://json-schema.org/latest/json-schema-core.html)
-
-Dereferencing to a fragment of XSD schema is described in *3.15.2.2 References to Schema Components*, [XML Schema Part 1: Structures Second Edition](http://www.w3.org/TR/xmlschema-1/). However there is a special shortcut: If you are referring to a named type within XSD schema you may simplify fragment definition to its name.
-
-Meaning of references to inner elements: referencing to inner element of schema is equivalent to referencing to the schema with a top level element with structural restrictions same as restrictions on the referenced element of schema. At this version of RAML specification it is allowed to refer on elements of schemas in the following cases:
-
-* referencing to an element of JSON schema is valid in any context, but they do not define name of top level XML element  when serializing to XML payload
-* referencing to an element of XSD schema is valid in any context
-* references to XSD complex types are valid to determine inner structure of payload but they do not define name of top level XML element when serializing to XML payload
-* any other kinds of references does not have well defined meaning
-
 ### Libraries
 
-RAML libraries are used to combine any collection of data type declarations, resource type declarations, trait declarations, and security scheme declarations into modular, externalized, reusable groups. While libraries are meant to allow definition of common declarations in external documents which are then included where needed, they may also be defined inline.
+RAML libraries are used to combine any collection of data type declarations, resource type declarations, trait declarations, and security scheme declarations into modular, externalized, reusable groups. While libraries are intended to define common declarations in external documents, which are then included where needed, libraries can also be defined inline.
 
-A library is an object whose allowed properties are enumerated in the following table. Each is optional.
+The following table describes the properties, which are optional, of a library object.
 
 |Property | Description |
 |:--------|:------------|
-| types?<br>schemas?<br>resourceTypes?<br>traits?<br>securitySchemes?<br>annotationTypes?<br>(&lt;annotationName&gt;)?<br>uses? | The definition of each property is the same as that of the corresponding property in the root of a RAML document. Annotation properties are allowed as in any other RAML document.
-| usage | Describes the content or purpose of a specific library. Its value is a string and MAY be formatted using [markdown](#markdown).
+| types?<br>schemas?<br>resourceTypes?<br>traits?<br>securitySchemes?<br>annotationTypes?<br>(&lt;annotationName&gt;)?<br>uses? | The definition of each property is the same as that of the corresponding property at the root of a RAML document. A library supports annotation properties like any other RAML document.
+| usage | Describes the content or purpose of a specific library. The value is a string and MAY be formatted using [markdown](#markdown).
 
 The following example shows a simple library as a standalone, reusable RAML fragment document.
 
@@ -3076,20 +3112,20 @@ traits:
 resourceTypes:
   file:
     get:
-      is: drm
+      is: [ drm ]
     put:
-      is: drm
+      is: [ drm ]
 ```
 
 #### Applying Libraries
 
-Any number of libraries may be applied by using the OPTIONAL **uses** property which may ONLY be used at the root of a RAML file (either a root ["master"] RAML file or a RAML fragment file). The value of the uses property is a map of key-value pairs where its keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
+Any number of libraries can be applied by using the OPTIONAL **uses** property ONLY at the root of a ["master"] RAML or RAML fragment file. The value of the uses property is a map of key-value pairs. The keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
 
-When a library is applied, the data types, resource types, traits, security schemes, and annotation types which it declared are made available in the document in which it was applied, but are referenced via names formed by concatenating the library name followed by a period (".") followed by the name of the data type, resource type, trait, security scheme, or annotation type. In this way the library name defines a namespace for the library's objects within the context in which the library was applied. That means, namespaces defined in a **uses** statement in a specific file are only consumable within that file, i.e. they are only used to disambiguate the included libraries from each other within that file. Therefore, any processor MUST not be permitted to allow any composition of namespaces using "." across multiple libraries.
+In the document that applies a library, the data types, resource types, traits, security schemes, and annotation types in the library become available from the document. The assets in the library are referenced from the document using dot notation as follows: concatenate the library name followed by a period ("."), and then the name of the data type, resource type, trait, security scheme, or annotation type. The library name defines a namespace for the library objects within the context that the library is applied. Namespaces defined in a **uses** statement in a specific file are only consumable within that file and serve only to disambiguate the included libraries from each other. Therefore, any processor MUST not allow any composition of namespaces using "." across multiple libraries.
 
-Using **uses** does NOT automatically import the remote library's assets into the local file, but it allows the local file to import those assets by referring to them in its contents: e.g., a RAML type fragment file that uses a library of remote types can then import one of those types by referring to it, and that remote type will be included as if it were defined locally within the RAML type fragment file.
+Using **uses** does NOT automatically import the remote library assets into the local file, but the local file can import those assets by referring to the assets from its contents. For example, a RAML type fragment file that uses a library of remote types can import one of those types by referring to it. The remote type is included as if it were defined locally within the RAML type fragment file.
 
-The following examples demonstrate the use of a library in a second library, and the use of that second library in a resource type fragment as well as in RAML API definition.
+The following examples demonstrate the use of a library in a second library, a second library in a resource type fragment, and a second library in a RAML API definition.
 
 ```yaml
 #%RAML 1.0 Library
@@ -3116,14 +3152,14 @@ traits:
 resourceTypes:
   file:
     get:
-      is: drm
+      is: [ drm ]
       responses:
         201:
           body:
             application/json:
               type: file-type.File
     put:
-      is: drm
+      is: [ drm ]
 
 ```
 
@@ -3133,10 +3169,10 @@ resourceTypes:
 uses:
   files: libraries/files.raml
 get:
-  is: files.drm
+  is: [ files.drm ]
 ```
 
-The following example is not valid according to the restriction that chaining namespaces is not allowed.
+The following example is not valid because chaining namespaces is not allowed.
 
 ```yaml
 #%RAML 1.0 ResourceType
@@ -3144,7 +3180,7 @@ The following example is not valid according to the restriction that chaining na
 uses:
   files: libraries/files.raml
 get:
-  is: files.drm
+  is: [ files.drm ]
   responses:
     200:
       body:
@@ -3154,36 +3190,41 @@ get:
 
 ### Overlays and Extensions
 
-API definitions may need to be extended in a variety of ways for different needs. Annotations allow for adding metadata beyond that which is standardized in this RAML specification. Another set of needs is satisfied by overlaying standard or non-standard metadata on top of an existing API definition without changing its behavior, for example to specify implementation details or provide a translation of human-oriented documentation into different languages. Yet another set of needs requires extending an API definition by adding to its behavior or overriding certain aspects. RAML provides two mechanisms for doing so: overlays and extensions.
+API definitions might need to be extended in a variety of ways for different needs. Annotations extend an API by adding metadata beyond that which is standardized in this RAML specification. Overlays of standard or non-standard metadata on top of an existing API definition can specify implementation details, or provide a translation of human-oriented documentation into different languages, without changing API behavior. Extending an API definition by adding to its behavior, or overriding certain aspects, is another way to satisfy different needs. RAML provides two mechanisms for extending API definitions: overlays and extensions.
 
-Overlays and extensions are RAML documents that add or override properties of a RAML API definition. The first line of an overlay or extension document MUST begin with the text _#%RAML 1.0 Overlay_ or _#%RAML 1.0 Extension_, respectively, followed by nothing but the end of the line. An overlay or extension document MUST contain a root-level `extends` property whose value MUST be the location of a valid RAML API definition, or another overlay or extension; the location is specified equivalently to the location specified in the value of an !include tag (as an absolute or relative path or as a URL). The document specified in the `extends` property is called the master RAML document.
+Overlays and extensions are RAML documents that add or override properties of a RAML API definition. The first line of an overlay or extension document MUST begin with the text _#%RAML 1.0 Overlay_ or _#%RAML 1.0 Extension_, respectively, followed by nothing but the end of the line. An overlay or extension document MUST contain a root-level `extends` property whose value MUST be the location of a valid RAML API definition or another overlay or extension; the location specification is an absolute or relative path, or a URL, equivalent to an [!include tag argument](#includes). The document specified in the `extends` property is called the master RAML document.
 
-The remainder of an overlay or extension document follows the same rules as a RAML API definition, but with certain restrictions in case of an overlay, as discussed in section about [Overlays](#overlays).
+The remainder of an overlay or extension document follows the same rules as a RAML API definition, but with certain [restrictions](#overlays) in case of an overlay.
 
-To apply an overlay or extension, RAML processors MUST apply the merging algorithm described in the Merging Rules section below to the master RAML document and the extension or overlay, thereby producing a modified API definition; in the case of applying an overlay, the modified API definition is then validated against the master RAML document to adhere to the restrictions on overlays.
+To apply an overlay or extension, RAML processors MUST apply the [merging algorithm](#merging-rules) to the master RAML document and the extension or overlay, thereby producing a modified API definition; in the case of applying an overlay, the modified API definition is then validated against the master RAML document to adhere to the restrictions on overlays.
 
-To apply any combination of overlays and/or extensions, all of them must share the same master RAML document; the first is applied to the master RAML document as before, producing a modified API definition, and validating the result in the case of an overlay; then the second overlay or extension is applied to that modified API definition as if the latter were the master RAML document, and again validating the result in the case of an overlay; and so on until the last overlay or extension. All !include tags are resolved before any application of the merging algorithm, the validation of restrictions on overlays occurs after each overlay is applied, and all inheritances (of types, resource types, traits, and annotation types) are applied at the end of the application of all overlays and extensions.
+To apply any combination of overlays and/or extensions, all must share the same master RAML document. The application process is:
+
+1. Apply the first overlay or extension to the master RAML document, producing a modified API definition and validating the result in the case of an overlay.
+2. Apply the second overlay or extension to the modified API definition as if the latter were the master RAML document, and again validate the result in the case of an overlay.
+3. Repeat the previous step until the last overlay or extension is applied.
+4. Resolve all !include tags before any application of the merging algorithm, validate restrictions on overlays after each overlay is applied, and apply all inheritances of types, resource types, traits, and annotation types.
 
 #### Overlays
 
-An overlay adds or overrides properties of a RAML API definition while preserving its behavioral, functional aspects. Certain properties of a RAML API definition specify the behavior of an API: its resources, methods, parameters, bodies, responses, etc. These may not be changed by applying an overlay. In contrast, other properties such as descriptions or annotations address concerns beyond the functional interface, such as the human-oriented descriptive documentation in some language, or implementation or verification information for use in automated tools. These may be changed by applying an overlay.
+An overlay adds or overrides properties of a RAML API definition while preserving its behavioral, functional aspects. Certain properties of a RAML API definition specify the behavior of an API: its resources, methods, parameters, bodies, responses, and so on. These properties cannot be changed by applying an overlay. In contrast, other properties, such as descriptions or annotations, address concerns beyond the functional interface, such as the human-oriented descriptive documentation in some language, or implementation or verification information for use in automated tools. These properties can be changed by applying an overlay.
 
-Overlays are particularly important for separating interface from implementation, and for enabling separate lifecycles for the behavioral aspects of the API that need to be controlled more tightly as a contract between the API provider and its consumers, versus the human- or implementation-oriented aspects that can evolve at different paces. For example, adding hooks for testing and monitoring tools, appending metadata relevant to a registry of APIs, or or providing updated or translated human documentation can be achieved without changing any aspects of the behavioral aspects of the API, which may be controlled through a more rigorous version and change management process.
+Overlays are particularly important for separating interface from implementation. Overlays enable separate lifecycles for the behavioral aspects of the API that need to be controlled tightly, such as a contract between the API provider and its consumers, versus those needing little control, such as the human- or implementation-oriented aspects that can evolve at different paces. For example, adding hooks for testing and monitoring tools, appending metadata relevant to a registry of APIs, or providing updated or translated human documentation can be achieved without changing any aspects of the behavioral aspects of the API. These things can be controlled through a rigorous version and change management process.
 
-While it is difficult to draw a definitive line between the two, for example because some semantics of the API is often captured only in human documentation, RAML does define the specific behavior-invariance restrictions on overlay files which processors MUST follow. Processors may then choose to offer the master API definition as well as its modifications after applying one or more overlays, so the consumer may benefit from all the information available; for example, if overlay files are provided as a means of localizing textual descriptions of resources, methods, and data, the consumer of generated documentation may be offered a choice of which localized overlays to apply.
+It is difficult to draw a definitive line between the behavioral and implementation-oriented aspects of the API because, for example, some semantics of the API are often captured only in human documentation. RAML does, however, define the specific behavior-invariance restrictions on overlay files that processors MUST follow. Processors can then choose to offer the master API definition as well as its modifications after applying one or more overlays, so the consumer can benefit from all the information available. For example, if overlay files are provided as a means of localizing textual descriptions of resources, methods, and data, the consumer of generated documentation can be offered a choice of which localized overlays to apply.
 
-The behavior-invariance restrictions of an overlay are defined as follows: after applying the merging algorithm described in the Merging Rules section, and before any inheritances (of types, resource types, traits, and annotation types) are applied, the tree of nodes in the merged document is compared with the tree of nodes in the master RAML document after resolving all !include tags. Any differences MUST only be in properties listed in the following table.
+The behavior-invariance restrictions of an overlay are defined as follows: after applying the [merging algorithm](#merging-rules) and before applying any inheritances of types, resource types, traits, and annotation types, the tree of nodes in the merged document is compared with the tree of nodes in the master RAML document after resolving all !include tags. Any differences in the documents MUST be only in the properties listed in the following table.
 
 |Property | Allowed differences |
 |:--------|:------------|
-| title<br>description<br>documentation<br>usage<br>example | The merged tree may include new properties of this type, or properties with different values than those in the master tree.
-| types | In addition to allowed differences described elsewhere in this table, the merged tree may also include new data types.
-| annotationTypes | The merged tree may include new annotation types, or new values for existing annotation types, as long as all annotations in the merged API definition validate against the annotation types in the merged tree.
-| any annotation property | The merged tree may include new annotations of annotation types declared in the merged tree, or annotations with different values than those in the master tree.
-| examples | The merged tree may contain new named examples, or named examples with different values than those in the master tree.
-| documentation | The merged tree may contain new items in the array that is the value of the documentation root-level property. To change or remove existing items, the documentation property itself may be overridden in the overlay.
+| title<br>description<br>documentation<br>usage<br>example | The merged tree can include new properties of this type or properties with different values from those in the master tree.
+| types | In addition to allowed differences described elsewhere in this table, the merged tree can also include new data types.
+| annotationTypes | The merged tree can include new annotation types or new values for existing annotation types, as long as all annotations in the merged API definition validate against the annotation types in the merged tree.
+| any annotation property | The merged tree can include new annotations of annotation types declared in the merged tree, or annotations with different values from those in the master tree.
+| examples | The merged tree can contain new named examples, or named examples with different values from those in the master tree.
+| documentation | The merged tree can contain new items in the array that is the value of the documentation root-level property. To change or remove existing items, the documentation property itself can be overridden in the overlay.
 
-The following example illustrates a (very) simple RAML definition of a library books API, along with an overlay file that provides a Spanish translation and an overlay file that provides metadata for an API monitoring service.
+The following example illustrates a very simple RAML definition of a library books API, along with overlay files that provide a Spanish translation and metadata for an API monitoring service.
 
 ```yaml
 #%RAML 1.0
@@ -3236,9 +3277,9 @@ annotationTypes:
 
 #### Extensions
 
-An extension allows extending a RAML API definition by adding to, or modifying, its behavioral (functional) aspects as well as its non-behavioral aspects. This can be useful in separating a core, broadly-available API from layers of functionality available to more restricted audiences, for creating variants of an API for somewhat different purposes, or for specifying instance-specific properties of an API such as its service endpoint (URL) without altering its pure interface definition document.
+An extension broadens a RAML API definition by adding to, or modifying aspects of its behavior and other functionality. An extension can be useful in separating a core, broadly-available API from layers of functionality available to more restricted audiences, for creating variants of an API for somewhat different purposes, or for specifying instance-specific properties of an API, such as its service endpoint (URL) without altering its pure interface definition document.
 
-The following examples build on the examples in the overlays section above, by adding an extension available to admins for adding items (books) to a collection, adding an overlay to provide a translation of the added functionality, and adding an extension that locates a particular service endpoint of the API.
+The following examples build on examples in the Overlays section by adding an extension for admins to add book items to a collection, adding an overlay to provide a translation of the added functionality, and adding an extension that locates a particular service endpoint of the API.
 
 ```yaml
 #%RAML 1.0 Extension
@@ -3267,7 +3308,7 @@ baseUri: http://api.piedmont-library.com
 
 #### Merging Rules
 
-The algorithm of how exactly an overlay/extension structure is applied to the master is described in this section.  
+This section describes how an overlay/extension structure is applied to the master.  
 
 ##### Terminology
 
@@ -3275,9 +3316,9 @@ The algorithm of how exactly an overlay/extension structure is applied to the ma
 
 _Object_ is a MAP or a SEQUENCE containing MAPPINGS in terms of YAML.
 
-_Property_ is a MAPPING in terms of YAML, the pair of key and its value.
+_Property_ is a MAPPING in terms of YAML, a key and its value pair.
 
-In the following example, "properties" highlighted in yellow is a _Property_ key, and the corresponding _Object_ value is highlighted in green.
+In the following example, the yellow "properties" is a _Property_ key, and the corresponding green _Object_ is the value.
 
 <pre style="background-color:#111;">
 <font color="yellow">properties:</font>
@@ -3287,7 +3328,7 @@ In the following example, "properties" highlighted in yellow is a _Property_ key
 <font color="#44ff44">      description: "some description"</font>
 </pre>
 
-In the same example, there is also a "responseParameters" _Property_ key and its _Object_ value colored in green:
+In the same example, there is also a green "responseParameters" _Property_ key and its _Object_ value:
 
 <pre style="background-color:#111;">
 <font color="white">properties:</font>
@@ -3297,7 +3338,7 @@ In the same example, there is also a "responseParameters" _Property_ key and its
 <font color="#44ff44">      description: "some description"</font>
 </pre>
 
-And while "statusCode", "type" and "description" colored yellow are also properties, their values are not _Objects_:
+And while the yellow "statusCode", "type" and "description" are also properties, their values are not _Objects_:
 
 <pre style="background-color:#111;">
 <font color="white">properties:</font>
@@ -3307,7 +3348,7 @@ And while "statusCode", "type" and "description" colored yellow are also propert
 <font color="yellow">       description:</font> <font color="white">"some description"</font>
 </pre>
 
-In the following sample "FilteredByPrice" and "Paged" are yellow-colored _Properties_ with _Object_ values colored in green.
+In the following sample, yellow "FilteredByPrice" and "Paged" are _Properties_ with green _Object_ values.
 
 <pre style="background-color:#111;">
 <font color="white">traits:</font>
@@ -3327,7 +3368,7 @@ In the following sample "FilteredByPrice" and "Paged" are yellow-colored _Proper
 
 _Array_ is a SEQUENCE containing SCALARs or SEQUENCE containing MAPs in terms of YAML.
 
-In the following example, the "enum" _Property_ key is highlighted in yellow that has an _Array_ value highlighted blue.
+In the following example, the yellow "enum" _Property_ key has a blue _Array_ value.
 
 <pre style="background-color:#111;">
 <font color="yellow">enum:</font>
@@ -3336,7 +3377,7 @@ In the following example, the "enum" _Property_ key is highlighted in yellow tha
 <font color="#4444ff"> - Colored</font>
 </pre>
 
-Another example for an _Array_ definition, a "documentation" _Property_ key has an _Array_ value, which contains two _Objects_ highlighted in green:
+In this example of an _Array_ definition, a "documentation" _Property_ key has an _Array_ value that contains two green _Objects_:
 
 <pre style="background-color:#111;">
 <font color="yellow">documentation:</font>
@@ -3349,7 +3390,7 @@ Another example for an _Array_ definition, a "documentation" _Property_ key has 
 
 ###### Property Types
 
-In the merging algorithm the _Property_ types are referred to as _Property Kind_ which can be one of the following (highlighted in **bold**):
+In the merging algorithm, the _Property_ types are referred to as _Property Kind_, which can be one of the following properties highlighted in **bold**:
 
 **_Object Property_** - a _Property_ having _Object_ as a value.
 
@@ -3402,7 +3443,7 @@ In the following sample "statusCode" and "enum" are simple properties.
 </pre>
 
 Exceptions:
-* Examples are always _Simple Properties_ despite its ability to have complex YAML samples as values.
+* Examples are always _Simple Properties_ despite the capability to have complex YAML samples as values.
 * Annotations are always _Simple Properties_ despite potentially having a complex node structure.
 * Resource type applications are always _Simple Properties_.
 * Trait applications are always _Simple Properties_.
@@ -3410,9 +3451,9 @@ Exceptions:
 
 ###### Conflicting Properties
 
-Conflicting properties are the properties, which can not coexist in the same Object at the same time.
+Conflicting properties are the properties that cannot coexist in the same Object.
 
-In the following example both "type" and "properties" _Properties_ can coexist with each other, but the "enum" _Property_ cannot coexist with both "type" and "properties".
+In the following example, both "type" and "properties" _Properties_ can coexist, but the "enum" _Property_ cannot coexist with both "type" and "properties".
 
 <pre style="background-color:#111;">
 <font color="white">color:</font>
@@ -3455,28 +3496,28 @@ For each **Current Extension Tree Object property** the following is done:
 
 * If the **property** is an _Ignored Property_, continue to process the next property.
 * If the **property** with the same name exists in **Current Target Tree Object**:
-  * If the **property** and the equally named property in **Current Target Tree Object** have different _Property Kind_:
-    * The **property** value in the equally named **Current Target Tree Object** property is replaced with its value from **Current Extension Tree Object** property.
+  * If the **property** and the identically named property in **Current Target Tree Object** have different _Property Kind_:
+    * The **property** value in the identically named **Current Target Tree Object** property is replaced with its value from **Current Extension Tree Object** property.
   * If the **property** is a _Simple Property_
     * If the **property** is a _Single-value Simple Property_,
-      * The **property** value in the equally named **Current Target Tree Object** property is replaced with its value from **Current Extension Tree Object** property.
+      * The **property** value in the identically named **Current Target Tree Object** property is replaced with its value from **Current Extension Tree Object** property.
     * If the **property** is a _Multi-value Simple Property_
-      * The **property** value from **Current Extension Tree Object** property is added to the equally named **Current Target Tree Object** property values if no such value already exists.
+      * The **property** value from **Current Extension Tree Object** property is added to the identically named **Current Target Tree Object** property values if no such value already exists.
   * If the **property** is an _Object Property_:
-    * The same _Merging Algorithm_ is recursively performed for **Current Extension Tree Object** being set to the **property** value, and **Current Target Tree Object** being set to the value of the equally named property in **Current Target Tree Object**.
+    * The same _Merging Algorithm_ is recursively performed for **Current Extension Tree Object** being set to the **property** value, and **Current Target Tree Object** being set to the value of the identically named property in **Current Target Tree Object**.
   * If the **property** is an _Array Property_:
-    * _Objects_ from the property value are added to the equally named **Current Target Tree Object** property value.
+    * _Objects_ from the property value are added to the identically named **Current Target Tree Object** property value.
 * If the **property** with the same name does not exist in **Current Target Tree Object**:
   * All _Conflicting Properties_ are removed from the **Current Target Tree Object**
   * The **property** is added to the **Current Target Tree Object**.
 
 _Target Tree_ is validated.
 
-If the _Extension Tree_ is an Overlay, _Target Tree_ is compared to the _Master Tree_. There MUST NOT be any differences, besides listed in the "Allowed differences" table in section [Overlays](#overlays). Otherwise the process is cancelled.
+If the _Extension Tree_ is an Overlay, _Target Tree_ is compared to the _Master Tree_. There MUST NOT be any differences, other than those listed in the "Allowed differences" table in the [Overlays](#overlays) section. Otherwise the process is cancelled.
 
 _Target Tree_ has its resource types and Traits applied.
 
-_Target Tree_ is being serialized to a document, or returned as the algorithm output.
+_Target Tree_ is being serialized to a document or returned as the algorithm output.
 
 ## References
 
