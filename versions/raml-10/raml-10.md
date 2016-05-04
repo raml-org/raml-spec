@@ -253,7 +253,7 @@ baseUri: https://na1.salesforce.com/services/data/{version}/chatter
 
 ### Default Media Types
 
-Specifying the OPTIONAL **mediaType** node sets the default for return by API requests having a body and for the expected responses. You do not need to specify the media type within every body definition.
+Specifying the OPTIONAL **mediaType** node sets the default media type for responses and requests that have a body. You do not need to specify the media type within every body definition.
 
 The value of the mediaType node MUST be a sequence of media type strings or a single media type string. The media type applies to requests having a body, the expected responses, and examples using the same sequence of media type strings. Each value needs to conform to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838).
 
