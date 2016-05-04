@@ -2140,6 +2140,8 @@ traits:
 
 The declarations of resource types and traits MAY contain parameters having values that MUST be specified when applying the resource type or trait, UNLESS the parameter name is reserved, in which case its value MUST be provided by the processing application.
 
+Parameters may be of any YAML type.
+
 In resource type and trait declarations, **resourcePath** and **resourcePathName** are reserved parameter names.
 
 | Parameter | Value |
