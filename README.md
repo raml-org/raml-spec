@@ -10,7 +10,7 @@ RAML 1.0 is currently in a Release Candidate stage to gather feedback from the c
 
 In the meanwhile, if you have any feedback, please report them [here](https://github.com/raml-org/raml-spec/issues).
 
-Current released version: 1.0 RC1
+Current released version: 1.0 RC2
 
 ## Contributing
 
@@ -22,12 +22,6 @@ We welcome any contributions from the community! You can contribute or provide f
 |You want to suggest a new feature, improve existing features, ask questions, or things general around the RAML specification? | File an issue. Please be as specific as possible about your intentions or what you’d like to see.
 
 You can also directly get in touch with us. Simply send us an email to: info@raml.org
-
-**Note**
-
-Currently we are working on RC2 inside another branch called `raml-10-rc2`. If you want to fix any spelling or grammar mistake, or an error in our examples, please fork that branch, make your edits, and then submit a pull request.
-
-More information around the current branch structure can be viewed [here](https://github.com/raml-org/raml-spec/wiki/RAML-1.0-RC2---Plan#branch-structure)
 
 ## Licensing
 
