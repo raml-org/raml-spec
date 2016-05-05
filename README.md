@@ -8,7 +8,7 @@ RAML 1.0 is currently in a Release Candidate stage to gather feedback from the c
 
 In the meanwhile, if you have any feedback, please report them [here](https://github.com/raml-org/raml-spec/issues).
 
-Current released version: RAML 1.0 RC1
+Current released version: RAML 1.0 RC2
 
 ## Contributing
 
