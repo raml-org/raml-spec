@@ -101,7 +101,6 @@ To facilitate the automated processing of RAML documents, RAML imposes the follo
 
 * The first line of a RAML file consists of a YAML comment that specifies the RAML version. Therefore, RAML processors cannot completely ignore all YAML comments.
 * The order of some properties at certain levels within a RAML document is significant. Therefore, processors are expected to preserve this ordering.
-* Property names, also known as Keys, at certain levels are not repeatable. Although YAML allows such repetition, the value of a duplicate key, key 2 for example, overwrites the value of the duplicated key 1.
 
 ## The Root of the Document
 
