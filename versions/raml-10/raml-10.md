@@ -417,7 +417,7 @@ types:
 
 ### Type Declarations
 
-A type declaration can extend a built-in type or other custom type, or add more information to types, such as specific examples or annotations. Here are the facets that all type declarations can have; certain type declarations might have other facets:
+A type declaration can extend a built-in type or other custom type using the type expression syntax, or add additional facets to types. Here are the facets that all type declarations can have; certain type declarations might have other facets:
 
 | Facet  | Description |
 |:----------|:----------|
