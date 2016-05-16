@@ -1915,7 +1915,7 @@ baseUri: https://api.github.com/{version}
 
 The HTTP request **body** for a method is specified using the OPTIONAL body node. For example, to create a resource using a POST or PUT, the body of the request would usually include the details of the resource to be created.
 
-The value of the body node is a "body declaration". Generally, the body declaration is a map whose key names are the valid media types of the request body. Each key name MUST be a media type string conforming to the media type specification in [RFC6838](#https://tools.ietf.org/html/rfc6838). The values are the corresponding data type declaration or data type name describing the request body. Alternatively, if [default media types](#default-media-type) have been declared at the root of the API, then the body declaration can consist of just the data type declaration or data type name describing the request body for that media type.
+The value of the body node is a "body declaration". Generally, the body declaration is a map whose key names are the valid media types of the request body. Each key name MUST be a media type string conforming to the media type specification in [RFC6838](#https://tools.ietf.org/html/rfc6838). The values are the corresponding data type declaration or data type name describing the request body. Alternatively, if [default media types](#default-media-types) have been declared at the root of the API, then the body declaration can consist of just the data type declaration or data type name describing the request body for that media type.
 
 The following example illustrates various combinations of both default and non-default media types, and both data type declarations and references.
 
@@ -3518,7 +3518,7 @@ For each **Current Extension Tree Object property** the following is done:
   * All _Conflicting Properties_ are removed from the **Current Target Tree Object**
   * The **property** is added to the **Current Target Tree Object**.
 
-Traits and Resource Types applications are applied one more time to the _Target Tree_. 
+Traits and Resource Types applications are applied one more time to the _Target Tree_.
 
 _Target Tree_ is validated.
 
