@@ -3492,7 +3492,7 @@ All _includes_ are resolved and applied for both _Master Tree_ and _Extension Tr
 
 All _uses_ are resolved and applied for both _Master Tree_ and _Extension Tree_. The trees MUST NOT have _uses_ instructions with the same namespace referring to different files.
 
-All Trait and Resource Types applications are aplied in the _Master Tree_
+All Trait and Resource Types applications are applied in the _Master Tree_
 
 Initially, _Target Tree_ is made equal to the _Master Tree_.
 
@@ -3518,7 +3518,7 @@ For each **Current Extension Tree Object property** the following is done:
   * All _Conflicting Properties_ are removed from the **Current Target Tree Object**
   * The **property** is added to the **Current Target Tree Object**.
 
-Traits and Resource Types applications are appled one more time to the _Target Tree_. 
+Traits and Resource Types applications are applied one more time to the _Target Tree_. 
 
 _Target Tree_ is validated.
 
