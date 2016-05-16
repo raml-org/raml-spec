@@ -3218,7 +3218,7 @@ Overlays are particularly important for separating interface from implementation
 
 It is difficult to draw a definitive line between the behavioral and implementation-oriented aspects of the API because, for example, some semantics of the API are often captured only in human documentation. RAML does, however, define the specific behavior-invariance restrictions on overlay files that processors MUST follow. Processors can then choose to offer the master API definition as well as its modifications after applying one or more overlays, so the consumer can benefit from all the information available. For example, if overlay files are provided as a means of localizing textual descriptions of resources, methods, and data, the consumer of generated documentation can be offered a choice of which localized overlays to apply.
 
-The behavior-invariance restrictions of an overlay are defined as follows: after applying the [merging algorithm](#merging-rules) and before applying any inheritances of types, resource types, traits, and annotation types, the tree of nodes in the merged document is compared with the tree of nodes in the master RAML document after resolving all !include tags. Any differences in the documents MUST be only in the nodes listed in the following table.
+The behavior-invariance restrictions of an overlay are defined as follows: after applying the [merging algorithm](#merging-rules) as well as application of resource types and traits, the tree of nodes in the merged document is compared with the tree of nodes in the master RAML document after resolving all !include tags. Any differences in the documents MUST be only in the nodes listed in the following table.
 
 |Name | Allowed differences |
 |:--------|:------------|
@@ -3492,6 +3492,8 @@ All _includes_ are resolved and applied for both _Master Tree_ and _Extension Tr
 
 All _uses_ are resolved and applied for both _Master Tree_ and _Extension Tree_. The trees MUST NOT have _uses_ instructions with the same namespace referring to different files.
 
+All Trait and Resource Types applications are aplied in the _Master Tree_
+
 Initially, _Target Tree_ is made equal to the _Master Tree_.
 
 **Current Extension Tree Object** is set to the _Extension Tree_ root (API).
@@ -3515,6 +3517,8 @@ For each **Current Extension Tree Object property** the following is done:
 * If the **property** with the same name does not exist in **Current Target Tree Object**:
   * All _Conflicting Properties_ are removed from the **Current Target Tree Object**
   * The **property** is added to the **Current Target Tree Object**.
+
+Traits and Resource Types applications are appled one more time to the _Target Tree_. 
 
 _Target Tree_ is validated.
 
