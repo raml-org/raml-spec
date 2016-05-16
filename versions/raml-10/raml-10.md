@@ -2143,16 +2143,16 @@ In resource type and trait declarations, **resourcePath** and **resourcePathName
 
 | Parameter | Value |
 |:---------|:-----------|
-| resourcePath | The full resource URI relative to the baseUri if there is one
-| resourcePathName | The rightmost path fragment of the relative resource URI, omitting any parametrizing brackets ("{" and "}")
+| resourcePath | The full resource URI relative to the baseUri if there is one.
+| resourcePathName | The rightmost of the non-URI-parameter-containing path fragments.
 
 Double angle brackets (double chevrons) enclose a parameter name in resource type and trait definitions; for example, `<<parameterName>>`.
 
-A processing application MUST set the value of `<<resourcePath>>` to the concatenation of the relative (to the baseUri if there is one) resource URI of the inheriting resource and all its parent relative resource URIs. A processing application MUST set the value of `<<resourcePathName>>` at the position in the URI following the rightmost slash ("/"), omitting any parametrizing brackets ("{" and "}").
+A processing application MUST set the value of `<<resourcePath>>` to the concatenation of the relative (to the baseUri if there is one) resource URI of the inheriting resource and all its parent relative resource URIs. A processing application MUST set the value of `<<resourcePathName>>` at the position in the URI following the rightmost slash ("/"), omitting any of the URI-parameter-containing path fragments.
 
-For example, applying a resource type or trait to a resource /users nested in a resource /{groupId} nested in a root-level resource /groups sets the value of the resourcePath parameter to /groups/{groupId}/users. Applying a resource type or trait to a resource /jobs/{jobId} sets the value of the resourcePathName parameter to jobId.
+For example, applying a resource type or trait to a resource /users nested in a resource /{groupId} nested in a root-level resource /groups sets the value of the resourcePath parameter to ""/groups/{groupId}/users". Applying a resource type or trait to a resource /jobs/{jobId} sets the value of the resourcePathName parameter to "jobs".
 
-When setting resourcePath and resourcePathName, processing applications MUST also omit any ext parameter and its parametrizing brackets ("{" and "}") found in the resource URI. For example, applying a resource type or trait to a root-level resource /bom/{itemId}{ext} sets the value of resourcePathName and resourcePath parameters to /bom/{itemId} and itemId, respectively.
+When setting resourcePath and resourcePathName, processing applications MUST also omit any ext parameter and its parametrizing brackets ("{" and "}") found in the resource URI. For example, applying a resource type or trait to a root-level resource /bom/{itemId}{ext} sets the value of resourcePathName and resourcePath parameters to "/bom/{itemId}" and "bom", respectively.
 
 In trait declarations, **methodName** is a reserved parameter.
 
