@@ -1,7 +1,5 @@
 RAML&trade; Version 0.8: RESTful API Modeling Language
-===================================
-
-A [newer version of RAML (1.0)](http://raml.org/spec.html) is available.
+==================================
 
 Abstract
 --------
@@ -584,7 +582,7 @@ baseUriParameters:
       enum: [ "api-content" ]
 ```
 
-In a resource structure of resources and nested resources with their methods, the most specific baseUriParameter fully overrides any baseUriParameter definition made before. In the following example the resource `/user/{userId}/image` overrides the definition made in `/users`.
+In a resource structure of resources and nested resources with their methods, the most specific baseUriParameter fully overrides any baseUriParameter definition made before. In the following example the resource `/users/{userId}/image` overrides the definition made in `/users`.
 
 ```
 #%RAML 0.8
@@ -603,7 +601,7 @@ baseUri: https://{apiDomain}.someapi.com
         enum: [ "static" ]
 ```
 
-In the following example, the `PUT` method overrides the definition made in `/user/{userId}/image`.
+In the following example, the `PUT` method overrides the definition made in `/users/{userId}/image`.
 
 ```
 #%RAML 0.8
@@ -621,9 +619,9 @@ baseUri: https://{apiDomain}.someapi.com
       apiDomain:
         enum: [ "static" ]
     get:
-      displayName: retrieve a user's picture
+      description: retrieve a user's picture
     put:
-      displayName: update a user's picture
+      description: update a user's picture
       baseUriParameters:
         apiDomain:
           enum: [ "content-update" ]
@@ -937,7 +935,7 @@ The *schema* key CANNOT be specified if a body's media type is *application/x-ww
 
 All parsers of RAML MUST be able to interpret JSON Schema [JSON_SCHEMA] and XML Schema [XML_SCHEMA].
 
-Schema MAY be declared inline or in an external file. However, if the schema is sufficiently large so as to make it difficult for a person to read the API definition, or the schema is reused across multiple APIs or across multiple miles in the same API, the !include user-defined data type SHOULD be used instead of including the content inline.
+Schema MAY be declared inline or in an external file. However, if the schema is sufficiently large so as to make it difficult for a person to read the API definition, or the schema is reused across multiple APIs or across multiple files in the same API, the !include user-defined data type SHOULD be used instead of including the content inline.
 
 This example shows an inline schema declaration.
 
@@ -975,7 +973,7 @@ This example shows an inline schema declaration.
           }
 ```
 
-Alternatively, the value of the *schema* field MAY be the name of a schema specified in the root-level *schemas* property (see [Named Parameters](#named-parameters), or it MAY be declared in an external file and included by using the by using the RAML !include user-defined data type.
+Alternatively, the value of the *schema* field MAY be the name of a schema specified in the root-level *schemas* property (see [Named Parameters](#named-parameters), or it MAY be declared in an external file and included by using the RAML !include user-defined data type.
 
 This example repeats the /jobs resource definition, but with the schemas defined in the external files job.xsd and job.schema.json.
 
@@ -1052,8 +1050,6 @@ For APIs without *a priori* knowledge of the response types for their responses,
       200:
         body:
           "*/*":
-            description: |
-                Returns the media file.
 ```
 
 Responses MAY contain a *description* property that further clarifies why the response was emitted. Response descriptions are particularly useful for describing error conditions.
@@ -1119,7 +1115,7 @@ This example shows a 503 error response that includes a custom header.
             description: |
               The number of seconds to wait before you can attempt to make a request again.
             type: integer
-            required: yes
+            required: true
             minimum: 1
             maximum: 3600
             example: 34
@@ -1191,7 +1187,7 @@ traits:
           required: true
 ```
 
-The following example builds on the previous one, but the the resource types and traits are defined in external files that are included by using the RAML !include data type.
+The following example builds on the previous one, but the resource types and traits are defined in external files that are included by using the RAML !include data type.
 
 ```yaml
 #%RAML 0.8
@@ -1266,8 +1262,8 @@ title: Example API
 version: v1
 mediaType: application/json
 schemas:
-  users: !include schemas/users.json
-  user: !include schemas/user.json
+  - users: !include schemas/users.json
+  - user: !include schemas/user.json
 resourceTypes:
   - collection:
       get:
