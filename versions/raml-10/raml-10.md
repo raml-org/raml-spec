@@ -47,7 +47,7 @@ Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](htt
 
 ## Table of Content
 
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC -->
 
 - [Introduction](#introduction)
 - [What's New and Different in RAML 1.0](#whats-new-and-different-in-raml-10)
@@ -3315,7 +3315,7 @@ The behavior-invariance restrictions of an overlay are defined as follows: after
 | annotationTypes | The merged tree can include new annotation types or new values for existing annotation types, as long as all annotations in the merged API definition validate against the annotation types in the merged tree.
 | any annotation node | The merged tree can include new annotations of annotation types declared in the merged tree, or annotations with different values from those in the master tree.
 | examples | The merged tree can contain new named examples, or named examples with different values from those in the master tree.
-| documentation | The merged tree can contain new items in the array that is the value of the documentation root-level node. To change or remove existing items, the documentation node itself can be overridden in the overlay.
+| documentation | The merged tree can contain new items in the array that is the value of the documentation root-level node. To change existing items, the documentation node itself can be overridden in the overlay.
 
 The following example illustrates a very simple RAML definition of a library books API, along with overlay files that provide a Spanish translation and metadata for an API monitoring service.
 
