@@ -89,11 +89,7 @@ RAML API definitions are YAML 1.2-compliant documents that begin with a REQUIRED
 title: My API
 ```
 
-The first line of a RAML specification-compliant document MUST match the [IETF RFC5234](https://tools.ietf.org/html/rfc5234) – Augmented BNF for Syntax Specifications:
-
-“#%RAML” SP “1.0” SP [FragmentType] CRLF
-
-The _FragmentType_ is NOT ALLOWED in API definitions and is OPTIONAL for the specification of [RAML fragment](#typed-fragments) documents. RAML fragment documents are reusable RAML modules that a larger API definition references or includes.
+The first line of a RAML API definition document MUST begin with the text _#%RAML_ followed by a single space followed by the text _1.0_ and nothing else before the end of the line. RAML fragment documents begin similarly with the RAML version comment and a [fragment identifier](#typed-fragments), but are not in themselves RAML API definition documents.
 
 The media type _application/raml+yaml_ and its associated file extension _.raml_ SHALL be used to designate files containing RAML API definitions, RAML fragments, and files that contain RAML markup. RAML is also capable of including documents of other media types, such as “application/schema+json” and “application/yaml”.
 
