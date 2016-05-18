@@ -2530,7 +2530,7 @@ securitySchemes:
     settings:
       authorizationUri: https://www.dropbox.com/1/oauth2/authorize
       accessTokenUri: https://api.dropbox.com/1/oauth2/token
-      authorizationGrants: [ authorization_code, refresh_token ]
+      authorizationGrants: [ authorization_code, implicit ]
   oauth_1_0:
     description: |
       OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
@@ -2636,7 +2636,7 @@ securitySchemes:
     settings:
       authorizationUri: https://www.dropbox.com/1/oauth2/authorize
       accessTokenUri: https://api.dropbox.com/1/oauth2/token
-      authorizationGrants: [ authorization_code, refresh_token, 'urn:ietf:params:oauth:grant-type:saml2-bearer' ]
+      authorizationGrants: [ authorization_code, implicit, 'urn:ietf:params:oauth:grant-type:saml2-bearer' ]
 ```
 
 ##### Basic Authentication
