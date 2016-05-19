@@ -1291,10 +1291,24 @@ Imagine a more complex example of a union type used in a multiple inheritance ty
 
 ```yaml
 types:
+   HasHome: 
+     type: object
+     properties: 
+       homeAddress: string
+   Cat:
+     type: object
+     properties:
+       name: string
+       color: string
+   Dog:
+     type: object
+     properties:
+       name: string
+       fangs: string       
    HomeAnimal: [ HasHome ,  Dog | Cat ]
 ```
 
-In this case, type `HomeAnimal` has two base types, `HasHome` and an anonymous union type, defined by the following type expression: `Dog | Cat`  
+In this case, type `HomeAnimal` has two base types, `HasHome` and an anonymous union type, defined by the following type expression: `Dog | Cat`. 
 
 Validating the `HomeAnimal` type involves validating the types derived from each of the base types and the types of each element in the union type. In this particular case, you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
 
