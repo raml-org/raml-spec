@@ -472,6 +472,8 @@ types:
 
 ### Overview
 
+This section is informative.
+
 The RAML type system borrows from object oriented programming languages such as Java, as well as from XSD and JSON Schemas.
 
 RAML Types in a nutshell:
@@ -1291,9 +1293,9 @@ Imagine a more complex example of a union type used in a multiple inheritance ty
 
 ```yaml
 types:
-   HasHome: 
+   HasHome:
      type: object
-     properties: 
+     properties:
        homeAddress: string
    Cat:
      type: object
@@ -1308,7 +1310,7 @@ types:
    HomeAnimal: [ HasHome ,  Dog | Cat ]
 ```
 
-In this case, type `HomeAnimal` has two base types, `HasHome` and an anonymous union type, defined by the following type expression: `Dog | Cat`. 
+In this case, type `HomeAnimal` has two base types, `HasHome` and an anonymous union type, defined by the following type expression: `Dog | Cat`.
 
 Validating the `HomeAnimal` type involves validating the types derived from each of the base types and the types of each element in the union type. In this particular case, you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
 
