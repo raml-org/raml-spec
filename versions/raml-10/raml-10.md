@@ -512,8 +512,8 @@ A type declaration references another type, or wraps or extends another type by 
 | default? | A default value for a type. When an API request is completely missing the instance of a type, for example when a query parameter described by a type is entirely missing from the request, then the API must act as if the API client had sent an instance of that type with the instance value being the value in the default facet. Similarly, when the API response is completely missing the instance of a type, the client must act as if the API server had returned an instance of that type with the instance value being the value in the default facet. A special case is made for URI parameters: for these, the client MUST substitute the value in the default facet if no instance of the URI parameter was given.
 | schema? | An alias for the equivalent "type" facet for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" facet because the "schema" alias for that facet name might be removed in a future RAML version. The "type" facet supports XML and JSON schemas.
 | type? | A base type which the current type extends or just wraps. The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.
-| example? | An example of an instance of this type that can be used, for example, by documentation generators to generate sample values for an object of this type. The "example" facet MUST not be available when the "examples" facet is already defined. See section [Examples](#defining-examples-in-raml) for more information.
-| examples? |  Examples of instances of this type. This can be used, for example, by documentation generators to generate sample values for an object of this type. The "examples" facet MUST not be available when the "example" facet is already defined. See section [Examples](#defining-examples-in-raml) for more information.
+| example? | An example of an instance of this type that can be used, for example, by documentation generators to generate sample values for an object of this type. The "example" facet MUST NOT be available when the "examples" facet is already defined. See section [Examples](#defining-examples-in-raml) for more information.
+| examples? |  Examples of instances of this type. This can be used, for example, by documentation generators to generate sample values for an object of this type. The "examples" facet MUST NOT be available when the "example" facet is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | displayName? | An alternate, human-friendly name for the type
 | description? | A substantial, human-friendly description of the type. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this API. An annotation is a map having a key that begins with "(" and ends with ")" where the text enclosed in parentheses is the annotation name, and the value is an instance of that annotation.
@@ -550,11 +550,11 @@ The RAML type system defines the following built-in types:
 * [object](#object-types)
 * [array](#array-types)
 * [union](#union-types) via type expression
-* [scalar types](#scalar-types) such as number, boolean, string, date, file, integer, and null
+* one of the following [scalar types](#scalar-types): number, boolean, string, date, file, integer, or null
 
 Additional to the built-in types, the RAML type system also allows to define [JSON or XML schema](#using-xml-and-json-schema).
 
-#### Any Types
+#### The "Any" Type
 
 Every type, whether built-in or user-defined, has the `any` type at the root of its inheritance tree. The "base" type of any type is the type in its inheritance tree that directly extends the `any` type at the root; thus, for example, if a custom type `status` extends the built-in type `integer` which extends the built-in type `number` which extends the `any` type, then the base type of `status` is `number`. Note that a type may have more than one base type.
 
@@ -562,9 +562,7 @@ The `any` type has no facets.
 
 The following diagram shows the inheritance tree, starting at the root-level with `any`.
 
-![Types Hierarchy](images/typesHierarchy.png)
-
-#### Object Types
+#### Object Type
 
 All types that have the built-in object base type can use the following facets in their type declarations:
 
@@ -851,7 +849,7 @@ PersonOrDog:
    discriminator: hasTail
 ```
 
-#### Array Types
+#### Array Type
 
 Array types are declared by using either the array qualifier `[]` at the end of a [type expression](#type-expressions) or `array` as the value of a `type` facet. If you are defining a top-level array type, such as the `Emails` in the examples below, you can declare the following facets in addition to those previously described to further restrict the behavior of the array type.
 
@@ -1090,9 +1088,9 @@ example:
 
 Declaring the type of a property to be `null` represents the lack of a value in a type instance. In a RAML context that requires *values* of type `null` (vs just type declarations), the usual YAML `null` is used, e.g. when the type is `null | number` you may use `enum: [ 1, 2, ~ ]` or more explicitly/verbosely `enum: [ 1, 2, !!null "" ]`; in non-inline notation you can just omit the value completely, of course.
 
-#### Union Types
+#### Union Type
 
-Union types are declared using pipes (|) in type expressions. Union types are useful for modeling common scenarios in JSON-based applications, for example an array containing objects that can be instances of more than one type.
+A union type is used to allow instances of data to be described by any of several types. A union type is declared via a type expression that combines 2 or more types delimited by pipe (`|`) symbols; these combined types are referred to as the union type's base types. In the following example, instances of the `Device` type may be described by either the `Phone` type or the `Notebook` type:
 
 ```yaml
 #%RAML 1.0
@@ -1118,7 +1116,9 @@ types:
     type: Phone | Notebook
 ```
 
-To deserialize an instance of data, first fully expand all unions at every level, then match the instance against each element in that expansion starting from the left-most and proceeding to the right; use the first successful matching element to deserialize the instance; and if no elements match, the instance is invalid. A valid instance of a union type must pass all restrictions associated with at least one of the elements. For example:
+An instance of a union type is valid if and only if it meets all restrictions associated with at least one of the base types. More generally, an instance of a type that has a union type in its type hierarchy is valid if and only if it is a valid instance of at least one of the base types obtained by expanding all unions in that type hierarchy. Such an instance is deserialized by performing this expansion and then matching the instance against all the base types, starting from the left-most and proceeding to the right; the first successfully-matching base type is used to deserialize the instance.
+
+The following example defines two types and a third type which is a union of those two types.
 
 ```yaml
 types:
@@ -1136,7 +1136,7 @@ types:
       fangs: string
 ```
 
-A following example of an instance of type `CatOrDog` is valid:
+The following example of an instance of type `CatOrDog` is valid:
 
 ```yaml
 CatOrDog: # follows restrictions applied to the type 'Cat'
@@ -1198,7 +1198,7 @@ types:
             type: !include person.json
 ```
 
-A RAML processor MUST not allow types that define an XML or JSON schema to participate in type inheritance or specialization, or effectively in any [type expression](#type-expressions). Therefore, you cannot define sub-types of these types to declare new properties, add restrictions, set facets, or declare facets. You can, however, create simple type wrappers that add annotations, examples, displayName, or a description.
+A RAML processor MUST NOT allow types that define an XML or JSON schema to participate in type inheritance or specialization, or effectively in any [type expression](#type-expressions). Therefore, you cannot define sub-types of these types to declare new properties, add restrictions, set facets, or declare facets. You can, however, create simple type wrappers that add annotations, examples, display name, or a description.
 
 The following example shows a valid declaration.
 
@@ -1952,7 +1952,7 @@ An API method can support or require a query string in the URL on which the meth
 
 #### The Query String as a Whole
 
-The **queryString** node is used to specify the query string as a whole, rather than as name-value pairs. The queryString value is either the name of a data type or an inline data type declaration, including a data type expression. In either case, all types at the base of the type hierarchy of the data type MUST be either a scalar type or the object type, after fully expanding any union type expressions at every level of the type hierarchy.
+The **queryString** node is used to specify the query string as a whole, rather than as name-value pairs. The queryString value is either the name of a data type or an inline data type declaration, including a data type expression. In either case, all base types in type hierarchy of the data type MUST be either a scalar type or the object type, after fully expanding any union type expressions at every level of the type hierarchy.
 
 If the type is derived from a scalar type, the query string as a whole MUST be described by the type.
 
@@ -3137,7 +3137,7 @@ resourceTypes:
 
 #### Resolving Includes
 
-When RAML or YAML files are included, RAML parsers MUST not only read the content, but must also parse it and add the content to the declaring structure as if the content were declared inline. RAML parsers MUST parse the content of the file as RAML content and append the parsed structures to the RAML document node if the included file has a .raml, .yml, or .yaml extension or one of the following media types:
+When RAML or YAML files are included, RAML parsers MUST NOT only read the content, but must also parse it and add the content to the declaring structure as if the content were declared inline. RAML parsers MUST parse the content of the file as RAML content and append the parsed structures to the RAML document node if the included file has a .raml, .yml, or .yaml extension or one of the following media types:
 
 * application/raml+yaml
 * text/yaml
@@ -3250,7 +3250,7 @@ resourceTypes:
 
 Any number of libraries can be applied by using the OPTIONAL **uses** node ONLY at the root of a ["master"] RAML or RAML fragment file. The value of the uses node is a map of key-value pairs. The keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
 
-In the document that applies a library, the data types, resource types, traits, security schemes, and annotation types in the library become available from the document. The assets in the library are referenced from the document using dot notation as follows: concatenate the library name followed by a period ("."), and then the name of the data type, resource type, trait, security scheme, or annotation type. The library name defines a namespace for the library nodes within the context that the library is applied. Namespaces defined in a **uses** statement in a specific file are only consumable within that file and serve only to disambiguate the included libraries from each other. Therefore, any processor MUST not allow any composition of namespaces using "." across multiple libraries.
+In the document that applies a library, the data types, resource types, traits, security schemes, and annotation types in the library become available from the document. The assets in the library are referenced from the document using dot notation as follows: concatenate the library name followed by a period ("."), and then the name of the data type, resource type, trait, security scheme, or annotation type. The library name defines a namespace for the library nodes within the context that the library is applied. Namespaces defined in a **uses** statement in a specific file are only consumable within that file and serve only to disambiguate the included libraries from each other. Therefore, any processor MUST NOT allow any composition of namespaces using "." across multiple libraries.
 
 Using **uses** does NOT automatically import the remote library assets into the local file, but the local file can import those assets by referring to the assets from its contents. For example, a RAML type fragment file that uses a library of remote types can import one of those types by referring to it. The remote type is included as if it were defined locally within the RAML type fragment file.
 
