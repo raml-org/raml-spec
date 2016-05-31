@@ -550,7 +550,7 @@ The RAML type system defines the following built-in types:
 * [object](#object-type)
 * [array](#array-type)
 * [union](#union-type) via type expression
-* one of the following [scalar types](#scalar-types): number, boolean, string, date, file, integer, or null
+* one of the following [scalar types](#scalar-types): number, boolean, string, date-only, time-only, datetime-only, datetime, file, integer, or null
 
 Additional to the built-in types, the RAML type system also allows to define [JSON or XML schema](#using-xml-and-json-schema).
 
