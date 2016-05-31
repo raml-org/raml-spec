@@ -521,6 +521,7 @@ A type declaration references another type, or wraps or extends another type by 
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this API. An annotation is a map having a key that begins with "(" and ends with ")" where the text enclosed in parentheses is the annotation name, and the value is an instance of that annotation.
 | facets? | A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section [User-defined Facets](#user-defined-facets) for more information.
 | xml? | The capability to configure [XML serialization of this type instance](#xml-serialization-of-type-instances).
+| enum? | An enumeration of all the possible values of instances of this type. The value is an array containing representations of these possible values; an instance of this type MUST be equal to one of these values.
 
 The "schema" and "type" facets are mutually exclusive and synonymous: processors MUST NOT allow both to be specified, explicitly or implicitly, inside the same type declaration. Therefore, the following examples are invalid:
 
@@ -882,26 +883,7 @@ Using `Email[]` is equivalent to using `type: array`.  The `items` facet defines
 
 ### Scalar Types
 
-RAML defines a set of built-in scalar types, each of which has a predefined set of restrictions. All types, except the file type, can have an additional `enum` facet.
-
-| Facet | Description |
-|:--------|:------------|
-| enum? | Enumeration of possible values for this built-in scalar type. The value is an array containing representations of possible values, or a single value if there is only one possible value.
-
-Example usage of enums:
-
-```yaml
-#%RAML 1.0
-title: My API With Types
-types:
-  country:
-    type: string
-    enum: [ usa, rus ]
-
-  sizes:
-    type: number
-    enum: [ 1, 2, 3 ]
-```
+RAML defines a set of built-in scalar types, each of which has a predefined set of restrictions.
 
 #### String
 
