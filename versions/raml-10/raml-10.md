@@ -64,13 +64,13 @@ Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](htt
 	- [Defining Types](#defining-types)
 	- [Type Declarations](#type-declarations)
 	- [Built-in Types](#built-in-types)
-		- [Any Types](#any-types)
-		- [Object Types](#object-types)
+		- [The "Any" Type](#the-any-type)
+		- [Object Type](#object-type)
 			- [Property Declarations](#property-declarations)
 			- [Additional Properties](#additional-properties)
 			- [Object Type Specialization](#object-type-specialization)
 			- [Using Discriminator](#using-discriminator)
-		- [Array Types](#array-types)
+		- [Array Type](#array-type)
 		- [Scalar Types](#scalar-types)
 			- [String](#string)
 			- [Number](#number)
@@ -79,7 +79,7 @@ Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](htt
 			- [Date](#date)
 			- [File](#file)
 			- [Null Type](#null-type)
-		- [Union Types](#union-types)
+		- [Union Type](#union-type)
 		- [Using XML and JSON Schema](#using-xml-and-json-schema)
 	- [User-defined Facets](#user-defined-facets)
 	- [Determine Default Types](#determine-default-types)
@@ -546,10 +546,10 @@ We recommended using the "type" facet instead of "schema" because the schema ali
 
 The RAML type system defines the following built-in types:
 
-* [any](#any-types)
-* [object](#object-types)
-* [array](#array-types)
-* [union](#union-types) via type expression
+* [any](#the-any-type)
+* [object](#object-type)
+* [array](#array-type)
+* [union](#union-type) via type expression
 * one of the following [scalar types](#scalar-types): number, boolean, string, date, file, integer, or null
 
 Additional to the built-in types, the RAML type system also allows to define [JSON or XML schema](#using-xml-and-json-schema).
