@@ -1036,7 +1036,7 @@ types:
     type: object
     properties:
       name:
-      comment:
+      comment: null
     example:
       name: Fred
       comment: # Providing a value here is not allowed.
