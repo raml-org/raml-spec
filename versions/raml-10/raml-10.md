@@ -903,6 +903,7 @@ types:
     type: string
     minLength: 2
     maxLength: 6
+    pattern: ^note\d+$
 ```
 
 #### Number
