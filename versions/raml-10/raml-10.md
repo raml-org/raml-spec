@@ -554,13 +554,15 @@ The RAML type system defines the following built-in types:
 
 Additional to the built-in types, the RAML type system also allows to define [JSON or XML schema](#using-xml-and-json-schema).
 
+The following diagram shows the inheritance tree, starting at the root-level with `any`.
+
+![Types Hierarchy](images/typesHierarchy.png)
+
 #### The "Any" Type
 
 Every type, whether built-in or user-defined, has the `any` type at the root of its inheritance tree. The "base" type of any type is the type in its inheritance tree that directly extends the `any` type at the root; thus, for example, if a custom type `status` extends the built-in type `integer` which extends the built-in type `number` which extends the `any` type, then the base type of `status` is `number`. Note that a type may have more than one base type.
 
 The `any` type has no facets.
-
-The following diagram shows the inheritance tree, starting at the root-level with `any`.
 
 #### Object Type
 
