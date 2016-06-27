@@ -1095,7 +1095,7 @@ This example shows a resource GET method that responds with separate codes and b
 
 An API's methods may support custom header values in responses. The custom, non-standard HTTP headers MUST be specified by the *headers* property.
 
-The *headers* property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the [Named Parameters section](#name-parameters).
+The *headers* property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the [Named Parameters section](#named-parameters).
 
 This example shows a 503 error response that includes a custom header.
 
