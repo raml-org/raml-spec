@@ -125,6 +125,7 @@ If the included file has one of the following media types:
 or a *.raml* or *.yml* or *.yaml* extension, RAML parsers MUST parse the content the file as RAML content and append the parsed structures to the RAML document's node.
 
 The location of the file to be included, that is, the right-hand side of !include, must be static, that is, it cannot contain any resource type or trait parameters. This will be reconsidered for future versions of RAML.
+
 Named Parameters
 ----------------
 
@@ -285,12 +286,11 @@ If the *baseUri* value is a Level 1 Template URI, the following reserved base UR
 
 Any other URI template variables appearing in the *baseUri* MAY be described explicitly within a *baseUriParameters* property at the root
 of the API definition. The properties of the *baseUriParameters* property are described in the
-Named Parameters section of this specification.
+[Named Parameters section](#named-parameters) of this specification.
 
 If a URI template variable in the base URI is not explicitly described in a *baseUriParameters* property,
 and is not specified in a resource-level *baseUriParameters* property,
-it MUST still be treated as a base URI parameter with defaults as specified in the Named Parameters
-section of this specification. Its type is "string", it is required, and its displayName is its name
+it MUST still be treated as a base URI parameter with defaults as specified in the [Named Parameters section](#named-parameters) of this specification. Its type is "string", it is required, and its displayName is its name
 (i.e. without the surrounding curly brackets [{] and [}]).
 
 The following example RAML API definition uses a Level 1 Template URI as the *baseUri*.
@@ -511,7 +511,7 @@ baseUri: https://app.zencoder.com/api/{version}
 
 The values matched by URI parameters cannot contain slash (/) characters, in order to avoid ambiguous matching. In the example above, a URI (relative to the baseUri) of "/jobs/123" matches the "/{jobId}" resource nested within the "/jobs" resource, but a URI of "/jobs/123/x" does not match any of those resources.
 
-A resource MAY contain a *uriParameters* property specifying the uriParameters in that resource's relative URI, as described in the Named Parameters section of this specification. The example below shows two top-level resources (/user and /users) and a nested resource specified by its template URI, "/{userId}". The URI parameter "userId" is explicitly declared, and given a displayName "User ID" and an integer type.
+A resource MAY contain a *uriParameters* property specifying the uriParameters in that resource's relative URI, as described in the [Named Parameters section](#named-parameters) of this specification. The example below shows two top-level resources (/user and /users) and a nested resource specified by its template URI, "/{userId}". The URI parameter "userId" is explicitly declared, and given a displayName "User ID" and an integer type.
 
 ```yaml
 #%RAML 0.8
@@ -530,7 +530,7 @@ baseUri: https://api.github.com
        type: integer
 ```
 
-If a URI parameter in a resource's relative URI is not explicitly described in a uriParameters property for that resource, it MUST still be treated as a URI parameter with defaults as specified in the Named Parameters section of this specification. Its type is "string", it is required, and its displayName is its name (i.e. without the surrounding curly brackets [{] and [}]). In the example below, the top-level resource has two URI parameters, "folderId" and "fileId".
+If a URI parameter in a resource's relative URI is not explicitly described in a uriParameters property for that resource, it MUST still be treated as a URI parameter with defaults as specified in the [Named Parameters section](#named-parameters) of this specification. Its type is "string", it is required, and its displayName is its name (i.e. without the surrounding curly brackets [{] and [}]). In the example below, the top-level resource has two URI parameters, "folderId" and "fileId".
 
 ```yaml
 #%RAML 0.8
