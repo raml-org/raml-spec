@@ -730,7 +730,7 @@ baseUri: https://app.zencoder.com/api/{version}
 
 An API's methods MAY support or require non-standard HTTP headers. In the API definition, specify the non-standard HTTP headers by using the *headers* property.
 
-The *headers* property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the [Named Parameters section](#name-parameters).
+The *headers* property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the [Named Parameters section](#named-parameters).
 
 This example shows a POST method with an HTTP header.
 
