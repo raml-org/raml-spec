@@ -511,7 +511,7 @@ A type declaration references another type, or wraps or extends another type by 
 |:----------|:----------|
 | default? | A default value for a type. When an API request is completely missing the instance of a type, for example when a query parameter described by a type is entirely missing from the request, then the API must act as if the API client had sent an instance of that type with the instance value being the value in the default facet. Similarly, when the API response is completely missing the instance of a type, the client must act as if the API server had returned an instance of that type with the instance value being the value in the default facet. A special case is made for URI parameters: for these, the client MUST substitute the value in the default facet if no instance of the URI parameter was given.
 | schema? | An alias for the equivalent "type" facet for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" facet because the "schema" alias for that facet name might be removed in a future RAML version. The "type" facet supports XML and JSON schemas.
-| type? | A base type which the current type extends or just wraps. The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.
+| type? | The type which the current type extends or just wraps. The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.
 | example? | An example of an instance of this type that can be used, for example, by documentation generators to generate sample values for an object of this type. The "example" facet MUST NOT be available when the "examples" facet is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | examples? |  Examples of instances of this type. This can be used, for example, by documentation generators to generate sample values for an object of this type. The "examples" facet MUST NOT be available when the "example" facet is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | displayName? | An alternate, human-friendly name for the type
@@ -561,13 +561,15 @@ The following diagram shows the inheritance tree, starting at the root-level wit
 
 #### The "Any" Type
 
-Every type, whether built-in or user-defined, has the `any` type at the root of its inheritance tree. The "base" type of any type is the type in its inheritance tree that directly extends the `any` type at the root; thus, for example, if a custom type `status` extends the built-in type `integer` which extends the built-in type `number` which extends the `any` type, then the base type of `status` is `number`. Note that a type may have more than one base type.
+Every type, whether built-in or user-defined, has the `any` type at the root of its inheritance tree. By definition, the `any` type is a type which imposes no restrictions, i.e. any instance of data is valid against it.
+
+The "base" type of any type is the type in its inheritance tree that directly extends the `any` type at the root; thus, for example, if a custom type `status` extends the built-in type `integer` which extends the built-in type `number` which extends the `any` type, then the base type of `status` is `number`. Note that a type may have more than one base type.
 
 The `any` type has no facets.
 
 #### Object Type
 
-All types that have the built-in object base type can use the following facets in their type declarations:
+All types that have the built-in object base type in its inheritance tree can use the following facets in their type declarations:
 
 | Facet  | Description |
 |:----------|:----------|
@@ -1074,7 +1076,7 @@ Declaring the type of a property to be `null` represents the lack of a value in 
 
 #### Union Type
 
-A union type is used to allow instances of data to be described by any of several types. A union type is declared via a type expression that combines 2 or more types delimited by pipe (`|`) symbols; these combined types are referred to as the union type's base types. In the following example, instances of the `Device` type may be described by either the `Phone` type or the `Notebook` type:
+A union type is used to allow instances of data to be described by any of several types. A union type is declared via a type expression that combines 2 or more types delimited by pipe (`|`) symbols; these combined types are referred to as the union type's super types. In the following example, instances of the `Device` type may be described by either the `Phone` type or the `Notebook` type:
 
 ```yaml
 #%RAML 1.0
@@ -1100,7 +1102,7 @@ types:
     type: Phone | Notebook
 ```
 
-An instance of a union type is valid if and only if it meets all restrictions associated with at least one of the base types. More generally, an instance of a type that has a union type in its type hierarchy is valid if and only if it is a valid instance of at least one of the base types obtained by expanding all unions in that type hierarchy. Such an instance is deserialized by performing this expansion and then matching the instance against all the base types, starting from the left-most and proceeding to the right; the first successfully-matching base type is used to deserialize the instance.
+An instance of a union type is valid if and only if it meets all restrictions associated with at least one of the super types. More generally, an instance of a type that has a union type in its type hierarchy is valid if and only if it is a valid instance of at least one of the super types obtained by expanding all unions in that type hierarchy. Such an instance is deserialized by performing this expansion and then matching the instance against all the super types, starting from the left-most and proceeding to the right; the first successfully-matching base type is used to deserialize the instance.
 
 The following example defines two types and a third type which is a union of those two types.
 
@@ -1124,8 +1126,8 @@ The following example of an instance of type `CatOrDog` is valid:
 
 ```yaml
 CatOrDog: # follows restrictions applied to the type 'Cat'
-  name: "Musia",
-  color: "brown"
+  name: Musia,
+  color: brown
 ```
 
 <a name="union-multiple-inheritance"></a>
@@ -1150,11 +1152,11 @@ types:
    HomeAnimal: [ HasHome ,  Dog | Cat ]
 ```
 
-In this case, type `HomeAnimal` has two base types, `HasHome` and an anonymous union type, defined by the following type expression: `Dog | Cat`.
+In this case, type `HomeAnimal` has two super types, `HasHome` and an anonymous union type, defined by the following type expression: `Dog | Cat`.
 
-Validating the `HomeAnimal` type involves validating the types derived from each of the base types and the types of each element in the union type. In this particular case, you need to test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
+Validating the `HomeAnimal` type involves validating the types derived from each of the super types and the types of each element in the union type. In this particular case, the processor MUST test that types `[HasHome, Dog]` and `[HasHome, Cat]` are valid types.
 
-If you are extending from two union types you should perform validations for every possible combination. For example, to validate the `HomeAnimal` type shown below, you need to test six possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
+If you are extending from two union types a processor MUST perform validations for every possible combination. For example, to validate the `HomeAnimal` type shown below, the processor MUST test the six possible combinations: `[HasHome, Dog ]`, `[HasHome, Cat ]`, `[HasHome, Parrot]`, `[IsOnFarm, Dog ]`, `[IsOnFarm, Cat ]`, and `[IsOnFarm, Parrot]`.
 
 ```yaml
 types:
