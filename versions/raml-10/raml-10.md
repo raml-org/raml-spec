@@ -107,8 +107,7 @@ Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](htt
 	- [Applying Resource Types and Traits](#applying-resource-types-and-traits)
 	- [Resource Type and Trait Parameters](#resource-type-and-trait-parameters)
 	- [Declaring HTTP Methods as Optional](#declaring-http-methods-as-optional)
-	- [Algorithm of Merging Traits and Methods](#algorithm-of-merging-traits-and-methods)
-	- [Resource Types and Traits Effect on Collections](#resource-types-and-traits-effect-on-collections)
+	- [Algorithm of Merging Traits and Resource Types](#algorithm-of-merging-traits-and-resource-types)
 - [Security Schemes](#security-schemes)
 	- [Security Scheme Types](#security-scheme-types)
 	- [Security Scheme Declaration](#security-scheme-declaration)
@@ -2367,73 +2366,31 @@ resourceTypes:
   # not required; same for the X-Chargeback header
 ```
 
-### Algorithm of Merging Traits and Methods
+### Algorithm of Merging Traits and Resource Types
 
-Each RAML element has its branch of the RAML document. The high-level description of applying a trait to method is putting a traits branch under the methods branch. Actually, applying a trait to a method is a recursive procedure:
+In order to apply trait to a method, trait YAML node and its sub-nodes are merged with method YAML node and its sub-nodes.
+Everything described below for methods and traits also works in the same way for resource types and resources unless stated otherwise.
 
-1. Method node properties are inspected and those that are undefined in trait node remain unchanged.  
-2. The method node receives all properties of trait node (excluding optional ones), which are undefined in the method node.  
-3. Properties defined in both method node and trait node (including optional ones) are treated as follows:  
-  * Scalar properties remain unchanged.  
-  * Collection properties are merged by value, as described later.  
-  * Values of object properties are subjected to steps 1-3 of this procedure.  
+Algorithm has three phases:
+1. YAML-level merging
+2. Parameters application
+3. Reference patching
 
-Generally, a method can have more than one trait, each having a sufficient hierarchy. Applying all traits is equivalent to building a stack of branches as follows:
+#### Phase 1: YAML-level merging
+At the first phase, YAML trees of methods, traits, resources and resource types are merged.
 
-* The top branch is the methods branch.
-* Other branches are traits branches.
-  * Branches of traits that are farther away hierarchically from the method than others, are bypassed in favor the closest one.
-  * Those traits that are within the same hierarchy distance from the method, can be ordered in a queue:
-    * For distance one, it's just the methods trait list.
-    * Queue(d+1) is obtained from Queue(d) by concatenating trait lists of its elements and canceling all but the first occurrence of each trait.
-    * Branch order is determined as follows: traits that have higher positions in the queue, have branches deeper in the stack.
+The following node merging procedure is applied for each YAML sub-node of trait and method, recursively:
 
-Finally, the resource can have its own traits, and a chain of resource types, for example resourceType1, resourceType2, ..., can be applied. Each resource type can potentially have its own traits and define the same method. The stack is constructed as follows:
+##### Single trait or resource type merging algorithm
 
-1. Traits of method itself  
-2. Traits of resource owning the method  
-3. Traits of method owned by resourceType1  
-4. Traits of resourceType1  
-5. ...  
+1. Method YAML MAP node MAPPINGs are inspected and those that have keys undefined in trait MAP node remain unchanged.
+2. For each YAML MAPPING in trait node with key undefined in method node, the MAPPING is copied to the method node. This does not apply to the keys ending with "?" character (optional properties).  
+3. MAPPINGs with the keys defined in both method node and trait node (including optional ones) are treated as follows:  
+  * MAPPING with value of SCALAR type remain unchanged.  
+  * MAPPING with value of SEQUENCE type is merged by value, as described in the next section `Resource Types and Traits Effect on Collections`.  
+  * For MAPPING with value of MAP type this procedure is repeated, recursively
 
-Merging resource types with resources obeys similar rules.
-
-The following example illustrates how a resource type gets merged into the `/products` resource.
-
-```yaml
-resourceTypes:
-  collection:
-    get:
-      description: a list
-      headers:
-        APIKey:
-/products:
-  type: collection
-  get:
-    description: override the description
-    responses:
-      200:
-        body:
-          application/json:
-```
-
-The only overlap between the `collection` resource type and the resource declaration is `description` which is defined in both. In this example, the final version has the description that has been explicitly defined in the resource.
-
-Every explicit node wins over the ones that are declared in a resource type or trait. The rest are simply merged. The final, merged result must be:
-
-```yaml
-/resource:
-  get:
-    headers:
-      APIKey:
-    description: override the description
-    responses:
-      200:
-        body:
-          application/json:
-```
-
-### Resource Types and Traits Effect on Collections
+##### Resource Types and Traits Effect on Collections
 
 All collections or sequences that are affected by applied traits and resource types are merged. This example defines the enum values of a query parameter in both the trait and resource:
 
@@ -2481,6 +2438,280 @@ traits:
 ```
 
 To resolve a collision arising from this inequality, priority is given to the trait in closest proximity to the target method or resource. In the previous example, the `tokenName` parameter value for the `GET:/servers` method is `token`, and the trait list consists of single trait occurrence: `[ {secured:{ tokenName:token}} ]`.
+
+
+
+##### Applying several traits or resource types
+
+Generally, a method can have more than one trait, each having a sufficient hierarchy.
+
+Applying all traits is equivalent to building a stack of branches, where each branch is a sub-tree of a respective node YAML tree, and applying such branches according to `Single trait or resource type merging algorithm` in the following order:
+
+* The top branch is the methods branch.
+* Other branches are traits branches.
+  * Branches of traits that are farther away hierarchically from the method than others, are bypassed in favor the closest one.
+  * Those traits that are within the same hierarchy distance from the method, can be ordered in a queue:
+    * For distance one, it's just the methods trait list.
+    * Queue(d+1) is obtained from Queue(d) by concatenating trait lists of its elements and canceling all but the first occurrence of each trait.
+    * Branch order is determined as follows: traits that have higher positions in the queue, have branches deeper in the stack.
+
+##### Applying mixed traits and resource types
+
+Finally, the resource can have its own traits, and a chain of resource types, for example resourceType1, resourceType2, ..., can be applied. Each resource type can potentially have its own traits and define the same method. The stack is constructed as follows:
+
+1. Traits of method itself  
+2. Traits of resource owning the method  
+3. Traits of method owned by resourceType1  
+4. Traits of resourceType1  
+5. ...  
+
+Merging resource types with resources obeys similar rules.
+
+The following example illustrates how a resource type gets merged into the `/products` resource.
+
+```yaml
+resourceTypes:
+  collection:
+    get:
+      description: a list
+      headers:
+        APIKey:
+/products:
+  type: collection
+  get:
+    description: override the description
+    responses:
+      200:
+        body:
+          application/json:
+```
+
+The only overlap between the `collection` resource type and the resource declaration is `description` which is defined in both. In this example, the final version has the description that has been explicitly defined in the resource.
+
+Every explicit node wins over the ones that are declared in a resource type or trait. The rest are simply merged. The final, merged result must be:
+
+```yaml
+/resource:
+  get:
+    headers:
+      APIKey:
+    description: override the description
+    responses:
+      200:
+        body:
+          application/json:
+```
+
+#### Phase 2: Parameters application
+
+At the second phase of an algorithm, YAML tree is modified to apply the parameter values. The result of such application is also an YAML tree.
+
+Nodes are being traversed in exactly the same order as in Phase 1. For each node containing parameter template (application), the template is being textually replaced with parameter value got from respective trait or resource type application in a method or resource. Changed nodes and text ranges inside the node are being associated with the unit, where the value is defined in for further use in phase 3.
+
+If parameter application adds new trait reference to a method or new resource type to a resource, or make them resolvable, Phase 1 is repeated for such a trait or resource. Due to that, it is often more convenient to perform Phase 1 and Phase 2 simultaneously.
+
+#### Phase 3: Reference patching
+
+At the third phase, the whole RAML tree is traversed. For each node, which is defined by RAML language as a reference (like type reference), an attempt to resolve the reference according to the algorithm defined in `Reference resolving` section. If the reference is resolved, it is determined whether reference text needs to be patched in order to be accessed correctly from the main RAML unit (file), and patched if needed by an algorithm described in `Reference patching` section. The purpose is to have the valid RAML document after such patching.
+
+In example, for the following files:
+
+```yaml
+#%RAML 1.0
+# main.raml
+title: main
+uses:
+    a: libA.raml
+
+/users:
+    type: a.rtA
+```
+
+```yaml
+#%RAML 1.0 Library
+# libA.raml
+
+types:
+    Monkey: number
+
+resourceTypes:    
+    rtA:
+        post:
+            headers:
+                hA2: Monkey
+```
+
+The result of Phase 2 looks like this:
+
+```yaml
+#%RAML 1.0
+# main.raml
+uses:
+    a: libA.raml
+
+/users:
+  post:
+    headers:
+        hA2: Monkey
+```
+
+But there is no `Monkey` type defined in `main.raml` file. So we need to patch `Monkey` text of the reference to become `a.Monkey` to make it a valid reference:
+
+```yaml
+#%RAML 1.0
+# main.raml
+uses:
+    a: libA.raml
+
+/users:
+  post:
+    headers:
+        hA2: a.Monkey
+```
+
+Each reference is resolved and patched individually. So in case of type expressions, each participating type is resolved and patched individually.
+
+This will be the main example for the next sections:
+
+```yaml
+#%RAML 1.0
+# main.raml
+title: type shadows
+uses:
+    a: libA.raml
+
+types:
+    Monkey: string
+
+/users:
+    type:
+        a.rtA:
+            kind: Monkey     
+```
+
+```yaml
+#%RAML 1.0 Library
+# libA.raml
+
+uses:
+    b: libB.raml
+
+types:
+    Monkey: number
+
+resourceTypes:    
+    rtA:
+        type:
+            b.rtB:
+                kindB: <<kind>>
+                kindB2: Monkey
+        post:
+            headers:
+                hA: <<kind>>
+                hA2: Monkey
+```
+
+```yaml
+#%RAML 1.0 Library
+# libB.raml
+
+types:
+    Monkey: boolean
+
+resourceTypes:    
+    rtB:
+        post:
+            headers:
+                hB: <<kindB>>
+                hB2: Monkey
+                hB3: <<kindB>> | <<kindB2>> | Monkey
+```
+
+Phase 2 result for this example is:
+
+```yaml
+#%RAML 1.0
+# main.raml
+title: type shadows
+uses:
+    a: libA.raml
+
+types:
+    Monkey: string
+
+/users:
+  post:
+    headers:
+        hA: Monkey
+        hA2: Monkey
+        hB: Monkey
+        hB2: Monkey
+        hB3: Monkey | Monkey | Monkey
+```
+
+##### Reference resolving
+
+For each reference a queue of RAML units (files) is calculated and an algorithm should look for the reference target in each unit, in turn. The first matching reference name and kind is treated as a result. For the example above, we perform the resolving of each `Monkey` reference in Phase 2 results.
+
+###### Static reference resolving
+
+In case of reference value being NOT a result of template parameter substitution, the units queue is opposite to the units and order of node traversing in Phase 1 leading from initial resource or method node to the reference application node.
+
+For the example above and `hA2: Monkey` reference phase 1 algorithm starts from `/users` resource node defined in unit `main.raml` and ends in `hA2: Monkey` node in `libA.raml` unit. So the final unit sequence for phase 3 is opposite to that order: [`libA.raml`,`main.raml`].
+
+As a result `hA2: Monkey` reference target will be resolved to be pointing at `Monkey` type defined in `libA.raml` as this unit is the first one in the queue containing type called `Monkey`.
+
+For the example above and `hB2: Monkey` reference phase 1 algorithm starts from `/users` resource node defined in unit `main.raml`, then goes to `rtA` resource type sub-nodes defined in `libA.raml` unit and ends in `hB2: Monkey` node in `libB.raml` unit. So the final unit sequence for phase 3 is opposite to that order: [`libB.raml`, `libA.raml`, `main.raml`].
+
+As a result `hB2: Monkey` reference target will be resolved to be pointing at `Monkey` type defined in `libB.raml` as this unit is the first one in queue containing type called `Monkey`.
+
+###### Parameter value reference resolving
+
+In case of reference value being a result of template parameter substitution, the units queue is matching units and order of node traversing in Phase 1 leading from the node setting parameter value to the reference application node. If the node setting parameter value is in turn a result of other parameter application, that parameter value setting node is taken instead, recursively. If a single reference contains a result of more than a single parameter value substitution or a single reference crosses the textual boundaries of parameter value, such reference is resolved according to the static reference resolving rules.
+
+For the example above and `hA: <<kind>>` reference defined in `libA.raml`, the node setting its value is `kind: Monkey` in `main.raml`. So the unit sequence for phase 3 is phase 1 path from `kind: Monkey` (`/users`) to `hA: <<kind>>`, and that is [`main.raml`, `libA.raml`].
+
+As a result in this case, `kind: Monkey` will be resolved to `Monkey` type defined in `main.raml` as this unit is the first one in queue containing type called `Monkey`.
+
+For the example above and `hB: <<kindB>>` reference defined in `libB.raml`, the node setting its value is `kindB: <<kind>>` in `libA.raml`, and its value is in turn set by `kind: Monkey` in `main.raml`. So the unit sequence for phase 3 is phase 1 path from `kind: Monkey` (`/users`) to `hB: <<kindB>>`, and that is [`main.raml`, `libA.raml`, `libB.raml`].
+
+As a result in this case, `kind: Monkey` will be resolved to `Monkey` type defined in `main.raml` as this unit is the first one in queue containing type called `Monkey`.
+
+##### Reference patching
+
+After reference target is resolved, reference text must be patched to become a correct reference from the main unit to the previously found reference target.
+If there is no `uses` instruction in the main unit, which imports the unit, reference target is defined in, such an instruction must be automatically generated.
+
+For the example above, and `hA2: Monkey` reference we found that its target is `Monkey` type defined in `libA.raml` unit. Correct reference from `main.raml` unit for this type will be `a.Monkey`, so we patch `hA2: Monkey` to become `hA2: a.Monkey`
+
+For the example above, and `hB: Monkey` reference we found that its target is `Monkey` type defined in `main.raml` unit. Correct reference from `main.raml` unit for this type will be `Monkey`, so the change to `hB: Monkey` is not needed.
+
+For the example above, and `hB2: Monkey` reference we found that its target is `Monkey` type defined in `libB.raml` unit. Correct reference from `main.raml` unit for this type is impossible to build as `main.raml` unit does not import `libB.raml` unit. So the `uses` instruction of `b: libB.raml` should be automatically generated, and the correct reference is then `b.Monkey`, so we patch `hB2: Monkey` to become `hB2: b.Monkey`
+
+For `hB3: Monkey | Monkey | Monkey` we find individual target for each `Monkey` type reference in the expression and patch it accordingly to become `hB3: Monkey | a.Monkey | b.Monkey`.
+
+The final patching result for the example above is:
+
+```yaml
+#%RAML 1.0
+# main.raml
+title: type shadows
+uses:
+    a: libA.raml
+    b: libB.raml
+
+types:
+    Monkey: string
+
+/users:
+  post:
+    headers:
+        hA: Monkey
+        hA2: a.Monkey
+        hB: Monkey
+        hB2: b.Monkey
+        hB3: Monkey | a.Monkey | b.Monkey
+```
 
 ## Security Schemes
 
