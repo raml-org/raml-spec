@@ -3265,7 +3265,7 @@ types:
 usage: |
   Use to define some basic file-related constructs.
 uses:
-  file-type: libraries/file-type.raml
+  file-type: file-type.raml
 traits:
   drm:
     headers:
