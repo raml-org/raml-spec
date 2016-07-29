@@ -1083,7 +1083,12 @@ Declaring the type of a property to be `nil` represents the lack of a value in a
 
 #### Union Type
 
-A union type is used to allow instances of data to be described by any of several types. A union type is declared via a type expression that combines 2 or more types delimited by pipe (`|`) symbols; these combined types are referred to as the union type's super types. In the following example, instances of the `Device` type may be described by either the `Phone` type or the `Notebook` type:
+A union type is used to allow instances of data to be described by any of several types. A union type is declared via a type expression that combines 2 or more types delimited by pipe (`|`) symbols; these combined types are referred to as the union type's super types. Union types can also be declared using a combination of the `type` facet with value `union` and a facet `anyOf` with a value containing an array of all the union super types. In the following example, instances of the `Device` type may be described by either the `Phone` type or the `Notebook` type:
+
+| Facet | Descriptions |
+|:------|:-------------|
+| anyOf | array with the super types of the union. It cannot be empty. |
+
 
 ```yaml
 #%RAML 1.0
@@ -1115,8 +1120,9 @@ The following example defines two types and a third type which is a union of tho
 
 ```yaml
 types:
-  CatOrDog:
-    type: Cat | Dog # elements: Cat or Dog
+  CatOrDog: # equivalent to type: Cat | Dog
+    type: union
+    anyOf: [ Cat, Dog ]
   Cat:
     type: object
     properties:
