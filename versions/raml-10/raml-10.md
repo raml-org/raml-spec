@@ -1974,17 +1974,17 @@ types:
       type: [paging,  lat-long | loc ]
       examples:
         first:
-          content:
+          value:
             start: 2
             lat: 12
             long: 13
         second:
-          content:
+          value:
             start: 2
             page-size: 20
             location: 1,2
         third:  # not valid
-          content:
+          value:
             lat: 12
             location: 2
           strict: false # because it's not valid
