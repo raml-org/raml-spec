@@ -6,7 +6,7 @@ RAML is a language for the definition of HTTP-based APIs that embody most or all
 
 ## Status of this Document
 
-This document constitutes the RAML 1.0 specification. The consensus of specification authors and RAML 0.8 users determines the contents of this document. We strongly recommend that implementers and users of the RAML 0.8 specification update their software and API definitions to this version of the RAML specification.
+This document constitutes the RAML 1.0 specification. The consensus of specification authors and RAML 0.8 users determines the contents of this document. We strongly recommend that implementers and users of the RAML 0.8 specification update their software and API definitions to the RAML 1.0 specification.
 
 ## Terminology and Conformance Language
 
@@ -78,7 +78,7 @@ Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](htt
 			- [Boolean](#boolean)
 			- [Date](#date)
 			- [File](#file)
-			- [Null Type](#null-type)
+			- [Nil Type](#nil-type)
 		- [Union Type](#union-type)
 		- [Using XML and JSON Schema](#using-xml-and-json-schema)
 	- [User-defined Facets](#user-defined-facets)
@@ -551,7 +551,7 @@ The RAML type system defines the following built-in types:
 * [object](#object-type)
 * [array](#array-type)
 * [union](#union-type) via type expression
-* one of the following [scalar types](#scalar-types): number, boolean, string, date-only, time-only, datetime-only, datetime, file, integer, or null
+* one of the following [scalar types](#scalar-types): number, boolean, string, date-only, time-only, datetime-only, datetime, file, integer, or nil
 
 Additional to the built-in types, the RAML type system also allows to define [JSON or XML schema](#using-xml-and-json-schema).
 
@@ -1031,15 +1031,15 @@ types:
     maxLength: 1048576
 ```
 
-##### Null Type
+##### Nil Type
 ​
-In RAML, the type `null` is a scalar type that allows only null data values. Specifically, in YAML it allows only YAML's `null` (or its equivalent representations, such as `~`), in JSON it allows only JSON's `null`, and in XML it allows only XML's `xsi:nil`. In headers, URI parameters, and query parameters, the `null` type only allows the string value "null" (case-sensitive); and in turn an instance having the string value "null" (case-sensitive), when described with the `null` type, deserializes to a null value.
+In RAML, the type `nil` is a scalar type that allows only nil data values. Specifically, in YAML it allows only YAML's `null` (or its equivalent representations, such as `~`), in JSON it allows only JSON's `null`, and in XML it allows only XML's `xsi:nil`. In headers, URI parameters, and query parameters, the `nil` type only allows the string value "nil" (case-sensitive); and in turn an instance having the string value "nil" (case-sensitive), when described with the `nil` type, deserializes to a nil value.
 
-In the following example, the type of an object and has two required properties, `name` and `comment`, both defaulting to type `string`. In `example`, `name` is assigned a string value, but comment is null and this is _not_ allowed because RAML expects a string.
+In the following example, the type of an object and has two required properties, `name` and `comment`, both defaulting to type `string`. In `example`, `name` is assigned a string value, but comment is nil and this is _not_ allowed because RAML expects a string.
 
 ```yaml
 types:
-  NullValue:
+  NilValue:
     type: object
     properties:
       name:
@@ -1049,37 +1049,37 @@ types:
       comment: # Providing no value here is not allowed.
 ```
 
-The following example shows the assignment of the `null` type to `comment`:
+The following example shows the assignment of the `nil` type to `comment`:
 
 ​
 ```yaml
 types:
-  NullValue:
+  NilValue:
     type: object
     properties:
       name:
-      comment: null
+      comment: nil
     example:
       name: Fred
       comment: # Providing a value here is not allowed.
 ```
 
-The following example shows how to represent nullable properties using a union:
+The following example shows how to represent nilable properties using a union:
 ​
 ```yaml
 types:
-  NullValue:
+  NilValue:
     type: object
     properties:
       name:
-      comment: null | string # equivalent to ->
+      comment: nil | string # equivalent to ->
                              # comment: string?
     example:
       name: Fred
       comment: # Providing a value or not providing a value here is allowed.
 ```
 
-Declaring the type of a property to be `null` represents the lack of a value in a type instance. In a RAML context that requires *values* of type `null` (vs just type declarations), the usual YAML `null` is used, e.g. when the type is `null | number` you may use `enum: [ 1, 2, ~ ]` or more explicitly/verbosely `enum: [ 1, 2, !!null "" ]`; in non-inline notation you can just omit the value completely, of course.
+Declaring the type of a property to be `nil` represents the lack of a value in a type instance. In a RAML context that requires *values* of type `nil` (vs just type declarations), the usual YAML `null` is used, e.g. when the type is `nil | number` you may use `enum: [ 1, 2, ~ ]` or more explicitly/verbosely `enum: [ 1, 2, !!null "" ]`; in non-inline notation you can just omit the value completely, of course.
 
 #### Union Type
 
@@ -1238,7 +1238,7 @@ Sometimes it is necessary to refer to an element defined in a schema. RAML suppo
 type: !include elements.xsd#Foo
 ```
 
-When referencing an inner element of a schema, a RAML processor MUST validate an instance against that particular element. This version of RAML specification supports referencing any inner elements in JSON schemas that are valid schemas, any globally defined elements, and complex types in XML schemas. There are only a few restrictions:
+When referencing an inner element of a schema, a RAML processor MUST validate an instance against that particular element. The RAML specification supports referencing any inner elements in JSON schemas that are valid schemas, any globally defined elements, and complex types in XML schemas. There are only a few restrictions:
 
 * Validation of any XML or JSON instance against inner elements follows the same restrictions as the validation against a regular XML or JSON schema.
 * Referencing complex types inside an XSD is valid to determine the structure of an XML instance, but since complex types do not define a name for the top-level XML element, these types cannot be used for serializing an XML instance.
@@ -1805,15 +1805,15 @@ title: Serialization API
 /users:
   description: All users
   /{userIds}:
-   description: A specific user
-   uriParameters:
-     userIds:
-       description: A list of userIds
-       type: array
-       items:
-         type: string
-         minLength: 1
-         uniqueItems: true
+    description: A specific user
+    uriParameters:
+      userIds:
+        description: A list of userIds
+        type: array
+    		items:
+          type: string
+          minLength: 1
+			  uniqueItems: true
 ```
 
 In this example, the URI parameter `userIds` is an array of ids. Assume the array should contain `[blue,green]`, which on the wire might appear as `/users/%5B%22blue%22,%22green%22%5D/`.
@@ -1974,17 +1974,17 @@ types:
       type: [paging,  lat-long | loc ]
       examples:
         first:
-          content:
+          value:
             start: 2
             lat: 12
             long: 13
         second:
-          content:
+          value:
             start: 2
             page-size: 20
             location: 1,2
         third:  # not valid
-          content:
+          value:
             lat: 12
             location: 2
           strict: false # because it's not valid
@@ -2279,7 +2279,7 @@ In trait declarations, **methodName** is a reserved parameter.
 
 The processing application MUST set the value of the methodName parameter to the inheriting method name.
 
-Parameter values MAY be transformed further by applying one of the following functions. The only locale supported by this version of RAML is United States English.
+Parameter values MAY be transformed further by applying one of the following functions. The only locale supported by RAML is United States English.
 
 | Function | Definition |
 |:---------|:-----------|
@@ -2597,7 +2597,7 @@ Security schemes of this type have the following nodes:
 | requestTokenUri | The URI of the *Temporary Credential Request endpoint* as defined in [RFC5849 Section 2.1](https://tools.ietf.org/html/rfc5849#section-2.1)
 | authorizationUri | The URI of the *Resource Owner Authorization endpoint* as defined in [RFC5849 Section 2.2](https://tools.ietf.org/html/rfc5849#section-2.2)
 | tokenCredentialsUri | The URI of the *Token Request endpoint* as defined in [RFC5849 Section 2.3](https://tools.ietf.org/html/rfc5849#section-2.3)
-| signatures | A list of signature methods used by the Authorization server, which can be any of the following: `HMAC-SHA1`, `RSA-SHA1`, or `PLAINTEXT`. If signatures is missing, it is assumed that the Authentication server allows any signature method defined in [RFC5849 Section 3.4](https://tools.ietf.org/html/rfc5849#section-3.4).
+| signatures? | A list of signature methods used by the Authorization server, which can be any of the following: `HMAC-SHA1`, `RSA-SHA1`, or `PLAINTEXT`. If signatures is missing, it is assumed that the Authentication server allows any signature method defined in [RFC5849 Section 3.4](https://tools.ietf.org/html/rfc5849#section-3.4).
 
 OAuth 1.0 authentication follows the standard described in [RFC5849](https://tools.ietf.org/html/rfc5849). The following example shows how to set OAuth 1.0 properties:
 
@@ -2606,7 +2606,7 @@ OAuth 1.0 authentication follows the standard described in [RFC5849](https://too
 title: My Sample API
 securitySchemes:
   oauth_1_0:
-    description:|
+    description: |
       OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
     type: OAuth 1.0
     settings:
@@ -2625,7 +2625,7 @@ Security schemes of this type have the following nodes:
 |authorizationUri| The URI of the *Authorization Endpoint* as defined in [RFC6749 Section 3.1](https://tools.ietf.org/html/rfc6749#section-3.1). Providing an Authorization Endpoint is only mandatory using either the `authorization_code` or `implicit` grant type. It is not mandatory for any other.
 |accessTokenUri| The URI of the *Token Endpoint* as defined in [RFC6749 Section 3.2](https://tools.ietf.org/html/rfc6749#section-3.2).
 |authorizationGrants| A list of the authorization grants supported by the API as defined in RFC6749 Sections [4.1](https://tools.ietf.org/html/rfc6749#section-4.1), [4.2](https://tools.ietf.org/html/rfc6749#section-4.2), [4.3](https://tools.ietf.org/html/rfc6749#section-4.3) and [4.4](https://tools.ietf.org/html/rfc6749#section-4.4), which can be either any of the following grants: `authorization_code`, `password`, `client_credentials`, or `implicit`; or any absolute URI as defined in section [4.5](defined in https://tools.ietf.org/html/rfc6749#section-4.5).
-|scopes| A list of scopes supported by the API as defined in [RFC6749 Section 3.3](https://tools.ietf.org/html/rfc6749#section-3.3)
+|scopes?| A list of scopes supported by the API as defined in [RFC6749 Section 3.3](https://tools.ietf.org/html/rfc6749#section-3.3)
 
 OAuth 2.0 authentication follows the standard described in [RFC6749](https://tools.ietf.org/html/rfc6749). The following example shows how to set OAuth 2.0 properties:
 
@@ -2821,8 +2821,8 @@ The following example shows various annotation type declarations and the applica
 title: Illustrating annotations
 mediaType: application/json
 annotationTypes:
-  deprecated: null
-  experimental: null | string
+  deprecated: nil
+  experimental: nil | string
   feedbackRequested: string?
   testHarness:
     type: string # This line can be omitted as it's the default type
@@ -2938,7 +2938,6 @@ schema
 default
 example
 usage
-repeat
 required
 content
 strict
@@ -3153,7 +3152,6 @@ traits: !include patterns/traits.raml
 ```
 
 ```yaml
-#%RAML 1.0
 # This file is located at patterns/resourceTypes.raml
 
 collection:
@@ -3167,7 +3165,6 @@ member:
 ```
 
 ```yaml
-#%RAML 1.0
 # This file is located at patterns/traits.raml
 
 chargeable:
@@ -3266,7 +3263,7 @@ types:
 usage: |
   Use to define some basic file-related constructs.
 uses:
-  file-type: libraries/file-type.raml
+  file-type: file-type.raml
 traits:
   drm:
     headers:
@@ -3339,7 +3336,7 @@ The behavior-invariance restrictions of an overlay are defined as follows: after
 
 |Name | Allowed differences |
 |:--------|:------------|
-| title<br>description<br>documentation<br>usage<br>example | The merged tree can include new nodes of this type or nodes with different values from those in the master tree.
+| title<br>displayName<br>description<br>documentation<br>usage<br>example | The merged tree can include new nodes of this type or nodes with different values from those in the master tree.
 | types | In addition to allowed differences described elsewhere in this table, the merged tree can also include new data types.
 | annotationTypes | The merged tree can include new annotation types or new values for existing annotation types, as long as all annotations in the merged API definition validate against the annotation types in the merged tree.
 | any annotation node | The merged tree can include new annotations of annotation types declared in the merged tree, or annotations with different values from those in the master tree.
