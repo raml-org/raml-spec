@@ -6,7 +6,7 @@ RAML is a language for the definition of HTTP-based APIs that embody most or all
 
 ## Status of this Document
 
-This document constitutes the RAML 1.0 specification. The consensus of specification authors and RAML 0.8 users determines the contents of this document. We strongly recommend that implementers and users of the RAML 0.8 specification update their software and API definitions to this version of the RAML specification.
+This document constitutes the RAML 1.0 specification. The consensus of specification authors and RAML 0.8 users determines the contents of this document. We strongly recommend that implementers and users of the RAML 0.8 specification update their software and API definitions to the RAML 1.0 specification.
 
 ## Terminology and Conformance Language
 
@@ -1238,7 +1238,7 @@ Sometimes it is necessary to refer to an element defined in a schema. RAML suppo
 type: !include elements.xsd#Foo
 ```
 
-When referencing an inner element of a schema, a RAML processor MUST validate an instance against that particular element. This version of RAML specification supports referencing any inner elements in JSON schemas that are valid schemas, any globally defined elements, and complex types in XML schemas. There are only a few restrictions:
+When referencing an inner element of a schema, a RAML processor MUST validate an instance against that particular element. The RAML specification supports referencing any inner elements in JSON schemas that are valid schemas, any globally defined elements, and complex types in XML schemas. There are only a few restrictions:
 
 * Validation of any XML or JSON instance against inner elements follows the same restrictions as the validation against a regular XML or JSON schema.
 * Referencing complex types inside an XSD is valid to determine the structure of an XML instance, but since complex types do not define a name for the top-level XML element, these types cannot be used for serializing an XML instance.
@@ -2279,7 +2279,7 @@ In trait declarations, **methodName** is a reserved parameter.
 
 The processing application MUST set the value of the methodName parameter to the inheriting method name.
 
-Parameter values MAY be transformed further by applying one of the following functions. The only locale supported by this version of RAML is United States English.
+Parameter values MAY be transformed further by applying one of the following functions. The only locale supported by RAML is United States English.
 
 | Function | Definition |
 |:---------|:-----------|
