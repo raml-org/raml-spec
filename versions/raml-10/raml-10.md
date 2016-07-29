@@ -2938,7 +2938,6 @@ schema
 default
 example
 usage
-repeat
 required
 content
 strict
