@@ -1805,15 +1805,15 @@ title: Serialization API
 /users:
   description: All users
   /{userIds}:
-   description: A specific user
-   uriParameters:
-     userIds:
-       description: A list of userIds
-       type: array
-       items:
-         type: string
-         minLength: 1
-         uniqueItems: true
+    description: A specific user
+    uriParameters:
+      userIds:
+        description: A list of userIds
+        type: array
+    		items:
+          type: string
+          minLength: 1
+			  uniqueItems: true
 ```
 
 In this example, the URI parameter `userIds` is an array of ids. Assume the array should contain `[blue,green]`, which on the wire might appear as `/users/%5B%22blue%22,%22green%22%5D/`.
