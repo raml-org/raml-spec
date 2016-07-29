@@ -3339,7 +3339,7 @@ The behavior-invariance restrictions of an overlay are defined as follows: after
 
 |Name | Allowed differences |
 |:--------|:------------|
-| title<br>description<br>documentation<br>usage<br>example | The merged tree can include new nodes of this type or nodes with different values from those in the master tree.
+| title<br>displayName<br>description<br>documentation<br>usage<br>example | The merged tree can include new nodes of this type or nodes with different values from those in the master tree.
 | types | In addition to allowed differences described elsewhere in this table, the merged tree can also include new data types.
 | annotationTypes | The merged tree can include new annotation types or new values for existing annotation types, as long as all annotations in the merged API definition validate against the annotation types in the merged tree.
 | any annotation node | The merged tree can include new annotations of annotation types declared in the merged tree, or annotations with different values from those in the master tree.
