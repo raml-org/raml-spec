@@ -2606,7 +2606,7 @@ OAuth 1.0 authentication follows the standard described in [RFC5849](https://too
 title: My Sample API
 securitySchemes:
   oauth_1_0:
-    description:|
+    description: |
       OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
     type: OAuth 1.0
     settings:
