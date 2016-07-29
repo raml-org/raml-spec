@@ -3152,7 +3152,6 @@ traits: !include patterns/traits.raml
 ```
 
 ```yaml
-#%RAML 1.0
 # This file is located at patterns/resourceTypes.raml
 
 collection:
@@ -3166,7 +3165,6 @@ member:
 ```
 
 ```yaml
-#%RAML 1.0
 # This file is located at patterns/traits.raml
 
 chargeable:
