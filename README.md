@@ -2,11 +2,11 @@
 
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/raml-org/raml-spec)
 
+**The current version of the RAML specification is 1.0 - and you can find it [here](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md).**
+
 RAML is a language for the definition of HTTP-based APIs that embody most or all of the principles of Representational State Transfer (REST). The RAML specification (this document) defines an application of the [YAML 1.2 specification](http://yaml.org/spec/1.2/spec.html) that provides mechanisms for the definition of practically-RESTful APIs, while providing provisions with which source code generators for client and server source code and comprehensive user documentation can be created.
 
-## What is the current version?
-
-The current version of the RAML specification is 1.0 - and you can find it [here](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md).
+Why not pay us a visit on [raml.org](http://www.raml.org)? You will find tons of information around RAML such as a tutorial, what the RAML Workgroup is, RAML projects, a forum, and a lot more.
 
 ## What is the fastest way to get started?
 
@@ -18,7 +18,7 @@ Now you only need to do is to write the design for your first endpoint
 #%RAML 1.0
 title: Hello world # required title
 
-/helloworld: # optional resource
+/greeting: # optional resource
   get: # HTTP method declaration
     responses: # declare a response
       200: # HTTP status code
@@ -42,7 +42,7 @@ Interested? Learn more about the syntax in the [RAML 1.0 specification](https://
 * [RAML MVP Program](http://raml.influitive.com/) - Currently in beta
 * [Examples](https://github.com/raml-org/raml-examples)
 * [Wiki](https://github.com/raml-org/raml-spec/wiki)
-* [Projects](raml.org/projects/projects)
+* [Projects](http://www.raml.org/projects/projects)
 
 ## How can I contribute?
 
