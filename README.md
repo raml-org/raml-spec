@@ -38,7 +38,7 @@ Interested? Learn more about the syntax in the [RAML 1.0 specification](https://
 
 * [Tutorial](http://raml.org/developers/raml-100-tutorial) - In progress to be updated to 1.0
 * [Advanced Tutorial](http://raml.org/developers/raml-200-tutorial) - In progress to be updated to 1.0
-* [Community Sneak Peaks](forums.raml.org/c/sneak-peek)
+* [Community Sneak Peaks](http://forums.raml.org/c/sneak-peek)
 * [RAML MVP Program](http://raml.influitive.com/) - Currently in beta
 * [Examples](https://github.com/raml-org/raml-examples)
 * [Wiki](https://github.com/raml-org/raml-spec/wiki)
@@ -57,7 +57,7 @@ We welcome any contributions from the community! You can contribute or provide f
 
 * [@ramlapi](https://twitter.com/ramlapi)
 * info@raml.org
-* [forum](forums.raml.org)
+* [forum](http://forums.raml.org)
 * [chat](https://gitter.im/raml-org/raml-spec)
 * [Stack Overflow](http://stackoverflow.com/questions/tagged/raml)
 * [Github Issues](https://github.com/raml-org/raml-spec/issues)
