@@ -1599,7 +1599,7 @@ To facilitate the potentially complex process of serialization to XML, RAML intr
 | Name | Type | Description |
 |:---------|:------:|:-----------------|
 | attribute? | `boolean` | `true` serializes a type instance as an XML attribute. Can be `true` only for scalar types.<br/><br/>**Default:** `false`
-| wrapped? | `boolean` | `true` wraps a type instance in its own XML element. Cannot be `true` for scalar types or `true` at the same moment `attribute` is `true`. <br/><br/>**Default:** `false`
+| wrapped? | `boolean` | `true` wraps a type instance in its own XML element. Cannot be `true` for scalar types or `true` at the same moment `attribute` is `true`. When wrapped is true the name of outer XML element is deterimined by the name of the property/type to which wrapped it applied, and the name of the inner xml element is determined by resolved XML name of component type for the array types. For object types name of inner xml element is not fixed<br/><br/>**Default:** `false`
 | name? | `string` | Overrides the name of the XML element or XML attribute.<br/><br/>**Default:** name of either a type or property
 | namespace? | `string` | Configures the name of the XML namespace.
 | prefix? | `string` |  Configures the prefix used during serialization to XML.
