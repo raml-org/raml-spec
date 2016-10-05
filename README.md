@@ -1,4 +1,5 @@
 # The RESTful API Modeling Language (RAML) Spec
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/raml-org/raml-spec?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/raml-org/raml-spec)
 
