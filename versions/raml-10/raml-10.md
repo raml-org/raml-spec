@@ -317,13 +317,12 @@ baseUri: http://api.test.com/common/
   /groups:
 ```
 
-In the following, more complicated example with consecutive slashes in multiple places, only trailing slashes in the base URI are collapsed, leading to these absolute paths to resources: `//api.test.com//common/`, `//api.test.com//common//users/`, and `//api.test.com//common//users//groups//`.
+Similarly, when a path component ends in one or more slashes (`/`), those trailing slashes are omitted when appended to subsequent path components. For example, in the following snippet, the absolute paths for the resources are `http://api.test.com/common/users/`, and `http://api.test.com/common/users/groups/`.
 
 ```yaml
-baseUri: //api.test.com//common//
-/:
-  /users/:
-    /groups//:
+baseUri: http://api.test.com/common/
+/users/:
+  /groups/:
 ```
 
 ### Protocols
