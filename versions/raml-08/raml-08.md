@@ -536,6 +536,7 @@ If a URI parameter in a resource's relative URI is not explicitly described in a
 #%RAML 0.8
 title: Flat Filesystem API
 version: v1
+baseUri: https://api.github.com
 /files:
   description: A collection of all files
   /folder_{folderId}-file_{fileId}:
@@ -548,6 +549,7 @@ A special uriParameter, *mediaTypeExtension*, is a reserved parameter. It may be
 #%RAML 0.8
 title: API Using media type in the URL
 version: v1
+baseUri: https://api.github.com
 /users{mediaTypeExtension}:
   uriParameters:
     mediaTypeExtension:
