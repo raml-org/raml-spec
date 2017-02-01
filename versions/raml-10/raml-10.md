@@ -233,7 +233,7 @@ The following table enumerates the possible nodes at the root of a RAML document
 | protocols? | The [protocols](#protocols) supported by the API.
 | mediaType? | The [default media types](#default-media-types) to use for request and response bodies (payloads), for example "application/json".
 | documentation? | Additional overall [documentation](#user-documentation) for the API.
-| schemas? | An alias for the equivalent "types" node for compatibility with RAML 0.8. Deprecated - API definitions should use the "types" node because a future RAML version might remove the "schemas" alias with that node. The "types" node supports XML and JSON schemas.
+| schemas? | An alias for the equivalent "types" node for compatibility with RAML 0.8. Deprecated - API definitions SHOULD use the "types" node because a future RAML version might remove the "schemas" alias with that node. The "types" node supports XML and JSON schemas.
 | types? | Declarations of [(data) types](#defining-types) for use within the API.
 | traits? | Declarations of [traits](#resource-types-and-traits) for use within the API.
 | resourceTypes? | Declarations of [resource types](#resource-types-and-traits) for use within the API.
