@@ -3063,7 +3063,7 @@ A file to be included MAY begin with a RAML fragment identifier line, which cons
 |Fragment Identifier | Description | Relevant RAML Specification Section |
 |:-------------------|:------------| :-----------------------------------|
 | DocumentationItem | An item in the collection of items that is the value of the root-level documentation node | [User Documentation](#user-documentation)
-| DataType | A data type declaration where the type node may be used | [Types](#types)
+| DataType | A data type declaration where the type node may be used | [Types](#defining-types)
 | NamedExample | A declaration of the examples facet, whose key is a name of an example and whose value describes the example | [Examples](#defining-examples-in-raml)
 | ResourceType | A single resource type declaration | [Resource Types and Traits](#resource-types-and-traits)
 | Trait | A single trait declaration | [Resource Types and Traits](#resource-types-and-traits)
