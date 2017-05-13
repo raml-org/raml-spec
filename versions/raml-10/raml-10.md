@@ -861,7 +861,7 @@ Array types are declared by using either the array qualifier `[]` at the end of 
 | Facet  | Description |
 |:----------|:----------|
 | uniqueItems? | Boolean value that indicates if items in the array MUST be unique.
-| items? | Indicates the type all items in the array are inherited from. Can be a reference to an existing type or an inline [type declaration](#type-declaration).
+| items? | Indicates the type all items in the array are inherited from. Can be a reference to an existing type or an inline [type declaration](#type-declarations).
 | minItems? | Minimum amount of items in array. Value MUST be equal to or greater than 0.<br /><br />**Default:** `0`.
 | maxItems? | Maximum amount of items in array. Value MUST be equal to or greater than 0.<br /><br />**Default:** `2147483647`.
 
