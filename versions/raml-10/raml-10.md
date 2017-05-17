@@ -103,7 +103,7 @@ Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](htt
 	- [Bodies](#bodies)
 - [Responses](#responses)
 - [Resource Types and Traits](#resource-types-and-traits)
-	- [Declaration Resource Types and Traits](#declaration-resource-types-and-traits)
+	- [Declaring Resource Types and Traits](#declaring-resource-types-and-traits)
 	- [Applying Resource Types and Traits](#applying-resource-types-and-traits)
 	- [Resource Type and Trait Parameters](#resource-type-and-trait-parameters)
 	- [Declaring HTTP Methods as Optional](#declaring-http-methods-as-optional)
@@ -2134,7 +2134,7 @@ A resource type, like a resource, can specify security schemes, methods, and oth
 
 A trait, like a method, can provide method-level nodes such as description, headers, query string parameters, and responses. Methods that use one or more traits inherit nodes of those traits. A resource and resource type can also use, and thus inherit from, one or more traits, which then apply to all methods of the resource and resource type. Traits are related to methods through a mixing pattern.
 
-### Declaration Resource Types and Traits
+### Declaring Resource Types and Traits
 
 Resource types can be declared using the OPTIONAL **resourceTypes** node at the root of the API definition. The value of this node is a map where keys names become names of resource types that can be referenced throughout the API, and values are resource type declarations.
 
