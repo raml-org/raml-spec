@@ -1339,8 +1339,8 @@ Type expressions provide a powerful way of referring to, and even defining, type
 | `Person[]` | An array of Person objects
 | `string[]` | An array of string scalars
 | `string[][]` | A bi-dimensional array of string scalars
-| `string | Person` | A union type made of members of string OR Person
-| `(string | Person)[]` | An array of the type shown above
+| `string \| Person` | A union type made of members of string OR Person
+| `(string \| Person)[]` | An array of the type shown above
 
 Type expressions can be used wherever a type is expected:
 
