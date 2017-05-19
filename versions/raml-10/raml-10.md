@@ -119,7 +119,7 @@ Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](htt
 			- [Basic Authentication](#basic-authentication)
 			- [Digest Authentication](#digest-authentication)
 			- [Pass Through](#pass-through)
-			- [x-&lt;other&gt;](#x-ltothergt)
+			- [x-&lt;other&gt;](#x-other)
 		- [Applying Security Schemes](#applying-security-schemes)
 - [Annotations](#annotations)
 	- [Declaring Annotation Types](#declaring-annotation-types)
