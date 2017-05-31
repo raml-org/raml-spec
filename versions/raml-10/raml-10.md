@@ -700,13 +700,14 @@ types:
         type: string
 ```
 
-This pattern property restricts any additional properties whose keys start with "note" followed by a string of one or more digits. Consequently, the example of an object instance that declares an additional `note` property with the value "US" is valid, but the same property is invalid with a non-string value:
+This pattern property restricts any additional properties whose keys start with "note" followed by a string of one or more digits. Consequently, the example of an object instance that declares an additional `note5` property with the value "US" is valid, but the same property is invalid with a non-string value:
 
 ```yaml
 Person:
   name: "John"
   age: 35
-  note: 123 # not valid as it is not a string
+  note5: 123 # not valid as it is not a string
+  note: 123 # valid as it does not match the pattern
   address: "US" # valid as it does not match the pattern
 ```
 
