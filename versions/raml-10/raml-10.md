@@ -1074,7 +1074,7 @@ types:
     properties:
       name:
       comment: nil | string # equivalent to ->
-                             # comment: string?
+                             # comment?: string
     example:
       name: Fred
       comment: # Providing a value or not providing a value here is allowed.
@@ -2824,7 +2824,7 @@ mediaType: application/json
 annotationTypes:
   deprecated: nil
   experimental: nil | string
-  feedbackRequested: string?
+  feedbackRequested?: string
   testHarness:
     type: string # This line can be omitted as it's the default type
   badge:         # This annotation type allows string values, too
