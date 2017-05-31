@@ -2877,7 +2877,7 @@ If the allowedTargets node is not present, the annotation can be applied in any 
 
 To be applied in an API specification, the annotation MUST be declared in an annotation type.
 
-A declared annotation can be applied to a node in the specification by adding an annotation node on that whose key is the name of the annotation type enclosed in parentheses. The annotation value MUST be valid according to the corresponding annotation type.
+A declared annotation can be applied to a node in the specification by adding an annotation node on that node whose key is the name of the annotation type enclosed in parentheses. The annotation value MUST be valid according to the corresponding annotation type.
 
 The example below, a small subset of the previous example, shows an explicit declaration and use of a testHarness annotation that should be a string value.
 
