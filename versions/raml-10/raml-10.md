@@ -700,13 +700,14 @@ types:
         type: string
 ```
 
-This pattern property restricts any additional properties whose keys start with "note" followed by a string of one or more digits. Consequently, the example of an object instance that declares an additional `note` property with the value "US" is valid, but the same property is invalid with a non-string value:
+This pattern property restricts any additional properties whose keys start with "note" followed by a string of one or more digits. Consequently, the example of an object instance that declares an additional `note5` property with the value "US" is valid, but the same property is invalid with a non-string value:
 
 ```yaml
 Person:
   name: "John"
   age: 35
-  note: 123 # not valid as it is not a string
+  note5: 123 # not valid as it is not a string
+  note: 123 # valid as it does not match the pattern
   address: "US" # valid as it does not match the pattern
 ```
 
@@ -1073,7 +1074,7 @@ types:
     properties:
       name:
       comment: nil | string # equivalent to ->
-                             # comment: string?
+                             # comment?: string
     example:
       name: Fred
       comment: # Providing a value or not providing a value here is allowed.
@@ -2422,7 +2423,7 @@ The only overlap between the `collection` resource type and the resource declara
 Every explicit node wins over the ones that are declared in a resource type or trait. The rest are simply merged. The final, merged result must be:
 
 ```yaml
-/resource:
+/products:
   get:
     headers:
       APIKey:
@@ -2823,7 +2824,7 @@ mediaType: application/json
 annotationTypes:
   deprecated: nil
   experimental: nil | string
-  feedbackRequested: string?
+  feedbackRequested?: string
   testHarness:
     type: string # This line can be omitted as it's the default type
   badge:         # This annotation type allows string values, too
@@ -2876,7 +2877,7 @@ If the allowedTargets node is not present, the annotation can be applied in any 
 
 To be applied in an API specification, the annotation MUST be declared in an annotation type.
 
-A declared annotation can be applied to a node in the specification by adding an annotation node on that whose key is the name of the annotation type enclosed in parentheses. The annotation value MUST be valid according to the corresponding annotation type.
+A declared annotation can be applied to a node in the specification by adding an annotation node on that node whose key is the name of the annotation type enclosed in parentheses. The annotation value MUST be valid according to the corresponding annotation type.
 
 The example below, a small subset of the previous example, shows an explicit declaration and use of a testHarness annotation that should be a string value.
 
