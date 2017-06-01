@@ -2423,7 +2423,7 @@ The only overlap between the `collection` resource type and the resource declara
 Every explicit node wins over the ones that are declared in a resource type or trait. The rest are simply merged. The final, merged result must be:
 
 ```yaml
-/resource:
+/products:
   get:
     headers:
       APIKey:
