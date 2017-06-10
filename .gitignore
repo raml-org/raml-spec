@@ -1,3 +1,7 @@
 # MAC OS
 
 .DS_Store
+
+# Node.js (for CI testing)
+
+node_modules/
