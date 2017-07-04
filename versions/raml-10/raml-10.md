@@ -1402,9 +1402,9 @@ Type expressions are composed of names of built-in or custom types and certain s
 | Expression Components | Description | Examples
 |:--------------------------|:------------|:---------|
 | `type name` | A type name, the basic building block of a type expression, used alone creates the simplest expression. | `number:` a built-in type<br><br>`Person:` a custom type
-| `(type expression)` | Parentheses disambiguate the expression to which an operator applies. | `Person | Animal[]` <br><br> `( Person | Animal )[]`
+| `(type expression)` | Parentheses disambiguate the expression to which an operator applies. | `Person \| Animal[]` <br><br> `( Person \| Animal )[]`
 | `(type expression)[]` | The array, a unary, postfix operator placed after another type expression, enclosed in parentheses as needed, indicates the resulting type is an array of instances of that type expression. | `string[]:` an array of strings<br><br>`Person[][]:` an array of arrays of Person instances
-| `(type expression 1) | (type expression 2)` | An infix union operator indicates the resulting type might be either of type expression 1 or of type expression 2. Multiple union operators can be combined between pairs of type expressions. | `string | number:` either a string or a number <br><br> `X | Y | Z`: either an X or a Y or a Z <br><br>`(Manager | Admin)[]:` an array whose members consist of Manager or Admin instances<br><br>`Manager[] | Admin[]:` an array of Manager instances or an array of Admin instances.
+| `(type expression 1) \| (type expression 2)` | An infix union operator indicates the resulting type might be either of type expression 1 or of type expression 2. Multiple union operators can be combined between pairs of type expressions. | `string \| number:` either a string or a number <br><br> `X \| Y \| Z`: either an X or a Y or a Z <br><br>`(Manager \| Admin)[]:` an array whose members consist of Manager or Admin instances<br><br>`Manager[] \| Admin[]:` an array of Manager instances or an array of Admin instances.
 
 ### Multiple Inheritance
 
