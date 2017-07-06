@@ -2079,7 +2079,7 @@ The value of a response declaration is a map that can contain any of the followi
 | headers? | Detailed information about any response headers returned by this method
 | body? | The body of the response
 
-The syntax and semantics of the OPTIONAL nodes **description**, **headers**, **body**, and **annotations** for responses and [method declarations](methods) are the same, but applied to HTTP responses rather than HTTP requests, respectively.
+The syntax and semantics of the OPTIONAL nodes **description**, **headers**, **body**, and **annotations** for responses and [method declarations](#methods) are the same, but applied to HTTP responses rather than HTTP requests, respectively.
 
 The following example illustrates some possible responses:
 
