@@ -37,7 +37,7 @@ A trailing question mark, for example **description?**, indicates an optional pr
 
 ### Template URI
 
-A template URI refers to a URI parameter, which is a variable element, enclosed in curly brackets ({}) inside a relative URI of a resource.
+A template URI refers to a URI parameter, which is a variable element, enclosed in curly brackets (`{}`) inside a relative URI of a resource.
 
 RAML fully supports Level 2 as defined in [RFC6570](https://tools.ietf.org/html/rfc6570) for URI Templates.
 
@@ -105,7 +105,7 @@ Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](htt
 	- [Bodies](#bodies)
 - [Responses](#responses)
 - [Resource Types and Traits](#resource-types-and-traits)
-	- [Declaration Resource Types and Traits](#declaration-resource-types-and-traits)
+	- [Declaring Resource Types and Traits](#declaring-resource-types-and-traits)
 	- [Applying Resource Types and Traits](#applying-resource-types-and-traits)
 	- [Resource Type and Trait Parameters](#resource-type-and-trait-parameters)
 	- [Declaring HTTP Methods as Optional](#declaring-http-methods-as-optional)
@@ -121,7 +121,7 @@ Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](htt
 			- [Basic Authentication](#basic-authentication)
 			- [Digest Authentication](#digest-authentication)
 			- [Pass Through](#pass-through)
-			- [x-&lt;other&gt;](#x-ltothergt)
+			- [x-&lt;other&gt;](#x-other)
 		- [Applying Security Schemes](#applying-security-schemes)
 - [Annotations](#annotations)
 	- [Declaring Annotation Types](#declaring-annotation-types)
@@ -235,7 +235,7 @@ The following table enumerates the possible nodes at the root of a RAML document
 | protocols? | The [protocols](#protocols) supported by the API.
 | mediaType? | The [default media types](#default-media-types) to use for request and response bodies (payloads), for example "application/json".
 | documentation? | Additional overall [documentation](#user-documentation) for the API.
-| schemas? | An alias for the equivalent "types" node for compatibility with RAML 0.8. Deprecated - API definitions should use the "types" node because a future RAML version might remove the "schemas" alias with that node. The "types" node supports XML and JSON schemas.
+| schemas? | An alias for the equivalent "types" node for compatibility with RAML 0.8. Deprecated - API definitions SHOULD use the "types" node because a future RAML version might remove the "schemas" alias with that node. The "types" node supports XML and JSON schemas.
 | types? | Declarations of [(data) types](#defining-types) for use within the API.
 | traits? | Declarations of [traits](#resource-types-and-traits) for use within the API.
 | resourceTypes? | Declarations of [resource types](#resource-types-and-traits) for use within the API.
@@ -512,7 +512,7 @@ A type declaration references another type, or wraps or extends another type by 
 | Facet  | Description |
 |:----------|:----------|
 | default? | A default value for a type. When an API request is completely missing the instance of a type, for example when a query parameter described by a type is entirely missing from the request, then the API must act as if the API client had sent an instance of that type with the instance value being the value in the default facet. Similarly, when the API response is completely missing the instance of a type, the client must act as if the API server had returned an instance of that type with the instance value being the value in the default facet. A special case is made for URI parameters: for these, the client MUST substitute the value in the default facet if no instance of the URI parameter was given.
-| schema? | An alias for the equivalent "type" facet for compatibility with RAML 0.8. Deprecated - API definitions should use the "type" facet because the "schema" alias for that facet name might be removed in a future RAML version. The "type" facet supports XML and JSON schemas.
+| schema? | An alias for the equivalent "type" facet for compatibility with RAML 0.8. Deprecated - API definitions SHOULD use the "type" facet because the "schema" alias for that facet name might be removed in a future RAML version. The "type" facet supports XML and JSON schemas.
 | type? | The type which the current type extends or just wraps. The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.
 | example? | An example of an instance of this type that can be used, for example, by documentation generators to generate sample values for an object of this type. The "example" facet MUST NOT be available when the "examples" facet is already defined. See section [Examples](#defining-examples-in-raml) for more information.
 | examples? |  Examples of instances of this type. This can be used, for example, by documentation generators to generate sample values for an object of this type. The "examples" facet MUST NOT be available when the "example" facet is already defined. See section [Examples](#defining-examples-in-raml) for more information.
@@ -703,14 +703,14 @@ types:
         type: string
 ```
 
-This pattern property restricts any additional properties whose keys start with "note" followed by a string of one or more digits. Consequently, the example of an object instance that declares an additional `note` property with the value "US" is valid, but the same property is invalid with a non-string value:
+This pattern property restricts any additional properties whose keys start with "note" followed by a string of one or more digits. Consequently, the example of an object instance that declares an additional `note1` property with the value "US" is valid, but the property `note2` is invalid with a non-string value:
 
 ```yaml
 Person:
   name: "John"
   age: 35
-  note: 123 # not valid as it is not a string
-  address: "US" # valid as it does not match the pattern
+  note2: 123 # not valid as it is not a string
+  note1: "US" # valid as it does not match the pattern
 ```
 
 To force all additional properties to be strings, regardless of their keys, use:
@@ -864,7 +864,7 @@ Array types are declared by using either the array qualifier `[]` at the end of 
 | Facet  | Description |
 |:----------|:----------|
 | uniqueItems? | Boolean value that indicates if items in the array MUST be unique.
-| items? | Indicates the type all items in the array are inherited from. Can be a reference to an existing type or an inline [type declaration](#type-declaration).
+| items? | Indicates the type all items in the array are inherited from. Can be a reference to an existing type or an inline [type declaration](#type-declarations).
 | minItems? | Minimum amount of items in array. Value MUST be equal to or greater than 0.<br /><br />**Default:** `0`.
 | maxItems? | Maximum amount of items in array. Value MUST be equal to or greater than 0.<br /><br />**Default:** `2147483647`.
 
@@ -916,7 +916,7 @@ A JSON string with the following additional facets:
 
 | Facet | Description |
 |:--------|:------------|
-| pattern? | Regular expression that this string should match.
+| pattern? | Regular expression that this string SHOULD match.
 | minLength? | Minimum length of the string. Value MUST be equal to or greater than 0.<br /><br />**Default:** `0`
 | maxLength? | Maximum length of the string. Value MUST be equal to or greater than 0.<br /><br />**Default:** `2147483647`
 
@@ -1035,7 +1035,7 @@ types:
 ```
 
 ##### Nil Type
-​
+
 In RAML, the type `nil` is a scalar type that allows only nil data values. Specifically, in YAML it allows only YAML's `null` (or its equivalent representations, such as `~`), in JSON it allows only JSON's `null`, and in XML it allows only XML's `xsi:nil`. In headers, URI parameters, and query parameters, the `nil` type only allows the string value "nil" (case-sensitive); and in turn an instance having the string value "nil" (case-sensitive), when described with the `nil` type, deserializes to a nil value.
 
 In the following example, the type of an object and has two required properties, `name` and `comment`, both defaulting to type `string`. In `example`, `name` is assigned a string value, but comment is nil and this is _not_ allowed because RAML expects a string.
@@ -1054,7 +1054,6 @@ types:
 
 The following example shows the assignment of the `nil` type to `comment`:
 
-​
 ```yaml
 types:
   NilValue:
@@ -1068,7 +1067,7 @@ types:
 ```
 
 The following example shows how to represent nilable properties using a union:
-​
+
 ```yaml
 types:
   NilValue:
@@ -1231,7 +1230,7 @@ A RAML processor MUST be able to interpret and apply JSON Schema and XML Schema.
 
 An XML schema, or JSON schema, MUST NOT be used where the media type does not allow XML-formatted data, or JSON-formatted data, respectively. XML and JSON schemas are also forbidden in any declaration of query parameters, query string, URI parameters, and headers.
 
-The nodes "schemas" and "types", as well as "schema" and "type", are mutually exclusive and synonymous for compatibility with RAML 0.8. API definitions should use "types" and "type", as "schemas" and "schema" are deprecated and might be removed in a future RAML version.
+The nodes "schemas" and "types", as well as "schema" and "type", are mutually exclusive and synonymous for compatibility with RAML 0.8. API definitions SHOULD use "types" and "type", as "schemas" and "schema" are deprecated and might be removed in a future RAML version.
 
 ##### References to Inner Elements
 
@@ -1282,55 +1281,55 @@ A RAML processor must be able to determine the default type of a type declaratio
 
 * If, and only if, a type declaration contains a `properties` facet, then the default type is `object`. The following snippet exemplifies this rule:
 
-  ```yaml
-  types:
-    Person:
-      type: object
-      properties:
-  ```
+```yaml
+types:
+  Person:
+    type: object
+    properties:
+```
 
-  This rule can also be written as follows:
+This rule can also be written as follows:
 
-  ```yaml
-  types:
-    Person:
-      # default type is `object`, no need to explicitly define it
-      properties:
-  ```
+```yaml
+types:
+  Person:
+    # default type is `object`, no need to explicitly define it
+    properties:
+```
 
 * If, and only if, a type declaration contains neither a `properties` facet nor a `type` or `schema` facet, then the default type is `string`. The following snippet exemplifies this rule:
 
-  ```yaml
-  types:
-    Person:
-      properties:
-        name: # no type or schema necessary since the default type is `string`
-  ```
+```yaml
+types:
+  Person:
+    properties:
+      name: # no type or schema necessary since the default type is `string`
+```
 
 * The default type `any` is applied to any `body` node that does not contain `properties`, `type`, or `schema`. For example:
 
-  ```yaml
-  body:
-    application/json:
-      # default type is `any`
-  ```
-
-  Or, if a default media type has been defined, no need to declare it here:
-
-  ```yaml
-  body:
+```yaml
+body:
+  application/json:
     # default type is `any`
-  ```
+```
 
-  Of course, each rule can be overridden by explicitly defining a type. For example:
+Or, if a default media type has been defined, no need to declare it here:
 
-  ```yaml
-  types:
-    Person:
-      properties:
-        name:
-          type: number
-  ```
+```yaml
+body:
+  # default type is `any`
+```
+
+Of course, each rule can be overridden by explicitly defining a type. For example:
+
+```yaml
+types:
+  Person:
+    properties:
+      name:
+        type: number
+```
 
 ### Type Expressions
 
@@ -1342,8 +1341,8 @@ Type expressions provide a powerful way of referring to, and even defining, type
 | `Person[]` | An array of Person objects
 | `string[]` | An array of string scalars
 | `string[][]` | A bi-dimensional array of string scalars
-| `string | Person` | A union type made of members of string OR Person
-| `(string | Person)[]` | An array of the type shown above
+| `string \| Person` | A union type made of members of string OR Person
+| `(string \| Person)[]` | An array of the type shown above
 
 Type expressions can be used wherever a type is expected:
 
@@ -1405,10 +1404,10 @@ Type expressions are composed of names of built-in or custom types and certain s
 
 | Expression Components | Description | Examples
 |:--------------------------|:------------|:---------|
-| type name | A type name, the basic building block of a type expression, used alone creates the simplest expression. | `number:` a built-in type<br><br>`Person:` a custom type
-| (type expression) | Parentheses disambiguate the expression to which an operator applies. | `Person | Animal[]`<br><br>`( Person | Animal )[]`
-| (type expression)[] | The array, a unary, postfix operator placed after another type expression, enclosed in parentheses as needed, indicates the resulting type is an array of instances of that type expression. | `string[]:` an array of strings<br><br>`Person[][]:` an array of arrays of Person instances
-| (type expression 1) &#124; (type expression 2) | An infix union operator indicates the resulting type might be either of type expression 1 or of type expression 2. Multiple union operators can be combined between pairs of type expressions. | `string | number:` either a string or a number <br><br> `X | Y | Z`: either an X or a Y or a Z <br><br>`(Manager | Admin)[]:` an array whose members consist of Manager or Admin instances<br><br>`Manager[] | Admin[]:` an array of Manager instances or an array of Admin instances.
+| `type name` | A type name, the basic building block of a type expression, used alone creates the simplest expression. | `number:` a built-in type<br><br>`Person:` a custom type
+| `(type expression)` | Parentheses disambiguate the expression to which an operator applies. | `Person \| Animal[]` <br><br> `( Person \| Animal )[]`
+| `(type expression)[]` | The array, a unary, postfix operator placed after another type expression, enclosed in parentheses as needed, indicates the resulting type is an array of instances of that type expression. | `string[]:` an array of strings<br><br>`Person[][]:` an array of arrays of Person instances
+| `(type expression 1) \| (type expression 2)` | An infix union operator indicates the resulting type might be either of type expression 1 or of type expression 2. Multiple union operators can be combined between pairs of type expressions. | `string \| number:` either a string or a number <br><br> `X \| Y \| Z`: either an X or a Y or a Z <br><br>`(Manager \| Admin)[]:` an array whose members consist of Manager or Admin instances<br><br>`Manager[] \| Admin[]:` an array of Manager instances or an array of Admin instances.
 
 ### Multiple Inheritance
 
@@ -1597,7 +1596,7 @@ types:
 
 ### XML Serialization of Type Instances
 
-To facilitate the potentially complex process of serialization to XML, RAML introduces an additional `xml` node for [type declarations](#type-declarations). This node is used to configure how type instances should be serialized to XML. The value of the `xml` node is a map that contains the following nodes:
+To facilitate the potentially complex process of serialization to XML, RAML introduces an additional `xml` node for [type declarations](#type-declarations). This node is used to configure how type instances SHOULD be serialized to XML. The value of the `xml` node is a map that contains the following nodes:
 
 | Name | Type | Description |
 |:---------|:------:|:-----------------|
@@ -1849,7 +1848,7 @@ baseUri: https://api.github.com
     displayName: Public Gists
 ```
 
-The key of a resource node, its relative URI, MAY consist of multiple URI path fragments separated by slashes. For example, /bom/items might indicate the collection of items in a bill of materials as a single resource. However, if the individual URI path fragments are themselves resources, the API definition SHOULD use nested resources to describe this structure. For example, if /bom is itself a resource, then /items should be a nested resource of /bom, versus using /bom/items as a non-nested resource.
+The key of a resource node, its relative URI, MAY consist of multiple URI path fragments separated by slashes. For example, /bom/items might indicate the collection of items in a bill of materials as a single resource. However, if the individual URI path fragments are themselves resources, the API definition SHOULD use nested resources to describe this structure. For example, if /bom is itself a resource, then /items SHOULD be a nested resource of /bom, versus using /bom/items as a non-nested resource.
 
 Absolute URIs are not explicitly specified. They are computed by appending the relative URI of the top-level resource, and then successively appending the relative URI values for each nested resource until the target resource is reached. In this formation of the absolute URI, if a baseUri is defined, it is prepended before the relative URI of the top-level resource; any trailing slashes in the baseUri are removed before prepending.
 
@@ -1924,7 +1923,7 @@ The value of a resource node is a map whose key-value pairs are described in the
 
 | Name | Description |
 |:--------|:------------|
-| displayName? | An alternate, human-friendly name for the resource. If the displayName node is not defined for a resource, documentation tools SHOULD refer to the resource by its key, which acts as the resource name. For example, tools should refer to the relative URI /jobs.
+| displayName? | An alternate, human-friendly name for the resource. If the displayName node is not defined for a resource, documentation tools SHOULD refer to the resource by its key, which acts as the resource name. For example, tools SHOULD refer to the relative URI /jobs.
 | description? | A substantial, human-friendly description of a resource. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this API. An annotation is a map having a key that begins with "(" and ends with ")" where the text enclosed in parentheses is the annotation name, and the value is an instance of that annotation.
 | get?<br>patch?<br>put?<br>post?<br>delete?<br>options?<br>head? | The object describing the [method](#methods).
@@ -1994,7 +1993,7 @@ title: Serialization API
     	uniqueItems: true
 ```
 
-In this example, the URI parameter `userIds` is an array of ids. Assume the array should contain `[blue,green]`, which on the wire might appear as `/users/%5B%22blue%22,%22green%22%5D/`.
+In this example, the URI parameter `userIds` is an array of ids. Assume the array SHOULD contain `[blue,green]`, which on the wire might appear as `/users/%5B%22blue%22,%22green%22%5D/`.
 
 If a URI parameter declaration specifies a non-string scalar type for the value of the header, the standard serialization rules for types MUST be invoked in applying the type to instances of that URI parameter.
 
@@ -2012,7 +2011,7 @@ version: v1
     description: An item in the collection of all files
 ```
 
-Although a URI parameter can be explicitly specified as optional, it SHOULD be required when surrounded directly by slashes ("/"). In this case, the URI parameter constitutes a complete URI path fragment, for example .../{objectId}/.... It usually makes no sense to allow a URI to contain adjacent slashes, enclosing no characters, for example ...//.... Hence, a URI parameter should be specified as optional only when it appears adjacent to other text. For example, /people/~{fieldSelectors} indicates that URI parameter {fieldSelectors} can be blank, and therefore optional, implying that /people/~ is a valid relative URI.
+Although a URI parameter can be explicitly specified as optional, it SHOULD be required when surrounded directly by slashes ("/"). In this case, the URI parameter constitutes a complete URI path fragment, for example .../{objectId}/.... It usually makes no sense to allow a URI to contain adjacent slashes, enclosing no characters, for example ...//.... Hence, a URI parameter SHOULD be specified as optional only when it appears adjacent to other text. For example, /people/~{fieldSelectors} indicates that URI parameter {fieldSelectors} can be blank, and therefore optional, implying that /people/~ is a valid relative URI.
 
 A special URI reserved parameter, **ext**, might or might not be specified explicitly in a uriParameters node. Its meaning is reserved for use by a client to specify that the body of the request or response be of the associated media type.
 
@@ -2210,7 +2209,7 @@ baseUri: https://api.github.com/{version}
 
 The HTTP request **body** for a method is specified using the OPTIONAL body node. For example, to create a resource using a POST or PUT, the body of the request would usually include the details of the resource to be created.
 
-The value of the body node is a "body declaration". Generally, the body declaration is a map whose key names are the valid media types of the request body. Each key name MUST be a media type string conforming to the media type specification in [RFC6838](#https://tools.ietf.org/html/rfc6838). The values are the corresponding data type declaration or data type name describing the request body. Alternatively, if [default media types](#default-media-types) have been declared at the root of the API, then the body declaration can consist of just the data type declaration or data type name describing the request body for that media type.
+The value of the body node is a "body declaration". Generally, the body declaration is a map whose key names are the valid media types of the request body. Each key name MUST be a media type string conforming to the media type specification in [RFC6838](https://tools.ietf.org/html/rfc6838). The values are the corresponding data type declaration or data type name describing the request body. Alternatively, if [default media types](#default-media-types) have been declared at the root of the API, then the body declaration can consist of just the data type declaration or data type name describing the request body for that media type.
 
 The following example illustrates various combinations of both default and non-default media types, and both data type declarations and references.
 
@@ -2258,7 +2257,7 @@ The value of a response declaration is a map that can contain any of the followi
 | headers? | Detailed information about any response headers returned by this method
 | body? | The body of the response
 
-The syntax and semantics of the OPTIONAL nodes **description**, **headers**, **body**, and **annotations** for responses and [method declarations](methods) are the same, but applied to HTTP responses rather than HTTP requests, respectively.
+The syntax and semantics of the OPTIONAL nodes **description**, **headers**, **body**, and **annotations** for responses and [method declarations](#methods) are the same, but applied to HTTP responses rather than HTTP requests, respectively.
 
 The following example illustrates some possible responses:
 
@@ -2312,7 +2311,7 @@ A resource type, like a resource, can specify security schemes, methods, and oth
 
 A trait, like a method, can provide method-level nodes such as description, headers, query string parameters, and responses. Methods that use one or more traits inherit nodes of those traits. A resource and resource type can also use, and thus inherit from, one or more traits, which then apply to all methods of the resource and resource type. Traits are related to methods through a mixing pattern.
 
-### Declaration Resource Types and Traits
+### Declaring Resource Types and Traits
 
 Resource types can be declared using the OPTIONAL **resourceTypes** node at the root of the API definition. The value of this node is a map where keys names become names of resource types that can be referenced throughout the API, and values are resource type declarations.
 
@@ -2322,7 +2321,7 @@ Resource type and trait declarations can have the following nodes, in addition t
 
 | Name | Definition |
 |:---------|:-----------|
-| usage? | The OPTIONAL **usage** node of a resource type or trait provides instructions about how and when the resource type or trait should be used. Documentation generators MUST describe this node in terms of the characteristics of the resource and method, respectively. However, the resources and methods MUST NOT inherit the usage node. Neither resources nor methods allow a node named usage.
+| usage? | The OPTIONAL **usage** node of a resource type or trait provides instructions about how and when the resource type or trait SHOULD be used. Documentation generators MUST describe this node in terms of the characteristics of the resource and method, respectively. However, the resources and methods MUST NOT inherit the usage node. Neither resources nor methods allow a node named usage.
 
 The following example illustrates the declaration of several resource types and traits:
 
@@ -2600,7 +2599,7 @@ The only overlap between the `collection` resource type and the resource declara
 Every explicit node wins over the ones that are declared in a resource type or trait. The rest are simply merged. The final, merged result must be:
 
 ```yaml
-/resource:
+/products:
   get:
     headers:
       APIKey:
@@ -3054,9 +3053,9 @@ If the allowedTargets node is not present, the annotation can be applied in any 
 
 To be applied in an API specification, the annotation MUST be declared in an annotation type.
 
-A declared annotation can be applied to a node in the specification by adding an annotation node on that whose key is the name of the annotation type enclosed in parentheses. The annotation value MUST be valid according to the corresponding annotation type.
+A declared annotation can be applied to a node in the specification by adding an annotation node on that node whose key is the name of the annotation type enclosed in parentheses. The annotation value MUST be valid according to the corresponding annotation type.
 
-The example below, a small subset of the previous example, shows an explicit declaration and use of a testHarness annotation that should be a string value.
+The example below, a small subset of the previous example, shows an explicit declaration and use of a testHarness annotation that SHOULD be a string value.
 
 ```yaml
 #%RAML 1.0
@@ -3108,6 +3107,7 @@ baseUri:
 
 The following list shows all available scalar-valued nodes supported in RAML:
 <a name="scalar-valued-nodes"></a>
+
 ```
 displayName
 description
@@ -3241,7 +3241,7 @@ A file to be included MAY begin with a RAML fragment identifier line, which cons
 |Fragment Identifier | Description | Relevant RAML Specification Section |
 |:-------------------|:------------| :-----------------------------------|
 | DocumentationItem | An item in the collection of items that is the value of the root-level documentation node | [User Documentation](#user-documentation)
-| DataType | A data type declaration where the type node may be used | [Types](#types)
+| DataType | A data type declaration where the type node may be used | [Types](#defining-types)
 | NamedExample | A declaration of the examples facet, whose key is a name of an example and whose value describes the example | [Examples](#defining-examples-in-raml)
 | ResourceType | A single resource type declaration | [Resource Types and Traits](#resource-types-and-traits)
 | Trait | A single trait declaration | [Resource Types and Traits](#resource-types-and-traits)
@@ -3416,11 +3416,11 @@ resourceTypes:
 
 #### Applying Libraries
 
-Any number of libraries can be applied by using the OPTIONAL **uses** node ONLY at the root of a ["master"] RAML or RAML fragment file. The value of the uses node is a map of key-value pairs. The keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
+Any number of libraries can be applied by using the OPTIONAL **uses** node ONLY at the root of a `["master"]` RAML or RAML fragment file. The value of the uses node is a map of key-value pairs. The keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
 
 In a document that applies a library, the data types, resource types, traits, security schemes, and annotation types in the library become available within the document. The assets in the library are referenced within the document using dot notation as follows: concatenate the library name followed by a period ("."), followed by the name of the data type, resource type, trait, security scheme, or annotation type. The library name defines a namespace for the library nodes within the context in which the library is applied. Namespaces defined in a **uses** statement in a specific file are only consumable within that file and serve only to disambiguate the included libraries from each other. Therefore, any processor MUST NOT allow any composition of namespaces using "." across multiple libraries.
 
-Using **uses** does NOT automatically import the remote library assets into the local file, but the local file can import those assets by referring to the assets from its contents. For example, a RAML type fragment file that uses a library of remote types can import one of those types by referring to it. The remote type is included as if it were defined locally within the RAML type fragment file.
+Using **uses** does not automatically import the remote library assets into the local file, but the local file can import those assets by referring to the assets from its contents. For example, a RAML type fragment file that uses a library of remote types can import one of those types by referring to it. The remote type is included as if it were defined locally within the RAML type fragment file.
 
 The following examples demonstrate the use of a library in a second library, a second library in a resource type fragment, and a second library in a RAML API definition.
 
@@ -3609,7 +3609,7 @@ This section describes how an overlay/extension structure is applied to the mast
 
 ##### Terminology
 
-###### Object & Property
+**Object & Property**
 
 _Object_ is a MAP or a SEQUENCE containing MAPPINGS in terms of YAML.
 
@@ -3661,7 +3661,7 @@ In the following sample, yellow "FilteredByPrice" and "Paged" are _Properties_ w
 <font color="#44ff44">       length: number</font>
 </pre>
 
-###### Array
+**Array**
 
 _Array_ is a SEQUENCE containing SCALARs or SEQUENCE containing MAPs in terms of YAML.
 
@@ -3685,7 +3685,7 @@ In this example of an _Array_ definition, a "documentation" _Property_ key has a
 <font color="#44ff44">  content: Please respect copyrights on our books.</font>
 </pre>
 
-###### Property Types
+**Property Types**
 
 In the merging algorithm, the _Property_ types are referred to as _Property Kind_, which can be one of the following properties highlighted in **bold**:
 
@@ -3746,7 +3746,7 @@ Exceptions:
 * Trait applications are always _Simple Properties_.
 * _Security Schema_ applications are always Simple Properties.
 
-###### Conflicting Properties
+**Conflicting Properties**
 
 Conflicting properties are the properties that cannot coexist in the same Object.
 
@@ -3763,18 +3763,18 @@ In the following example, both "type" and "properties" _Properties_ can coexist,
 <font color="white">   - Colored</font>
 </pre>
 
-###### Ignored properties
+**Ignored properties**
 
 _Ignored Properties_ - the following properties are considered ignored:
 "uses" and "usage".
 
-###### The Trees
+**The Trees**
 
 _Master Tree_ - Master file document YAML parsing tree result.
 _Extension Tree_ - overlay or extension YAML parsing tree result.
 _Target Tree_ - the result tree.
 
-##### Merging Algorithm:
+**Merging Algorithm:**
 
 Master document and Extension or Overlay are parsed by YAML parser to produce _Master Tree_ and _Extension Tree_.
 
