@@ -43,7 +43,7 @@ Interested? Learn more about the syntax in the [RAML 1.0 specification](https://
 * [RAML MVP Program](http://raml.influitive.com/) - Currently in beta
 * [Examples](https://github.com/raml-org/raml-examples)
 * [Wiki](https://github.com/raml-org/raml-spec/wiki)
-* [Projects](http://www.raml.org/projects/projects)
+* [Projects](http://www.raml.org/projects/)
 
 ## How can I contribute?
 
