@@ -40,10 +40,9 @@ Interested? Learn more about the syntax in the [RAML 1.0 specification](https://
 * [Tutorial](http://raml.org/developers/raml-100-tutorial) - In progress to be updated to 1.0
 * [Advanced Tutorial](http://raml.org/developers/raml-200-tutorial) - In progress to be updated to 1.0
 * [Community Sneak Peaks](http://forums.raml.org/c/sneak-peek)
-* [RAML MVP Program](http://raml.influitive.com/) - Currently in beta
 * [Examples](https://github.com/raml-org/raml-examples)
 * [Wiki](https://github.com/raml-org/raml-spec/wiki)
-* [Projects](http://www.raml.org/projects/)
+* [Projects](http://www.raml.org/projects)
 
 ## How can I contribute?
 
