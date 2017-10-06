@@ -2268,7 +2268,7 @@ A processing application MUST set the value of `<<resourcePath>>` to the concate
 
 For example, applying a resource type or trait to a resource /users nested in a resource /{groupId} nested in a root-level resource /groups sets the value of the resourcePath parameter to ""/groups/{groupId}/users". Applying a resource type or trait to a resource /jobs/{jobId} sets the value of the resourcePathName parameter to "jobs".
 
-When setting resourcePath and resourcePathName, processing applications MUST also omit any ext parameter and its parametrizing brackets ("{" and "}") found in the resource URI. For example, applying a resource type or trait to a root-level resource /bom/{itemId}{ext} sets the value of resourcePathName and resourcePath parameters to "/bom/{itemId}" and "bom", respectively.
+When setting resourcePath and resourcePathName, processing applications MUST also omit any ext parameter and its parametrizing brackets ("{" and "}") found in the resource URI. For example, applying a resource type or trait to a root-level resource /bom/{itemId}{ext} sets the value of resourcePath and resourcePathName parameters to "/bom/{itemId}" and "bom", respectively.
 
 In trait declarations, **methodName** is a reserved parameter.
 
