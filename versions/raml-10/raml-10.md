@@ -706,8 +706,9 @@ This pattern property restricts any additional properties whose keys start with 
 Person:
   name: "John"
   age: 35
+  note1: "US" # valid
   note2: 123 # not valid as it is not a string
-  note1: "US" # valid as it does not match the pattern
+  note: 123 # valid as it does not match the pattern
 ```
 
 To force all additional properties to be strings, regardless of their keys, use:
