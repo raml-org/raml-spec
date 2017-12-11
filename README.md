@@ -51,7 +51,7 @@ We welcome any contributions from the community! You can contribute or provide f
 |Your Intention  |What to do?|
 |:----------|:----------|
 |You see a spelling or grammar mistake, or an error in our examples? | Fork this repository, make edits, and then submit a pull request. We will respond to your request as quickly as possible.
-|You want to suggest a new feature, improve existing features, ask questions, or things general around the RAML specification? | File an issue. Please be as specific as possible about your intentions or what you’d like to see.
+|You want to suggest a new feature, improve existing features, ask questions, or things in general around the RAML specification? | File an issue. Please be as specific as possible about your intentions or what you’d like to see.
 
 ## How can I get in touch?
 
