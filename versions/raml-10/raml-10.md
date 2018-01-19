@@ -1653,7 +1653,7 @@ Key points about serialization are:
 
 ## Resources and Nested Resources
 
-A resource is identified by its relative URI, which MUST begin with a slash ("/"). Every node whose key begins with a slash, and is either at the root of the API definition or is the child node of a resource node, is such a resource node.
+A resource is identified by its relative URI, which MUST begin with a slash (`/`). Every node whose key begins with a slash, and is either at the root of the API definition or is the child node of a resource node, is such a resource node.
 
 A resource defined as a root-level node is called a top-level resource. The key of the root-level node is the URI of the resource relative to the baseUri if there is one. A resource defined as a child node of another resource is called a nested resource. The key of the child node is the URI of the nested resource relative to the parent resource URI.
 
@@ -1753,7 +1753,7 @@ The value of a resource node is a map whose key-value pairs are described in the
 | type? | The [resource type](#applying-resource-types-and-traits) that this resource inherits.
 | securedBy? | The [security schemes](#applying-security-schemes) that apply to all methods declared (implicitly or explicitly) for this resource.
 | uriParameters? | Detailed information about any URI parameters of this resource.
-| /&lt;relativeUri&gt;? | A nested resource, which is identified as any node whose name begins with a slash ("/"), and is therefore treated as a relative URI.
+| /&lt;relativeUri&gt;? | A nested resource, which is identified as any node whose name begins with a slash (`/`), and is therefore treated as a relative URI.
 
 ### Template URIs and URI Parameters
 
@@ -1833,7 +1833,7 @@ version: v1
     description: An item in the collection of all files
 ```
 
-Although a URI parameter can be explicitly specified as optional, it SHOULD be required when surrounded directly by slashes ("/"). In this case, the URI parameter constitutes a complete URI path fragment, for example `.../{objectId}/...`. It usually makes no sense to allow a URI to contain adjacent slashes, enclosing no characters, for example `...//...`. Hence, a URI parameter SHOULD be specified as optional only when it appears adjacent to other text. For example, `/people/~{fieldSelectors}` indicates that URI parameter `{fieldSelectors}` can be blank, and therefore optional, implying that `/people/~` is a valid relative URI.
+Although a URI parameter can be explicitly specified as optional, it SHOULD be required when surrounded directly by slashes (`/`). In this case, the URI parameter constitutes a complete URI path fragment, for example `.../{objectId}/...`. It usually makes no sense to allow a URI to contain adjacent slashes, enclosing no characters, for example `...//...`. Hence, a URI parameter SHOULD be specified as optional only when it appears adjacent to other text. For example, `/people/~{fieldSelectors}` indicates that URI parameter `{fieldSelectors}` can be blank, and therefore optional, implying that `/people/~` is a valid relative URI.
 
 A special URI reserved parameter, **ext**, might or might not be specified explicitly in a uriParameters node. Its meaning is reserved for use by a client to specify that the body of the request or response be of the associated media type.
 
@@ -2264,7 +2264,7 @@ In resource type and trait declarations, **resourcePath** and **resourcePathName
 
 Double angle brackets (double chevrons) enclose a parameter name in resource type and trait definitions; for example, `<<parameterName>>`.
 
-A processing application MUST set the value of `<<resourcePath>>` to the concatenation of the relative (to the baseUri if there is one) resource URI of the inheriting resource and all its parent relative resource URIs. A processing application MUST set the value of `<<resourcePathName>>` at the position in the URI following the rightmost slash ("/"), omitting any of the URI-parameter-containing path fragments.
+A processing application MUST set the value of `<<resourcePath>>` to the concatenation of the relative (to the baseUri if there is one) resource URI of the inheriting resource and all its parent relative resource URIs. A processing application MUST set the value of `<<resourcePathName>>` at the position in the URI following the rightmost slash (`/`), omitting any of the URI-parameter-containing path fragments.
 
 For example, applying a resource type or trait to a resource `/users` nested in a resource `/{groupId}` nested in a root-level resource `/groups` sets the value of the resourcePath parameter to "`/groups/{groupId}/users`". Applying a resource type or trait to a resource `/jobs/{jobId}` sets the value of the resourcePathName parameter to "jobs".
 
@@ -3048,8 +3048,8 @@ The !include tag accepts a single argument, the location of the content to be in
 
 |Argument | Description | Examples |
 |:--------|:------------|:---------|
-| absolute path | A path that begins with a single slash ("/") and is interpreted relative to the root RAML file location. | /traits/pageable.raml
-| relative path | A path that neither begins with a single slash ("/") nor constitutes a URL, and is interpreted relative to the location of the included file. | description.md<br>../traits/pageable.raml
+| absolute path | A path that begins with a single slash (`/`) and is interpreted relative to the root RAML file location. | /traits/pageable.raml
+| relative path | A path that neither begins with a single slash (`/`) nor constitutes a URL, and is interpreted relative to the location of the included file. | description.md<br>../traits/pageable.raml
 | URL | An absolute URL | http://dev.domain.com/api/patterns/traits.raml
 
 To simplify the API definition, and because the parsing context of the included file is not shared between the file and its parent, an included file SHALL NOT use a YAML reference to an anchor in a separate file. Likewise, a reference made from a parent file SHALL NOT reference an anchor defined in an included file.
