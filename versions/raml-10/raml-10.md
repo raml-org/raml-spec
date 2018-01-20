@@ -1940,7 +1940,7 @@ traits:
 
 ### Query Strings and Query Parameters
 
-An API method can support or require a query string in the URL on which the method is invoked. The query string in a URL is defined in [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) as the part of the URL following the question mark separator ("?") and preceding any fragment ("#") separator. The query string can be specified either by the OPTIONAL **queryString** node or by the OPTIONAL **queryParameters** node. The queryString and queryParameters nodes are mutually exclusive: processors MUST NOT allow both to be specified, explicitly or implicitly, on the same method of the same resource.
+An API method can support or require a query string in the URL on which the method is invoked. The query string in a URL is defined in [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) as the part of the URL following the question mark separator (`?`) and preceding any fragment (`#`) separator. The query string can be specified either by the OPTIONAL **queryString** node or by the OPTIONAL **queryParameters** node. The queryString and queryParameters nodes are mutually exclusive: processors MUST NOT allow both to be specified, explicitly or implicitly, on the same method of the same resource.
 
 #### The Query String as a Whole
 
@@ -2293,7 +2293,7 @@ Parameter values MAY be transformed further by applying one of the following fun
 | !lowerhyphencase | The <b>!lowerhyphencase</b> function MUST convert the value of the parameter to lowercase letters; if the value is a compound word, the function MUST also add an additional hyphen between consecutive words which are not already separated by one or more hyphen.<br><br>for example: `userId --> user-id`
 | !upperhyphencase | The <b>!upperhyphencase</b> function MUST convert the value of the parameter to uppercase letters; if the value is a compound word, the function MUST also add an additional hyphen between consecutive words which are not already separated by one or more hyphen.<br><br>for example: `userId --> USER-ID`
 
-Append these functions to the parameter name within the double angle brackets, separated by a pipe ("|") character and optional whitespace padding. Here is an example that uses functions and reserved parameters:
+Append these functions to the parameter name within the double angle brackets, separated by a pipe (`|`) character and optional whitespace padding. Here is an example that uses functions and reserved parameters:
 
 ```yaml
 #%RAML 1.0
@@ -2336,7 +2336,7 @@ Parameters cannot be used within an !include tag specification of the include fi
 
 When defining resource types, it can be useful to capture patterns that manifest several levels below the inheriting resource without mandating the creation of the intermediate levels. For example, a resource type declaration describes a body parameter that is used if the API defines a post method for that resource. Applying the resource type to a resource without a post method does not create the post method.
 
-To accommodate this need, a resource type definition MAY append a question mark ("?") suffix to the name of any method to declare the method as optional, resulting in the following behavior:
+To accommodate this need, a resource type definition MAY append a question mark (`?`) suffix to the name of any method to declare the method as optional, resulting in the following behavior:
 
 * Do not apply the method to the resource if it doesn't already exist at the corresponding level in the resource.
 * Apply the value of the method node to the resource type if the method name without the question mark is already defined, explicitly or implicitly, at the corresponding level in the resource.
@@ -3034,7 +3034,7 @@ RAML provides several mechanisms to help modularize the ecosystem of an API spec
 
 ### Includes
 
-RAML processors MUST support the OPTIONAL **!include** tag, which specifies the inclusion of external files into the API specification. Being a YAML tag, the exclamation point ("!") prefix is required. In an API specification, the !include tag is located only in a node value position. The !include tag MUST be the value of a node, which assigns the contents of the file named by the !include tag to the value of the node.
+RAML processors MUST support the OPTIONAL **!include** tag, which specifies the inclusion of external files into the API specification. Being a YAML tag, the exclamation point (`!`) prefix is required. In an API specification, the !include tag is located only in a node value position. The !include tag MUST be the value of a node, which assigns the contents of the file named by the !include tag to the value of the node.
 
 In the following example, the set of types to be used in the API specification is retrieved from a file called myTypes.raml and used as the value of the types node.
 
@@ -3240,7 +3240,7 @@ resourceTypes:
 
 Any number of libraries can be applied by using the OPTIONAL **uses** node ONLY at the root of a `["master"]` RAML or RAML fragment file. The value of the uses node is a map of key-value pairs. The keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
 
-In a document that applies a library, the data types, resource types, traits, security schemes, and annotation types in the library become available within the document. The assets in the library are referenced within the document using dot notation as follows: concatenate the library name followed by a period ("."), followed by the name of the data type, resource type, trait, security scheme, or annotation type. The library name defines a namespace for the library nodes within the context in which the library is applied. Namespaces defined in a **uses** statement in a specific file are only consumable within that file and serve only to disambiguate the included libraries from each other. Therefore, any processor MUST NOT allow any composition of namespaces using "." across multiple libraries.
+In a document that applies a library, the data types, resource types, traits, security schemes, and annotation types in the library become available within the document. The assets in the library are referenced within the document using dot notation as follows: concatenate the library name followed by a period (`.`), followed by the name of the data type, resource type, trait, security scheme, or annotation type. The library name defines a namespace for the library nodes within the context in which the library is applied. Namespaces defined in a **uses** statement in a specific file are only consumable within that file and serve only to disambiguate the included libraries from each other. Therefore, any processor MUST NOT allow any composition of namespaces using "." across multiple libraries.
 
 Using **uses** does not automatically import the remote library assets into the local file, but the local file can import those assets by referring to the assets from its contents. For example, a RAML type fragment file that uses a library of remote types can import one of those types by referring to it. The remote type is included as if it were defined locally within the RAML type fragment file.
 
