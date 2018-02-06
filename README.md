@@ -1,7 +1,6 @@
 # The RESTful API Modeling Language (RAML) Spec
 
 [![Build Status](https://travis-ci.org/raml-org/raml-spec.svg?branch=master)](https://travis-ci.org/raml-org/raml-spec)
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/raml-org/raml-spec)
 
 **The current version of the RAML specification is 1.0 - and you can find it [here](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md).**
 
@@ -39,9 +38,8 @@ Interested? Learn more about the syntax in the [RAML 1.0 specification](https://
 
 * [Tutorial](http://raml.org/developers/raml-100-tutorial) - In progress to be updated to 1.0
 * [Advanced Tutorial](http://raml.org/developers/raml-200-tutorial) - In progress to be updated to 1.0
-* [Community Sneak Peaks](http://forums.raml.org/c/sneak-peek)
 * [Examples](https://github.com/raml-org/raml-examples)
-* [Wiki](https://github.com/raml-org/raml-spec/wiki)
+* [Blog](https://medium.com/raml-api)
 * [Projects](http://www.raml.org/projects)
 
 ## How can I contribute?
@@ -57,8 +55,8 @@ We welcome any contributions from the community! You can contribute or provide f
 
 * [@ramlapi](https://twitter.com/ramlapi)
 * info@raml.org
-* [forum](http://forums.raml.org)
-* [chat](https://gitter.im/raml-org/raml-spec)
+* [Forum](http://forum.raml.org)
+* [Slack](https://raml.org/slack)
 * [Stack Overflow](http://stackoverflow.com/questions/tagged/raml)
 * [Github Issues](https://github.com/raml-org/raml-spec/issues)
 
