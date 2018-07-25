@@ -3415,7 +3415,7 @@ usage: Spanish localization for admin functionality
 extends: librarybooks.raml
 /books:
   post:
-    description: A?adir un nuevo libro para la colecci?n
+    description: Añadir un nuevo libro para la colección
 ```
 
 ```yaml
