@@ -3437,75 +3437,75 @@ _Object_ is a MAP or a SEQUENCE containing MAPPINGS in terms of YAML.
 
 _Property_ is a MAPPING in terms of YAML, a key and its value pair.
 
-In the following example, the yellow "properties" is a _Property_ key, and the corresponding green _Object_ is the value.
+In the following example, "properties" is a _Property_ key, and the child node _Object_ is the value.
 
-<pre style="background-color:#111;">
-<font color="yellow">properties:</font>
-<font color="#44ff44">  statusCode: 200</font>
-<font color="#44ff44">    responseParameters:</font>
-<font color="#44ff44">      type: object</font>
-<font color="#44ff44">      description: "some description"</font>
-</pre>
+```yaml
+properties:
+  statusCode: 200
+  responseParameters:
+    type: object
+    description: "some description"
+```
 
-In the same example, there is also a green "responseParameters" _Property_ key and its _Object_ value:
+In the same example, there is also a "responseParameters" _Property_ key and its _Object_ value:
 
-<pre style="background-color:#111;">
-<font color="white">properties:</font>
-<font color="white">  statusCode: 200</font>
-<font color="yellow">    responseParameters:</font>
-<font color="#44ff44">      type: object</font>
-<font color="#44ff44">      description: "some description"</font>
-</pre>
+```yaml
+properties:
+  statusCode: 200
+  responseParameters:
+    type: object
+    description: "some description"
+```
 
-And while the yellow "statusCode", "type" and "description" are also properties, their values are not _Objects_:
+And while "statusCode", "type" and "description" are also properties, their values are not _Objects_:
 
-<pre style="background-color:#111;">
-<font color="white">properties:</font>
-<font color="yellow">   statusCode:</font> <font color="white">200</font>
-<font color="white">   responseParameters:</font>
-<font color="yellow">       type:</font> <font color="white">object</font>
-<font color="yellow">       description:</font> <font color="white">"some description"</font>
-</pre>
+```yaml
+properties:
+  statusCode: 200
+  responseParameters:
+    type: object
+    description: "some description"
+```
 
-In the following sample, yellow "FilteredByPrice" and "Paged" are _Properties_ with green _Object_ values.
+In the following example, "FilteredByPrice" and "Paged" are _Properties_ with _Object_ values.
 
-<pre style="background-color:#111;">
-<font color="white">traits:</font>
-<font color="yellow"> - FilterableByPrice:</font>
-<font color="#44ff44">     queryParameters:</font>
-<font color="#44ff44">       priceLessThen?:</font>
-<font color="#44ff44">         type: number</font>
-<font color="#44ff44">       priceMoreThen?:</font>
-<font color="#44ff44">        type: number</font>
-<font color="yellow"> - Paged:</font>
-<font color="#44ff44">     queryParameters:</font>
-<font color="#44ff44">       offset: number</font>
-<font color="#44ff44">       length: number</font>
-</pre>
+```yaml
+traits:
+ - FilterableByPrice:
+     queryParameters:
+       priceLessThen?:
+         type: number
+       priceMoreThen?:
+        type: number
+ - Paged:
+     queryParameters:
+       offset: number
+       length: number
+```
 
 **Array**
 
 _Array_ is a SEQUENCE containing SCALARs or SEQUENCE containing MAPs in terms of YAML.
 
-In the following example, the yellow "enum" _Property_ key has a blue _Array_ value.
+In the following example, the "enum" _Property_ key has an _Array_ value.
 
-<pre style="background-color:#111;">
-<font color="yellow">enum:</font>
-<font color="#4444ff"> - White</font>
-<font color="#4444ff"> - Black</font>
-<font color="#4444ff"> - Colored</font>
-</pre>
+```yaml
+enum:
+  - White
+  - Black
+  - Colored
+```
 
-In this example of an _Array_ definition, a "documentation" _Property_ key has an _Array_ value that contains two green _Objects_:
+In this example of an _Array_ definition, a "documentation" _Property_ key has an _Array_ value that contains two _Objects_:
 
-<pre style="background-color:#111;">
-<font color="yellow">documentation:</font>
-<font color="#44ff44">- title: Introduction</font>
-<font color="#44ff44">  content: Automated access to books</font>
+```yaml
+documentation:
+  - title: Introduction
+    content: Automated access to books
 
-<font color="#44ff44">- title: Licensing</font>
-<font color="#44ff44">  content: Please respect copyrights on our books.</font>
-</pre>
+  - title: Licensing
+    content: Please respect copyrights on our books.
+```
 
 **Property Types**
 
@@ -3513,53 +3513,55 @@ In the merging algorithm, the _Property_ types are referred to as _Property Kind
 
 **_Object Property_** - a _Property_ having _Object_ as a value.
 
-In the following example, "properties" _Property_ is an _Object Property_:
+In the following example, the "properties" _Property_ is an _Object Property_:
 
-<pre style="background-color:#111;">
-<font color="yellow">properties:</font>
-<font color="#44ff44">   statusCode: 200</font>
-<font color="#44ff44">   responseParameters:</font>
-</pre>
+```yaml
+properties:
+  statusCode: 200
+  responseParameters:
+    type: object
+    description: "some description"
+```
 
 **_Array Property_** - a _Property_ having _Array_ of _Objects_ as a value.
 
-In the following example, "documentation" _Property_ is an _Object Property_:
+In the following example, the "documentation" _Property_ is an _Array Property_:
 
-<pre style="background-color:#111;">
-<font color="yellow">documentation:</font>
-<font color="#44ff44">- title: Introduction</font>
-<font color="#44ff44">  content: Automated access to books</font>
+```yaml
+documentation:
+  - title: Introduction
+    content: Automated access to books
 
-<font color="#44ff44">- title: Licensing</font>
-<font color="#44ff44">  content: Please respect copyrights on our books.</font>
-</pre>
+  - title: Licensing
+    content: Please respect copyrights on our books.
+```
 
 **_Simple property_** - a _Property_ having YAML SCALAR or a SEQUENCE of YAML SCALARS as a value.
 
-In the following sample "statusCode" and "enum" are simple properties.
+In the following example, "statusCode" and "enum" are simple properties.
 
-<pre style="background-color:#111;">
-<font color="yellow">statusCode:</font><font color="white"> 200</font>
-<font color="yellow">enum:</font>
-<font color="white"> - White</font>
-<font color="white"> - Black</font>
-<font color="white"> - Colored</font>
-</pre>
+```yaml
+statusCode: 200
+enum:
+  - White
+  - Black
+  - Colored
+```
 
 **_Single-value Simple Property_** - a Simple property having YAML SCALAR value.
 
-<pre style="background-color:#111;">
-<font color="yellow">statusCode</font>: <font color="white">200</font>
-</pre>
+```yaml
+statusCode: 200
+```
 
 **_Multi-value Simple Property_** - a Simple property having a SEQUENCE of YAML SCALARS as value.
 
-<pre style="background-color:#111;">
-<font color="yellow">enum:</font>
-<font color="white"> - White</font>
-<font color="white"> - Black</font>
-<font color="white"> - Colored</font>
-</pre>
+```yaml
+enum:
+  - White
+  - Black
+  - Colored
+```
 
 Exceptions:
 * Examples are always _Simple Properties_ despite the capability to have complex YAML samples as values.
@@ -3574,16 +3576,16 @@ Conflicting properties are the properties that cannot coexist in the same Object
 
 In the following example, both "type" and "properties" _Properties_ can coexist, but the "enum" _Property_ cannot coexist with both "type" and "properties".
 
-<pre style="background-color:#111;">
-<font color="white">color:</font>
-<font color="#44ff44">  type:</font> <font color="white">object</font>
-<font color="#44ff44">  properties:</font>
-<font color="white">    name: string</font>
-<font color="#ff4444">  enum:</font>
-<font color="white">   - White</font>
-<font color="white">   - Black</font>
-<font color="white">   - Colored</font>
-</pre>
+```yaml
+color:
+  type: object
+  properties:
+    name: string
+  enum:
+   - White
+   - Black
+   - Colored
+```
 
 **Ignored properties**
 
