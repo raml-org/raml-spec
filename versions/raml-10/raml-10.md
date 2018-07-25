@@ -3471,7 +3471,7 @@ In the following example, "FilteredByPrice" and "Paged" are _Properties_ with _O
 
 ```yaml
 traits:
- - FilterableByPrice:
+ - FilteredByPrice:
      queryParameters:
        priceLessThen?:
          type: number
@@ -3502,7 +3502,6 @@ In this example of an _Array_ definition, a "documentation" _Property_ key has a
 documentation:
   - title: Introduction
     content: Automated access to books
-
   - title: Licensing
     content: Please respect copyrights on our books.
 ```
@@ -3531,7 +3530,6 @@ In the following example, the "documentation" _Property_ is an _Array Property_:
 documentation:
   - title: Introduction
     content: Automated access to books
-
   - title: Licensing
     content: Please respect copyrights on our books.
 ```
