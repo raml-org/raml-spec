@@ -242,7 +242,7 @@ The following table enumerates the possible nodes at the root of a RAML document
 | securitySchemes? | Declarations of [security schemes](#security-schemes) for use within the API.
 | securedBy? | The [security schemes](#applying-security-schemes) that apply to every resource and method in the API.
 | uses? | Imported external [libraries](#libraries) for use within the API.
-| /&lt;relativeUri&gt;? | The resources of the API, identified as relative URIs that begin with a slash (/). A [resource node](#resources-and-nested-resources) is one that begins with the slash and is either at the root of the API definition or a child of a resource node. For example, /users and /{groupId}.
+| /&lt;relativeUri&gt;? | The resources of the API, identified as relative URIs that begin with a slash (/). A [resource node](#resources-and-nested-resources) is one that begins with the slash and is either at the root of the API definition or a child of a resource node. For example, `/users` and `/{groupId}`.
 
 The "schemas" and "types" nodes are mutually exclusive and synonymous: processors MUST NOT allow both to be specified at the root-level of an API definition. We recommended using the "types" node instead of "schemas" because the schemas alias is deprecated and might be removed in a future RAML version.
 
@@ -1653,11 +1653,11 @@ Key points about serialization are:
 
 ## Resources and Nested Resources
 
-A resource is identified by its relative URI, which MUST begin with a slash ("/"). Every node whose key begins with a slash, and is either at the root of the API definition or is the child node of a resource node, is such a resource node.
+A resource is identified by its relative URI, which MUST begin with a slash (`/`). Every node whose key begins with a slash, and is either at the root of the API definition or is the child node of a resource node, is such a resource node.
 
 A resource defined as a root-level node is called a top-level resource. The key of the root-level node is the URI of the resource relative to the baseUri if there is one. A resource defined as a child node of another resource is called a nested resource. The key of the child node is the URI of the nested resource relative to the parent resource URI.
 
-This example shows an API definition with one top-level resource, /gists, and one nested resource, /public.
+This example shows an API definition with one top-level resource, `/gists`, and one nested resource, `/public`.
 
 ```yaml
 #%RAML 1.0
@@ -1670,7 +1670,7 @@ baseUri: https://api.github.com
     displayName: Public Gists
 ```
 
-The key of a resource node, its relative URI, MAY consist of multiple URI path fragments separated by slashes. For example, /bom/items might indicate the collection of items in a bill of materials as a single resource. However, if the individual URI path fragments are themselves resources, the API definition SHOULD use nested resources to describe this structure. For example, if /bom is itself a resource, then /items SHOULD be a nested resource of /bom, versus using /bom/items as a non-nested resource.
+The key of a resource node, its relative URI, MAY consist of multiple URI path fragments separated by slashes. For example, `/bom/items` might indicate the collection of items in a bill of materials as a single resource. However, if the individual URI path fragments are themselves resources, the API definition SHOULD use nested resources to describe this structure. For example, if `/bom` is itself a resource, then `/items` SHOULD be a nested resource of `/bom`, versus using `/bom/items` as a non-nested resource.
 
 Absolute URIs are not explicitly specified. They are computed by appending the relative URI of the top-level resource, and then successively appending the relative URI values for each nested resource until the target resource is reached. In this formation of the absolute URI, if a baseUri is defined, it is prepended before the relative URI of the top-level resource; any trailing slashes in the baseUri are removed before prepending.
 
@@ -1686,7 +1686,7 @@ Continuing with the previous example, the absolute URI of the public gists resou
 "https://api.github.com/gists/public"     <--- public gists absolute URI
 ```
 
-A nested resource can itself have a child (nested) resource, creating a multiply-nested resource. In the following example, /user is a top-level resource that has no children; /users is a top-level resource that has a nested resource, /{userId}; and the nested resource, /{userId}, has three nested resources, /followers, /following, and /keys.
+A nested resource can itself have a child (nested) resource, creating a multiply-nested resource. In the following example, `/user` is a top-level resource that has no children; `/users` is a top-level resource that has a nested resource, `/{userId}`; and the nested resource, `/{userId}`, has three nested resources, `/followers`, `/following`, and `/keys`.
 
 
 ```yaml
@@ -1745,7 +1745,7 @@ The value of a resource node is a map whose key-value pairs are described in the
 
 | Name | Description |
 |:--------|:------------|
-| displayName? | An alternate, human-friendly name for the resource. If the displayName node is not defined for a resource, documentation tools SHOULD refer to the resource by its key, which acts as the resource name. For example, tools SHOULD refer to the relative URI /jobs.
+| displayName? | An alternate, human-friendly name for the resource. If the displayName node is not defined for a resource, documentation tools SHOULD refer to the resource by its key, which acts as the resource name. For example, tools SHOULD refer to the relative URI `/jobs`.
 | description? | A substantial, human-friendly description of a resource. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this API. An annotation is a map having a key that begins with "(" and ends with ")" where the text enclosed in parentheses is the annotation name, and the value is an instance of that annotation.
 | get?<br>patch?<br>put?<br>post?<br>delete?<br>options?<br>head? | The object describing the [method](#methods).
@@ -1753,11 +1753,11 @@ The value of a resource node is a map whose key-value pairs are described in the
 | type? | The [resource type](#applying-resource-types-and-traits) that this resource inherits.
 | securedBy? | The [security schemes](#applying-security-schemes) that apply to all methods declared (implicitly or explicitly) for this resource.
 | uriParameters? | Detailed information about any URI parameters of this resource.
-| /&lt;relativeUri&gt;? | A nested resource, which is identified as any node whose name begins with a slash ("/"), and is therefore treated as a relative URI.
+| /&lt;relativeUri&gt;? | A nested resource, which is identified as any node whose name begins with a slash (`/`), and is therefore treated as a relative URI.
 
 ### Template URIs and URI Parameters
 
-[Template URIs](#template-uri) containing URI parameters can be used to define a relative URI of a resource that contains variable elements. The following example shows a top-level resource with a key /jobs and a nested resource with a key /{jobId}, a template URI.
+[Template URIs](#template-uri) containing URI parameters can be used to define a relative URI of a resource that contains variable elements. The following example shows a top-level resource with a key `/jobs` and a nested resource with a key `/{jobId}`, a template URI.
 
 ```yaml
 #%RAML 1.0
@@ -1776,7 +1776,7 @@ Every property in a uriParameters declaration MUST correspond exactly to the nam
 
 Like the [baseUriParameters root node](#base-uri-and-base-uri-parameters), the version parameter is a reserved parameter name in the uriParameters properties declaration. The version parameter value corresponds to the value of the version root-level node.
 
-The following example shows two top-level resources, /user and /users, and a nested resource specified by its [Template URI](#template-uri), /{userId}. The URI parameter, userId, is explicitly declared and given a description and an integer type.
+The following example shows two top-level resources, `/user` and `/users`, and a nested resource specified by its [Template URI](#template-uri), `/{userId}`. The URI parameter, `userId`, is explicitly declared and given a description and an integer type.
 
 ```yaml
 #%RAML 1.0
@@ -1819,7 +1819,7 @@ In this example, the URI parameter `userIds` is an array of ids. Assume the arra
 
 If a URI parameter declaration specifies a non-string scalar type for the value of the header, the standard serialization rules for types MUST be invoked in applying the type to instances of that URI parameter.
 
-To avoid ambiguous matching, the values matched by URI parameters MUST NOT contain slash (/) characters. In the first example in this section, /jobs/123 is a URI (relative to the baseUri) that matches the /{jobId} resource nested within the /jobs resource, but the URI /jobs/123/x does not match any resource.
+To avoid ambiguous matching, the values matched by URI parameters MUST NOT contain slash (`/`) characters. In the first example in this section, `/jobs/123` is a URI (relative to the baseUri) that matches the `/{jobId}` resource nested within the `/jobs` resource, but the URI `/jobs/123/x` does not match any resource.
 
 In the next example, the top-level resource has URI parameters folderId and fileId.
 
@@ -1833,7 +1833,7 @@ version: v1
     description: An item in the collection of all files
 ```
 
-Although a URI parameter can be explicitly specified as optional, it SHOULD be required when surrounded directly by slashes ("/"). In this case, the URI parameter constitutes a complete URI path fragment, for example .../{objectId}/.... It usually makes no sense to allow a URI to contain adjacent slashes, enclosing no characters, for example ...//.... Hence, a URI parameter SHOULD be specified as optional only when it appears adjacent to other text. For example, /people/~{fieldSelectors} indicates that URI parameter {fieldSelectors} can be blank, and therefore optional, implying that /people/~ is a valid relative URI.
+Although a URI parameter can be explicitly specified as optional, it SHOULD be required when surrounded directly by slashes (`/`). In this case, the URI parameter constitutes a complete URI path fragment, for example `.../{objectId}/...`. It usually makes no sense to allow a URI to contain adjacent slashes, enclosing no characters, for example `...//...`. Hence, a URI parameter SHOULD be specified as optional only when it appears adjacent to other text. For example, `/people/~{fieldSelectors}` indicates that URI parameter `{fieldSelectors}` can be blank, and therefore optional, implying that `/people/~` is a valid relative URI.
 
 A special URI reserved parameter, **ext**, might or might not be specified explicitly in a uriParameters node. Its meaning is reserved for use by a client to specify that the body of the request or response be of the associated media type.
 
@@ -1841,7 +1841,7 @@ A special URI reserved parameter, **ext**, might or might not be specified expli
 |:--------|:------------|
 | ext | The desired media type of the request or response body
 
-By convention, a value for the ext parameter of .json is equivalent to an Accept header of application/json. A value of .xml is equivalent to an Accept header of text/xml. By employing the ext parameter, clients can specify the media type of a request or response through the URI rather than the Accept HTTP header. In the following example, the /users resource can be requested as application/json or text/xml:
+By convention, a value for the ext parameter of .json is equivalent to an Accept header of application/json. A value of .xml is equivalent to an Accept header of text/xml. By employing the ext parameter, clients can specify the media type of a request or response through the URI rather than the Accept HTTP header. In the following example, the `/users` resource can be requested as application/json or text/xml:
 
 ```yaml
 #%RAML 1.0
@@ -1940,7 +1940,7 @@ traits:
 
 ### Query Strings and Query Parameters
 
-An API method can support or require a query string in the URL on which the method is invoked. The query string in a URL is defined in [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) as the part of the URL following the question mark separator ("?") and preceding any fragment ("#") separator. The query string can be specified either by the OPTIONAL **queryString** node or by the OPTIONAL **queryParameters** node. The queryString and queryParameters nodes are mutually exclusive: processors MUST NOT allow both to be specified, explicitly or implicitly, on the same method of the same resource.
+An API method can support or require a query string in the URL on which the method is invoked. The query string in a URL is defined in [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) as the part of the URL following the question mark separator (`?`) and preceding any fragment (`#`) separator. The query string can be specified either by the OPTIONAL **queryString** node or by the OPTIONAL **queryParameters** node. The queryString and queryParameters nodes are mutually exclusive: processors MUST NOT allow both to be specified, explicitly or implicitly, on the same method of the same resource.
 
 #### The Query String as a Whole
 
@@ -2264,11 +2264,11 @@ In resource type and trait declarations, **resourcePath** and **resourcePathName
 
 Double angle brackets (double chevrons) enclose a parameter name in resource type and trait definitions; for example, `<<parameterName>>`.
 
-A processing application MUST set the value of `<<resourcePath>>` to the concatenation of the relative (to the baseUri if there is one) resource URI of the inheriting resource and all its parent relative resource URIs. A processing application MUST set the value of `<<resourcePathName>>` at the position in the URI following the rightmost slash ("/"), omitting any of the URI-parameter-containing path fragments.
+A processing application MUST set the value of `<<resourcePath>>` to the concatenation of the relative (to the baseUri if there is one) resource URI of the inheriting resource and all its parent relative resource URIs. A processing application MUST set the value of `<<resourcePathName>>` at the position in the URI following the rightmost slash (`/`), omitting any of the URI-parameter-containing path fragments.
 
-For example, applying a resource type or trait to a resource /users nested in a resource /{groupId} nested in a root-level resource /groups sets the value of the resourcePath parameter to ""/groups/{groupId}/users". Applying a resource type or trait to a resource /jobs/{jobId} sets the value of the resourcePathName parameter to "jobs".
+For example, applying a resource type or trait to a resource `/users` nested in a resource `/{groupId}` nested in a root-level resource `/groups` sets the value of the resourcePath parameter to "`/groups/{groupId}/users`". Applying a resource type or trait to a resource `/jobs/{jobId}` sets the value of the resourcePathName parameter to "jobs".
 
-When setting resourcePath and resourcePathName, processing applications MUST also omit any ext parameter and its parametrizing brackets ("{" and "}") found in the resource URI. For example, applying a resource type or trait to a root-level resource /bom/{itemId}{ext} sets the value of resourcePathName and resourcePath parameters to "/bom/{itemId}" and "bom", respectively.
+When setting resourcePath and resourcePathName, processing applications MUST also omit any ext parameter and its parametrizing brackets ("{" and "}") found in the resource URI. For example, applying a resource type or trait to a root-level resource `/bom/{itemId}{ext}` sets the value of resourcePathName and resourcePath parameters to "`/bom/{itemId}`" and "bom", respectively.
 
 In trait declarations, **methodName** is a reserved parameter.
 
@@ -2293,7 +2293,7 @@ Parameter values MAY be transformed further by applying one of the following fun
 | !lowerhyphencase | The <b>!lowerhyphencase</b> function MUST convert the value of the parameter to lowercase letters; if the value is a compound word, the function MUST also add an additional hyphen between consecutive words which are not already separated by one or more hyphen.<br><br>for example: `userId --> user-id`
 | !upperhyphencase | The <b>!upperhyphencase</b> function MUST convert the value of the parameter to uppercase letters; if the value is a compound word, the function MUST also add an additional hyphen between consecutive words which are not already separated by one or more hyphen.<br><br>for example: `userId --> USER-ID`
 
-Append these functions to the parameter name within the double angle brackets, separated by a pipe ("|") character and optional whitespace padding. Here is an example that uses functions and reserved parameters:
+Append these functions to the parameter name within the double angle brackets, separated by a pipe (`|`) character and optional whitespace padding. Here is an example that uses functions and reserved parameters:
 
 ```yaml
 #%RAML 1.0
@@ -2336,12 +2336,12 @@ Parameters cannot be used within an !include tag specification of the include fi
 
 When defining resource types, it can be useful to capture patterns that manifest several levels below the inheriting resource without mandating the creation of the intermediate levels. For example, a resource type declaration describes a body parameter that is used if the API defines a post method for that resource. Applying the resource type to a resource without a post method does not create the post method.
 
-To accommodate this need, a resource type definition MAY append a question mark ("?") suffix to the name of any method to declare the method as optional, resulting in the following behavior:
+To accommodate this need, a resource type definition MAY append a question mark (`?`) suffix to the name of any method to declare the method as optional, resulting in the following behavior:
 
 * Do not apply the method to the resource if it doesn't already exist at the corresponding level in the resource.
 * Apply the value of the method node to the resource type if the method name without the question mark is already defined, explicitly or implicitly, at the corresponding level in the resource.
 
-The following example shows a resource type called corpResource with an optional post? node that defines a required header called X-Chargeback and a custom parameter called TextAboutPost. The inheriting resource /servers defines a post method, so it needs to include the X-Chargeback header requirement. TextAboutPost MUST be defined as well. The inheriting resource /queues does not define a post method, so it does not have to define the X-Chargeback header or the TextAboutPost parameter.
+The following example shows a resource type called corpResource with an optional post? node that defines a required header called X-Chargeback and a custom parameter called TextAboutPost. The inheriting resource `/servers` defines a post method, so it needs to include the X-Chargeback header requirement. TextAboutPost MUST be defined as well. The inheriting resource `/queues` does not define a post method, so it does not have to define the X-Chargeback header or the TextAboutPost parameter.
 
 ```yaml
 #%RAML 1.0
@@ -3034,7 +3034,7 @@ RAML provides several mechanisms to help modularize the ecosystem of an API spec
 
 ### Includes
 
-RAML processors MUST support the OPTIONAL **!include** tag, which specifies the inclusion of external files into the API specification. Being a YAML tag, the exclamation point ("!") prefix is required. In an API specification, the !include tag is located only in a node value position. The !include tag MUST be the value of a node, which assigns the contents of the file named by the !include tag to the value of the node.
+RAML processors MUST support the OPTIONAL **!include** tag, which specifies the inclusion of external files into the API specification. Being a YAML tag, the exclamation point (`!`) prefix is required. In an API specification, the !include tag is located only in a node value position. The !include tag MUST be the value of a node, which assigns the contents of the file named by the !include tag to the value of the node.
 
 In the following example, the set of types to be used in the API specification is retrieved from a file called myTypes.raml and used as the value of the types node.
 
@@ -3048,8 +3048,8 @@ The !include tag accepts a single argument, the location of the content to be in
 
 |Argument | Description | Examples |
 |:--------|:------------|:---------|
-| absolute path | A path that begins with a single slash ("/") and is interpreted relative to the root RAML file location. | /traits/pageable.raml
-| relative path | A path that neither begins with a single slash ("/") nor constitutes a URL, and is interpreted relative to the location of the included file. | description.md<br>../traits/pageable.raml
+| absolute path | A path that begins with a single slash (`/`) and is interpreted relative to the root RAML file location. | /traits/pageable.raml
+| relative path | A path that neither begins with a single slash (`/`) nor constitutes a URL, and is interpreted relative to the location of the included file. | description.md<br>../traits/pageable.raml
 | URL | An absolute URL | http://dev.domain.com/api/patterns/traits.raml
 
 To simplify the API definition, and because the parsing context of the included file is not shared between the file and its parent, an included file SHALL NOT use a YAML reference to an anchor in a separate file. Likewise, a reference made from a parent file SHALL NOT reference an anchor defined in an included file.
@@ -3240,7 +3240,7 @@ resourceTypes:
 
 Any number of libraries can be applied by using the OPTIONAL **uses** node ONLY at the root of a `["master"]` RAML or RAML fragment file. The value of the uses node is a map of key-value pairs. The keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
 
-In a document that applies a library, the data types, resource types, traits, security schemes, and annotation types in the library become available within the document. The assets in the library are referenced within the document using dot notation as follows: concatenate the library name followed by a period ("."), followed by the name of the data type, resource type, trait, security scheme, or annotation type. The library name defines a namespace for the library nodes within the context in which the library is applied. Namespaces defined in a **uses** statement in a specific file are only consumable within that file and serve only to disambiguate the included libraries from each other. Therefore, any processor MUST NOT allow any composition of namespaces using "." across multiple libraries.
+In a document that applies a library, the data types, resource types, traits, security schemes, and annotation types in the library become available within the document. The assets in the library are referenced within the document using dot notation as follows: concatenate the library name followed by a period (`.`), followed by the name of the data type, resource type, trait, security scheme, or annotation type. The library name defines a namespace for the library nodes within the context in which the library is applied. Namespaces defined in a **uses** statement in a specific file are only consumable within that file and serve only to disambiguate the included libraries from each other. Therefore, any processor MUST NOT allow any composition of namespaces using "." across multiple libraries.
 
 Using **uses** does not automatically import the remote library assets into the local file, but the local file can import those assets by referring to the assets from its contents. For example, a RAML type fragment file that uses a library of remote types can import one of those types by referring to it. The remote type is included as if it were defined locally within the RAML type fragment file.
 
