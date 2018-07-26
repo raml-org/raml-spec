@@ -3570,20 +3570,9 @@ Exceptions:
 
 **Conflicting Properties**
 
-Conflicting properties are the properties that cannot coexist in the same Object.
+Conflicting properties are the properties that cannot coexist in the same _Object_. They are said to be mutually exclusive. 
 
-In the following example, both "type" and "properties" _Properties_ can coexist, but the "enum" _Property_ cannot coexist with both "type" and "properties".
-
-<pre style="background-color:#111;">
-<font color="white">color:</font>
-<font color="#44ff44">  type:</font> <font color="white">object</font>
-<font color="#44ff44">  properties:</font>
-<font color="white">    name: string</font>
-<font color="#ff4444">  enum:</font>
-<font color="white">   - White</font>
-<font color="white">   - Black</font>
-<font color="white">   - Colored</font>
-</pre>
+For example, the "queryString" and "queryParameters" properties of a method object are _Conflicting Properties_.
 
 **Ignored properties**
 
