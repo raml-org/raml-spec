@@ -3570,20 +3570,9 @@ Exceptions:
 
 **Conflicting Properties**
 
-Conflicting properties are the properties that cannot coexist in the same Object.
+Conflicting properties are the properties that cannot coexist in the same _Object_. They are said to be mutually exclusive. 
 
-In the following example, both "type" and "properties" _Properties_ can coexist, but the "enum" _Property_ cannot coexist with both "type" and "properties".
-
-```yaml
-color:
-  type: object
-  properties:
-    name: string
-  enum:
-   - White
-   - Black
-   - Colored
-```
+For example, the "queryString" and "queryParameters" properties of a method object are _Conflicting Properties_.
 
 **Ignored properties**
 
