@@ -43,7 +43,7 @@ RAML fully supports Level 2 as defined in [RFC6570](https://tools.ietf.org/html/
 
 ### Markdown
 
-Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/).
+Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](https://github.github.com/gfm/).
 
 ## Table of Content
 
