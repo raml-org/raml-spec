@@ -1,5 +1,7 @@
 # The RESTful API Modeling Language (RAML) Spec
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/raml-org/raml-spec.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/raml-org/raml-spec.svg?branch=master)](https://travis-ci.org/raml-org/raml-spec)
 
 **The current version of the RAML specification is 1.0 - and you can find it [here](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md).**
