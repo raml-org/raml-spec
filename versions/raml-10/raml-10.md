@@ -3156,7 +3156,7 @@ traits: !include patterns/traits.raml
 
 collection:
   get:
-    is: paged
+    is: [ paged ]
   post:
 member:
   get:
@@ -3185,7 +3185,7 @@ version: v1
 resourceTypes:
   collection:
     get:
-      is: paged
+      is: [ paged ]
     post:
   member:
     get:
