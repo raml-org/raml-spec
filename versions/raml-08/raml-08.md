@@ -762,7 +762,7 @@ baseUri: https://app.zencoder.com/api/{version}
     headers:
       Zencoder-Api-Key:
         displayName: ZEncoder API Key
-      x-Zencoder-job-metadata-{*}
+      x-Zencoder-job-metadata-{*}:
         displayName: Job Metadata
         description: |
            Field names prefixed with x-Zencoder-job-metadata- contain user-specified metadata.
@@ -1305,7 +1305,7 @@ The following example shows an optional *post?* property that defines a body par
 #%RAML 0.8
 title: Example of Optional Properties
 resourceTypes:
-  - auditableResource
+  - auditableResource:
       post?:
         body:
           createAuthority:
@@ -1430,7 +1430,7 @@ securitySchemes:
           accessTokenUri: https://api.dropbox.com/1/oauth2/token
           authorizationGrants: [ code, token ]
     - oauth_1_0:
-        description:|
+        description: |
             OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
         type: OAuth 1.0
         settings:
@@ -1438,7 +1438,7 @@ securitySchemes:
           authorizationUri: https://www.dropbox.com/1/oauth/authorize
           tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
     - customHeader:
-        description:|
+        description: |
             A custom
 ```
 
