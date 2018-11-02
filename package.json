@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/raml-spec/raml-spec#readme",
   "dependencies": {
-    "mdv": "^1.0.6",
+    "mdv": "^1.0.8",
     "node-readfiles": "^0.2.0"
   }
 }
