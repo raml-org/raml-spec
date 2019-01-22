@@ -1035,7 +1035,7 @@ types:
 
 In RAML, the type `nil` is a scalar type that allows only nil data values. Specifically, in YAML it allows only YAML's `null` (or its equivalent representations, such as `~`), in JSON it allows only JSON's `null`, and in XML it allows only XML's `xsi:nil`. In headers, URI parameters, and query parameters, the `nil` type only allows the string value "nil" (case-sensitive); and in turn an instance having the string value "nil" (case-sensitive), when described with the `nil` type, deserializes to a nil value.
 
-In the following example, the type of an object has two required properties, `name` and `comment`, both defaulting to type `string`. In `example`, `name` is assigned a string value, but comment is nil and this is _not_ allowed because RAML expects a string.
+In the following example, the type is an object and has two required properties, `name` and `comment`, both defaulting to type `string`. In `example`, `name` is assigned a string value, but comment is nil and this is _not_ allowed because RAML expects a string.
 
 ```yaml
 types:
