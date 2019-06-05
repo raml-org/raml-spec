@@ -1,0 +1,31 @@
+{
+  "name": "raml-spec",
+  "version": "1.0.0",
+  "description": "RESTful API Modeling Language",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/mdv/testRunner README.md versions"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raml-spec/raml-spec.git"
+  },
+  "keywords": [
+    "raml",
+    "rest",
+    "restful",
+    "api",
+    "modeling",
+    "language"
+  ],
+  "author": "http://raml.org/",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/raml-spec/raml-spec/issues"
+  },
+  "homepage": "https://github.com/raml-spec/raml-spec#readme",
+  "dependencies": {
+    "mdv": "^1.0.8",
+    "node-readfiles": "^0.2.0"
+  }
+}

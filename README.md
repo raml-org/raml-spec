@@ -1,6 +1,6 @@
 # The RESTful API Modeling Language (RAML) Spec
 
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/raml-org/raml-spec)
+[![Build Status](https://travis-ci.org/raml-org/raml-spec.svg?branch=master)](https://travis-ci.org/raml-org/raml-spec)
 
 **The current version of the RAML specification is 1.0 - and you can find it [here](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md).**
 
@@ -36,13 +36,11 @@ Interested? Learn more about the syntax in the [RAML 1.0 specification](https://
 
 ## How do I learn more?
 
-* [Tutorial](http://raml.org/developers/raml-100-tutorial) - In progress to be updated to 1.0
-* [Advanced Tutorial](http://raml.org/developers/raml-200-tutorial) - In progress to be updated to 1.0
-* [Community Sneak Peaks](http://forums.raml.org/c/sneak-peek)
-* [RAML MVP Program](http://raml.influitive.com/) - Currently in beta
+* [Tutorial](http://raml.org/developers/raml-100-tutorial)
+* [Advanced Tutorial](http://raml.org/developers/raml-200-tutorial)
 * [Examples](https://github.com/raml-org/raml-examples)
-* [Wiki](https://github.com/raml-org/raml-spec/wiki)
-* [Projects](http://www.raml.org/projects/projects)
+* [Blog](https://medium.com/raml-api)
+* [Projects](http://www.raml.org/projects)
 
 ## How can I contribute?
 
@@ -51,14 +49,14 @@ We welcome any contributions from the community! You can contribute or provide f
 |Your Intention  |What to do?|
 |:----------|:----------|
 |You see a spelling or grammar mistake, or an error in our examples? | Fork this repository, make edits, and then submit a pull request. We will respond to your request as quickly as possible.
-|You want to suggest a new feature, improve existing features, ask questions, or things general around the RAML specification? | File an issue. Please be as specific as possible about your intentions or what you’d like to see.
+|You want to suggest a new feature, improve existing features, ask questions, or things in general around the RAML specification? | File an issue. Please be as specific as possible about your intentions or what you’d like to see.
 
 ## How can I get in touch?
 
+* [Slack](https://raml.org/slack)
 * [@ramlapi](https://twitter.com/ramlapi)
 * info@raml.org
-* [forum](http://forums.raml.org)
-* [chat](https://gitter.im/raml-org/raml-spec)
+* [Forum](http://forum.raml.org)
 * [Stack Overflow](http://stackoverflow.com/questions/tagged/raml)
 * [Github Issues](https://github.com/raml-org/raml-spec/issues)
 
