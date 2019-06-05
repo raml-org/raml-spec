@@ -278,7 +278,7 @@ documentation:
 
 ### Base URI and Base URI Parameters
 
-The OPTIONAL **baseUri** node specifies a URI as an identifier for the API as a whole, and MAY be used the specify the URL at which the API is served (its service endpoint), and which forms the base of the URLs of each of its resources. The value of the baseUri node is a string that MUST conform to the URI specification [RFC2396](https://www.ietf.org/rfc/rfc2396.txt) or a [Template URI](#template-uri).
+The OPTIONAL **baseUri** node specifies a URI as an identifier for the API as a whole, and MAY be used to specify the URL at which the API is served (its service endpoint), and which forms the base of the URLs of each of its resources. The value of the baseUri node is a string that MUST conform to the URI specification [RFC2396](https://www.ietf.org/rfc/rfc2396.txt) or a [Template URI](#template-uri).
 
 If the baseUri value is a [Template URI](#template-uri), the following reserved base URI parameter is available.
 
