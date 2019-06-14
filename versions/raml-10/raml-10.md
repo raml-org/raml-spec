@@ -565,7 +565,7 @@ Every type, whether built-in or user-defined, has the `any` type at the root of 
 
 The "base" type of any type is the type in its inheritance tree that directly extends the `any` type at the root; thus, for example, if a custom type `status` extends the built-in type `integer` which extends the built-in type `number` which extends the `any` type, then the base type of `status` is `number`. Note that a type may have more than one base type.
 
-The `any` type has no facets.
+The `any` type has no additional facets.
 
 #### Object Type
 
