@@ -476,7 +476,7 @@ types:
 
 This section is informative.
 
-The RAML type system borrows from object oriented programming languages such as Java, as well as from XSD and JSON Schemas.
+The RAML type system borrows from object oriented programming languages such as Java, as well as from XSD and JSON Schema.
 
 RAML Types in a nutshell:
 
