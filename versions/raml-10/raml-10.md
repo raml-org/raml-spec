@@ -931,13 +931,13 @@ types:
 
 ##### Number
 
-Any JSON number including [integer](#integer) with the following additional facets:
+Any JSON number with the following additional facets:
 
 | Facet | Description |
 |:--------|:------------|
-|minimum? | The minimum value of the parameter. Applicable only to parameters of type number or integer.
-|maximum? | The maximum value of the parameter. Applicable only to parameters of type number or integer.
-|format? | The format of the value. The value MUST be one of the following: int32, int64, int, long, float, double, int16, int8
+|minimum? | The minimum value.
+|maximum? | The maximum value.
+|format? | The format of the value. The value MUST be one of the following: int, int8, int16, int32, int64, long, float, double.
 |multipleOf? | A numeric instance is valid against "multipleOf" if the result of dividing the instance by this keyword's value is an integer.
 
 Example:
@@ -946,24 +946,23 @@ Example:
 types:
   Weight:
     type: number
-    minimum: 3
-    maximum: 5
-    format: int64
-    multipleOf: 4
+    minimum: -1.1
+    maximum: 20.9
+    format: float
+    multipleOf: 1.1
 ```
 
 ##### Integer
 
-A subset of JSON numbers that are positive and negative multiples of 1. The integer type inherits its facets from the [number type](#number).
+Any JSON number, positive or negative multiple of 1. The integer type inherits its facets from the [number type](#number).
 
 ```yaml
 types:
   Age:
     type: integer
-    minimum: 3
+    minimum: -3
     maximum: 5
     format: int8
-    multipleOf: 1
 ```
 
 ##### Boolean
