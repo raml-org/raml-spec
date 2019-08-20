@@ -580,7 +580,7 @@ All types that have the built-in object base type in its inheritance tree MAY us
 | discriminator? | Determines the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types due to unions or inheritance. The value must match the name of one of the declared `properties` of a type. Unsupported practices are inline type declarations and [using `discriminator`](#using-discriminator) with non-scalar properties.
 | discriminatorValue? | Identifies the declaring type. Requires including a `discriminator` facet in the type declaration. A valid value is an actual value that might identify the type of an individual object and is unique in the hierarchy of the type. Inline type declarations are not supported.<br/><br/>**Default:** The name of the type
 
-An object type is created by explicit inheritance from the built-in type object:
+Example:
 
 ```yaml
 #%RAML 1.0
