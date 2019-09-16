@@ -3210,7 +3210,7 @@ The following table describes the nodes, which are optional, of a library node.
 |Name | Description |
 |:--------|:------------|
 | types?<br>schemas?<br>resourceTypes?<br>traits?<br>securitySchemes?<br>annotationTypes?<br>(&lt;annotationName&gt;)?<br>uses? | The definition of each node is the same as that of the corresponding node at the root of a RAML document. A library supports annotation node like any other RAML document.
-| usage | Describes the content or purpose of a specific library. The value is a string and MAY be formatted using [markdown](#markdown).
+| usage? | Describes the content or purpose of a specific library. The value is a string and MAY be formatted using [markdown](#markdown).
 
 The following example shows a simple library as a standalone, reusable RAML fragment document.
 
