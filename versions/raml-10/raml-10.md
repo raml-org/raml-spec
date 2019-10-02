@@ -3034,7 +3034,7 @@ RAML provides several mechanisms to help modularize the ecosystem of an API spec
 
 ### Includes
 
-RAML processors MUST support the OPTIONAL **!include** tag, which specifies the inclusion of external files into the API specification. Being a YAML tag, the exclamation point (`!`) prefix is required. In an API specification, the !include tag is located only in a node value position. The !include tag MUST be the value of a node, which assigns the contents of the file named by the !include tag to the value of the node.
+RAML processors MUST support the OPTIONAL **!include** tag, which specifies the inclusion of external files into the API specification. Being a YAML tag, the exclamation point (`!`) prefix is required. In an API specification, the !include tag is located only in a node value position. The !include tag MUST be the value of a node, which assigns the contents of the file named by the !include tag to the value of the node. Therefor, the !include tag cannot be used in any type expression or multiple inheritance.
 
 In the following example, the set of types to be used in the API specification is retrieved from a file called myTypes.raml and used as the value of the types node.
 
