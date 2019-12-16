@@ -914,7 +914,7 @@ A JSON string with the following additional facets:
 
 | Facet | Description |
 |:--------|:------------|
-| pattern? | Regular expression that this string SHOULD match.
+| pattern? | Regular expression that this string SHOULD match. The value of this keyword MUST be a string. This string SHOULD be a valid regular expression, according to the [ECMA 262](https://www.ecma-international.org/ecma-262/5.1/#sec-7.8.5) regular expression dialect. A string instance is considered valid if the regular expression matches the instance successfully.
 | minLength? | Minimum length of the string. Value MUST be equal to or greater than 0.<br /><br />**Default:** `0`
 | maxLength? | Maximum length of the string. Value MUST be equal to or greater than 0.<br /><br />**Default:** `2147483647`
 
