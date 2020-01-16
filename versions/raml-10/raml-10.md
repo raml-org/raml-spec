@@ -59,7 +59,7 @@ Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](htt
 	- [Default Media Types](#default-media-types)
 	- [Default Security](#default-security)
 - [RAML Data Types](#raml-data-types)
-	- [Introduction](#introduction)
+	- [Introduction](#introduction-1)
 	- [Overview](#overview)
 	- [Defining Types](#defining-types)
 	- [Type Declarations](#type-declarations)
