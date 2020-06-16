@@ -1198,7 +1198,7 @@ The following example shows a valid declaration.
 types:
   Person:
     type: !include person.json
-    description: this is a schema describing person
+    description: this is a schema describing a person
 ```
 
 The following example shows an invalid declaration of a type that inherits the characteristics of a JSON schema and adds additional properties.
@@ -1217,7 +1217,7 @@ Another invalid case is shown in the following example of the type `Person` bein
 types:
   Person:
     type: !include person.json
-    description: this is a schema describing person
+    description: this is a schema describing a person
   Board:
     properties:
       members: Person[] # invalid use of type expression '[]' and as a property type
