@@ -914,7 +914,7 @@ A JSON string with the following additional facets:
 
 | Facet | Description |
 |:--------|:------------|
-| pattern? | Regular expression that this string SHOULD match.
+| pattern? | Regular expression that this string MUST match.
 | minLength? | Minimum length of the string. Value MUST be equal to or greater than 0.<br /><br />**Default:** `0`
 | maxLength? | Maximum length of the string. Value MUST be equal to or greater than 0.<br /><br />**Default:** `2147483647`
 
