@@ -3065,7 +3065,7 @@ A file to be included MAY begin with a RAML fragment identifier line, which cons
 |:-------------------|:------------| :-----------------------------------|
 | DocumentationItem | An item in the collection of items that is the value of the root-level documentation node | [User Documentation](#user-documentation)
 | DataType | A data type declaration where the type node may be used | [Types](#defining-types)
-| NamedExample | A declaration of the examples facet, whose key is a name of an example and whose value describes the example | [Examples](#defining-examples-in-raml)
+| NamedExample | A declaration of the examples facet, whose keys are names of examples and whose values describe each of the examples | [Examples](#defining-examples-in-raml)
 | ResourceType | A single resource type declaration | [Resource Types and Traits](#resource-types-and-traits)
 | Trait | A single trait declaration | [Resource Types and Traits](#resource-types-and-traits)
 | AnnotationTypeDeclaration | A single annotation type declaration | [Annotations](#annotations)
@@ -3126,6 +3126,42 @@ resourceTypes:
 /products:
   type: collection
   description: All products
+```
+
+The following example shows a RAML fragment file that defines multiple examples and a file that includes this fragment file.
+
+```yaml
+#%RAML 1.0 NamedExample
+
+#This file is located at examples/paging-examples.raml
+
+onlyStart:
+  displayName: Only Start
+  value:
+    start: 2
+startAndPageSize:
+  description: Contains start and page size
+  value:
+    start: 3
+    page-size: 20
+```
+
+```yaml
+#%RAML 1.0
+title: Products API
+
+types:
+  paging:
+    properties:
+      start?: number
+      page-size?: number
+
+/products:
+  description: All products
+  get:
+    queryString:
+      type: paging
+      examples: !include examples/paging-examples.raml
 ```
 
 #### Resolving Includes
