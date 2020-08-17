@@ -3074,9 +3074,15 @@ A file to be included MAY begin with a RAML fragment identifier line, which cons
 | Extension | An extension file | [Extensions](#extensions)
 | SecurityScheme | A definition of a security scheme | [Security Schemes](#security-schemes)
 
-If a file begins with a RAML fragment identifier line, and the fragment identifier is not Library, Overlay, or Extension, the contents of the file after removal of the RAML fragment identifier line MUST be valid structurally according to the relevant RAML specification. For example, a RAML file beginning with `#%RAML 1.0 Trait` must have the structure of a RAML trait declaration as defined in the [Resource Types and Traits](#resource-types-and-traits) section. Including the file in a correct location for a trait declaration results in a valid RAML file.
+In addition to any nodes allowed in any of the "Relevant RAML Specification Sections" above, the following OPTIONAL node is allowed:
 
-The following example shows a RAML fragment file that defines a resource type and a file that includes this fragment file.
+|Allowed Node | Description |
+|:------------|:------------|
+| uses? | Imported external [libraries](#libraries) for use within the RAML typed fragment. |
+
+If a file begins with a RAML fragment identifier line, and the fragment identifier is not Library, Overlay, or Extension, the contents of the file after removal of the RAML fragment identifier line and any `uses` node MUST be valid structurally according to the relevant RAML specification. For example, a RAML file beginning with `#%RAML 1.0 Trait` must have the structure of a RAML trait declaration as defined in the [Resource Types and Traits](#resource-types-and-traits) section. Including the file in a correct location for a trait declaration results in a valid RAML file.
+
+The following example shows a RAML fragment file that defines a resource type and a file that includes this typed fragment file.
 
 ```yaml
 #%RAML 1.0 ResourceType
@@ -3206,11 +3212,11 @@ traits:
 
 RAML libraries are used to combine any collection of data type declarations, resource type declarations, trait declarations, and security scheme declarations into modular, externalized, reusable groups. While libraries are intended to define common declarations in external documents, which are then included where needed, libraries can also be defined inline.
 
-The following table describes the nodes, which are optional, of a library node.
+In addition to any nodes allowed at the root of [RAML typed fragments](#typed-fragments), RAML libraries allow the following optional nodes:
 
 |Name | Description |
 |:--------|:------------|
-| types?<br>schemas?<br>resourceTypes?<br>traits?<br>securitySchemes?<br>annotationTypes?<br>(&lt;annotationName&gt;)?<br>uses? | The definition of each node is the same as that of the corresponding node at the root of a RAML document. A library supports annotation node like any other RAML document.
+| types?<br>schemas?<br>resourceTypes?<br>traits?<br>securitySchemes?<br>annotationTypes?<br>(&lt;annotationName&gt;)? | The definition of each node is the same as that of the corresponding node at the root of a RAML document. A library supports annotation node like any other RAML document.
 | usage | Describes the content or purpose of a specific library. The value is a string and MAY be formatted using [markdown](#markdown).
 
 The following example shows a simple library as a standalone, reusable RAML fragment document.
@@ -3239,11 +3245,11 @@ resourceTypes:
 
 #### Applying Libraries
 
-Any number of libraries can be applied by using the OPTIONAL **uses** node ONLY at the root of a master RAML or RAML fragment file. The value of the uses node is a map of key-value pairs. The keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
+Any number of libraries can be applied by using the OPTIONAL **uses** node at the root of a RAML or RAML typed fragment file. The value of the uses node is a map of key-value pairs. The keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
 
 In a document that applies a library, the data types, resource types, traits, security schemes, and annotation types in the library become available within the document. The assets in the library are referenced within the document using dot notation as follows: concatenate the library name followed by a period (`.`), followed by the name of the data type, resource type, trait, security scheme, or annotation type. The library name defines a namespace for the library nodes within the context in which the library is applied. Namespaces defined in a **uses** statement in a specific file are only consumable within that file and serve only to disambiguate the included libraries from each other. Therefore, any processor MUST NOT allow any composition of namespaces using "." across multiple libraries.
 
-Using **uses** does not automatically import the remote library assets into the local file, but the local file can import those assets by referring to the assets from its contents. For example, a RAML type fragment file that uses a library of remote types can import one of those types by referring to it. The remote type is included as if it were defined locally within the RAML type fragment file.
+Using **uses** does not automatically import the remote library assets into the local file, but the local file can import those assets by referring to the assets from its contents. For example, a RAML typed fragment file that uses a library of remote types can import one of those types by referring to it. The remote type is included as if it were defined locally within the RAML typed fragment file.
 
 The following examples demonstrate the use of a library in a second library, a second library in a resource type fragment, and a second library in a RAML API definition.
 
