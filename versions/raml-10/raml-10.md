@@ -1169,6 +1169,48 @@ If you are extending from two union types a processor MUST perform validations f
 types:
    HomeAnimal: [ HasHome | IsOnFarm ,  Dog | Cat | Parrot ]
 ```
+If a union type contains a facet with an `enum`, every value of that `enum` MUST meet all restrictions associated with at least one of the super types. Here is an example:
+
+This is valid:
+```
+type: number | boolean
+enum: [1, true, 2]
+```
+
+This is invalid:
+```
+type: number | boolean
+enum: [1, true, 2, "hello"]
+```
+
+Recall that types in this case can be built-in data types, such as number or boolean, but also custom user-defined types such as unions or complex types with multiple properties. Imagine a more complex example:
+
+```yaml
+#%RAML 1.0
+title: Scheduling API
+
+types:
+  CustomDates:
+    enum: [Monday12, Tuesday18, Wednesday7]
+  PossibleMeetingDates:
+    properties:
+      daysAllowed:
+        type: CustomDates | date-only
+        enum: [Monday12, Wednesday7, 2020-02-08, 2020-02-09]
+  PossibleVacationDates:
+    properties:
+      daysAllowed:
+        type: datetime-only
+        enum: [2020-02-01T00:00:00, 2019-02-22T00:00:00]
+  ScheduledDays:
+    type: PossibleMeetingDates | PossibleVacationDates
+    properties:
+      daysAllowed:
+        enum: [2020-02-01T00:00:00, Monday12] # VALID
+        # enum: [Tuesday123] # INVALID: "Tuesday123" does not match any of the super-types' enum values
+        # enum: [Tuesday18] # INVALID: although "Tuesday18" is an (allowed) enum value of "CustomDates", it is not listed in "PossibleMeetingDates" > "daysAllowed" `enum`, which is more restrictive
+        # enum: [2020-02-01T00:00:00, 2020-02-18] # INVALID
+```
 
 #### Using XML and JSON Schema
 
