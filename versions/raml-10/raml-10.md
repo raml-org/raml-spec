@@ -987,7 +987,11 @@ The following date type representations MUST be supported:
 | datetime-only | Combined date-only and time-only with a separator of "T", namely yyyy-mm-ddThh:mm:ss\[.ff...\]. Does not support a time zone offset.
 | datetime | A timestamp in one of the following formats:  if the _format_ is omitted or set to `rfc3339`, uses the "date-time" notation of [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14); if _format_ is set to `rfc2616`, uses the format defined in [RFC2616](https://www.ietf.org/rfc/rfc2616.txt).
 
-The additional facet _format_ MUST be available only when the type equals _datetime_, and the value MUST be either `rfc3339` or `rfc2616`. Any other values are invalid.
+The additional facet `format` MUST be available only when the type equals `datetime`:
+
+| Facet | Description |
+|:-----|:------------|
+| format? | The format of the value of a type `datetime`. The value MUST be either `rfc3339` or `rfc2616`. Any other values are invalid.
 
 ```yaml
 types:
