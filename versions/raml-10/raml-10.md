@@ -1576,7 +1576,7 @@ types:
           value: # needs to be declared since instance contains a 'value' property
             name: Doe Enterprise
             value: Silver
-/organizations/{orgId}
+/organizations/{orgId}:
   get:
     description: Returns an organization entity.
     responses:
