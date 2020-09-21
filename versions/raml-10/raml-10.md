@@ -922,11 +922,11 @@ Example:
 
 ```yaml
 types:
-  Email:
+  EmailAddress:
     type: string
-    minLength: 2
-    maxLength: 6
-    pattern: ^note\d+$
+    pattern: ^.+@.+\..+$
+    minLength: 3
+    maxLength: 320
 ```
 
 ##### Number
