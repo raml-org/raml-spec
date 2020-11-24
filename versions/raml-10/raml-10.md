@@ -1226,6 +1226,8 @@ types:
 
 A RAML processor MUST be able to interpret and apply JSON Schema and XML Schema.
 
+Because JSON is also a valid YAML 1.2 syntax, a RAML processor SHOULD interpret JSON-formatted data structures that do not contain a `$schema` key as RAML type declarations.
+
 An XML schema, or JSON schema, MUST NOT be used where the media type does not allow XML-formatted data, or JSON-formatted data, respectively. XML and JSON schemas are also forbidden in any declaration of query parameters, query string, URI parameters, and headers.
 
 The nodes "schemas" and "types", as well as "schema" and "type", are mutually exclusive and synonymous for compatibility with RAML 0.8. API definitions SHOULD use "types" and "type", as "schemas" and "schema" are deprecated and might be removed in a future RAML version.
