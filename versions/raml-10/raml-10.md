@@ -308,7 +308,7 @@ baseUriParameters:
     description: The name of the bucket
 ```
 
-When the base URI ends in one or more slashes (`/`), those trailing slashes are omitted in the absolute paths for the resources using that base URI. For example, in the following snippet, the absolute paths for the resources are `http://api.test.com/common/users/:userId` and `http://api.test.com/common/users/:userId/groups`.
+When the base URI ends in one or more slashes (`/`), the trailing slashes are omitted in the absolute paths for the resources using that base URI. For example, in the following snippet, the absolute paths for the resources are `http://api.test.com/common/users/:userId` and `http://api.test.com/common/users/:userId/groups`.
 
 ```yaml
 baseUri: http://api.test.com/common/
@@ -363,7 +363,7 @@ title: New API
 mediaType: [ application/json, application/xml ]
 ```
 
-Explicitly defining a `mediaType` node for a [body](#bodies) of an API request or response overrides the default media type, as shown in the following example. The resource `/people` returns a `Person[]` body represented as either JSON or XML. The resource `/messages` overrides the default media type by explicitly defining an `application/json` node. Therefore, the resource `/messages` returns only a JSON-formatted body.
+Explicitly defining a `mediaType` node for a [body](#bodies) of an API request or response overrides the default media type, as shown in the following example. The resource `/people` returns a `Person[]` body in either JSON or XML. The resource `/messages` overrides the default media type by explicitly defining an `application/json` node. Therefore, the resource `/messages` returns only a JSON-formatted body.
 
 ```yaml
 #%RAML 1.0
