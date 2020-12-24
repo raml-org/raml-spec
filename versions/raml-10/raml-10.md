@@ -1036,7 +1036,7 @@ types:
 
 In RAML, the type `nil` is a scalar type that allows only nil data values. Specifically, in YAML it allows only YAML's `null` (or its equivalent representations, such as `~`), in JSON it allows only JSON's `null`, and in XML it allows only XML's `xsi:nil`. In headers, URI parameters, and query parameters, the `nil` type only allows the string value "nil" (case-sensitive); and in turn an instance having the string value "nil" (case-sensitive), when described with the `nil` type, deserializes to a nil value.
 
-Using the type `nil` in a union, makes a type definition nilable, meaning that any instance of that union MAY be a nil data value. When such union is composed of only one type in addition to `| nil`, a trailing question mark `?` in lieu of such union is equivalent. The use of that equivalent alternative syntax SHALL be restricted to [scalar types](#scalar-types) and references to user-defined types, and SHALL NOT be used in [type expressions](#type-expressions).
+Using the type `nil` in a union makes a type definition nilable, which means that any instance of that union MAY be a nil data value. When such a union is composed of only one type in addition to `| nil`, use of a trailing question mark `?` instead of the union syntax is equivalent. The use of that equivalent, alternative syntax SHALL be restricted to [scalar types](#scalar-types) and references to user-defined types, and SHALL NOT be used in [type expressions](#type-expressions).
 
 In the following example, the type is an object and has two required properties, `name` and `comment`, both defaulting to type `string`. In `example`, `name` is assigned a string value, but comment is nil and this is _not_ allowed because RAML expects a string.
 
@@ -1083,7 +1083,7 @@ types:
 
 Declaring the type of a property to be `nil` represents the lack of a value in a type instance. In a RAML context that requires *values* of type `nil` (vs just type declarations), the usual YAML `null` is used, e.g. when the type is `nil | number` you may use `enum: [ 1, 2, ~ ]` or more explicitly/verbosely `enum: [ 1, 2, !!null "" ]`; in non-inline notation you can just omit the value completely, of course.
 
-Nilable values are not the same as optional properties, e.g. to have a `comment` property that is optional and which can also have a `nil` value, you could define it as `comment?: string?` or `comment?: nil | string`.
+Nilable values are not the same as optional properties. For example, you can define a `comment` property that is optional and that accepts a `nil` value by using the syntax `comment?: string?` or `comment?: nil | string`.
 
 #### Union Type
 
