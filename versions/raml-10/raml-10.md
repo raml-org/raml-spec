@@ -1277,7 +1277,7 @@ User-defined facets by definition are not built into this RAML specification, an
 
 A RAML processor must be able to determine the default type of a type declaration by using the following rules:
 
-* If, and only if, a type declaration contains a facet that is unique to that type, then its default type is inferred to be the only one with support for the facet being used.
+* If, and only if, a type declaration contains a facet that is unique to that type, its default type is then inferred to be the only one with support for the facet being used.
 
 For example, if a type declaration contains a `properties` facet, its default type is `object`. The following snippet exemplifies this rule:
 
@@ -1289,7 +1289,7 @@ types:
     properties:
 ```
 
-* If, and only if, a type declaration contains neither a facet that is unique to a given type as described in the previous rule above, nor a `type` or `schema` facet, then the default type is `string`. The following snippet exemplifies this rule:
+* If, and only if, a type declaration contains a facet that is neither unique to a given type, as described in the previous rule above, nor a `type` or `schema` facet, then the default type is `string`. The following snippet exemplifies this rule:
 
 ```yaml
 types:
