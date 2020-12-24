@@ -1171,19 +1171,19 @@ types:
 ```
 If a union type contains a facet with an `enum`, every value of that `enum` MUST meet all restrictions associated with at least one of the super types. Here is an example:
 
-This is valid:
+The following example illustrates a valid expression:
 ```
 type: number | boolean
 enum: [1, true, 2]
 ```
 
-This is invalid:
+The following example illustrates an invalid expression:
 ```
 type: number | boolean
 enum: [1, true, 2, "hello"]
 ```
 
-Recall that types in this case can be built-in data types, such as number or boolean, but also custom user-defined types such as unions or complex types with multiple properties. Imagine a more complex example:
+Note that types, in this case, can be built-in data types, such as numbers or boolean, or can be custom user-defined types, such as unions or complex types with multiple properties. Imagine a more complex example:
 
 ```yaml
 #%RAML 1.0
