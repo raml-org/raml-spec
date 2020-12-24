@@ -598,7 +598,7 @@ types:
 
 Properties of object types are defined using the OPTIONAL **properties** facet. The RAML Specification calls the value of the "properties" facet a "properties declaration". The properties declaration is a map of keys and values. The keys are valid property names for declaring a type instance. The values are either a name of a type or an inline type declaration.
 
-The properties declaration can specify whether a property is required or optional. Alternatively, a trailing question mark (`?`) in the key name MAY be used to indicate that said property is optional.
+The properties declaration can specify whether a property is required or optional. Alternatively, a trailing question mark (`?`) in the key name MAY be used to indicate that a property is optional.
 
 | Facet  | Description |
 |:----------|:----------|
@@ -1247,7 +1247,7 @@ When referencing an inner element of a schema, a RAML processor MUST validate an
 
 Facets express various additional restrictions beyond those which types impose on their instances, such as the optional `minimum` and `maximum` facets for numbers, or the `enum` facet for scalars. In addition to the built-in facets, RAML provides a way to declare user-defined facets for any data type.
 
-The user-defined facet is declared using the OPTIONAL `facets` facet in a type declaration. The value of the `facets` facet is a [properties declaration](#property-declarations) object, as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **user-defined facet declaration**. Each property name specifies a user-defined facet name. A trailing question mark (`?`) in a property name MAY be used to indicate that said user-defined facet is optional. Each property value specifies the user-defined facet value type as the name of a type or an inline type declaration.
+The user-defined facet is declared using the OPTIONAL `facets` facet in a type declaration. The value of the `facets` facet is a [properties declaration](#property-declarations) object, which is also the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **user-defined facet declaration**. Each property name specifies a user-defined facet name. A trailing question mark (`?`) in a property name MAY be used to indicate that a user-defined facet is optional. Each property value specifies the user-defined facet value type as the name of a type or as an inline type declaration.
 
 Facet names MUST NOT begin with open parenthesis, to disambiguate the names from annotations. User-defined facet names on a type MUST NOT match built-in facets on that type, nor facet names of any ancestor type in the inheritance chain of the type.
 
@@ -1992,7 +1992,7 @@ types:
 
 #### Query Parameters in a Query String
 
-The **queryParameters** node specifies the set of query parameters from which the query string is composed. When applying the restrictions defined by the API, processors MUST regard the query string as a set of query parameters according to the URL encoding format. The value of the queryParameters node is a [properties declaration](#property-declarations) object, as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **query parameter declaration**. Each property name specifies an allowed query parameter name. A trailing question mark (`?`) in a property name MAY be used to indicate that said query parameter is optional. Each property value specifies the query parameter value type as the name of a type or an inline type declaration.
+The **queryParameters** node specifies the set of query parameters from which the query string is composed. When applying the restrictions defined by the API, processors MUST regard the query string as a set of query parameters according to the URL encoding format. The value of the queryParameters node is a [properties declaration](#property-declarations) object, which is also the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **query parameter declaration**. Each property name specifies an allowed query parameter name. A trailing question mark (`?`) in a property name MAY be used to indicate that a query parameter is optional. Each property value specifies the query parameter value type as the name of a type or an inline type declaration.
 
 If a query parameter declaration specifies an array type for the value of the query parameter, processors MUST allow multiple instances of that query parameter in the request or response. In this case, the type of the elements of the array MUST be applied as the type of the value of query parameter instances.
 
