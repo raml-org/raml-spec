@@ -1170,9 +1170,8 @@ types:
    HomeAnimal: [ HasHome | IsOnFarm ,  Dog | Cat | Parrot ]
 ```
 
-A union type MAY use facets defined by any of its member types as long as all member types in the union accept those facets.
+A union type MAY use facets defined by any of its member types as long as all member types in the union accept those facets, for example:
 
-For example:
 
 ```yaml
 types:
