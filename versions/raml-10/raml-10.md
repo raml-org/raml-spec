@@ -1874,7 +1874,7 @@ RESTful API methods are operations that are performed on a resource. The OPTIONA
 
 ### Headers
 
-An API's methods MAY support or require various HTTP headers. The OPTIONAL **headers** node MAY be used to explicitly specify those headers. The value of the headers node MUST be a map, specifically a [properties declaration](#property-declarations), as is the value of the properties object of a type declaration. Each property in this declaration object is a header **declaration**. Each property name specifies an allowed header name. Each property value specifies the header value type as a type name or an inline type declaration.
+An API's methods MAY support or require various HTTP headers. The OPTIONAL **headers** node MAY be used to explicitly specify those headers. Like the value of the properties node, the value of the headers node MUST be a map, specifically a [properties declaration](#property-declarations). Each property in this declaration object is a header **declaration**. Each property name specifies an allowed header name. Each property value specifies the header value type as a type name or an inline type declaration.
 
 The following simple example shows a post method with a single HTTP header named Zencoder-Api-Key of (implied) string type.
 
@@ -1940,7 +1940,7 @@ traits:
 
 ### Query Strings and Query Parameters
 
-An API method MAY support or require a query string in the URL on which the method is invoked. The query string in a URL MUST follow [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) as the part of the URL following the question mark separator (`?`) and preceding any fragment (`#`) separator. The query string MAY be specified either by the OPTIONAL **queryString** node or by the OPTIONAL **queryParameters** node. The queryString and queryParameters nodes SHALL BE mutually exclusive: processors MUST NOT allow both to be specified, explicitly or implicitly, on the same method of the same resource.
+An API method MAY support or require a query string in the URL on which the method is invoked. The query string in a URL MUST follow the [RFC3986](https://www.ietf.org/rfc/rfc3986.txt) specification for the part of the URL following the question mark separator (`?`) and preceding any fragment (`#`) separator. The query string MAY be specified either by the OPTIONAL **queryString** node or by the OPTIONAL **queryParameters** node. The queryString and queryParameters nodes SHALL BE mutually exclusive: processors MUST NOT allow both to be specified, explicitly or implicitly, on the same method of the same resource.
 
 #### The Query String as a Whole
 
