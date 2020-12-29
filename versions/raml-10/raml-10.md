@@ -1526,7 +1526,7 @@ The map can contain the following additional facets:
 | description? | A substantial, human-friendly description for an example. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this API. An annotation is a map having a key that begins with "(" and ends with ")" where the text enclosed in parentheses is the annotation name, and the value is an instance of that annotation.
 | value | The actual example of a type instance.
-| strict? | Validates the example against any type declaration (the default). Set this to false to prevent validation.
+| strict? | Validates the example against any type declaration (default). Set this to false to prevent validation.
 
 For example:
 
