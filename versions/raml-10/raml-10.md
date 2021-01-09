@@ -1484,7 +1484,7 @@ title: My API With Types
 
 ### Defining Examples in RAML
 
-It is highly RECOMMENDED that API documentation include a rich selection of examples. RAML supports either the definition of multiple examples or a single one for any given instance of a type declaration. In addition to YAML by default, processors SHOULD support JSON and XML representations of examples. Processors MAY support additional formats. Note that type definition is agnostic to example encoding such that, e.g. examples in YAML will work for JSON or XML, and in reverse for any chosen combination of those three supported encodings.
+It is highly RECOMMENDED that API documentation include a rich selection of examples. RAML supports either the definition of multiple examples or a single one for any given instance of a type declaration. In addition to supporting YAML by default, processors SHOULD support JSON and XML representations of examples. Processors MAY support additional formats. Note that type definition is agnostic to example encoding, so examples in YAML will work for JSON or XML, and vice versa, for any chosen combination of those three supported encodings.
 
 #### Multiple Examples
 
