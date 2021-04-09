@@ -215,10 +215,9 @@ resourceTypes:
   collection: !include types/collection.raml
 traits:
 securedBy: [ oauth_2_0 ]
-/search:
-  /code:
-    type: collection
-    get:
+/users:
+  type: collection
+  get:
 ```
 
 The following table enumerates the possible nodes at the root of a RAML document:
@@ -309,21 +308,23 @@ baseUriParameters:
     description: The name of the bucket
 ```
 
-When the base URI ends in one or more slashes (`/`), those trailing slashes are omitted in the absolute paths for the resources using that base URI. For example, in the following snippet, the absolute paths for the resources are `http://api.test.com/common/users` and `http://api.test.com/common/users/groups`.
+When the base URI ends in one or more slashes (`/`), the trailing slashes are omitted in the absolute paths for the resources using that base URI. For example, in the following snippet, the absolute paths for the resources are `http://api.test.com/common/users/:userId` and `http://api.test.com/common/users/:userId/groups`.
 
 ```yaml
 baseUri: http://api.test.com/common/
 /users:
-  /groups:
+  /{userId}:
+    /groups:
 ```
 
-In the following, more complicated example with consecutive slashes in multiple places, only trailing slashes in the base URI are collapsed, leading to these absolute paths to resources: `//api.test.com//common/`, `//api.test.com//common//users/`, and `//api.test.com//common//users//groups//`.
+In the following, more complicated example with consecutive slashes in multiple places, only trailing slashes in the base URI are collapsed, leading to these absolute paths to resources: `//api.test.com//common/`, `//api.test.com//common//users//:userId//`, and `//api.test.com//common//users//:userId//groups//`.
 
 ```yaml
 baseUri: //api.test.com//common//
 /:
   /users/:
-    /groups//:
+    /{userId}/:
+      /groups//:
 ```
 
 ### Protocols
@@ -362,7 +363,7 @@ title: New API
 mediaType: [ application/json, application/xml ]
 ```
 
-Explicitly defining a `mediaType` node for a [body](#bodies) of an API request or response overrides the default media type, as shown in the following example. The resource `/list` returns a `Person[]` body represented as either JSON or XML. The resource `/send` overrides the default media type by explicitly defining an `application/json` node. Therefore, the resource `/send` returns only a JSON-formatted body.
+Explicitly defining a `mediaType` node for a [body](#bodies) of an API request or response overrides the default media type, as shown in the following example. The resource `/people` returns a `Person[]` body in either JSON or XML. The resource `/messages` overrides the default media type by explicitly defining an `application/json` node. Therefore, the resource `/messages` returns only a JSON-formatted body.
 
 ```yaml
 #%RAML 1.0
@@ -371,12 +372,12 @@ mediaType: [ application/json, application/xml ]
 types:
   Person:
   Another:
-/list:
+/people:
   get:
     responses:
       200:
         body: Person[]
-/send:
+/messages:
   post:
     body:
       application/json:
@@ -1263,7 +1264,7 @@ types:
 ```
 
 ```yaml
-/person:
+/people/{personId}:
   get:
     responses:
       200:
@@ -1636,7 +1637,7 @@ types:
       name: string
       address?: string
       value?: string
-/organization:
+/organizations:
   post:
     headers:
       UserID:
@@ -1650,6 +1651,7 @@ types:
           value: # needs to be declared since instance contains a 'value' property
             name: Doe Enterprise
             value: Silver
+/organizations/{orgId}:
   get:
     description: Returns an organization entity.
     responses:
