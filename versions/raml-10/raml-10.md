@@ -1488,7 +1488,7 @@ title: My API With Types
 
 ### Defining Examples in RAML
 
-It is highly RECOMMENDED that API documentation include a rich selection of examples. RAML supports either the definition of multiple examples or a single one for any given instance of a type declaration.
+It is highly RECOMMENDED that API documentation include a rich selection of examples. RAML supports either the definition of multiple examples or a single one for any given instance of a type declaration. In addition to supporting YAML by default, processors SHOULD support JSON and XML representations of examples. Processors MAY support additional formats. Note that type definition is agnostic to example encoding, so examples in YAML will work for JSON or XML, and vice versa, for any chosen combination of those three supported encodings.
 
 #### Multiple Examples
 
@@ -1530,7 +1530,7 @@ The map can contain the following additional facets:
 | description? | A substantial, human-friendly description for an example. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this API. An annotation is a map having a key that begins with "(" and ends with ")" where the text enclosed in parentheses is the annotation name, and the value is an instance of that annotation.
 | value | The actual example of a type instance.
-| strict? | Validates the example against any type declaration (the default), or not. Set this to false avoid validation.
+| strict? | Validates the example against any type declaration (default). Set this to false to prevent validation.
 
 For example:
 
