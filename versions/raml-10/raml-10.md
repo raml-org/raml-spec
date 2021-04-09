@@ -2279,7 +2279,7 @@ resourceTypes:
 
 A resource can specify the resource type from which it is derived using the OPTIONAL **type** node. The value MUST be the name of a resource type defined within the root-level resourceTypes node or in a library. Resource type definitions do not apply to existing nested resources.
 
-Similarly, a method can specify one or more traits it inherits using the OPTIONAL **is** node. The value of a trait is an array of any number of elements where each MUST be the name of a trait defined within the root-level traits node or in a library. A trait can also be applied to a resource by using the **is** node. Using this node is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type. A trait is applied to a method in left-to-right order, according to the traits defined in the **is** node. Trait definitions do not apply to nested resources.
+Similarly, a method can specify one or more traits it inherits by using the OPTIONAL **is** node. The value of a trait MUST be an array of any number of elements. Each element MUST be the name of a trait defined within the root-level traits node or in a library. A trait can also be applied to a resource by using the **is** node. Using this node is equivalent to applying the trait to all methods for that resource, whether the method is declared explicitly in the resource definition or inherited from a resource type. A trait is applied to a method in left-to-right order, according to the traits defined in the **is** node. Trait definitions do not apply to nested resources.
 
 The following example illustrates the application of resource types and traits.
 
