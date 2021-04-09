@@ -2414,7 +2414,7 @@ traits:
         example: <<methodName>>=h8duh3uhhu38   # e.g. get=h8duh3uhhu38
 ```
 
-Parameters cannot be used within an !include tag specification of the include file location.
+Parameters cannot be used within any file location that is used in the context of [modularization](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md#modularization), that is, any file location defined in the `!include` tag or as a value of any of the `uses` or `extends` nodes.
 
 ### Declaring HTTP Methods as Optional
 
