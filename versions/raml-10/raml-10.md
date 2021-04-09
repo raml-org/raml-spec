@@ -1174,6 +1174,41 @@ types:
    HomeAnimal: [ HasHome | IsOnFarm ,  Dog | Cat | Parrot ]
 ```
 
+A union type MAY use facets defined by any of its member types as long as all member types in the union accept those facets, for example:
+
+
+```yaml
+types:
+  Foo: number
+  Bar: integer
+  FooBar:
+    type: Foo | Bar
+    minimum: 1 # valid because both "Foo" (number) and "Bar" (integer) all accept "minimum"
+```
+
+```yaml
+types:
+  Foo: number
+  Bar: integer
+  Qux: string
+  FooBarQux:
+    type: Foo | Bar | Qux
+    minimum: 1 # invalid because "Qux" (string) does not accept the "minimum" facet
+```
+
+```yaml
+types:
+  Foo: number
+  Bar: integer
+  Qux:
+    type: string
+    facets:
+      minimum: number
+  FooBarQux:
+    type: Foo | Bar | Qux
+    minimum: 1 # valid because "Qux" (string) has a user-defined facet "minimum"
+```
+
 #### Using XML and JSON Schema
 
 RAML allows the use of XML and JSON schemas to describe the body of an API request or response by integrating the schemas into its data type system.
