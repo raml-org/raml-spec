@@ -33,7 +33,7 @@ In this specification, **API definition** means an API using this specification.
 
 A **resource** is the conceptual mapping to an entity or set of entities.
 
-A trailing question mark, for example **description?**, indicates an optional property.
+A trailing question mark in key names MAY denote an optional key.
 
 ### Template URI
 
@@ -176,7 +176,7 @@ This document is organized as follows:
 
 This specification uses [YAML 1.2](http://www.yaml.org/spec/1.2/spec.html) as its underlying format. YAML is a human-readable data format that aligns well with the design goals of this specification. As in YAML, all nodes such as keys, values, and tags, are case-sensitive.
 
-RAML API definitions are YAML 1.2-compliant documents that begin with a REQUIRED YAML-comment line that indicates the RAML version, as follows:
+RAML API definitions MUST be YAML 1.2-compliant documents that begin with a REQUIRED YAML-comment line that indicates the RAML version, as follows:
 
 ```yaml
 #%RAML 1.0
@@ -215,10 +215,9 @@ resourceTypes:
   collection: !include types/collection.raml
 traits:
 securedBy: [ oauth_2_0 ]
-/search:
-  /code:
-    type: collection
-    get:
+/users:
+  type: collection
+  get:
 ```
 
 The following table enumerates the possible nodes at the root of a RAML document:
@@ -309,21 +308,23 @@ baseUriParameters:
     description: The name of the bucket
 ```
 
-When the base URI ends in one or more slashes (`/`), those trailing slashes are omitted in the absolute paths for the resources using that base URI. For example, in the following snippet, the absolute paths for the resources are `http://api.test.com/common/users` and `http://api.test.com/common/users/groups`.
+When the base URI ends in one or more slashes (`/`), the trailing slashes are omitted in the absolute paths for the resources using that base URI. For example, in the following snippet, the absolute paths for the resources are `http://api.test.com/common/users/:userId` and `http://api.test.com/common/users/:userId/groups`.
 
 ```yaml
 baseUri: http://api.test.com/common/
 /users:
-  /groups:
+  /{userId}:
+    /groups:
 ```
 
-In the following, more complicated example with consecutive slashes in multiple places, only trailing slashes in the base URI are collapsed, leading to these absolute paths to resources: `//api.test.com//common/`, `//api.test.com//common//users/`, and `//api.test.com//common//users//groups//`.
+In the following, more complicated example with consecutive slashes in multiple places, only trailing slashes in the base URI are collapsed, leading to these absolute paths to resources: `//api.test.com//common/`, `//api.test.com//common//users//:userId//`, and `//api.test.com//common//users//:userId//groups//`.
 
 ```yaml
 baseUri: //api.test.com//common//
 /:
   /users/:
-    /groups//:
+    /{userId}/:
+      /groups//:
 ```
 
 ### Protocols
@@ -362,7 +363,7 @@ title: New API
 mediaType: [ application/json, application/xml ]
 ```
 
-Explicitly defining a `mediaType` node for a [body](#bodies) of an API request or response overrides the default media type, as shown in the following example. The resource `/list` returns a `Person[]` body represented as either JSON or XML. The resource `/send` overrides the default media type by explicitly defining an `application/json` node. Therefore, the resource `/send` returns only a JSON-formatted body.
+Explicitly defining a `mediaType` node for a [body](#bodies) of an API request or response overrides the default media type, as shown in the following example. The resource `/people` returns a `Person[]` body in either JSON or XML. The resource `/messages` overrides the default media type by explicitly defining an `application/json` node. Therefore, the resource `/messages` returns only a JSON-formatted body.
 
 ```yaml
 #%RAML 1.0
@@ -371,12 +372,12 @@ mediaType: [ application/json, application/xml ]
 types:
   Person:
   Another:
-/list:
+/people:
   get:
     responses:
       200:
         body: Person[]
-/send:
+/messages:
   post:
     body:
       application/json:
@@ -598,7 +599,7 @@ types:
 
 Properties of object types are defined using the OPTIONAL **properties** facet. The RAML Specification calls the value of the "properties" facet a "properties declaration". The properties declaration is a map of keys and values. The keys are valid property names for declaring a type instance. The values are either a name of a type or an inline type declaration.
 
-The properties declaration can specify whether a property is required or optional.
+The properties declaration can specify whether a property is required or optional. Alternatively, a trailing question mark (`?`) in the key name MAY be used to indicate that a property is optional.
 
 | Facet  | Description |
 |:----------|:----------|
@@ -633,7 +634,7 @@ types:
                    #  required: false
 ```
 
-When the `required` facet on a property is specified explicitly in a type declaration, any question mark in its property name is treated as part of the property name rather than as an indicator that the property is optional.
+When the `required` facet on a property is specified explicitly in a type declaration, any question mark in its property name MUST be treated as part of the property name rather than as an indicator that the property is optional.
 
 For example, in
 
@@ -914,7 +915,7 @@ A JSON string with the following additional facets:
 
 | Facet | Description |
 |:--------|:------------|
-| pattern? | Regular expression that this string SHOULD match.
+| pattern? | Regular expression that this string MUST match.
 | minLength? | Minimum length of the string. Value MUST be equal to or greater than 0.<br /><br />**Default:** `0`
 | maxLength? | Maximum length of the string. Value MUST be equal to or greater than 0.<br /><br />**Default:** `2147483647`
 
@@ -1036,6 +1037,8 @@ types:
 
 In RAML, the type `nil` is a scalar type that allows only nil data values. Specifically, in YAML it allows only YAML's `null` (or its equivalent representations, such as `~`), in JSON it allows only JSON's `null`, and in XML it allows only XML's `xsi:nil`. In headers, URI parameters, and query parameters, the `nil` type only allows the string value "nil" (case-sensitive); and in turn an instance having the string value "nil" (case-sensitive), when described with the `nil` type, deserializes to a nil value.
 
+Using the type `nil` in a union makes a type definition nilable, which means that any instance of that union MAY be a nil data value. When such a union is composed of only one type in addition to `| nil`, use of a trailing question mark `?` instead of the union syntax is equivalent. The use of that equivalent, alternative syntax SHALL be restricted to [scalar types](#scalar-types) and references to user-defined types, and SHALL NOT be used in [type expressions](#type-expressions).
+
 In the following example, the type is an object and has two required properties, `name` and `comment`, both defaulting to type `string`. In `example`, `name` is assigned a string value, but comment is nil and this is _not_ allowed because RAML expects a string.
 
 ```yaml
@@ -1073,13 +1076,15 @@ types:
     properties:
       name:
       comment: nil | string # equivalent to ->
-                             # comment: string?
+                            # comment: string?
     example:
       name: Fred
       comment: # Providing a value or not providing a value here is allowed.
 ```
 
 Declaring the type of a property to be `nil` represents the lack of a value in a type instance. In a RAML context that requires *values* of type `nil` (vs just type declarations), the usual YAML `null` is used, e.g. when the type is `nil | number` you may use `enum: [ 1, 2, ~ ]` or more explicitly/verbosely `enum: [ 1, 2, !!null "" ]`; in non-inline notation you can just omit the value completely, of course.
+
+Nilable values are not the same as optional properties. For example, you can define a `comment` property that is optional and that accepts a `nil` value by using the syntax `comment?: string?` or `comment?: nil | string`.
 
 #### Union Type
 
@@ -1169,6 +1174,83 @@ If you are extending from two union types a processor MUST perform validations f
 types:
    HomeAnimal: [ HasHome | IsOnFarm ,  Dog | Cat | Parrot ]
 ```
+If a union type contains a facet with an `enum`, every value of that `enum` MUST meet all restrictions associated with at least one of the super types. Here is an example:
+
+The following example illustrates a valid expression:
+```
+type: number | boolean
+enum: [1, true, 2]
+```
+
+The following example illustrates an invalid expression:
+```
+type: number | boolean
+enum: [1, true, 2, "hello"]
+```
+
+Note that types, in this case, can be built-in data types, such as numbers or boolean, or can be custom user-defined types, such as unions or complex types with multiple properties. Imagine a more complex example:
+
+```yaml
+#%RAML 1.0
+title: Scheduling API
+
+types:
+  CustomDates:
+    enum: [Monday12, Tuesday18, Wednesday7]
+  PossibleMeetingDates:
+    properties:
+      daysAllowed:
+        type: CustomDates | date-only
+        enum: [Monday12, Wednesday7, 2020-02-08, 2020-02-09]
+  PossibleVacationDates:
+    properties:
+      daysAllowed:
+        type: datetime-only
+        enum: [2020-02-01T00:00:00, 2019-02-22T00:00:00]
+  ScheduledDays:
+    type: PossibleMeetingDates | PossibleVacationDates
+    properties:
+      daysAllowed:
+        enum: [2020-02-01T00:00:00, Monday12] # VALID
+        # enum: [Tuesday123] # INVALID: "Tuesday123" does not match any of the super-types' enum values
+        # enum: [Tuesday18] # INVALID: although "Tuesday18" is an (allowed) enum value of "CustomDates", it is not listed in "PossibleMeetingDates" > "daysAllowed" `enum`, which is more restrictive
+        # enum: [2020-02-01T00:00:00, 2020-02-18] # INVALID
+```
+
+A union type MAY use facets defined by any of its member types as long as all member types in the union accept those facets, for example:
+
+
+```yaml
+types:
+  Foo: number
+  Bar: integer
+  FooBar:
+    type: Foo | Bar
+    minimum: 1 # valid because both "Foo" (number) and "Bar" (integer) all accept "minimum"
+```
+
+```yaml
+types:
+  Foo: number
+  Bar: integer
+  Qux: string
+  FooBarQux:
+    type: Foo | Bar | Qux
+    minimum: 1 # invalid because "Qux" (string) does not accept the "minimum" facet
+```
+
+```yaml
+types:
+  Foo: number
+  Bar: integer
+  Qux:
+    type: string
+    facets:
+      minimum: number
+  FooBarQux:
+    type: Foo | Bar | Qux
+    minimum: 1 # valid because "Qux" (string) has a user-defined facet "minimum"
+```
 
 #### Using XML and JSON Schema
 
@@ -1182,7 +1264,7 @@ types:
 ```
 
 ```yaml
-/person:
+/people/{personId}:
   get:
     responses:
       200:
@@ -1238,16 +1320,18 @@ Sometimes it is necessary to refer to an element defined in a schema. RAML suppo
 type: !include elements.xsd#Foo
 ```
 
-When referencing an inner element of a schema, a RAML processor MUST validate an instance against that particular element. The RAML specification supports referencing any inner elements in JSON schemas that are valid schemas, any globally defined elements, and complex types in XML schemas. There are only a few restrictions:
+When referencing an inner element of a JSON or XML schema, a RAML processor MUST validate an instance against that element. The RAML specification supports referencing any inner elements in JSON schemas that are valid schemas, any globally defined elements, and complex types in XML schemas. There are a few restrictions:
 
 * Validation of any XML or JSON instance against inner elements follows the same restrictions as the validation against a regular XML or JSON schema.
 * Referencing complex types inside an XSD is valid to determine the structure of an XML instance, but since complex types do not define a name for the top-level XML element, these types cannot be used for serializing an XML instance.
+* References pointing to inner elements of JSON schemas MUST be valid JSON Pointers as defined in [RFC6901](https://tools.ietf.org/html/rfc6901).
+
 
 ### User-defined Facets
 
 Facets express various additional restrictions beyond those which types impose on their instances, such as the optional `minimum` and `maximum` facets for numbers, or the `enum` facet for scalars. In addition to the built-in facets, RAML provides a way to declare user-defined facets for any data type.
 
-The user-defined facet is declared using the OPTIONAL `facets` facet in a type declaration. The value of the `facets` facet is a map. The key names the user-defined facet. The corresponding value defines the concrete value that the respective facet can take. The syntax of a [property declaration](#property-declarations) and user-defined facet declaration are the same. A facet restricts instances of a subtype, not its type, based on the concrete value defined in the facet declaration.
+The user-defined facet is declared using the OPTIONAL `facets` facet in a type declaration. The value of the `facets` facet is a [properties declaration](#property-declarations) object, which is also the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **user-defined facet declaration**. Each property name specifies a user-defined facet name. A trailing question mark (`?`) in a property name MAY be used to indicate that a user-defined facet is optional. Each property value specifies the user-defined facet value type as the name of a type or as an inline type declaration.
 
 Facet names MUST NOT begin with open parenthesis, to disambiguate the names from annotations. User-defined facet names on a type MUST NOT match built-in facets on that type, nor facet names of any ancestor type in the inheritance chain of the type.
 
@@ -1277,25 +1361,19 @@ User-defined facets by definition are not built into this RAML specification, an
 
 A RAML processor must be able to determine the default type of a type declaration by using the following rules:
 
-* If, and only if, a type declaration contains a `properties` facet, then the default type is `object`. The following snippet exemplifies this rule:
+* If, and only if, a type declaration contains a facet that is unique to that type, its default type is then inferred to be the only one with support for the facet being used.
+
+For example, if a type declaration contains a `properties` facet, its default type is `object`. The following snippet exemplifies this rule:
 
 ```yaml
 types:
   Person:
-    type: object
+    # default type is "object" because "properties" is unique to that type
+    # i.e. no need to explicitly define it, "type: object" is inferred
     properties:
 ```
 
-This rule can also be written as follows:
-
-```yaml
-types:
-  Person:
-    # default type is `object`, no need to explicitly define it
-    properties:
-```
-
-* If, and only if, a type declaration contains neither a `properties` facet nor a `type` or `schema` facet, then the default type is `string`. The following snippet exemplifies this rule:
+* If, and only if, a type declaration contains a facet that is neither unique to a given type, as described in the previous rule above, nor a `type` or `schema` facet, then the default type is `string`. The following snippet exemplifies this rule:
 
 ```yaml
 types:
@@ -1484,7 +1562,7 @@ title: My API With Types
 
 ### Defining Examples in RAML
 
-It is highly RECOMMENDED that API documentation include a rich selection of examples. RAML supports either the definition of multiple examples or a single one for any given instance of a type declaration.
+It is highly RECOMMENDED that API documentation include a rich selection of examples. RAML supports either the definition of multiple examples or a single one for any given instance of a type declaration. In addition to supporting YAML by default, processors SHOULD support JSON and XML representations of examples. Processors MAY support additional formats. Note that type definition is agnostic to example encoding, so examples in YAML will work for JSON or XML, and vice versa, for any chosen combination of those three supported encodings.
 
 #### Multiple Examples
 
@@ -1526,7 +1604,7 @@ The map can contain the following additional facets:
 | description? | A substantial, human-friendly description for an example. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this API. An annotation is a map having a key that begins with "(" and ends with ")" where the text enclosed in parentheses is the annotation name, and the value is an instance of that annotation.
 | value | The actual example of a type instance.
-| strict? | Validates the example against any type declaration (the default), or not. Set this to false avoid validation.
+| strict? | Validates the example against any type declaration (default). Set this to false to prevent validation.
 
 For example:
 
@@ -1561,7 +1639,7 @@ types:
       name: string
       address?: string
       value?: string
-/organization:
+/organizations:
   post:
     headers:
       UserID:
@@ -1575,6 +1653,7 @@ types:
           value: # needs to be declared since instance contains a 'value' property
             name: Doe Enterprise
             value: Silver
+/organizations/{orgId}:
   get:
     description: Returns an organization entity.
     responses:
@@ -1992,7 +2071,7 @@ types:
 
 #### Query Parameters in a Query String
 
-The **queryParameters** node specifies the set of query parameters from which the query string is composed. When applying the restrictions defined by the API, processors MUST regard the query string as a set of query parameters according to the URL encoding format. The value of the queryParameters node is a [properties declaration](#property-declarations) object, as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **query parameter declaration**. Each property name specifies an allowed query parameter name. Each property value specifies the query parameter value type as the name of a type or an inline type declaration.
+The **queryParameters** node specifies the set of query parameters from which the query string is composed. When applying the restrictions defined by the API, processors MUST regard the query string as a set of query parameters according to the URL encoding format. The value of the queryParameters node is a [properties declaration](#property-declarations) object, which is also the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **query parameter declaration**. Each property name specifies an allowed query parameter name. A trailing question mark (`?`) in a property name MAY be used to indicate that a query parameter is optional. Each property value specifies the query parameter value type as the name of a type or an inline type declaration.
 
 If a query parameter declaration specifies an array type for the value of the query parameter, processors MUST allow multiple instances of that query parameter in the request or response. In this case, the type of the elements of the array MUST be applied as the type of the value of query parameter instances.
 
@@ -2200,7 +2279,7 @@ resourceTypes:
 
 A resource can specify the resource type from which it is derived using the OPTIONAL **type** node. The value MUST be the name of a resource type defined within the root-level resourceTypes node or in a library. Resource type definitions do not apply to existing nested resources.
 
-Similarly, a method can specify one or more traits it inherits using the OPTIONAL **is** node. The value of a trait is an array of any number of elements where each MUST be the name of a trait defined within the root-level traits node or in a library. A trait can also be applied to a resource by using the **is** node. Using this node is equivalent to applying the trait to all methods for that resource, whether declared explicitly in the resource definition or inherited from a resource type. A trait is applied to a method in left-to-right order, according to the traits defined in the **is** node. Trait definitions do not apply to nested resources.
+Similarly, a method can specify one or more traits it inherits by using the OPTIONAL **is** node. The value of a trait MUST be an array of any number of elements. Each element MUST be the name of a trait defined within the root-level traits node or in a library. A trait can also be applied to a resource by using the **is** node. Using this node is equivalent to applying the trait to all methods for that resource, whether the method is declared explicitly in the resource definition or inherited from a resource type. A trait is applied to a method in left-to-right order, according to the traits defined in the **is** node. Trait definitions do not apply to nested resources.
 
 The following example illustrates the application of resource types and traits.
 
@@ -3074,9 +3153,15 @@ A file to be included MAY begin with a RAML fragment identifier line, which cons
 | Extension | An extension file | [Extensions](#extensions)
 | SecurityScheme | A definition of a security scheme | [Security Schemes](#security-schemes)
 
-If a file begins with a RAML fragment identifier line, and the fragment identifier is not Library, Overlay, or Extension, the contents of the file after removal of the RAML fragment identifier line MUST be valid structurally according to the relevant RAML specification. For example, a RAML file beginning with `#%RAML 1.0 Trait` must have the structure of a RAML trait declaration as defined in the [Resource Types and Traits](#resource-types-and-traits) section. Including the file in a correct location for a trait declaration results in a valid RAML file.
+In addition to the nodes allowed in any of the Relevant RAML Specification Sections above, the following OPTIONAL node is allowed:
 
-The following example shows a RAML fragment file that defines a resource type and a file that includes this fragment file.
+|Allowed Node | Description |
+|:------------|:------------|
+| uses? | Imported external [libraries](#libraries) for use within the RAML typed fragment. |
+
+If a file begins with a RAML fragment identifier line, and the fragment identifier is not a Library, Overlay, or Extension, the contents of the file after the removal of the RAML fragment identifier line and any `uses` node MUST be valid structurally according to the relevant RAML specification. For example, a RAML file beginning with `#%RAML 1.0 Trait` must have the structure of a RAML trait declaration as defined in the [Resource Types and Traits](#resource-types-and-traits) section. Including the file in a correct location for a trait declaration results in a valid RAML file.
+
+The following example shows a RAML fragment file that defines a resource type and a file that includes this typed fragment file.
 
 ```yaml
 #%RAML 1.0 ResourceType
@@ -3242,11 +3327,11 @@ traits:
 
 RAML libraries are used to combine any collection of data type declarations, resource type declarations, trait declarations, and security scheme declarations into modular, externalized, reusable groups. While libraries are intended to define common declarations in external documents, which are then included where needed, libraries can also be defined inline.
 
-The following table describes the nodes, which are optional, of a library node.
+In addition to any nodes allowed at the root of [RAML typed fragments](#typed-fragments), RAML libraries allow the following optional nodes:
 
 |Name | Description |
 |:--------|:------------|
-| types?<br>schemas?<br>resourceTypes?<br>traits?<br>securitySchemes?<br>annotationTypes?<br>(&lt;annotationName&gt;)?<br>uses? | The definition of each node is the same as that of the corresponding node at the root of a RAML document. A library supports annotation node like any other RAML document.
+| types?<br>schemas?<br>resourceTypes?<br>traits?<br>securitySchemes?<br>annotationTypes?<br>(&lt;annotationName&gt;)? | The definition of each node is the same as that of the corresponding node at the root of a RAML document. A library supports the annotation node like any other RAML document.
 | usage | Describes the content or purpose of a specific library. The value is a string and MAY be formatted using [markdown](#markdown).
 
 The following example shows a simple library as a standalone, reusable RAML fragment document.
@@ -3275,11 +3360,11 @@ resourceTypes:
 
 #### Applying Libraries
 
-Any number of libraries can be applied by using the OPTIONAL **uses** node ONLY at the root of a master RAML or RAML fragment file. The value of the uses node is a map of key-value pairs. The keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
+You can apply any number of libraries by using the OPTIONAL **uses** node at the root of a RAML or RAML typed fragment file. The value of the **uses** node is a map of key-value pairs. The keys are treated as library names, or namespaces, and the value MUST be the location of a RAML library file, usually an external RAML library fragment document.
 
 In a document that applies a library, the data types, resource types, traits, security schemes, and annotation types in the library become available within the document. The assets in the library are referenced within the document using dot notation as follows: concatenate the library name followed by a period (`.`), followed by the name of the data type, resource type, trait, security scheme, or annotation type. The library name defines a namespace for the library nodes within the context in which the library is applied. Namespaces defined in a **uses** statement in a specific file are only consumable within that file and serve only to disambiguate the included libraries from each other. Therefore, any processor MUST NOT allow any composition of namespaces using "." across multiple libraries.
 
-Using **uses** does not automatically import the remote library assets into the local file, but the local file can import those assets by referring to the assets from its contents. For example, a RAML type fragment file that uses a library of remote types can import one of those types by referring to it. The remote type is included as if it were defined locally within the RAML type fragment file.
+Using **uses** does not automatically import the remote library assets into the local file, but the local file can import those assets by referring to the assets from its contents. For example, a RAML typed fragment file that uses a library of remote types can import one of those types by referring to it. The remote type is included as if it were defined locally within the RAML typed fragment file.
 
 The following examples demonstrate the use of a library in a second library, a second library in a resource type fragment, and a second library in a RAML API definition.
 
@@ -3350,7 +3435,7 @@ API definitions might need to be extended in a variety of ways for different nee
 
 Overlays and extensions are RAML documents that add or override nodes of a RAML API definition. The first line of an overlay or extension document MUST begin with the text _#%RAML 1.0 Overlay_ or _#%RAML 1.0 Extension_, respectively, followed by nothing but the end of the line. An overlay or extension document MUST contain a root-level `extends` node whose value MUST be the location of a valid RAML API definition or another overlay or extension; the location specification is an absolute or relative path, or a URL, equivalent to an [!include tag argument](#includes). The document specified in the `extends` node is called the master RAML document.
 
-The remainder of an overlay or extension document follows the same rules as a RAML API definition, but with certain [restrictions](#overlays) in case of an overlay.
+The remainder of an overlay or extension document follows the same rules as a RAML API definition, but with certain [restrictions](#overlays) in case of an overlay. The resolution of paths in an overlay or extension document, such as those for `!include` tags or libraries, MUST be relative to the document from which the reference is made, as opposed to the API root document.
 
 To apply an overlay or extension, RAML processors MUST apply the [merging algorithm](#merging-rules) to the master RAML document and the extension or overlay, thereby producing a modified API definition; in the case of applying an overlay, the modified API definition is then validated against the master RAML document to adhere to the restrictions on overlays.
 
