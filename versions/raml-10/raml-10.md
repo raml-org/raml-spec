@@ -33,7 +33,7 @@ In this specification, **API definition** means an API using this specification.
 
 A **resource** is the conceptual mapping to an entity or set of entities.
 
-A trailing question mark, for example **description?**, indicates an optional property.
+A trailing question mark in key names MAY denote an optional key.
 
 ### Template URI
 
@@ -598,7 +598,7 @@ types:
 
 Properties of object types are defined using the OPTIONAL **properties** facet. The RAML Specification calls the value of the "properties" facet a "properties declaration". The properties declaration is a map of keys and values. The keys are valid property names for declaring a type instance. The values are either a name of a type or an inline type declaration.
 
-The properties declaration can specify whether a property is required or optional.
+The properties declaration can specify whether a property is required or optional. Alternatively, a trailing question mark (`?`) in the key name MAY be used to indicate that a property is optional.
 
 | Facet  | Description |
 |:----------|:----------|
@@ -633,7 +633,7 @@ types:
                    #  required: false
 ```
 
-When the `required` facet on a property is specified explicitly in a type declaration, any question mark in its property name is treated as part of the property name rather than as an indicator that the property is optional.
+When the `required` facet on a property is specified explicitly in a type declaration, any question mark in its property name MUST be treated as part of the property name rather than as an indicator that the property is optional.
 
 For example, in
 
@@ -1036,6 +1036,8 @@ types:
 
 In RAML, the type `nil` is a scalar type that allows only nil data values. Specifically, in YAML it allows only YAML's `null` (or its equivalent representations, such as `~`), in JSON it allows only JSON's `null`, and in XML it allows only XML's `xsi:nil`. In headers, URI parameters, and query parameters, the `nil` type only allows the string value "nil" (case-sensitive); and in turn an instance having the string value "nil" (case-sensitive), when described with the `nil` type, deserializes to a nil value.
 
+Using the type `nil` in a union makes a type definition nilable, which means that any instance of that union MAY be a nil data value. When such a union is composed of only one type in addition to `| nil`, use of a trailing question mark `?` instead of the union syntax is equivalent. The use of that equivalent, alternative syntax SHALL be restricted to [scalar types](#scalar-types) and references to user-defined types, and SHALL NOT be used in [type expressions](#type-expressions).
+
 In the following example, the type is an object and has two required properties, `name` and `comment`, both defaulting to type `string`. In `example`, `name` is assigned a string value, but comment is nil and this is _not_ allowed because RAML expects a string.
 
 ```yaml
@@ -1073,13 +1075,15 @@ types:
     properties:
       name:
       comment: nil | string # equivalent to ->
-                             # comment: string?
+                            # comment: string?
     example:
       name: Fred
       comment: # Providing a value or not providing a value here is allowed.
 ```
 
 Declaring the type of a property to be `nil` represents the lack of a value in a type instance. In a RAML context that requires *values* of type `nil` (vs just type declarations), the usual YAML `null` is used, e.g. when the type is `nil | number` you may use `enum: [ 1, 2, ~ ]` or more explicitly/verbosely `enum: [ 1, 2, !!null "" ]`; in non-inline notation you can just omit the value completely, of course.
+
+Nilable values are not the same as optional properties. For example, you can define a `comment` property that is optional and that accepts a `nil` value by using the syntax `comment?: string?` or `comment?: nil | string`.
 
 #### Union Type
 
@@ -1247,7 +1251,7 @@ When referencing an inner element of a schema, a RAML processor MUST validate an
 
 Facets express various additional restrictions beyond those which types impose on their instances, such as the optional `minimum` and `maximum` facets for numbers, or the `enum` facet for scalars. In addition to the built-in facets, RAML provides a way to declare user-defined facets for any data type.
 
-The user-defined facet is declared using the OPTIONAL `facets` facet in a type declaration. The value of the `facets` facet is a map. The key names the user-defined facet. The corresponding value defines the concrete value that the respective facet can take. The syntax of a [property declaration](#property-declarations) and user-defined facet declaration are the same. A facet restricts instances of a subtype, not its type, based on the concrete value defined in the facet declaration.
+The user-defined facet is declared using the OPTIONAL `facets` facet in a type declaration. The value of the `facets` facet is a [properties declaration](#property-declarations) object, which is also the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **user-defined facet declaration**. Each property name specifies a user-defined facet name. A trailing question mark (`?`) in a property name MAY be used to indicate that a user-defined facet is optional. Each property value specifies the user-defined facet value type as the name of a type or as an inline type declaration.
 
 Facet names MUST NOT begin with open parenthesis, to disambiguate the names from annotations. User-defined facet names on a type MUST NOT match built-in facets on that type, nor facet names of any ancestor type in the inheritance chain of the type.
 
@@ -1478,7 +1482,7 @@ title: My API With Types
 
 ### Defining Examples in RAML
 
-It is highly RECOMMENDED that API documentation include a rich selection of examples. RAML supports either the definition of multiple examples or a single one for any given instance of a type declaration.
+It is highly RECOMMENDED that API documentation include a rich selection of examples. RAML supports either the definition of multiple examples or a single one for any given instance of a type declaration. In addition to supporting YAML by default, processors SHOULD support JSON and XML representations of examples. Processors MAY support additional formats. Note that type definition is agnostic to example encoding, so examples in YAML will work for JSON or XML, and vice versa, for any chosen combination of those three supported encodings.
 
 #### Multiple Examples
 
@@ -1520,7 +1524,7 @@ The map can contain the following additional facets:
 | description? | A substantial, human-friendly description for an example. Its value is a string and MAY be formatted using [markdown](#markdown).
 | (&lt;annotationName&gt;)? | [Annotations](#annotations) to be applied to this API. An annotation is a map having a key that begins with "(" and ends with ")" where the text enclosed in parentheses is the annotation name, and the value is an instance of that annotation.
 | value | The actual example of a type instance.
-| strict? | Validates the example against any type declaration (the default), or not. Set this to false avoid validation.
+| strict? | Validates the example against any type declaration (default). Set this to false to prevent validation.
 
 For example:
 
@@ -1986,7 +1990,7 @@ types:
 
 #### Query Parameters in a Query String
 
-The **queryParameters** node specifies the set of query parameters from which the query string is composed. When applying the restrictions defined by the API, processors MUST regard the query string as a set of query parameters according to the URL encoding format. The value of the queryParameters node is a [properties declaration](#property-declarations) object, as is the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **query parameter declaration**. Each property name specifies an allowed query parameter name. Each property value specifies the query parameter value type as the name of a type or an inline type declaration.
+The **queryParameters** node specifies the set of query parameters from which the query string is composed. When applying the restrictions defined by the API, processors MUST regard the query string as a set of query parameters according to the URL encoding format. The value of the queryParameters node is a [properties declaration](#property-declarations) object, which is also the value of the properties object of a type declaration. Each property in this declaration object is referred to as a **query parameter declaration**. Each property name specifies an allowed query parameter name. A trailing question mark (`?`) in a property name MAY be used to indicate that a query parameter is optional. Each property value specifies the query parameter value type as the name of a type or an inline type declaration.
 
 If a query parameter declaration specifies an array type for the value of the query parameter, processors MUST allow multiple instances of that query parameter in the request or response. In this case, the type of the elements of the array MUST be applied as the type of the value of query parameter instances.
 
