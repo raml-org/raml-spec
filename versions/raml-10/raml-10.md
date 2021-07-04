@@ -92,6 +92,8 @@ Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](htt
 		- [Example of how to define example/examples in RAML](#example-of-how-to-define-exampleexamples-in-raml)
 	- [XML Serialization of Type Instances](#xml-serialization-of-type-instances)
 	- [Using Types in RAML](#using-types-in-raml)
+	- [Customizing inherited types structure and behavior](#customizing-inherited-types-structure-and-behavior)
+		- [Merging Rules](#merging-rules)
 - [Resources and Nested Resources](#resources-and-nested-resources)
 	- [Resource Property](#resource-property)
 	- [Template URIs and URI Parameters](#template-uris-and-uri-parameters)
@@ -580,6 +582,7 @@ All types that have the built-in object base type in their inheritance tree MAY 
 | additionalProperties? | A Boolean that indicates whether an object instance MAY contain [additional properties](#additional-properties).<br/><br/>**Default:** `true`
 | discriminator? | Determines the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types due to unions or inheritance. The value must match the name of one of the declared `properties` of a type. Unsupported practices are inline type declarations and [using `discriminator`](#using-discriminator) with non-scalar properties.
 | discriminatorValue? | Identifies the declaring type. Requires including a `discriminator` facet in the type declaration. A valid value is an actual value that might identify the type of an individual object and is unique in the hierarchy of the type. Inline type declarations are not supported.<br/><br/>**Default:** The name of the type
+| heritable? | A boolean that indicates if this type is inherited automatically or if it should be explicitly declared on every type that inherit it in order to consider it as a part of it. ***True*** means the child does not need to overwrite it in order to inherite it, it is inherited automatically. ***False*** means that if the child does not overwrite it explicitly, the same won't be available on it, thus it's not usable by it, in other words, the property is not inherited automatically. Default value: **true**
 
 Example:
 
@@ -1735,6 +1738,181 @@ Key points about serialization are:
 * Serialization rules depend on the type and the position in which the type is used.
 * A "string" is the default serialization target of a custom value type, which is an extended "value" of a built-in type.
 * An extended built-in type inherits its serialization target.
+
+
+### Customizing inherited types structure and behavior
+
+By default, every object can be inherited. That implies that all properties from the parent object type will be available for every child object. But, there are some situations on which is required to customize the structure or behavior of the inherited objects by restricting the use of some property belonging to the parent.
+
+Although a declared object type must be always the same, independently of the use,  we do not always use the entirety of its properties in all use cases. For all those cases when it is needed alter the structure or behavior of a parent object from an inherited object type, it could be used the facet *heritable*. The *heritable* facet permits to condition the use of some property existent on a parent object type within any of its inherited children. So, if it desired to restrict some property of the parent, making it not usable by children, is possible to add an *heritable* facet at property or type definition level.
+
+There will be a simple merging rule that modeling the behavior expected by the using of the *heritable* facet, which is described as follows:
+
+#### Merging Rules for *heritable* facet
+
+This section describes how should be built the _Master Structure_ of a type that use the *heritable* facet.  
+
+##### Terminology
+
+###### Object
+
+_Object_ is any kind of Built-in Types declared according to [Object Type](#object-type) specification.
+
+_Parent Object_ is an _Object_ that is a parent for another _Objects_, in other words, is an _Object_ that has one o more chidren
+
+The following exemplify a _Parent Object_ named '_entity_':
+
+```yaml
+
+  entity:
+    type: object
+    properties:
+      field1?:
+        type: string
+        description: field 1.
+      field2?:
+        type: boolean
+        description: field 2.
+      field3?:
+        type: string
+        description: field 3.	
+```   
+
+_Inherited Object_ is an _Object_ that has a _Parent Object_, thus it inherit its properties. 
+
+In the following, '_inheritedEntity_' is an _Inherited Object_ child of the '_entity_' _Object_:
+
+```yaml
+
+  inheritedEntity:
+	type: entity
+	properties:
+	  field1:
+      field4: number
+	  description: field 4.
+```
+
+###### Property
+
+A _Property_ is a specific property belonging to the set of properties that are part of the _Object_ according to [Property Declarations](#property-declarations) specification
+
+###### Own Property
+
+Is a _Property_ explicitly declared in the _Object_ type declaration, with the exception of any [Overwritten Properties](#overwritten-property). An _Overwritten Property_ is not considered an an _Own Property_
+
+In the examples above, for the '_entity_' _Object_: *field1*, *field2* and *field3* are its _Own Properties_
+
+###### Inherited Property
+
+Is a _Property_ that is not explicitly declared in an _Object_ type, but declared in any of its _Parent Object_. All [Overwritten Properties](#overwritten-property) are considered as _Inherited Properties_
+
+In the examples above, for '_inheritedEntity_' _Object_ the _Property_ *field4* is its _Own Property_ and _Properties_: *field1*, *field2* and *field3* are its _Inherited Properties_. Although the attribute "*field1*" is present as an _inheritedEntity_ property, it can not be considered as an _Own Property_, but as an _Inherited Property_, since the _inheritedEntity_ entity is overwriting it (it is declared in the _Parent Object_).
+
+###### Overwritten Property
+
+_Overwritten Property_ is a property that are declared both on the _Inherited Object_ and _Parent Object_.
+
+In the examples above, for '_inheritedEntity_' _Object_ the _Property_ *field1* is an _Overwritten Property_
+
+##### Merging Algorithm:
+
+A Master Structure should be built by RAML parser to produce an unique view of the resulting _Object_ considering all types of possible heritage and the use of *heritable* facet across all _Objects_ involved in the heritage chain.
+
+The following exemplify the same _Parent Object_ '_entity_' described above, but with the use of the *heritable* facet:
+
+```yaml
+
+  entity:
+    type: object
+    properties:
+      field1?:
+        type: string
+        description: field 1.
+      field2?:
+        type: boolean
+        description: field 2.
+      field3?:
+        type: string
+        description: field 3.
+	    heritable: true
+    heritable: false		
+```   
+
+Consider the same _Inherited Object_ '_inheritedEntity_' described above unaltered:
+
+```yaml
+
+  inheritedEntity:
+	type: entity
+	properties:
+	  field1:
+	    heritable: true	  
+      field4: number
+	  description: field 4.
+```
+
+For each **_Object_** that has a *heritable* facet:
+
+* The value of the **heritable** facet in a _Inherited Object_ overides any value on the same facet existent on any _Parent Objects_. In the example above, on '_inheritedEntity_' object, the value *true* for the facet **heritable** placed at *field1* level, overide the *false* value indicated at '_entity_' parent object level.
+* The value of the **heritable** facet defined at a _Parent Object_ level will be traversed to all its _Inherited Objects_ and thus _Properties_. In the example above, on '_entity_' object, the value *false* indicated at type declaration level will be traversed to *field1* and *field2* belonging to it and to the *field4* belonging to its child '_inheritedEntity_'. The *field3* is not affected because of the reason explaned bellow.
+
+For each **_Property_** that has a *heritable* facet:
+
+* The value of the **heritable** facet in a _Property_ overides any value on the same facet existent on any _Parent Objects_. In the example above, on '_entity_' object, the value *true* for the facet **heritable** placed at *field3* level, overide the false value indicated at '_entity_' object level.
+* If any of the _Parent Objects_ of an _Inherited Object_ or the _Object_ itself declares the **heritable** facet to false, the only way an _Inherited Objects_ could use it is by _Overwriting_ it inside its _Properties_ section. In the example above, on '_inheritedEntity_' object, the *field1* will be admitted at runtime because of '_inheritedEntity_' overides it.
+
+This example shows the behavior you could expect by including conveniently the *heritable* facet on an object type.
+
+Consider this types declaration:
+
+```yaml
+types:
+  entity:
+    type: object
+    properties:
+      field1?:
+        type: string
+        description: field 1.
+      field2?:
+        type: boolean
+        description: field 2.
+      field3?:
+        type: string
+        description: field 3.	
+	    heritable: true
+    heritable: false
+   
+  inheritedEntity:
+	type: entity
+	properties:
+	  field1:
+      field4: number
+	  description: field 4.
+```
+
+For the types described above the following values will be valid or invalid at runtime according to the merging rules defined in relation to the *heritable* facet 
+
+```yaml
+entity:  			# Valid
+  field1: "John"
+  field2: true
+  field3: "Doe"   
+  
+inheritedEntity:	# Invalid because of 'heritable' is false for entity which means by default all attributes are excluded at least it is explicitly declared on the child, and field2 is not.
+  field1: "John"   
+  field2: true	
+  field4: 1   
+
+inheritedEntity:	# Valid because of the only available attributes are: field3, field4 and field1, the last one because of it is overwritten. The field2 is not usable because it is marked as not heritable (heritable: false) in the parent and it is no overwritten in the child
+  field1: "John"
+  field3: "Doe"    	
+  field4: 1  
+  
+inheritedEntity:	# Invalid because of field2 is not usable because it is marked as not heritable (heritable: false) in the parent and it is no overwritten in the child
+  field2: true
+  field3: "Doe"    	
+  field4: 1 
+```
 
 ## Resources and Nested Resources
 
