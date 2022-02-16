@@ -2041,14 +2041,14 @@ In the following example, union types and extended multiple types are used to co
 #%RAML 1.0
 title: Illustrate query parameter variations
 types:
-  lat-long: # lat & long required; mutually exclusive with location
+  lat-long:
     properties:
       lat: number
       long: number
-  loc: # location required; mutually exclusive with lat & long
+  loc:
     properties:
       location:
-  paging: # each is optional, not exclusive with anything
+  paging:
     properties:
       start?: number
       page-size?: number
@@ -2067,11 +2067,6 @@ types:
             start: 2
             page-size: 20
             location: 1,2
-        third:  # not valid
-          value:
-            lat: 12
-            location: 2
-          strict: false # because it's not valid
 ```
 
 #### Query Parameters in a Query String
