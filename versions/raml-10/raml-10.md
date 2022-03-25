@@ -2958,7 +2958,7 @@ If the allowedTargets node is not present, the annotation can be applied in any 
 
 ### Applying Annotations
 
-To be applied in an API specification, the annotation MUST be declared in an annotation type.
+To be applied in an API specification, the annotation SHOULD be declared in an annotation type. If no annotation type is found, the `any` RAML type would be used to validate the body of the annotation.
 
 A declared annotation can be applied to a node in the specification by adding an annotation node on that node whose key is the name of the annotation type enclosed in parentheses. The annotation value MUST be valid according to the corresponding annotation type.
 
