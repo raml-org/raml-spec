@@ -2896,7 +2896,7 @@ The list of required and optional parameters to be provided to the security sche
 
 Annotations provide a mechanism to extend the API specification with metadata beyond the metadata already defined in this RAML 1.0 specification. Annotations can also be used to add properties to the built-in RAML nodes in certain locations within the RAML specification. Processors MAY support certain annotations to add additional specificity to the API description, enable tooling such as testing, support API repositories and API discovery, and so on. Processors MAY ignore any and all annotations.
 
-Annotations used in an API specification MUST be declared in a root-level annotationTypes node. Annotations can have values, which are defined and constrained in annotation type declarations. Processors can then rely on the declarations to ensure annotation values meet expectations.
+Annotations used in an API specification SHOULD be declared in a root-level annotationTypes node. Annotations can have values, which are defined and constrained in annotation type declarations. Processors can then rely on the declarations to ensure annotation values meet expectations.
 
 The following example shows various annotation type declarations and the application of the annotations to an API definition.
 
@@ -2958,7 +2958,7 @@ If the allowedTargets node is not present, the annotation can be applied in any 
 
 ### Applying Annotations
 
-To be applied in an API specification, the annotation MUST be declared in an annotation type.
+To be applied in an API specification, the annotation SHOULD be declared in an annotation type. If no annotation type is found, the `any` RAML type would be used to validate the body of the annotation.
 
 A declared annotation can be applied to a node in the specification by adding an annotation node on that node whose key is the name of the annotation type enclosed in parentheses. The annotation value MUST be valid according to the corresponding annotation type.
 
@@ -2983,6 +2983,16 @@ title: Testing annotations
 mediaType: application/json
 annotationTypes:
   testHarness:
+/users:
+  (testHarness): usersTest
+```
+
+This final example showcases how the annotation can be directly applied without declaration in the API specification:
+
+```yaml
+#%RAML 1.0
+title: Testing annotations
+mediaType: application/json
 /users:
   (testHarness): usersTest
 ```
